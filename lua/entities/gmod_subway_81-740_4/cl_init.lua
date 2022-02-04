@@ -1186,7 +1186,7 @@ end
 for i=1,5 do
     ENT.ClientProps["speedfact"..i] = {
         model = "models/metrostroi_train/81-720/segments/speed_green.mdl",
-        pos = Vector(344.5, 1.305*(i-1)-2.3, 103.7),
+        pos = Vector(344.5, -1.305*(i-1)+2.95, 103.7),
         ang = Angle(10,0,-0.2),
         skin = 0,
         color = Color(90,255,80),
