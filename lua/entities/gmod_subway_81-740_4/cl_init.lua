@@ -230,7 +230,7 @@ ENT.ClientProps["Antenna"] = {
     ang = Angle(-6,0,0),
     nohide=true,
 }
-ENT.ButtonMap["Antenna"] = {
+--[[ENT.ButtonMap["Antenna"] = {
 	pos = Vector(833.15, -4, -20),
 	ang = Angle(0,90,90),
 	width = 150,
@@ -242,7 +242,7 @@ ENT.ButtonMap["Antenna"] = {
         {ID = "Antenna_on",x=-10,y=0,w=150,h=150,tooltip="Установить антенну",},
 		{ID = "Antenna_off",x=-10,y=0,w=150,h=150,tooltip="Установить антенну",},
     }
-}
+}]]
 	
 ENT.ClientProps["krepezh"] = {
     model = "models/metrostroi_train/81-740/body/krepezh.mdl",
@@ -636,7 +636,7 @@ ENT.ButtonMap["Tickers"] = {
     hide=true,
     hideseat=1,
 }
-ENT.ButtonMap["Tickers_rear"] = { --Работает с багами
+--[[ENT.ButtonMap["Tickers_rear"] = { --Работает с багами
     pos = Vector(91.9,28,65), --446 -- 14 -- -0,5
     ang = Angle(0,-90,90),
     width = 1024,
@@ -644,7 +644,7 @@ ENT.ButtonMap["Tickers_rear"] = { --Работает с багами
     scale = 0.055,
     hide=true,
     hideseat=1,
-}
+}]]
 ENT.ButtonMap["BackVent"] = {
     pos = Vector(735.25,27,47), --446 -- 14 -- -0,5
     ang = Angle(0,90,90),
@@ -1995,23 +1995,23 @@ end
     self:Animate("km013", Cpos[self:GetPackedRatio("Cran")] or 0, 0, 0.7,  2,false)
     self:Animate("PB",  self:GetPackedBool("PB") and 1 or 0,0,0.2,  8,false)
 
-	self:ShowHide("lamps_salon_off",self:GetPackedRatio("SalonLighting") < 0.4)
+    self:ShowHide("lamps_salon_off",self:GetPackedRatio("SalonLighting") < 0.4)
     self:ShowHide("lamps_salon_on",self:GetPackedRatio("SalonLighting") >= 0.4)
 	
 	self:ShowHide("lamps_salon_off_r",self:GetPackedRatio("SalonLighting") < 0.4)
     self:ShowHide("lamps_salon_on_r",self:GetPackedRatio("SalonLighting") >= 0.4)
 	
-	local Antennamodel = self:GetNW2Bool("Antenna")
+--[[local Antennamodel = self:GetNW2Bool("Antenna")
 	self:ShowHide("Antennamodel", not Antennamodel)
 	
-	self:HidePanel("Antenna", not Antennamodel)
+	self:HidePanel("Antenna", not Antennamodel)]]
 	
 	 local cab_lamp = self:Animate("cab_lamp",self:GetPackedBool("CabinEnabledFull") and 1 or self:GetPackedBool("CabinEnabledEmer") and 0.5 or 0,0,1,5,false)
     self:ShowHideSmooth("cab_emer",cab_lamp)
     self:ShowHideSmooth("cab_full",cab_lamp)
 
     self:ShowHideSmooth("lamp_f",self:Animate("lamp_forw",self:GetPackedBool("BIForward") and 1 or 0,0,1,5,false))
-	self:ShowHideSmooth("lamp_b",self:Animate("lamp_back",self:GetPackedBool("BIBack") and 1 or 0,0,1,5,false))
+    self:ShowHideSmooth("lamp_b",self:Animate("lamp_back",self:GetPackedBool("BIBack") and 1 or 0,0,1,5,false))
 
     local accel = self:GetPackedRatio("BIAccel",0)
     local speed = self:GetNW2Int("BISpeed",0)
@@ -2320,12 +2320,6 @@ function ENT:DrawPost(special)
     end)
 	self.RTMaterial:SetTexture("$basetexture", self.Tickers)
     self:DrawOnPanel("Tickers",function(...)
-        surface.SetMaterial(self.RTMaterial)
-        surface.SetDrawColor(255,255,255)
-        surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
-    end)
-	self.RTMaterial:SetTexture("$basetexture", self.Tickers)
-    self:DrawOnPanel("Tickers_rear",function(...)
         surface.SetMaterial(self.RTMaterial)
         surface.SetDrawColor(255,255,255)
         surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
