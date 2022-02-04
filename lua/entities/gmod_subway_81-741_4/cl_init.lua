@@ -418,7 +418,7 @@ ENT.ClientProps["salon1"] = {
 		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
 		end,
 }
-ENT.ButtonMap["Tickers_rear"] = {
+--[[ENT.ButtonMap["Tickers_rear"] = {
     pos = Vector(-37,27.5,66), --446 -- 14 -- -0,5
     ang = Angle(0,-90,90),
     width = 1024,
@@ -426,7 +426,7 @@ ENT.ButtonMap["Tickers_rear"] = {
     scale = 0.0545,
     hide=true,
     hideseat=1,
-}
+}]]
 --------------------------------------------------------------------------------
 -- Add doors
 --------------------------------------------------------------------------------
@@ -911,14 +911,8 @@ function ENT:Draw()
 end
 
 function ENT:DrawPost(special)
-    self.RTMaterial:SetTexture("$basetexture", self.Tickers)
-    self:DrawOnPanel("Tickers",function(...)
-        surface.SetMaterial(self.RTMaterial)
-        surface.SetDrawColor(255,255,255)
-        surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
-    end)
 	self.RTMaterial:SetTexture("$basetexture", self.Tickers)
-    self:DrawOnPanel("Tickers_rear",function(...)
+    self:DrawOnPanel("Tickers",function(...)
         surface.SetMaterial(self.RTMaterial)
         surface.SetDrawColor(255,255,255)
         surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
