@@ -63,7 +63,6 @@ function ENT:Initialize()
 		
 	--симуляция интерьера начало.
 	self.FakeCouple = self:CreateCouple(Vector(-130,0,-75),Angle(0,0,0,false,"740F"))
-	self.FakeCouple:SetModel("models/hunter/plates/plate.mdl") ----тележка  ---160,0,-75 -410,0,-75
 	self:SetNW2Entity("FakeCouple",self.FakeCouple)
 	self.FakeCouple:SetRenderMode(RENDERMODE_NONE)
 	self.FakeCouple:PhysicsInit(SOLID_VPHYSICS)
@@ -261,12 +260,10 @@ function ENT:CreateRear1(pos,ang,a)
 	VAGON1:SetAngles(self:GetAngles())
 	VAGON1:Spawn()
 	VAGON1:SetOwner(self:GetOwner())	
+	self.FakeCouple:SetParent(VAGON1)
 	--Привязка интерьера к вагону, увы, багается(.		
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON1:CPPISetOwner(self:CPPIGetOwner()) end	
-	
-	constraint.Weld(VAGON1,self.FakeCouple,0,0,0,1)
-	constraint.NoCollide(VAGON1,self.FakeCouple,0,0)	
 
 	--Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
