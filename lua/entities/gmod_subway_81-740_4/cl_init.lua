@@ -2053,7 +2053,7 @@ end
     self:ShowHideSmooth("redlights740up2",not self.RedLightBroken2 and RL or 0)
 	self:ShowHideSmooth("redlights740down1",not self.RedLightBroken3 and RL or 0)
     self:ShowHideSmooth("redlights740down2",not self.RedLightBroken4 and RL or 0)
-    local headlights = HL1*0.5+HL2*0.5
+local headlights = HL1*0.5+HL2*0.5
     self:SetLightPower(1,headlights>0,headlights)
     self:SetLightPower(2,RL>0,RL)
     if IsValid(self.GlowingLights[1]) then
@@ -2063,6 +2063,7 @@ end
         if self:GetPackedRatio("Headlights") == 1 and self.GlowingLights[1]:GetFarZ() ~= 5144 then
             self.GlowingLights[1]:SetFarZ(5144)
         end
+	end
 	--Анимация дверей передней части.
     if not self.DoorStates then self.DoorStates = {} end
     if not self.DoorLoopStates then self.DoorLoopStates = {} end 
@@ -2143,7 +2144,6 @@ end
 			self:Animate(n_l1,state,0,1,15,1)--0.8 + (-0.2+0.4*math.random()),0)
             self:Animate(n_r1,state,0,1,15,1)--0.8 + (-0.2+0.4*math.random()),0)
         end
-    end
 	end
     local door_m = self:GetPackedBool("PassengerDoor")
     local door_l = self:GetPackedBool("CabinDoorLeft")
