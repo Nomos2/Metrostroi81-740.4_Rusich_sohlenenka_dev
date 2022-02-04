@@ -394,7 +394,7 @@ function ENT:TrainSpawnerUpdate()
 		end
 	end
 	
-	self:SetNW2Bool("Antenna",math.random()>0.5)
+	--self:SetNW2Bool("Antenna",math.random()>0.5)
 	
     --рандомизация цвета табло
 	--local sosi = math.random(1, 3)
@@ -607,12 +607,13 @@ function ENT:CreateRear(pos,ang,a)
 	VAGON:SetAngles(self:GetAngles())
 	VAGON:Spawn()
 	VAGON:SetOwner(self:GetOwner())	
+	self.FakeCouple:SetParent(VAGON)
 	
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
-	
-	constraint.Weld(VAGON,self.FakeCouple,0,0,0,1)
-	constraint.NoCollide(VAGON,self.FakeCouple,0,0)	
+
+	--constraint.Weld(VAGON,self.FakeCouple,0,0,0,1)
+	--constraint.NoCollide(VAGON,self.FakeCouple,0,0)	
 	
 	---Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
