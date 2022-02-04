@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/metrostroi_train/81-740/cabine/rusich_gauges"
+	"$model" "1"
+	"$selfillum" "1"
+
+	"$phong" "1"
+ 
+	"$phongexponenttexture"	"models/metrostroi_train/81-740/cabine/rusich_gauges_phong"
+	"$phongboost"				5.0
+	"$phongfresnelranges"		"[0 0.5 1]"
+
+}

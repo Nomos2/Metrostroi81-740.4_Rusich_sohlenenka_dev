@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "cralix/headlights/headlights81-740"
+	"$model" "1"
+	"$selfillum" "1"
+	"$selfillumint"		"[0.6 0.6 0.6]"
+	"$phong" "1"
+}
