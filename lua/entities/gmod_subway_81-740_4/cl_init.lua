@@ -1,4 +1,4 @@
-﻿include("shared.lua")
+include("shared.lua")
 
 --------------------------------------------------------------------------------
 ENT.ClientProps = {}
@@ -21,63 +21,63 @@ ENT.ButtonMap["PUU"] = {
     buttons = {
             
 			
-			{ID = "!DoorsClosed",x=83, y=30.5, radius=8, tooltip = "",model = {
+			{ID = "!DoorsClosed",x=93, y=30.5, radius=8, tooltip = "",model = {
 			model = "models/metrostroi_train/81-722/button_green.mdl",z=1.85,
             lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="DoorsClosed"},
         }},
 		
 		
 		
-        {ID = "StandToggle",x=203, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "StandToggle",x=213, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl",z=1.85,
             var="Stand",speed=12, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "notused1234",x=173, y=30.5, radius=15, tooltip = "",model = {
-            model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,
+        {ID = "notused1234",x=183, y=30.5, radius=15, tooltip = "",model = {
+            model = "models/metrostroi_train/81-722/button_red.mdl",z=1.85,
             var="Stand123",speed=12, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "notused123",x=113, y=30.5, radius=15, tooltip = "",model = {
-            model = "models/metrostroi_train/81-722/button_white.mdl",z=1.85,
+        {ID = "notused123",x=123, y=30.5, radius=15, tooltip = "",model = {
+            model = "models/metrostroi_train/81-722/button_red.mdl",z=1.85,
             var="Stand123",speed=12, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
 		
-		    {ID = "!HVoltage",x=137.5+37.83*0.16, y=30.5, radius=8, tooltip = "",model = {
+		    {ID = "!HVoltage",x=147.5+37.83*0.16, y=30.5, radius=8, tooltip = "",model = {
 			model = "models/metrostroi_train/81-722/button_green.mdl",z=1.85,
             lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="HVoltage"},
         }},
 		
 		
-        {ID = "KAHToggle",x=137.5+37.83*3, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "KAHToggle",x=147.5+37.83*3, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl",z=1.85,
             lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="KAHLamp", anim=true},
             var="KAH",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "KAHkToggle",x=137.5+37.83*3-20, y=27.5+10, w=40,h=20, tooltip="", model = {
+        {ID = "KAHkToggle",x=147.5+37.83*3-20, y=27.5+10, w=40,h=20, tooltip="", model = {
             model = "models/metrostroi_train/81/krishka.mdl", ang = 0, z = 1,
             var="KAHk",speed=8,min=0.32,max=0.721, disable="KAHToggle",
             plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=70,x=15,y=-40,z=-3.6,var="KAHPl", ID="KAHPl",},
             sndvol = 1, snd = function(val) return val and "kr_close" or "kr_open" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
         }},
-        {ID = "ALSToggle",x=137.5+37.83*4, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "ALSToggle",x=147.5+37.83*4, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl", z=1.85,
             lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="ALSLamp",z=0.1, anim=true},
             var="ALS",speed=8, vmin=0, vmax=0, disable="ALSToggle",
             --sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-		{ID = "AccelRateSet",x=137.5+37.88*5-7, y=30.5, radius=15, tooltip = "",model = {
+		{ID = "AccelRateSet",x=147.5+37.88*5-7, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=1.85,
             var="AccelRate",speed=8, vmin=0, vmax=0.7,
            -- lamp = {model = "models/metrostroi_train/81-720/buttons/l1.mdl",var="AccelRateLamp",anim=true},
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
-		{ID = "RingSet",x=137.5+37.83*6-10, y=30.5, radius=15, tooltip = "",model = {
+		{ID = "RingSet",x=147.5+37.83*6-10, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=1.85,
             var="Ring",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
@@ -86,35 +86,35 @@ ENT.ButtonMap["PUU"] = {
 
 		
 		/*
-        {ID = "FDepotToggle",x=137.5+37.83*5, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "FDepotToggle",x=147.5+37.83*5, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-720/buttons/b4.mdl",z=6,
             var="FDepot",speed=12, vmin=0, vmax=1,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		*/
 		
-        {ID = "PassSchemeToggle",x=137.5+37.83*7.5-8, y=30.5, radius=15, tooltip = "",model = {
-            model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,
-            --lamp = {model = "models/metrostroi_train/81-720/buttons/l1.mdl",var="PassSchemeLamp",anim=true},
+        {ID = "PassSchemeToggle",x=147.5+37.83*7.5-8, y=30.5, radius=15, tooltip = "",model = {
+            model = "models/metrostroi_train/81-722/button_green.mdl",z=1.85,
+           lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="PassSchemeLamp",anim=true},
             var="PassScheme",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		/*
-        {ID = "EmergencyCompressorSet",x=138+37.83*9+10, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "EmergencyCompressorSet",x=148+37.83*9+10, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-720/buttons/b7.mdl",z=7,
             var="EmergencyCompressor",speed=12, vmin=0, vmax=0.9,
             sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		*/
 		
-        {ID = "EnableBVSet",x=80+37.83*8, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "EnableBVSet",x=90+37.83*8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=1.85,
             var="EnableBV",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
 		
-        {ID = "DisableBVSet",x=138+37.83*8, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "DisableBVSet",x=148+37.83*8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,
             var="DisableBV",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
@@ -124,67 +124,74 @@ ENT.ButtonMap["PUU"] = {
 
 		
 		
-		{ID = "TickerToggle",x=566.63-100, y=30.5, radius=15, tooltip = "",model = {
+		{ID = "TickerToggle",x=576.63-100, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,
             lamp = {model = "models/metrostroi_train/81-722/lamp_yellow.mdl",var="TickerLamp", z=0.1, anim=true},
             var="Ticker",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "R_Program2Set",x=569.63+36.5*0, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "R_Program2Set",x=579.63+36.5*0, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,--blue
             var="R_Program2",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "R_AnnouncerToggle",x=566.63+36.5*2.75, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "R_AnnouncerToggle",x=576.63+36.5*2.75, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_blue.mdl",z=2.5,--blue
           --  lamp = {model = "models/metrostroi_train/81-720/buttons/l1.mdl",var="R_AnnouncerLamp",anim=true, color=Color(50,150,200)},
             var="R_Announcer",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "R_LineToggle",x=535, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "R_LineToggle",x=545, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,--blue
             lamp = {model = "models/metrostroi_train/81-722/lamp_yellow.mdl",var="R_LineLamp",anim=true},
             var="R_Line",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "R_EmerSet",x=566.63+35.5*1, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "R_EmerSet",x=576.63+35.5*1, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_yellow.mdl",skin =2,z=1.85,--blue
             var="R_Emer",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		/*
-        {ID = "R_Program1Set",x=566.63+35.2*4, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "R_Program1Set",x=576.63+35.2*4, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-720/buttons/b5.mdl",z=2.7,--blue
             var="R_Program1",speed=8, vmin=0, vmax=0,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 */
 /*
-        {ID = "EnableBVEmerSet",x=42, y=110, radius=15, tooltip = "",model = {
+        {ID = "EnableBVEmerSet",x=52, y=110, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-720/button_circle2.mdl",z=3,
             var="EnableBVEmer",speed=12, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 	*/	
 		
-		{ID = "EmergencyCompressorSet",x=566.63+36.5*1.05, y=90, radius=15, tooltip = "",model = { --566.63+36.5*1
+		{ID = "EmergencyCompressorSet",x=576.63+36.5*1.05, y=90, radius=15, tooltip = "",model = { --566.63+36.5*1
             model = "models/metrostroi_train/81-722/button_white.mdl", z=1.85,
             var="EmergencyCompressor",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
 		
-        {ID = "EmergencyControlsToggle",x=566.63+36.5*2.3, y=90, radius=15, tooltip = "",model = {
-            model = "models/metrostroi_train/81-722/button_white.mdl", z=1.85,
-            lamp = {model = "models/metrostroi_train/81-722/lamp_black.mdl",var="EmergencyControls",z=0, anim=true},
+        {ID = "EmergencyControlsToggle",x=576.63+36.5*2.3, y=90, radius=15, tooltip = "",model = {
+            model = "models/metrostroi_train/81-722/button_red.mdl", z=1.85,
+            lamp = {model = "models/metrostroi_train/81-722/lamp_red.mdl",var="EmergencyControls",z=0, anim=true},
             var="EmergencyControls",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "WiperToggle",x=569.63+35.75*1.8, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "WiperToggle",x=579.63+35.75*1.8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_blue.mdl",z=1.85,
             var="Wiper",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
+		{ID = "notused12345",x=459.63+35.75*1.8, y=100.5, radius=15, tooltip = "",model = {
+            model = "models/metrostroi_train/81-720/rc_rotator1.mdl",z=3.85,ang = Angle (0,0,0),
+			scale = 0.4,
+            var="notused12345",speed=8, vmin=0, vmax=0.7,
+            sndvol = 0.5, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
+        }},
+		--models/metrostroi_train/81-720/rc_rotator1.mdl
 
         {ID = "!VDop",x=269, y=69, w=107, h=6, tooltip = "Допустимая скорость"},
         {ID = "!VFact",x=269, y=76+9, w=107, h=6, tooltip = "Фактическая скорость"},
@@ -1186,7 +1193,7 @@ end
 for i=1,5 do
     ENT.ClientProps["speedfact"..i] = {
         model = "models/metrostroi_train/81-720/segments/speed_green.mdl",
-        pos = Vector(344.5, -1.305*(i-1)+2.95, 103.7),
+        pos = Vector(344.58, -1.305*(i-1)+2.95, 103.69),
         ang = Angle(10,0,-0.2),
         skin = 0,
         color = Color(90,255,80),
@@ -1206,7 +1213,7 @@ end
 
 ENT.ClientProps["brake_cylinder"] = {
     model = "models/metrostroi_train/equipment/arrow_nm.mdl",
-    pos = Vector(790.33,58.98,12.90),
+    pos = Vector(790.33, 58.98, 12.90),
     ang = Angle(-45.000000,0.000000,-270.000000),
     hideseat = 0.2,
 }
@@ -1220,7 +1227,7 @@ ENT.ClientProps["train_line"] = {
 
 ENT.ClientProps["brake_line"] = {
     model = "models/metrostroi_train/equipment/arrow_tm.mdl",
-    pos = Vector(790.33,58.56,20.10),
+    pos = Vector(790.33, 58.54, 20.10),
     ang = Angle(-40.000000,0.000000,-270.000000),
     hideseat = 0.2,
 }
@@ -2053,7 +2060,7 @@ end
     self:ShowHideSmooth("redlights740up2",not self.RedLightBroken2 and RL or 0)
 	self:ShowHideSmooth("redlights740down1",not self.RedLightBroken3 and RL or 0)
     self:ShowHideSmooth("redlights740down2",not self.RedLightBroken4 and RL or 0)
-local headlights = HL1*0.5+HL2*0.5
+    local headlights = HL1*0.5+HL2*0.5
     self:SetLightPower(1,headlights>0,headlights)
     self:SetLightPower(2,RL>0,RL)
     if IsValid(self.GlowingLights[1]) then
