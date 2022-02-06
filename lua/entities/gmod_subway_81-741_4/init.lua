@@ -302,11 +302,11 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --torquelimit
 		
 		-100, --ymin
-		-20, --xmin
+		-5, --xmin
 		-50, --zmin
 		
 		100, --ymax
-		20, --xmax
+		5, --xmax
 		50, --zmax
 		
 		0, --yfric
@@ -326,11 +326,11 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --torquelimit
 		
 		-100, --ymin
-		-20, --xmin
+		-5, --xmin
 		-50, --zmin
 		
 		100, --ymax
-		20, --xmax
+		5, --xmax --20
 		50, --zmax
 		
 		0, --yfric
