@@ -1460,26 +1460,6 @@ if not ENT.ClientSounds["PB"] then ENT.ClientSounds["PB"] = {} end
 table.insert(ENT.ClientSounds["PB"],{"PB",function(ent,var) return var > 0 and "pb_on" or "pb_off" end,1,1,30,1e3,Angle(-90,0,0)})
 
 --Задняя часть
-ENT.ClientProps["krepezh1"] = {
-    model = "models/metrostroi_train/81-740/body/krepezh1.mdl",
-    pos = Vector(0,0,0),
-    ang = Angle(0,0,0),
-	nohide=true,
-	callback = function(ent,cl_ent)
-		local FakeCouple = ent:GetNW2Entity("FakeCouple")
-		if not IsValid(FakeCouple) then
-			ent:ShowHide("krepezh1",false)
-			return
-		end
-		cl_ent:SetParent(FakeCouple) --выдача родителя.
-		
-		cl_ent:SetPos(FakeCouple:GetPos(Vector(0, 0, 0)))
-		
-		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
-		end,
-}
-
 ENT.ClientProps["RearTrain"] = {
     model = "models/metrostroi_train/bogey/disconnect_valve_blue.mdl",
     pos = Vector(-532, -20, -55), 
@@ -1560,84 +1540,6 @@ ENT.ButtonMap["RearDoor"] = {
         }},
     }
 }
-
-ENT.ClientProps["lamps_salon_on_r"] = {
-    model = "models/metrostroi_train/81-740/salon/lamps/lamps_on_rear.mdl",
-    pos = Vector(0,0,0),
-    ang = Angle(0,0,0),
-	nohide=true,
-	callback = function(ent,cl_ent)
-		local FakeCouple = ent:GetNW2Entity("FakeCouple")
-		if not IsValid(FakeCouple) then
-			ent:ShowHide("lamps_salon_on_r",false)
-			return
-		end
-		cl_ent:SetParent(FakeCouple) --выдача родителя.
-		
-		cl_ent:SetPos(FakeCouple:GetPos(Vector(0, 0, 0)))
-		
-		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
-		end,
-}
-
-ENT.ClientProps["lamps_salon_off_r"] = {
-    model = "models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",
-    pos = Vector(0,0,0),
-    ang = Angle(0,0,0),
-	nohide=true,
-	callback = function(ent,cl_ent)
-		local FakeCouple = ent:GetNW2Entity("FakeCouple")
-		if not IsValid(FakeCouple) then
-			ent:ShowHide("lamps_salon_off_r",false)
-			return
-		end
-		cl_ent:SetParent(FakeCouple) --выдача родителя.
-		
-		cl_ent:SetPos(FakeCouple:GetPos(Vector(0, 0, 0)))
-		
-		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
-		end,
-}
-ENT.ClientProps["handrails_offside"] = {
-    model = "models/metrostroi_train/81-740/body/740_body_additional.mdl",
-    pos = Vector(0,0,0),
-    ang = Angle(0,0,0),
-	nohide=true,
-	callback = function(ent,cl_ent)
-		local FakeCouple = ent:GetNW2Entity("FakeCouple")
-		if not IsValid(FakeCouple) then
-			ent:ShowHide("handrails_offside",false)
-			return
-		end
-		cl_ent:SetParent(FakeCouple) --выдача родителя.
-		
-		cl_ent:SetPos(FakeCouple:GetPos(Vector(0, 0, 0)))
-		
-		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
-		end,
-}
-ENT.ClientProps["salonR"] = {
-	model = "models/metrostroi_train/81-740/salon/salon_rear.mdl",
-    pos = Vector(0,0,0),
-    ang = Angle(0,0,0),
-	nohide=true,
-	callback = function(ent,cl_ent)
-		local FakeCouple = ent:GetNW2Entity("FakeCouple")
-		if not IsValid(FakeCouple) then
-			ent:ShowHide("salonR",false)
-			return
-		end
-		cl_ent:SetParent(FakeCouple) --выдача родителя.
-		
-		cl_ent:SetPos(FakeCouple:GetPos(Vector(0, 0, 0)))
-		
-		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
-		end,
-}
 ENT.ClientProps["door_cab_t"] = {
 			model =  "models/metrostroi_train/81-740/salon/door_br.mdl",
 			pos = Vector(-527, 15, 7),
@@ -1653,20 +1555,118 @@ ENT.ClientProps["door_cab_t"] = {
 			cl_ent:GetAngles(Angle(ang.x, ang.y, ang.z))
 			end,
 		}
+--Неотрегулируемые пропы.
+ENT.ClientProps["krepezh1"] = {
+    model = "models/metrostroi_train/81-740/body/krepezh1.mdl",
+    pos = Vector(0,0,0),
+    ang = Angle(0,0,0),
+	nohide=true,
+	callback = function(ent,cl_ent)
+		local FakeCouple = ent:GetNW2Entity("FakeCouple")
+		if not IsValid(FakeCouple) then
+			ent:ShowHide("krepezh1",false)
+			return
+		end
+		cl_ent:SetParent(FakeCouple) --выдача родителя.
+		
+		cl_ent:SetPos(FakeCouple:GetPos())
+		
+		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
+		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
+		end,
+}
+
+ENT.ClientProps["lamps_salon_on_r"] = {
+    model = "models/metrostroi_train/81-740/salon/lamps/lamps_on_rear.mdl",
+	pos = ENT.ClientProps["krepezh1"].pos,
+	ang = ENT.ClientProps["krepezh1"].ang,
+	nohide=true,
+	callback = function(ent,cl_ent)
+		local FakeCouple = ent:GetNW2Entity("FakeCouple")
+		if not IsValid(FakeCouple) then
+			ent:ShowHide("lamps_salon_on_r",false)
+			return
+		end
+		cl_ent:SetParent(FakeCouple) --выдача родителя.
+		
+		cl_ent:SetPos(FakeCouple:GetPos())
+		
+		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
+		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
+		end,
+}
+
+ENT.ClientProps["lamps_salon_off_r"] = {
+    model = "models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",
+	pos = ENT.ClientProps["lamps_salon_on_r"].pos,
+	ang = ENT.ClientProps["lamps_salon_on_r"].ang,
+	nohide=true,
+	callback = function(ent,cl_ent)
+		local FakeCouple = ent:GetNW2Entity("FakeCouple")
+		if not IsValid(FakeCouple) then
+			ent:ShowHide("lamps_salon_off_r",false)
+			return
+		end
+		cl_ent:SetParent(FakeCouple) --выдача родителя.
+		
+		cl_ent:SetPos(FakeCouple:GetPos())
+		
+		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
+		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
+		end,
+}
+ENT.ClientProps["handrails_offside"] = {
+    model = "models/metrostroi_train/81-740/body/740_body_additional.mdl",
+	pos = ENT.ClientProps["lamps_salon_on_r"].pos,
+	ang = ENT.ClientProps["lamps_salon_on_r"].ang,
+	nohide=true,
+	callback = function(ent,cl_ent)
+		local FakeCouple = ent:GetNW2Entity("FakeCouple")
+		if not IsValid(FakeCouple) then
+			ent:ShowHide("handrails_offside",false)
+			return
+		end
+		cl_ent:SetParent(FakeCouple) --выдача родителя.
+		
+		cl_ent:SetPos(FakeCouple:GetPos())
+		
+		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
+		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
+		end,
+}
+ENT.ClientProps["salonR"] = {
+	model = "models/metrostroi_train/81-740/salon/salon_rear.mdl",
+	pos = ENT.ClientProps["lamps_salon_on_r"].pos,
+	ang = ENT.ClientProps["lamps_salon_on_r"].ang,
+	nohide=true,
+	callback = function(ent,cl_ent)
+		local FakeCouple = ent:GetNW2Entity("FakeCouple")
+		if not IsValid(FakeCouple) then
+			ent:ShowHide("salonR",false)
+			return
+		end
+		cl_ent:SetParent(FakeCouple) --выдача родителя.
+		
+		cl_ent:SetPos(FakeCouple:GetPos())
+		
+		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
+		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
+		end,
+}
 ENT.ClientProps["handrailsR"] = {
-			model = "models/metrostroi_train/81-740/salon/handrails/handrails_r.mdl",
-			pos = Vector(0,0,0),
-			ang = Angle(0,0,0),
-			nohide=true,
-			callback = function(ent,cl_ent)
-			local FakeCouple = ent:GetNW2Entity("FakeCouple")
-			if not IsValid(FakeCouple) then
+	model = "models/metrostroi_train/81-740/salon/handrails/handrails_r.mdl",
+	pos = ENT.ClientProps["lamps_salon_on_r"].pos,
+	ang = ENT.ClientProps["lamps_salon_on_r"].ang,
+	nohide=true,
+	callback = function(ent,cl_ent)
+		local FakeCouple = ent:GetNW2Entity("FakeCouple")
+		if not IsValid(FakeCouple) then
 			ent:ShowHide("handrailsR",false)
 			return
 		end
 		cl_ent:SetParent(FakeCouple) --выдача родителя.
 		
-		cl_ent:SetPos(FakeCouple:GetPos(Vector(0, 0, 0)))
+		cl_ent:SetPos(FakeCouple:GetPos())
 		
 		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
 		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
@@ -1769,11 +1769,11 @@ function ENT:Initialize()
         self.VentState[i] = 0
         self.VentVol[i] = 0
     end
-	self.FrontBogey = self:GetNW2Entity("FrontBogey")
-	self.RearBogey = self:GetNW2Entity("RearBogey")
-	
 	self.MiddleBogey = self:GetNW2Entity("MiddleBogey")
 	self.FakeCouple = self:GetNW2Entity("FakeCouple")
+	
+	self.FrontBogey = self:GetNW2Entity("FrontBogey")
+	self.RearBogey = self:GetNW2Entity("RearBogey")
 	
 	self.FrontCouple = self:GetNW2Entity("FrontCouple")
 	self.RearCouple = self:GetNW2Entity("RearCouple")
@@ -2159,10 +2159,10 @@ end
     local door_t = self:GetPackedBool("RearDoor")
     local door_cab_m = self:Animate("door_cab_m",door_m and 1 or -0.05,0,0.235, 8, 0.05)
 
-    local door_cab_l = self:Animate("door_cab_l",door_l	/*self:GetPackedBool(159)*/ and 0.99/*self.Door3 or 0.99)*/ or 0,0,1, 4, 1)               --self:Animate("door_cab_l",door_l and 1 or -0.1,1,0.75, 2, 0.5)
+    local door_cab_l = self:Animate("door_cab_l",door_l	/*self:GetPackedBool(169)*/ and 0.99/*self.Door3 or 0.89)*/ or 0,0,1, 4, 1)               --self:Animate("door_cab_l",door_l and 1 or -0.1,1,0.75, 2, 0.5)
     local door_cab_r = self:Animate("door_cab_r",door_r	/*self:GetPackedBool(169)*/ and  0.99/*(self.Door4 or 0.99)*/ or 0,0,1, 4, 1)              --self:Animate("door_cab_r",door_r and 1 or -0.1,0,0.25, 2, 0.5)
     local door_cab_o = self:Animate("door_cab_o",door_o and 1 or -0.05,0,0.3, 8, 0.05)
-    local door_cab_t = self:Animate("door_cab_t",door_t /*self:GetPackedBool(169)*/ and  0.99/*(self.Door4 or 0.99)*/ or 0,0,1, 4, 1) 
+    local door_cab_t = self:Animate("door_cab_t",door_t and  0.5/*(self.Door4 or 0.99)*/ or 0,0,1, 4, 1) 
 
     local door1s = (door_cab_m > 0 or door_m)
     if self.Door1 ~= door1s then
