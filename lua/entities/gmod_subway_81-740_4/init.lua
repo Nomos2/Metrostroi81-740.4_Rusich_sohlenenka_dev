@@ -71,7 +71,7 @@ function ENT:Initialize()
 --------------------------------------------------------------------------------
         self.FrontCouple = self:CreateCouple(Vector(783,0,-60),Angle(0,0,0),true,"740")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-480,0,-60),Angle(0,-180,0),false,"740")
+        self.RearCouple  = self:CreateCouple(Vector(-482,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl")
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
@@ -80,6 +80,8 @@ function ENT:Initialize()
 	self:SetNW2Entity("RearBogey",self.RearBogey)
 	self:SetNW2Entity("FrontCouple",self.FrontCouple)
 	self:SetNW2Entity("RearCouple",self.RearCouple)
+	
+	self:SetNW2Entity("FakeCouple",self.FakeCouple)
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
@@ -305,15 +307,12 @@ end)
     if beb then
         ALSFreqPlomb = false
 	else
-		--Автодешифратор (взято с 81-717.6)
-		local sosi													
-		for k,v in pairs(ents.FindByClass("gmod_track_signal")) do
-		if not sosi or self:GetPos():DistToSqr(v:GetPos()) < self:GetPos():DistToSqr(sosi:GetPos()) then sosi = v end
-		end
-		if sosi and sosi.TwoToSix then 
-			self.ALSFreqBlock:TriggerInput("Set",0)
-		end
+	local blizhniy													--установка дешифратора в нужное положение
+	for k,v in pairs(ents.FindByClass("gmod_track_signal")) do
+		if not blizhniy or self:GetPos():DistToSqr(v:GetPos()) < self:GetPos():DistToSqr(blizhniy:GetPos()) then blizhniy = v end
 	end
+	if blizhniy and blizhniy.TwoToSix then self.ALSFreq:TriggerInput("Set",1) end
+end
 
 	--альтернативный способ выставления автодешифратора
 	--карты 2/6 в списке за 14.02.2021 (https://wiki.metrostroi.net/wiki/List_of_maps)
@@ -425,11 +424,11 @@ function ENT:Think()
 	
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do
-			self.Pneumatic.LeftDoorSpeed[k] = -1.5, 10
+			self.Pneumatic.LeftDoorSpeed[k] = -2, 10
 		end
 		
 		for k,v in pairs(self.Pneumatic.RightDoorSpeed) do
-			self.Pneumatic.RightDoorSpeed[k] = -1.5, 10
+			self.Pneumatic.RightDoorSpeed[k] = -2, 10
 		end
 
     self:SetPackedRatio("Speed", self.Speed)
@@ -463,10 +462,10 @@ function ENT:Think()
     self:SetLightPower(19,not self.HeadLightBroken[2] and self.Panel.Headlights1> 0,1)
 	
 	--self:SetLightPower(17,headlights>0,headlights)
-    self:SetLightPower(3,not self.HeadLightBroken[1] and self.Panel.RedLights>0,1)
-    self:SetLightPower(4,not self.HeadLightBroken[3] and self.Panel.RedLights>0,1)
-    self:SetLightPower(5,not self.HeadLightBroken[2] and self.Panel.RedLights>0,1)
-    self:SetLightPower(6,not self.HeadLightBroken[4] and self.Panel.RedLights>0,1)
+    self:SetLightPower(3,not self.HeadLightBroken[3] and self.Panel.RedLights>0,1)
+    self:SetLightPower(4,not self.HeadLightBroken[1] and self.Panel.RedLights>0,1)
+    self:SetLightPower(5,not self.HeadLightBroken[4] and self.Panel.RedLights>0,1)
+    self:SetLightPower(6,not self.HeadLightBroken[2] and self.Panel.RedLights>0,1)
 	--self:SetLightPower(20,cablights)
 	--self:SetLightPower(21,cablights)
 	--self:SetLightPower(22,cablights)
@@ -608,12 +607,10 @@ function ENT:CreateRear(pos,ang,a)
 	VAGON:Spawn()
 	VAGON:SetOwner(self:GetOwner())	
 	self.FakeCouple:SetParent(VAGON)
+	VAGON:GetPhysicsObject():SetMass(17000)
 	
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
-
-	--constraint.Weld(VAGON,self.FakeCouple,0,0,0,1)
-	--constraint.NoCollide(VAGON,self.FakeCouple,0,0)	
 	
 	---Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
@@ -621,19 +618,19 @@ function ENT:CreateRear(pos,ang,a)
 		self.RearCouple,
 		0, --bone
 		0, --bone
-		Vector(-320.2+20.8,0,-58),
+		Vector(-330.2+20.8,0,-58),
 		Vector(0,0,0),
-		1, --forcelimit
-		1, --torquelimit
+		0, --forcelimit
+		0, --torquelimit
 		-2, --xmin
 		-5, --ymin
 		-15, --zmin
 		2, --xmax
 		5, --ymax
 		15, --zmax
-		0.1, --xfric
-		0.1, --yfric
-		1, --zfric
+		1, --xfric
+		0, --yfric
+		0.5, --zfric
 		0, --rotonly
 		1 --nocollide
 	)
