@@ -32,10 +32,10 @@ function ENT:Initialize()
         self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  -тележка без сцепки в качестве родителя
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)		
 --------------------------------------------------------------------------------
-        self.FrontCouple = self:CreateCouple(Vector(609,0,-60),Angle(0,0,0),true,"717")
+        self.FrontCouple = self:CreateCouple(Vector(612,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-609,0,-60),Angle(0,-180,0),false,"740")
-		self.RearCouple:SetModel("models/metrostroi_train/bogey/metro_couple_717.mdl") --	self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl")
+        self.RearCouple  = self:CreateCouple(Vector(-612,0,-60),Angle(0,-180,0),false,"740")
+		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --	self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl")
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
 	
@@ -43,6 +43,8 @@ function ENT:Initialize()
 	self:SetNW2Entity("RearBogey",self.RearBogey)
 	self:SetNW2Entity("FrontCouple",self.FrontCouple)
 	self:SetNW2Entity("RearCouple",self.RearCouple)
+	
+	self:SetNW2Entity("FakeCouple",self.FakeCouple)
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
@@ -170,11 +172,11 @@ function ENT:Think()
 	
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do
-			self.Pneumatic.LeftDoorSpeed[k] = -1.5, 12
+			self.Pneumatic.LeftDoorSpeed[k] = -2, 12
 		end
 		
 		for k,v in pairs(self.Pneumatic.RightDoorSpeed) do
-			self.Pneumatic.RightDoorSpeed[k] = -1.5, 12
+			self.Pneumatic.RightDoorSpeed[k] = -2, 12
 		end
 		
     -- получение всяких значений
@@ -261,6 +263,7 @@ function ENT:CreateRear1(pos,ang,a)
 	VAGON1:Spawn()
 	VAGON1:SetOwner(self:GetOwner())	
 	self.FakeCouple:SetParent(VAGON1)
+	VAGON1:GetPhysicsObject():SetMass(17000)
 	--Привязка интерьера к вагону, увы, багается(.		
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON1:CPPISetOwner(self:CPPIGetOwner()) end	
@@ -271,19 +274,19 @@ function ENT:CreateRear1(pos,ang,a)
 		self.RearCouple,
 		0, --bone
 		0, --bone
-		Vector(-310.2+20.8,0,-58),
+		Vector(-335.2+20.8,0,-60),
 		Vector(0,0,0),
-		1, --forcelimit
-		1, --torquelimit
+		0, --forcelimit
+		0, --torquelimit
 		-2, --xmin
 		-5, --ymin
 		-15, --zmin
 		2, --xmax
 		5, --ymax
 		15, --zmax
-		0.1, --xfric
-		0.1, --yfric
-		1, --zfric
+		1, --xfric
+		0, --yfric
+		0.5, --zfric
 		0, --rotonly
 		1 --nocollide
 	)
