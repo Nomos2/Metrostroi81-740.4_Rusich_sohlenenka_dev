@@ -609,21 +609,21 @@ function ENT:CreateRear(pos,ang,a)
 		self.RearCouple,
 		0, --bone
 		0, --bone
-		Vector(-330.2+20.8,0,-58),
+		Vector(-330.2+20.8,0,-60),
 		Vector(0,0,0),
 		0, --forcelimit
 		0, --torquelimit
 		
-		-2, --xmin
+		-5, --xmin
 		-5, --ymin
 		-15, --zmin
 		
-		2, --xmax
+		5, --xmax
 		5, --ymax
 		15, --zmax
 		
-		0, --xfric
-		5, --yfric
+		1.5, --xfric
+		0, --yfric
 		0.3, --zfric
 		0, --rotonly
 		1 --nocollide
