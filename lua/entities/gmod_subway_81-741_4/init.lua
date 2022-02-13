@@ -274,19 +274,22 @@ function ENT:CreateRear1(pos,ang,a)
 		self.RearCouple,
 		0, --bone
 		0, --bone
-		Vector(-335.2+20.8,0,-60),
+		Vector(-330.2+20.8,0,-58),
 		Vector(0,0,0),
 		0, --forcelimit
 		0, --torquelimit
+		
 		-2, --xmin
 		-5, --ymin
 		-15, --zmin
+		
 		2, --xmax
 		5, --ymax
 		15, --zmax
-		1, --xfric
+		
+		5, --xfric
 		0, --yfric
-		0.5, --zfric
+		0.3, --zfric
 		0, --rotonly
 		1 --nocollide
 	)
@@ -301,12 +304,12 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-100, --ymin
+		-50, --ymin
 		-5, --xmin
 		-50, --zmin
 		
-		100, --ymax
-		5, --xmax
+		50, --ymax
+		5, --xmax --20
 		50, --zmax
 		
 		0, --yfric
@@ -325,11 +328,11 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-100, --ymin
+		-50, --ymin
 		-5, --xmin
 		-50, --zmin
 		
-		100, --ymax
+		50, --ymax
 		5, --xmax --20
 		50, --zmax
 		
