@@ -622,8 +622,8 @@ function ENT:CreateRear(pos,ang,a)
 		5, --ymax
 		15, --zmax
 		
-		5, --xfric
-		0, --yfric
+		0, --xfric
+		5, --yfric
 		0.3, --zfric
 		0, --rotonly
 		1 --nocollide
