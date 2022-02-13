@@ -225,24 +225,15 @@ end)
 		[5] = { "light",Vector(802, 40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
 		[6] = { "light",Vector(802, -40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
         --освещение в кабине
-        [10] = { "dynamiclight",    Vector( 815, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
+        [10] = { "dynamiclight",    Vector( 755, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
         -- Interior
-        --[11] = { "dynamiclight",  Vector( 200, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400 , fov=180,farz = 128
-        --[15] = { "dynamiclight",    Vector(150, 0, 30), Angle(0,0,30), Color(238,238,197), brightness = 2.95, distance = 800, fov=220,farz = 200 },
-        --[16] = { "dynamiclight",    Vector(-175, 0, 30), Angle(0,0,30), Color(238,238,197), brightness = 2.95, distance = 800, fov=220,farz = 200 },
-        --[17] = { "dynamiclight",    Vector(-175, 0, 30), Angle(0,0,30), Color(238,238,197), brightness = 2.95, distance = 800, fov=220,farz = 200 },
-		--[14] = { "dynamiclight",    Vector(0, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 400 , fov=180,farz = 128 },
-		[11] = { "dynamiclight",    Vector( -150, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-		[12] = { "dynamiclight",    Vector(250, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [13] = { "dynamiclight",    Vector( 40, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+		[11] = { "dynamiclight",    Vector(190, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+		[12] = { "dynamiclight",    Vector(675, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+        [13] = { "dynamiclight",    Vector(420, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
 		
-		
-		[14] = { "dynamiclight",    Vector( 650, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-		[15] = { "dynamiclight",    Vector(650, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [16] = { "dynamiclight",    Vector( 740, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
-        --[13] = { "dynamiclight",  Vector(-200, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400 , fov=180,farz = 128 },
-        --[11] = { "dynamiclight",  Vector( 100, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400 , fov=180,farz = 128 },
-        --[12] = { "dynamiclight",  Vector( 100, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400, fov=180,farz = 128 },
+		[14] = { "dynamiclight",    Vector( 80, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+		[15] = { "dynamiclight",    Vector(-70, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+        [16] = { "dynamiclight",    Vector( -510, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
     }
     self.InteractionZones = {
         {   Pos = Vector(476, 64, 30),
@@ -622,19 +613,22 @@ function ENT:CreateRear(pos,ang,a)
 		Vector(0,0,0),
 		0, --forcelimit
 		0, --torquelimit
+		
 		-2, --xmin
 		-5, --ymin
 		-15, --zmin
+		
 		2, --xmax
 		5, --ymax
 		15, --zmax
-		1, --xfric
+		
+		5, --xfric
 		0, --yfric
-		0.5, --zfric
+		0.3, --zfric
 		0, --rotonly
 		1 --nocollide
 	)
-	--Крепление вагона к средней тележке.
+--Крепление вагона к средней тележке.
 	constraint.AdvBallsocket( 
 		self.MiddleBogey,
 		VAGON,
@@ -645,12 +639,12 @@ function ENT:CreateRear(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-100, --ymin
+		-50, --ymin
 		-5, --xmin
 		-50, --zmin
 		
-		100, --ymax
-		5, --xmax
+		50, --ymax
+		5, --xmax --20
 		50, --zmax
 		
 		0, --yfric
@@ -669,12 +663,12 @@ function ENT:CreateRear(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-100, --ymin
+		-50, --ymin
 		-5, --xmin
 		-50, --zmin
 		
-		100, --ymax
-		5, --xmax
+		50, --ymax
+		5, --xmax --20
 		50, --zmax
 		
 		0, --yfric
