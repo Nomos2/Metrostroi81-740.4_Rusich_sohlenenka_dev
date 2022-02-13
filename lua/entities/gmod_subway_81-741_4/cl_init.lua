@@ -330,7 +330,7 @@ ENT.ClientProps["handrails_offside"] = {
 		cl_ent:SetPos(FakeCouple:GetPos())
 		
 		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
+		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
 		end,
 }
 ENT.ClientProps["lamps_salon_on1"] = {
@@ -384,7 +384,7 @@ ENT.ClientProps["handrails1"] = {
 		end
 		cl_ent:SetParent(FakeCouple) --выдача родителя.
 		
-		cl_ent:SetPos(FakeCouple:GetPos(Vector(0, 0, 0)))
+		cl_ent:SetPos(FakeCouple:GetPos())
 		
 		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
 		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
@@ -407,7 +407,7 @@ ENT.ClientProps["salon1"] = {
 		cl_ent:SetPos(FakeCouple:GetPos())
 		
 		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
+		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
 		end,
 }
 --[[ENT.ButtonMap["Tickers_rear"] = {
