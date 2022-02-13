@@ -133,20 +133,19 @@ end)
             Pos = Vector(-177, -66, -50), Radius = 20,
         },
     }
-    -- фары
     self.Lights = {
         -- Interior
         --[11] = { "dynamiclight",  Vector( 200, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400 , fov=180,farz = 128
-        [15] = { "dynamiclight",    Vector(230, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
-        [16] = { "dynamiclight",    Vector(0, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
-        [17] = { "dynamiclight",    Vector(-250, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+        [15] = { "dynamiclight",    Vector(220, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+        [16] = { "dynamiclight",    Vector(55, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+        [17] = { "dynamiclight",    Vector(640, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
         --[13] = { "dynamiclight",  Vector(-200, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400 , fov=180,farz = 128 },
         --[11] = { "dynamiclight",  Vector( 100, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400 , fov=180,farz = 128 },
         --[12] = { "dynamiclight",  Vector( 100, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400, fov=180,farz = 128 },
 		
-		[18] = { "dynamiclight",    Vector(630, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
-        [19] = { "dynamiclight",    Vector(330, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
-        [20] = { "dynamiclight",    Vector(-650, 0, 30), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+		[18] = { "dynamiclight",    Vector(-65, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+        [19] = { "dynamiclight",    Vector(-265, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+        [20] = { "dynamiclight",    Vector(-635, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
     }
     self.FrontDoor = false
     self.RearDoor = false
@@ -287,8 +286,8 @@ function ENT:CreateRear1(pos,ang,a)
 		5, --ymax
 		15, --zmax
 		
-		5, --xfric
-		0, --yfric
+		0, --xfric
+		5, --yfric
 		0.3, --zfric
 		0, --rotonly
 		1 --nocollide
