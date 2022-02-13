@@ -681,7 +681,7 @@ ENT.ButtonMap["BackVent"] = {
 }
 
 ENT.ButtonMap["BackPPZ"] = {
-    pos = Vector(735.12,22,35), --446 -- 14 -- -0,5
+    pos = Vector(735.52,22,35), --446 -- 14 -- -0,5
     ang = Angle(0,90,90),
     width = 400,
     height = 310,
@@ -723,7 +723,7 @@ for k,buttbl in ipairs(ENT.ButtonMap["BackPPZ"].buttons) do
     }
 end
 ENT.ButtonMap["PVZ"] = {
-    pos = Vector(735.12,25,-14), --446 -- 14 -- -0,5
+    pos = Vector(735.52,25,-14), --446 -- 14 -- -0,5
     ang = Angle(0,90,90),
     width = 330,
     height = 160,
@@ -777,7 +777,7 @@ for k,buttbl in ipairs(ENT.ButtonMap["PVZ"].buttons) do
 end
 
 ENT.ButtonMap["BackDown"] = {
-    pos = Vector(735.12,23,12), --446 -- 14 -- -0,5
+    pos = Vector(735.52,23,12), --446 -- 14 -- -0,5
     ang = Angle(0,90,90),
     width = 400,
     height = 350,
@@ -1278,7 +1278,7 @@ ENT.ClientProps["amp_engine_case"] = {
 ---Доп. модели
 ENT.ClientProps["PPZpanel"] = {
     model = "models/metrostroi_train/81-740/cabine/electric/paneltex.mdl",
-    pos = Vector(735.1,50,50),
+    pos = Vector(735.5,50,50),
     ang = Angle(180,270,0),
     scale = 1,
     hide = 1,
@@ -1419,8 +1419,49 @@ ENT.ClientProps["Test4"] = {
     pos = Vector(160,0,-50),
     ang = Angle(0,0,0),
     hideseat = 0.2,
+}
+ENT.ClientProps["Test5"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(755, 0, 60),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test6"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(190, 0, 60),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test7"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(675, 0, 60),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test8"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(420, 0, 60),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test9"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(80, 0, 60),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test10"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(-70, 0, 60),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test10"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(-510, 0, 60),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
 }]]
-
 
 ENT.ClientProps["KRO"] = {
     model = "models/metrostroi_train/81-740/cabine/pult/tum_r.mdl",
@@ -1631,7 +1672,7 @@ ENT.ClientProps["handrails_offside"] = {
 		cl_ent:SetPos(FakeCouple:GetPos())
 		
 		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
+		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
 		end,
 }
 ENT.ClientProps["salonR"] = {
@@ -1650,7 +1691,7 @@ ENT.ClientProps["salonR"] = {
 		cl_ent:SetPos(FakeCouple:GetPos())
 		
 		local ang = FakeCouple:GetAngles() --поворот XYZ (настраивается через верхние строки)
-		cl_ent:SetAngles(Angle(ang.x, -180+ang.y, ang.z))
+		cl_ent:SetAngles(Angle(ang.x, ang.y, ang.z))
 		end,
 }
 ENT.ClientProps["handrailsR"] = {
