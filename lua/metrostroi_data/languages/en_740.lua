@@ -112,6 +112,7 @@ Common.740.MK				= Switching on the motor-compressor
 Common.740.VB				= WB: Turning on the batteries
 Common.740.ALSFreqBlock-	= ALS decoder switch (Counter-Clockwise)
 Common.740.ALSFreqBlock+	= ALS decoder switch (Clockwise)
+Common.740.BRU				    = BRU
 
 Common.740.IGLA.Button1		= IGLA: First button
 Common.740.IGLA.Button2		= IGLA: Second button
@@ -442,9 +443,7 @@ Entities.gmod_subway_81-741_4.Buttons.RearPneumatic.RearBrakeLineIsolationToggle
 
 #Spawner:
 Entities.gmod_subway_81-740_4.Spawner.Announcer.Name          = @[Common.Spawner.Announcer]
-
 Entities.gmod_subway_81-740_4.Spawner.SpawnMode.Name          = @[Common.Spawner.SpawnMode]
-
 Entities.gmod_subway_81-740_4.Spawner.Antenna.Name	          = Antenna
 
 Entities.gmod_subway_81-740_4.Spawner.SpawnMode.1             = @[Common.Spawner.SpawnMode.Full]
