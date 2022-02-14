@@ -112,6 +112,7 @@ Common.740.MK				= Включение мотор-компрессора
 Common.740.VB				= ВБ: Включение батарей
 Common.740.ALSFreqBlock-	= Переключатель режимов дешифратора
 Common.740.ALSFreqBlock+	= Переключатель режимов дешифратора
+Common.740.BRU				    = БРУ
 
 Common.740.IGLA.Button1		= ИГЛА: Первая кнопка
 Common.740.IGLA.Button2		= ИГЛА: Вторая кнопка
