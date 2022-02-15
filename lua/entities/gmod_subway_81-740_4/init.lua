@@ -609,7 +609,7 @@ function ENT:CreateRear(pos,ang,a)
 		self.RearCouple,
 		0, --bone
 		0, --bone
-		Vector(-330.2+20.8,0,-68),
+		Vector(-330.2+20.8,0,-60),
 		Vector(0,0,0),
 		1, --forcelimit
 		1, --torquelimit
@@ -631,18 +631,18 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(20,5,0), --Vector(70,0,90)
-		Vector(20,50,0), --Vector(80,0,90)
+		Vector(0,5,0), --Vector(70,0,90)
+		Vector(0,50,0), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --ymin
-		-5, --xmin
+		-0.5, --xmin
 		-50, --zmin
+		-50, --ymin
 		
+		0.5, --xmax
+		50, --zmax --20
 		50, --ymax
-		5, --xmax --20
-		50, --zmax
 		
 		0, --yfric
 		0, --zfric
@@ -655,18 +655,18 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(20,-5,0), --Vector(70,0,90)
-		Vector(20,-50,0), --Vector(80,0,90)
+		Vector(0,-5,0), --Vector(70,0,90)
+		Vector(0,-50,0), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --ymin
-		-5, --xmin
+		-0.5, --xmin
 		-50, --zmin
+		-50, --xmin
 		
-		50, --ymax
-		5, --xmax --20
-		50, --zmax
+		0.5, --xmin
+		50, --zmin
+		50, --xmin
 		
 		0, --yfric
 		0, --zfric
