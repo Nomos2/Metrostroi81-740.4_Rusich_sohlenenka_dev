@@ -143,7 +143,7 @@ end)
         --[11] = { "dynamiclight",  Vector( 100, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400 , fov=180,farz = 128 },
         --[12] = { "dynamiclight",  Vector( 100, 0, 10), Angle(0,0,0), Color(255,175,50), brightness = 3, distance = 400, fov=180,farz = 128 },
 		
-	[18] = { "dynamiclight",    Vector(-65, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+		[18] = { "dynamiclight",    Vector(-65, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
         [19] = { "dynamiclight",    Vector(-265, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
         [20] = { "dynamiclight",    Vector(-635, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
     }
@@ -273,19 +273,22 @@ function ENT:CreateRear1(pos,ang,a)
 		self.RearCouple,
 		0, --bone
 		0, --bone
-		Vector(-330.2+20.8,0,-68),
+		Vector(-330.2+20.8,0,-60),
 		Vector(0,0,0),
-		1, --forcelimit
-		1, --torquelimit
-		-2, --xmin
-		-2, --ymin
+		0, --forcelimit
+		0, --torquelimit
+		
+		-5, --xmin
+		-5, --ymin
 		-15, --zmin
-		2, --xmax
-		2, --ymax
+		
+		5, --xmax
+		5, --ymax
 		15, --zmax
-		0.1, --xfric
-		0.1, --yfric
-		1, --zfric
+		
+		1.5, --xfric
+		0, --yfric
+		0.3, --zfric
 		0, --rotonly
 		1 --nocollide
 	)
@@ -295,18 +298,18 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(20,5,0), --Vector(70,0,90)
-		Vector(20,50,0), --Vector(80,0,90)
+		Vector(0,5,0), --Vector(70,0,90)
+		Vector(0,50,0), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --ymin
-		-5, --xmin
-		-50, --zmin
+		-0.5, --xmin   --	-50, --ymin
+		-50, --zmin  --  	-5, --xmin  
+		-50, --ymin --  	-50, --zmin  
 		
-		50, --ymax
-		5, --xmax --20
-		50, --zmax
+		0.5, --xmin   --		50, --ymin
+		50, --zmin    --  	5, --xmin  
+		50, --ymin   --  	50, --zmin  
 		
 		0, --yfric
 		0, --zfric
@@ -319,18 +322,18 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(20,-5,0), --Vector(70,0,90)
-		Vector(20,-50,0), --Vector(80,0,90)
+		Vector(0,-5,0), --Vector(70,0,90)
+		Vector(0,-50,0), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --ymin
-		-5, --xmin
-		-50, --zmin
+		-0.5, --xmin   --	-50, --ymin
+		-50, --zmin  --  	-5, --xmin  
+		-50, --ymin --  	-50, --zmin  
 		
-		50, --ymax
-		5, --xmax --20
-		50, --zmax
+		0.5, --xmin   --		50, --ymin
+		50, --zmin    --  	5, --xmin  
+		50, --ymin   --  	50, --zmin 
 		
 		0, --yfric
 		0, --zfric
