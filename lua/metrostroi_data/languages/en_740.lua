@@ -112,7 +112,7 @@ Common.740.MK				= Switching on the motor-compressor
 Common.740.VB				= WB: Turning on the batteries
 Common.740.ALSFreqBlock-	= ALS decoder switch (Counter-Clockwise)
 Common.740.ALSFreqBlock+	= ALS decoder switch (Clockwise)
-Common.740.BRU				    = BRU
+Common.740.BRU				    = Switchgear unit
 
 Common.740.IGLA.Button1		= IGLA: First button
 Common.740.IGLA.Button2		= IGLA: Second button
