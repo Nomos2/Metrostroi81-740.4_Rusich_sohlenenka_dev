@@ -275,20 +275,17 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --bone
 		Vector(-330.2+20.8,0,-60),
 		Vector(0,0,0),
-		0, --forcelimit
-		0, --torquelimit
-		
-		-5, --xmin
-		-5, --ymin
+		1, --forcelimit
+		1, --torquelimit
+		-2, --xmin
+		-2, --ymin
 		-15, --zmin
-		
-		5, --xmax
-		5, --ymax
+		2, --xmax
+		2, --ymax
 		15, --zmax
-		
-		1.5, --xfric
-		0, --yfric
-		0.3, --zfric
+		0.1, --xfric
+		0.1, --yfric
+		1, --zfric
 		0, --rotonly
 		1 --nocollide
 	)
@@ -303,13 +300,13 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-0.5, --xmin   --	-50, --ymin
-		-50, --zmin  --  	-5, --xmin  
-		-50, --ymin --  	-50, --zmin  
+		-100, --zmin   --	-50, --ymin
+		-0.5, --xmin  --  	-5, --xmin  
+		-100, --ymin --  	-50, --zmin  
 		
-		0.5, --xmin   --		50, --ymin
-		50, --zmin    --  	5, --xmin  
-		50, --ymin   --  	50, --zmin  
+		100, --zmax   --		50, --ymin
+		0.5, --xmax    --  	5, --xmin  
+		100, --ymax  --  	50, --zmin 
 		
 		0, --yfric
 		0, --zfric
@@ -327,13 +324,13 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-0.5, --xmin   --	-50, --ymin
-		-50, --zmin  --  	-5, --xmin  
-		-50, --ymin --  	-50, --zmin  
+		-100, --zmin   --	-50, --ymin
+		-0.5, --xmin  --  	-5, --xmin  
+		-100, --ymin --  	-50, --zmin  
 		
-		0.5, --xmin   --		50, --ymin
-		50, --zmin    --  	5, --xmin  
-		50, --ymin   --  	50, --zmin 
+		100, --zmax   --		50, --ymin
+		0.5, --xmax    --  	5, --xmin  
+		100, --ymax  --  	50, --zmin 
 		
 		0, --yfric
 		0, --zfric
@@ -354,10 +351,10 @@ function ENT:CreateRear1(pos,ang,a)
 		
 		0, --xmin
 		0, --ymin
-		-90, --zmin
+		-180, --zmin
 		0, --xmax
 		0, --ymax
-		90, --zmax
+		180, --zmax
 		
 		0, --xfric
 		0, --yfric
