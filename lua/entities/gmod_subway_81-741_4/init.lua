@@ -32,9 +32,9 @@ function ENT:Initialize()
         self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  -тележка без сцепки в качестве родителя
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)		
 --------------------------------------------------------------------------------
-        self.FrontCouple = self:CreateCouple(Vector(612,0,-60),Angle(0,0,0),true,"717")
+        self.FrontCouple = self:CreateCouple(Vector(610,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-612,0,-60),Angle(0,-180,0),false,"740")
+        self.RearCouple  = self:CreateCouple(Vector(-610,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --	self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl")
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
@@ -300,13 +300,13 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-100, --zmin   --	-50, --ymin
-		-0.5, --xmin  --  	-5, --xmin  
-		-100, --ymin --  	-50, --zmin  
+		-50, --xmin   --	-50, --ymin
+		-0.5, --ymin  --  	-5, --xmin  
+		-50, --zmin --  	-50, --zmin  
 		
-		100, --zmax   --		50, --ymin
-		0.5, --xmax    --  	5, --xmin  
-		100, --ymax  --  	50, --zmin 
+		50, --xmin   --		50, --ymin
+		0.5, --ymin  --  	5, --xmin  
+		50, --zmin --  		50, --zmin  
 		
 		0, --yfric
 		0, --zfric
@@ -324,13 +324,13 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-100, --zmin   --	-50, --ymin
-		-0.5, --xmin  --  	-5, --xmin  
-		-100, --ymin --  	-50, --zmin  
+		-50, --xmin   --	-50, --ymin
+		-0.5, --ymin  --  	-5, --xmin  
+		-50, --zmin --  	-50, --zmin  
 		
-		100, --zmax   --		50, --ymin
-		0.5, --xmax    --  	5, --xmin  
-		100, --ymax  --  	50, --zmin 
+		50, --xmin   --		50, --ymin
+		0.5, --ymin  --  	5, --xmin  
+		50, --zmin --  		50, --zmin  
 		
 		0, --yfric
 		0, --zfric
