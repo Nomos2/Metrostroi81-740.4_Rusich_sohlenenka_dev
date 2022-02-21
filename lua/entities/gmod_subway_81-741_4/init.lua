@@ -262,7 +262,7 @@ function ENT:CreateRear1(pos,ang,a)
 	VAGON1:Spawn()
 	VAGON1:SetOwner(self:GetOwner())	
 	self.FakeCouple:SetParent(VAGON1)
-	VAGON1:GetPhysicsObject():SetMass(17000)
+	VAGON1:GetPhysicsObject():SetMass(5000)
 	--Привязка интерьера к вагону, увы, багается(.		
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON1:CPPISetOwner(self:CPPIGetOwner()) end	
