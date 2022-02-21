@@ -598,7 +598,7 @@ function ENT:CreateRear(pos,ang,a)
 	VAGON:Spawn()
 	VAGON:SetOwner(self:GetOwner())	
 	self.FakeCouple:SetParent(VAGON)
-	VAGON:GetPhysicsObject():SetMass(5000)
+	VAGON:GetPhysicsObject():SetMass(10000)
 	
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
