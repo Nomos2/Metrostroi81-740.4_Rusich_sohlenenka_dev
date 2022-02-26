@@ -65,9 +65,10 @@ function ENT:Initialize()
 		
 	--симуляция интерьера начало.
 	self.FakeCouple = self:CreateCouple(Vector(-130,0,-75),Angle(0,0,0,false,"740F"))
+	self.FakeCouple:SetModel ("models/hunter/plates/plate.mdl")
+	self.FakeCouple:PhysicsInit(SOLID_VPHYSICS)
 	self:SetNW2Entity("FakeCouple",self.FakeCouple)
 	self.FakeCouple:SetRenderMode(RENDERMODE_NONE)
-	self.FakeCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.FakeCouple:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	self.FakeCouple:Spawn()
 	local FakeCouplePhys = self.FakeCouple:GetPhysicsObject() 
@@ -77,6 +78,7 @@ function ENT:Initialize()
 	self.FakeCouple.PhysgunDisabled = true
 	self.FakeCouple.m_tblToolsAllowed = { "none" }
 	self.FakeCouple:SetColor(Color(0,0,0,0))
+	self.FakeCouple.EKKDisconnected = true
 	--симуляция интерьера конец.
 		self.Rear1 = self:CreateRear1(Vector(-325,0,0),Angle(0,0,0)) --вагон
 end)
@@ -273,19 +275,23 @@ function ENT:CreateRear1(pos,ang,a)
 		self.RearCouple,
 		0, --bone
 		0, --bone
-		Vector(-330.2+20.8,0,-60),
+		Vector(-320.2+20.8,0,-60),
 		Vector(0,0,0),
 		1, --forcelimit
 		1, --torquelimit
+		
 		-2, --xmin
 		-2, --ymin
 		-15, --zmin
+		
 		2, --xmax
 		2, --ymax
 		15, --zmax
+		
 		0.1, --xfric
 		0.1, --yfric
 		1, --zfric
+		
 		0, --rotonly
 		1 --nocollide
 	)
@@ -295,18 +301,18 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(0,5,0), --Vector(70,0,90)
-		Vector(0,5,0), --Vector(80,0,90)
+		Vector(0,3,30), --Vector(70,0,90)
+		Vector(0,3,20), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --xmin   --	-50, --ymin
-		0, --ymin  --  	-5, --xmin  
-		-100, --zmin --  	-50, --zmin  
+		-50, --xmin --высота
+		-0.1, --ymin  --поворот влево/вправо
+		-100, --zmin
 		
-		50, --xmax   --		50, --ymin
-		0, --ymax  --  	5, --xmin  
-		100, --zmax --  		50, --zmin  
+		50, --xmax --высота
+		0.1, --ymax --20  --поворот влево/вправо
+		100, --zmax
 		
 		0, --yfric
 		0, --zfric
@@ -319,17 +325,17 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(0,-5,0), --Vector(70,0,90)
-		Vector(0,-5,0), --Vector(80,0,90)
+		Vector(0,-3,30), --Vector(70,0,90)
+		Vector(0,-3,20), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
 		-50, --xmin --высота
-		0, --ymin  --поворот влево/вправо
+		-0.1, --ymin  --поворот влево/вправо
 		-100, --zmin
 		
 		50, --xmax --высота
-		0, --ymax --20  --поворот влево/вправо
+		0.1, --ymax --20  --поворот влево/вправо
 		100, --zmax
 		
 		0, --yfric
