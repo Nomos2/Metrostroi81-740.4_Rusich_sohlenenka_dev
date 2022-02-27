@@ -116,6 +116,7 @@ function ENT:Initialize()
 	self.FakeCouple.m_tblToolsAllowed = { "none" }
 	self.FakeCouple:SetColor(Color(0,0,0,0))
 	self.FakeCouple.EKKDisconnected = true
+	self.FakeCouple:PhysicsDestroy()
 	--симуляция интерьера конец.
 		self.Rear = self:CreateRear(Vector(-195,0,0),Angle(0,0,0)) --вагон
 end)
@@ -637,8 +638,8 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(0,3,30), --Vector(70,0,90)
-		Vector(0,3,20), --Vector(80,0,90)
+		Vector(0,5,0), --Vector(70,0,90)
+		Vector(0,50,50), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -661,8 +662,8 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(0,-3,30), --Vector(70,0,90)
-		Vector(0,-3,20), --Vector(80,0,90)
+		Vector(0,-5,0), --Vector(70,0,90)
+		Vector(0,-50,50), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
