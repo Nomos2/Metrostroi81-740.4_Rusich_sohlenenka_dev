@@ -269,6 +269,8 @@ function ENT:CreateRear1(pos,ang,a)
 	--Привязка интерьера к вагону, увы, багается(.		
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON1:CPPISetOwner(self:CPPIGetOwner()) end	
+	
+	self:SetNW2Entity("VAGON1",VAGON1)
 
 	--Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
@@ -302,8 +304,8 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(0,5,0), --Vector(70,0,90)
-		Vector(0,50,50), --Vector(80,0,90)
+		Vector(0,-10,90), --Vector(70,0,90)
+		Vector(0,10,90), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -326,8 +328,8 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(0,-5,0), --Vector(70,0,90)
-		Vector(0,-50,50), --Vector(80,0,90)
+		Vector(0,10,90), --Vector(70,0,90)
+		Vector(0,-10,90), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -351,8 +353,8 @@ function ENT:CreateRear1(pos,ang,a)
 	self.RearBogey,
 		0, --bone
 		0, --bone
-		Vector(-205,0,90),
-		Vector(205,0,90),
+		Vector(-200,0,70),
+		Vector(200,0,70),
 		0, --forcelimit
 		0, --torquelimit
 		
