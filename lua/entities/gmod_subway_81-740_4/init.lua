@@ -603,6 +603,8 @@ function ENT:CreateRear(pos,ang,a)
 	self.FakeCouple:SetParent(VAGON)
 	VAGON:GetPhysicsObject():SetMass(10000)
 	
+	self:SetNW2Entity("VAGON",VAGON)
+	
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
 	
@@ -638,8 +640,8 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(0,5,0), --Vector(70,0,90)
-		Vector(0,50,50), --Vector(80,0,90)
+		Vector(0,-10,90), --Vector(70,0,90)
+		Vector(0,10,90), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -662,8 +664,8 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(0,-5,0), --Vector(70,0,90)
-		Vector(0,-50,50), --Vector(80,0,90)
+		Vector(0,10,90), --Vector(70,0,90)
+		Vector(0,-10,90), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -687,8 +689,8 @@ function ENT:CreateRear(pos,ang,a)
 	self.RearBogey,
 		0, --bone
 		0, --bone
-		Vector(-205,0,90),
-		Vector(205,0,90),
+		Vector(-200,0,70),
+		Vector(200,0,70),
 		0, --forcelimit
 		0, --torquelimit
 		
