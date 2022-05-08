@@ -80,6 +80,7 @@ function ENT:Initialize()
 	self:SetNW2Entity("RearBogey",self.RearBogey)
 	self:SetNW2Entity("FrontCouple",self.FrontCouple)
 	self:SetNW2Entity("RearCouple",self.RearCouple)
+	self:SetNW2Entity("VAGON",VAGON)
 	
 	self:SetNW2Entity("FakeCouple",self.FakeCouple)
 	
@@ -640,8 +641,8 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(0,-10,90), --Vector(70,0,90)
-		Vector(0,10,90), --Vector(80,0,90)
+		Vector(60,5,70), --Vector(70,0,90)
+		Vector(0,5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -664,8 +665,8 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(0,10,90), --Vector(70,0,90)
-		Vector(0,-10,90), --Vector(80,0,90)
+		Vector(60,-5,70), --Vector(70,0,90)
+		Vector(0,-5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
