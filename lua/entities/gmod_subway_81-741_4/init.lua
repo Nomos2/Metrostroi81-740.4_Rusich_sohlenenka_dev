@@ -304,8 +304,8 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(0,-10,90), --Vector(70,0,90)
-		Vector(0,10,90), --Vector(80,0,90)
+		Vector(60,5,70), --Vector(70,0,90)
+		Vector(0,5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -328,8 +328,8 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON1,
 		0, --bone
 		0, --bone
-		Vector(0,10,90), --Vector(70,0,90)
-		Vector(0,-10,90), --Vector(80,0,90)
+		Vector(60,-5,70), --Vector(70,0,90)
+		Vector(0,-5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
