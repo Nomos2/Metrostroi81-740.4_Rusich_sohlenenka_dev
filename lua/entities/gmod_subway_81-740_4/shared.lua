@@ -18,7 +18,7 @@ function ENT:PassengerCapacity()
 end
 
 function ENT:GetStandingArea()
-    return Vector(550,-10,-45), Vector(150,-10,-45), self.VAGON
+    return Vector(550,-10,-45), Vector(150,-10,-45)
 end
 local function GetDoorPosition(i,k)	--Правые двери			--Левые двери
 	return Vector(652.5  - 35.0*k     -  338.8*i, -67.5*(1-2*k), 4.3)
@@ -430,8 +430,12 @@ ENT.Spawner = {
 	model = {
 	"models/metrostroi_train/81-740/body/81-740_4_defualt_mos_front.mdl",
 	"models/metrostroi_train/81-740/salon/salon.mdl",
+	{"models/metrostroi_train/81-740/salon/handrails/handrails.mdl",pos = Vector(370,-5,0), ang=Angle(0,0,0)},
+	
 	{"models/metrostroi_train/81-741/body/81-741_4_defualt_mos_front.mdl",pos = Vector(135,0,0), ang=Angle(0,-180,0)},
 	{"models/metrostroi_train/81-740/body/Garm.mdl",pos = Vector(470,0,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-741/salon/salon.mdl",pos = Vector(-185,0,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-741/salon/handrails/handrails.mdl",pos = Vector(-185,0,0), ang=Angle(0,0,0)},
 	},
 	interim = "gmod_subway_81-741_4",
 	postfunc = function(trains,WagNum)
