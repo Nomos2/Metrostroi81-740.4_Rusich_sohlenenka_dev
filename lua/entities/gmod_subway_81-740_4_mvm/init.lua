@@ -701,11 +701,11 @@ function ENT:CreateRear(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --xmin --высота
+		-500, --xmin --высота
 		-0.2, --ymin  --поворот влево/вправо
 		-100, --zmin
 		
-		50, --xmax --высота
+		500, --xmax --высота
 		0.2, --ymax --20  --поворот влево/вправо
 		100, --zmax
 		
@@ -725,11 +725,11 @@ function ENT:CreateRear(pos,ang,a)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --xmin --высота
+		-500, --xmin --высота
 		-0.2, --ymin  --поворот влево/вправо
 		-100, --zmin
 		
-		50, --xmax --высота
+		500, --xmax --высота
 		0.2, --ymax --20  --поворот влево/вправо
 		100, --zmax
 		
