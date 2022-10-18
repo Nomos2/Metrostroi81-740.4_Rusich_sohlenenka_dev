@@ -177,7 +177,6 @@ if CLIENT then
 	end
 end
 end
-
 --mezhvag
 hook.Add("Metrostroi.AddMezhvagToSpawner","81_740_stock",function(tab)
 	tab["gmod_subway_81-740_4_mvm"] = {nil,nil,0}
