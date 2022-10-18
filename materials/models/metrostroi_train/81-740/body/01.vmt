@@ -1,7 +1,6 @@
 "VertexLitGeneric"
 {
 	"$basetexture" "models/metrostroi_train/81-740/body/01"
-	"$basetexture" "models/metrostroi_train/81-741/body/01"
 	"$model" "1"
 	"$surfaceprop" "metalvehicle"
 	
@@ -21,20 +20,4 @@
 	"$rimlightexponent" "1"
 	"$rimlightboost" "3"
 	"$rimmask" "1"
-
-	$detail "models/metrostroi_train/81-717/717_decal"
-	$detailblendmode 2
-	$detailscale 1
-
-	"Proxies"
-	{
-		TrainBodyColor
-		{
-			resultVar	$color2
-		}
-		TrainBodyDecal
-		{
-			resultVar	$detailblendfactor
-		}
-	}
 }
