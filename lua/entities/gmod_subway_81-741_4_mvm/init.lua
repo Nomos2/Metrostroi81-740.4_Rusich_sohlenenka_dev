@@ -29,13 +29,13 @@ function ENT:Initialize()
     -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740")
 --------------------------------------------------------------------------------
-        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  -тележка без сцепки в качестве родителя
+        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)		
 --------------------------------------------------------------------------------
-        self.FrontCouple = self:CreateCouple(Vector(610,0,-60),Angle(0,0,0),true,"717")
+        self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-610,0,-60),Angle(0,-180,0),false,"740")
-		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --	self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl")
+        self.RearCouple  = self:CreateCouple(Vector(-609,0,-60),Angle(0,-180,0),false,"740")
+		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
 	
@@ -87,7 +87,7 @@ function ENT:Initialize()
 	)
 	constraint.AdvBallsocket( 
 		self.MiddleBogey,
-		VAGON,
+		self,
 		0, --bone
 		0, --bone
 		Vector(0,0,0), --Vector(70,0,90)
@@ -183,62 +183,6 @@ end)
     self.FrontDoor = false
     self.RearDoor = false
 	
-end
-
-function ENT:UpdateLampsColors()
-    local lCol,lCount = Vector(),0
-    local rand = math.random() > 0.8 and 1 or math.random(0.95,0.99)
-        local r,g,col = 15,15
-        local typ = math.Round(math.random())
-        local rnd =  0.5+math.random()*0.5
-        for i = 1,10 do
-            local chtp = math.random() > rnd
-
-            if typ == 0 and not chtp or typ == 1 and chtp then
-                g = math.random()*15
-                col=Vector(240+g,240+g,255)
-            else
-                b = -5+math.random()*20
-                col = Vector(255,255,235+b)
-            end
-            lCol = lCol + col
-            lCount = lCount + 1
-            if i%4==0 then
-                local id = 10+math.ceil(i/4)
-                self:SetLightPower(id,false)
-
-                local tcol = (lCol/lCount)/255
-                self.Lights[id][4] = Vector(tcol.r,tcol.g^3,tcol.b^3)*255
-                lCol = Vector()
-                lCount = 0
-            end
-            self:SetNW2Vector("lamps_salon_on_test"..i+1,col)
-            --self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7
-		end		
-        for i = 1,10 do
-            local chtp = math.random() > rnd
-
-            if typ == 0 and not chtp or typ == 1 and chtp then
-                g = math.random()*15
-                col=Vector(240+g,240+g,255)
-            else
-                b = -5+math.random()*20
-                col = Vector(255,255,235+b)
-            end
-            lCol = lCol + col
-            lCount = lCount + 1
-            if i%4==0 then
-                local id = 10+math.ceil(i/4)
-                self:SetLightPower(id,false)
-
-                local tcol = (lCol/lCount)/255
-                self.Lights[id][4] = Vector(tcol.r,tcol.g^3,tcol.b^3)*255
-                lCol = Vector()
-                lCount = 0
-            end
-            self:SetNW2Vector("lamps_salon_on_test1"..i+1,col)
-            --self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7
-		end	
 end
 --------------------------------------------------------------------------------
 --Основное
@@ -382,7 +326,7 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --rotonly
 		1 --nocollide
 	)
-		--Шарнирное крепление задней телеги к вагону.
+	--Шарнирное крепление задней телеги к вагону.
 	constraint.AdvBallsocket(
 	VAGON,
 	self.RearBogey,

@@ -358,7 +358,7 @@ for i=0,3 do
         pos = Vector(635-i*6.6+4*6.6/2,-63.35,18),
         ang = Angle(0,0,-5),
         skin=0,
-        hide = 1.5,
+		nohide=true,
         callback = function(ent)
             ent.WagonNumber = false
         end,
@@ -425,7 +425,7 @@ for i=0,3 do
 		pos = Vector(0,0,-78),
         ang = Angle(0,180,-3.29),
         skin=1,
-		hide=2,
+		nohide=true,
 		callback = function(ent,cl_ent)
 		local VAGONK = ent:GetNW2Entity("VAGON")
 		if not IsValid(VAGONK) then
@@ -781,8 +781,6 @@ function ENT:Initialize()
 end
 function ENT:UpdateWagonNumber()
     for i=0,3 do
-        --self:ShowHide("TrainNumberL"..i,i<count)
-        --self:ShowHide("TrainNumberR"..i,i<count)
         --if i< count then
             local num = math.floor(self.WagonNumber%(10^(i+1))/10^i)
             local rightNum = self.ClientEnts["TrainNumberR"..i]

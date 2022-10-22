@@ -43,15 +43,15 @@ function ENT:Initialize()
     self:SetPos(self:GetPos() + Vector(0,0,150))
 
     -- Create seat entities
-    self.DriverSeat = self:CreateSeat("driver",Vector(775,19,-30))
+    self.DriverSeat = self:CreateSeat("driver",Vector(775-144,19,-30))
     --self.InstructorsSeat = self:CreateSeat("instructor",Vector(285,48,-40),Angle(0,40,0),"models/vehicles/prisoner_pod_inner.mdl")
-    self.InstructorsSeat2 = self:CreateSeat("instructor",Vector(767,45,-35),Angle(0,75,0),"models/vehicles/prisoner_pod_inner.mdl")
-    self.InstructorsSeat3 = self:CreateSeat("instructor",Vector(760,0,-40),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
-    self.InstructorsSeat4 = self:CreateSeat("instructor",Vector(787,-25,-40),Angle(0,115,0),"models/vehicles/prisoner_pod_inner.mdl")
+    self.InstructorsSeat2 = self:CreateSeat("instructor",Vector(767-144,45,-35),Angle(0,75,0),"models/vehicles/prisoner_pod_inner.mdl") 
+    self.InstructorsSeat3 = self:CreateSeat("instructor",Vector(760-144,0,-40),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
+    self.InstructorsSeat4 = self:CreateSeat("instructor",Vector(787-144,-25,-40),Angle(0,115,0),"models/vehicles/prisoner_pod_inner.mdl")
 
     --Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
-    self.DriverSeat:SetColor(Color(0,0,0,0))
+	self.DriverSeat:SetColor(Color(0,0,0,0))
     --self.InstructorsSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
     --self.InstructorsSeat:SetColor(Color(0,0,0,0))
     self.InstructorsSeat2:SetRenderMode(RENDERMODE_TRANSALPHA)
@@ -61,18 +61,18 @@ function ENT:Initialize()
     self.InstructorsSeat4:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat4:SetColor(Color(0,0,0,0))
 	
-	self.LightSensor = self:AddLightSensor(Vector(548,0,-130),Angle(0,90,0))
+	self.LightSensor = self:AddLightSensor(Vector(548-144,0,-130),Angle(0,90,0))
 	
     -- Create bogeys
-        self.FrontBogey = self:CreateBogey(Vector( 660,0,-75),Angle(0,180,0),true,"740")
+        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740")
 --------------------------------------------------------------------------------
-        self.RearBogey  = self:CreateBogey(Vector(-390,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80 
+        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80 
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)
 --------------------------------------------------------------------------------
-        self.FrontCouple = self:CreateCouple(Vector(783,0,-60),Angle(0,0,0),true,"740")
+        self.FrontCouple = self:CreateCouple(Vector(635,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-482,0,-60),Angle(0,-180,0),false,"740")
-		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl")
+        self.RearCouple  = self:CreateCouple(Vector(-610,0,-60),Angle(0,-180,0),false,"740")
+		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
 		
@@ -92,7 +92,7 @@ function ENT:Initialize()
 --------------------------------------------------------------------------------		
 	timer.Simple(0.0, function() --взято с Томаса, спасибо авторам.
 		local rand = math.random()*0.05
-		self.MiddleBogey = self:CreateBogey(Vector(130,0,-75),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75
+		self.MiddleBogey = self:CreateBogey(Vector(-4.3,0,-75),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75
 		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
 		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)
 		self.MiddleBogey:SetNWInt("MotorSoundType",2)
@@ -124,7 +124,7 @@ function ENT:Initialize()
 	)
 	constraint.AdvBallsocket( 
 		self.MiddleBogey,
-		VAGON,
+		self,
 		0, --bone
 		0, --bone
 		Vector(0,0,0), --Vector(70,0,90)
@@ -146,9 +146,10 @@ function ENT:Initialize()
 		0, --rotonly
 		1 --nocollide
 	)
-end)
-timer.Simple(0.0, function() --взято с Томаса, спасибо авторам.
-	self.Rear = self:CreateRear(Vector(-195,0,0),Angle(0,0,0)) --вагон
+end)	
+--взято с Томаса, спасибо авторам.
+timer.Simple(0.0, function()	
+	self.Rear1 = self:CreateRear1(Vector(-328,0,0),Angle(0,0,0)) --вагон
 end)
 --------------------------------------------------------------------------------				
     -- Initialize key mapping
@@ -248,25 +249,25 @@ end)
 
  self.Lights = {
         --белые огни
-        [1]  = { "light",Vector(835, 27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
-        [2]  = { "light",Vector(835, 40.5,-20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
-        [18]  = { "light",Vector(835, -27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
-        [19]  = { "light",Vector(835, -40.5, -20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [1]  = { "light",Vector(835-144, 27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [2]  = { "light",Vector(835-144, 40.5,-20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [18]  = { "light",Vector(835-144, -27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [19]  = { "light",Vector(835-144, -40.5, -20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
         --красные огни 
-        [3] = { "light",Vector(835, 41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
-		[4] = { "light",Vector(835, -41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
-		[5] = { "light",Vector(802, 40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
-		[6] = { "light",Vector(802, -40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+        [3] = { "light",Vector(690, 41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+		[4] = { "light",Vector(690, -41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+		[5] = { "light",Vector(656, 40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+		[6] = { "light",Vector(666, -40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
         --освещение в кабине
-        [10] = { "dynamiclight",    Vector( 755, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
+        [10] = { "dynamiclight",    Vector( 755-144, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
         -- Interior
-		[11] = { "dynamiclight",    Vector(190, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-		[12] = { "dynamiclight",    Vector(675, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [13] = { "dynamiclight",    Vector(420, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
+		[11] = { "dynamiclight",    Vector(190-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+		[12] = { "dynamiclight",    Vector(675-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+        [13] = { "dynamiclight",    Vector(420-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
 		
-		[14] = { "dynamiclight",    Vector( 80, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-		[15] = { "dynamiclight",    Vector(-70, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [16] = { "dynamiclight",    Vector( -510, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
+		[14] = { "dynamiclight",    Vector( 80-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+		[15] = { "dynamiclight",    Vector(-70+144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+        [16] = { "dynamiclight",    Vector( -510+144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
     }
     self.InteractionZones = {
         {   Pos = Vector(476, 64, 30),
@@ -624,7 +625,7 @@ local function CanConstrain( VAGON, Bone )
 
 end
 
-function ENT:CreateRear(pos,ang,a)
+function ENT:CreateRear1(pos,ang,a)
 	local VAGON = ents.Create("prop_physics")--ents.Create("prop_physics")
 	VAGON:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear_reference.mdl")--ent:SetModel("models/sligwolf/blue-x12/bluex12_train_socket.mdl")	 --"models/hunter/plates/plate.mdl"
 	VAGON:SetPos(self:LocalToWorld(pos))
@@ -632,12 +633,12 @@ function ENT:CreateRear(pos,ang,a)
 	VAGON:Spawn()
 	VAGON:SetOwner(self:GetOwner())	
 	VAGON:GetPhysicsObject():SetMass(10000)
-	
-	self:SetNW2Entity("VAGON",VAGON)
-    -- Assign ownership
+    -- Assign ownership	
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
 	
-	---Сцепка, крепление к вагону.
+	self:SetNW2Entity("VAGON",VAGON)
+	
+	--Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
 		VAGON,
 		self.RearCouple,
@@ -662,8 +663,7 @@ function ENT:CreateRear(pos,ang,a)
 		
 		0, --rotonly
 		1 --nocollide
-	)
-	
+	)	
 	--Шарнирное крепление задней телеги к вагону.
 	constraint.AdvBallsocket(
 	VAGON,
@@ -696,18 +696,18 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(-40,5,70), --Vector(70,0,90)
-		Vector(-40,5,70), --Vector(80,0,90)
+		Vector(0,5,70), --Vector(70,0,90)
+		Vector(100,5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
 		-100, --xmin --высота
-		-0.2, --ymin  --поворот влево/вправо
-		-200, --zmin
+		0, --ymin  --поворот влево/вправо
+		-100, --zmin
 		
 		100, --xmax --высота
-		0.2, --ymax --20  --поворот влево/вправо
-		200, --zmax
+		0, --ymax --20  --поворот влево/вправо
+		100, --zmax
 		
 		0, --yfric
 		0, --zfric
@@ -720,17 +720,17 @@ function ENT:CreateRear(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(-40,-5,70), --Vector(70,0,90)
-		Vector(-40,-5,70), --Vector(80,0,90)
+		Vector(0,-5,70), --Vector(70,0,90)
+		Vector(100,-5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-200, --xmin --высота
-		-0.2, --ymin  --поворот влево/вправо
-		-200, --zmin
+		-100, --xmin --высота
+		0, --ymin  --поворот влево/вправо
+		-100, --zmin
 		
-		200, --xmax --высота
-		0.2, --ymax --20  --поворот влево/вправо
+		100, --xmax --высота
+		0, --ymax --20  --поворот влево/вправо
 		100, --zmax
 		
 		0, --yfric
