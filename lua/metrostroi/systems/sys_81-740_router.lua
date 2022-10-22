@@ -46,7 +46,7 @@ if CLIENT then	local function createFont(name,font,size,weight,blur,scanlines
 		self.LastGettedLastStation = 0
 		self.ASNPState = self:GetNW2Int("ASNP:State",-1)
 		self.ButtonMap["InfoScreen"] = {
-			pos = Vector(800.7,-35,61.4),
+			pos = Vector(656.5,-35,61.4),
 			ang = Angle(0,90,90),
 			width = 1080,
 			height = 172,
