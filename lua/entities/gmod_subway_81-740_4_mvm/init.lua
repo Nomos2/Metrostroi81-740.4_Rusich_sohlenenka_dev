@@ -71,7 +71,7 @@ function ENT:Initialize()
 --------------------------------------------------------------------------------
         self.FrontCouple = self:CreateCouple(Vector(635,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-610,0,-60),Angle(0,-180,0),false,"740")
+        self.RearCouple  = self:CreateCouple(Vector(-613,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
