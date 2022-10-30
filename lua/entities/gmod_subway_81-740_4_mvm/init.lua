@@ -71,7 +71,7 @@ function ENT:Initialize()
 --------------------------------------------------------------------------------
         self.FrontCouple = self:CreateCouple(Vector(635,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-613,0,-60),Angle(0,-180,0),false,"740")
+        self.RearCouple  = self:CreateCouple(Vector(-610,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
@@ -92,7 +92,7 @@ function ENT:Initialize()
 --------------------------------------------------------------------------------		
 	timer.Simple(0.0, function() --взято с Томаса, спасибо авторам.
 		local rand = math.random()*0.05
-		self.MiddleBogey = self:CreateBogey(Vector(-4.3,0,-75),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75
+		self.MiddleBogey = self:CreateBogey(Vector(-5,0,-75),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75
 		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
 		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)
 		self.MiddleBogey:SetNWInt("MotorSoundType",2)
@@ -565,13 +565,11 @@ function ENT:Think()
     self:SetPackedBool("CompressorWork",self.Pneumatic.Compressor)
     self:SetPackedBool("Vent2Work",self.Electric.Vent2>0)
     self:SetPackedBool("RingEnabled",self.BUKP.Ring)
-	self:SetPackedBool("Antenna_off",self.Antenna_off)
-	self:SetPackedBool("Antenna_on",self.Antenna_on)
---[[
+	
     self:SetNW2Int("PassSchemesLED",self.PassSchemes.PassSchemeCurr)
     self:SetNW2Int("PassSchemesLEDN",self.PassSchemes.PassSchemeNext)
     self:SetPackedBool("PassSchemesLEDO",self.PassSchemes.PassSchemePath)
-]]
+	
     self:SetPackedBool("AnnPlay",self.Panel.AnnouncerPlaying > 0)
 
     self:SetPackedRatio("Cran", self.Pneumatic.DriverValvePosition)

@@ -14,12 +14,22 @@ ENT.AdminSpawnable  = true
 ENT.DontAccelerateSimulation = false
 
 function ENT:PassengerCapacity()
-    return 159
+    return 200
+end
+
+function ENT:Initialize()
+	self.BaseClass.Initialize(self)
+	VAGON = self:GetNW2Entity("VAGON")	
 end
 
 function ENT:GetStandingArea()
-    return Vector(550,-10,-45), Vector(150,-10,-45)
-end
+	return Vector(530,-25,-47),Vector(50,25,-47)
+end 
+
+--[[function ENT:GetStandingAreaRear() 
+	return Vector(-530,-25,-47),Vector(-50,25,-47) 	
+end	]]
+
 
 local function GetDoorPosition(i,k)	--Правые двери			--Левые двери
 	return Vector(652.5  - 35.0*k     -  338.8*i, -67.5*(1-2*k), 4.3)
@@ -396,37 +406,37 @@ function ENT:InitializeSounds()
 end
 
 function ENT:InitializeSystems()
-    self:LoadSystem("TR","TR_3B_740")
+    self:LoadSystem("TR","TR_3B_4740")
     self:LoadSystem("Engines","DK_120AM")
-    self:LoadSystem("Electric","81_740_ELECTRICA")
-    self:LoadSystem("BPTI","81_740_BPTI")
+    self:LoadSystem("Electric","81_740_4ELECTRICA")
+    self:LoadSystem("BPTI","81_740_4BPTI")
     --self:LoadSystem("RV","81_740_RV")
-	self:LoadSystem("KV","81_740_RV")
+	self:LoadSystem("KV","81_740_4RV")
 
-    self:LoadSystem("BUKP","81_740_VITYAZ")
-    self:LoadSystem("BUV","81_740_BUV")
-    self:LoadSystem("BARS","81_740_BARS")
-	self:LoadSystem("CAMS","81_740_CAMS")
+    self:LoadSystem("BUKP","81_740_4VITYAZ")
+    self:LoadSystem("BUV","81_740_4BUV")
+    self:LoadSystem("BARS","81_740_4BARS")
+	self:LoadSystem("CAMS","81_740_4CAMS")
 
-    self:LoadSystem("Pneumatic","81_740_Pneumatic")
-    self:LoadSystem("Horn","81_740_Horn")
+    self:LoadSystem("Pneumatic","81_740_4Pneumatic")
+    self:LoadSystem("Horn","81_740_4Horn")
 
-    self:LoadSystem("Panel","81_740_Panel")
+    self:LoadSystem("Panel","81_740_4Panel")
 
     self:LoadSystem("Announcer","81_71_Announcer", "AnnouncementsASNP")
     self:LoadSystem("ASNP","81_71_ASNP")
-    self:LoadSystem("RouteInf","81_740_router")
+    self:LoadSystem("RouteInf","81_740_4router")
     self:LoadSystem("ASNP_VV","81_71_ASNP_VV")
 
-    self:LoadSystem("Tickers","81_740_Ticker")
+    self:LoadSystem("Tickers","81_740_4Ticker")
     --self:LoadSystem("Tickers","81_760_Ticker")
-    --self:LoadSystem("PassSchemes","81_740_PassScheme")
+    self:LoadSystem("PassSchemes","81_740_4PassScheme")
 	
 	--self:LoadSystem("81_740_RED_LAMPS")
-	self:LoadSystem("IGLA_CBKI","IGLA_740_CBKI")
-	self:LoadSystem("IGLA_PCBK","IGLA_740_PCBK")
-	self:LoadSystem("Prost_Kos","81_740_PROST")
-    self:LoadSystem("81_740_router")
+	self:LoadSystem("IGLA_CBKI","IGLA_740_4CBKI")
+	self:LoadSystem("IGLA_PCBK","IGLA_740_4PCBK")
+	self:LoadSystem("Prost_Kos","81_740_4PROST")
+    self:LoadSystem("81_740_4router")
 end
 ENT.AnnouncerPositions = {}
 for i=1,3 do
