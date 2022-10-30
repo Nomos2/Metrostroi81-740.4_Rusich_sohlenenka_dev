@@ -216,11 +216,11 @@ function ENT:Think()
     self:SetPackedBool("CompressorWork",power and self.Pneumatic.Compressor)
     self:SetPackedBool("Vent2Work",self.Electric.Vent2>0)
     self:SetPackedBool("BBEWork",power and self.BUV.BBE > 0)
---[[
+	
     self:SetNW2Int("PassSchemesLED",self.PassSchemes.PassSchemeCurr)
     self:SetNW2Int("PassSchemesLEDN",self.PassSchemes.PassSchemeNext)
     self:SetPackedBool("PassSchemesLEDO",self.PassSchemes.PassSchemePath)
-]]
+
     self:SetPackedBool("AnnPlay",self.Panel.AnnouncerPlaying > 0)
 	
     self:SetPackedBool("FrontDoor",self.FrontDoor)

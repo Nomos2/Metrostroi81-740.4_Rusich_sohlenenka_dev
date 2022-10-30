@@ -289,7 +289,7 @@ ENT.ClientProps["handrails_offside_front"] = {
     hide=2,
 }
 ENT.ButtonMap["Tickers"] = {
-    pos = Vector(35.9, -27.5, 66.0), --446 -- 14 -- -0,5
+    pos = Vector(35.9, -27.5, 66.0), 
     ang = Angle(0,90,90),
     width = 1024,
     height = 64,
@@ -340,15 +340,15 @@ ENT.ButtonMap["FrontPneumatic"] = {
         {ID = "FrontTrainLineIsolationToggle",x=400, y=0, w=300, h=100, tooltip="Концевой кран напорной магистрали"},
     }
 }
-ENT.ClientProps["FrontBrake"] = {--
+ENT.ClientProps["FrontBrake"] = {
     model = "models/metrostroi_train/bogey/disconnect_valve_red.mdl",
-    pos = Vector(660, -20, -56.5),    --Vector(310, -23, -55) - старое значение
+    pos = Vector(660, -20, -56.5), 
     ang = Angle(15,-90,0),
     hide = 2,
 }
-ENT.ClientProps["FrontTrain"] = {--
+ENT.ClientProps["FrontTrain"] = {
     model = "models/metrostroi_train/bogey/disconnect_valve_blue.mdl",
-    pos = Vector(660, 20, -56.5), --Vector(310, 23, -55), - старое значение
+    pos = Vector(660, 20, -56.5),
     ang = Angle( -15,-90,0),
     hide = 2,
 }
@@ -366,6 +366,22 @@ for i=0,3 do
 end 
 ENT.ClientSounds["FrontBrakeLineIsolation"] = {{"FrontBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 ENT.ClientSounds["FrontTrainLineIsolation"] = {{"FrontTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+for i=1,4 do
+    ENT.ClientProps["led_l_f"..i] = {
+        model = "models/metrostroi_train/81-741/salon/741_led_l_rear.mdl",
+        pos = Vector(-(i-1)*10.5+278.6+39.3, 169.4, 13.7),
+        ang = Angle(0,-180,0),
+        skin=6,
+        hideseat = 1.5,
+    }
+    ENT.ClientProps["led_l_r"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_r_rear.mdl",
+        pos = Vector(-(i-1)*10.5+327, 95.2,13.65), 
+        ang = Angle(0,180,0),
+        skin=6,
+        hideseat = 1.5,
+    }	
+end
 
 --Задняя часть
 ENT.ButtonMap["RearPneumatic"] = {
@@ -616,6 +632,45 @@ ENT.ClientProps["door_cab_t"] = {
 			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
         end,		
 }
+--Задняя часть
+for i=1,4 do
+    ENT.ClientProps["led_l_f_rear"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_r_rear.mdl",
+		pos = Vector(0,0,0),
+        ang = Angle(0,180,0),
+        skin=6,
+        hideseat = 1.5,
+		callback = function(ent,cl_ent)
+		local VAGONK = ent:GetNW2Entity("VAGON")
+		if not IsValid(VAGONK) then
+			ent:ShowHide("led_l_f_rear"..i,true)
+			return
+		end
+		cl_ent:SetParent(VAGONK)
+		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-(i-1)*10.5-31.6, 95.35, 13.25)))
+		local ang = VAGONK:GetAngles()	
+		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
+        end,					
+    }
+    ENT.ClientProps["led_l_f_left"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l_rear.mdl",
+		pos = Vector(0,0,0),
+        ang = Angle(0,180,0),
+        skin=6,
+        hideseat = 1.5,
+		callback = function(ent,cl_ent)
+		local VAGONK = ent:GetNW2Entity("VAGON")
+		if not IsValid(VAGONK) then
+			ent:ShowHide("led_l_f_left"..i,true)
+			return
+		end
+		cl_ent:SetParent(VAGONK)
+		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-(i-1)*10.5-41, 169.55,13.35)))
+		local ang = VAGONK:GetAngles()	
+		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
+        end,					
+    }	
+end
 --[[ENT.ButtonMap["Tickers_rear"] = {
     pos = Vector(-37,27.5,66), --446 -- 14 -- -0,5
     ang = Angle(0,-90,90),
@@ -899,36 +954,33 @@ end
     self:Animate("RearBrake",   self:GetNW2Bool("RbI") and 0 or 1,0,1, 3, false)
     self:Animate("RearTrain",   self:GetNW2Bool("RtI") and 1 or 0,0,1, 3, false)
 
-    --[[local scurr = self:GetNW2Int("PassSchemesLED")
+    local scurr = self:GetNW2Int("PassSchemesLED")
     local snext = self:GetNW2Int("PassSchemesLEDN")
     local led_back = self:GetPackedBool("PassSchemesLEDO",false)
-    if self:GetPackedBool("PassSchemesInvert",false)  then led_back = not led_back end
     local ledwork = scurr~=0 or snext~=0
-    for i=1,5 do
+    for i=1,4 do
         self:ShowHide("led_l_f"..i,not led_back and ledwork)
-        self:ShowHide("led_l_b"..i,led_back and ledwork)
-        self:ShowHide("led_r_f"..i,not led_back and ledwork)
-        self:ShowHide("led_r_b"..i,led_back and ledwork)
+        self:ShowHide("led_l_r"..i,not led_back and ledwork)
+        self:ShowHide("led_l_f_rear"..i,not led_back and ledwork)
+        self:ShowHide("led_l_f_left"..i,not led_back and ledwork)
     end
     local led = scurr
     if snext ~= 0 and CurTime()%.5 > .25 then led = led + snext end
     if scurr < 0 then led = math.floor(CurTime()%5*6.2) end
     if led_back then
         if ledwork then
-            for i=1,5 do
-                if IsValid(self.ClientEnts["led_l_b"..i]) then self.ClientEnts["led_l_b"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
-                if IsValid(self.ClientEnts["led_r_b"..i]) then self.ClientEnts["led_r_b"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
-            end
         end
     else
         if ledwork then
-            for i=1,5 do
+            for i=1,4 do
                 if IsValid(self.ClientEnts["led_l_f"..i]) then self.ClientEnts["led_l_f"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
-                if IsValid(self.ClientEnts["led_r_f"..i]) then self.ClientEnts["led_r_f"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
+                if IsValid(self.ClientEnts["led_l_r"..i]) then self.ClientEnts["led_l_r"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end			
+                if IsValid(self.ClientEnts["led_l_f_rear"..i]) then self.ClientEnts["led_l_f_rear"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
+                if IsValid(self.ClientEnts["led_l_f_left"..i]) then self.ClientEnts["led_l_f_left"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
             end
         end
-    end
-	]]
+    end	
+	
     if not self.DoorStates then self.DoorStates = {} end
     if not self.DoorLoopStates then self.DoorLoopStates = {} end
     for i=0,2 do

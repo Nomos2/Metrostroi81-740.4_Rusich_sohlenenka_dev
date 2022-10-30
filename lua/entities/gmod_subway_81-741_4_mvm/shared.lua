@@ -138,21 +138,21 @@ function ENT:InitializeSounds()
 end
 
 function ENT:InitializeSystems()
-    self:LoadSystem("TR","TR_3B_740")
-    self:LoadSystem("Electric","81_740_ELECTRICA")
+    self:LoadSystem("TR","TR_3B_4740")
+    self:LoadSystem("Electric","81_740_4ELECTRICA")
     self:LoadSystem("Engines","DK_120AM")
-    self:LoadSystem("BPTI","81_740_BPTI")
+    self:LoadSystem("BPTI","81_740_4BPTI")
 
-    self:LoadSystem("BUV","81_740_BUV")
+    self:LoadSystem("BUV","81_740_4BUV")
 
-    self:LoadSystem("Pneumatic","81_740_Pneumatic")
+    self:LoadSystem("Pneumatic","81_740_4Pneumatic")
 
-    self:LoadSystem("Panel","81_741_Panel")
+    self:LoadSystem("Panel","81_741_4Panel")
 
-    self:LoadSystem("Tickers","81_740_Ticker")
-    --self:LoadSystem("PassSchemes","81_720_PassScheme")
+    self:LoadSystem("Tickers","81_740_4Ticker")
+    self:LoadSystem("PassSchemes","81_740_4PassScheme")
 
-    self:LoadSystem("IGLA_PCBK","IGLA_740_PCBK")
+    self:LoadSystem("IGLA_PCBK","IGLA_740_4PCBK")
 end
 
 ENT.AnnouncerPositions = {}
