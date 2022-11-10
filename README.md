@@ -6,7 +6,6 @@
 Запланировано полное обновление моделей. 
 
 Для установки этой версии необходимо отписаться от модели из Workshop (https://steamcommunity.com/sharedfiles/filedetails/?id=2374733400 (1 часть),(https://steamcommunity.com/sharedfiles/filedetails/?id=2546557583) (2 часть),
-
 в противном случае будут ошибки.
 
 Известные баги: 
