@@ -203,14 +203,14 @@ ENT.ButtonMap["PUU"] = {
 
 ENT.ClientProps["Head0-_--"] = {
     model = "models/metrostroi_train/81-740/body/headlight.mdl", --_-- обозначает положение фары на маске.
-    pos = Vector(324.5-144, 4.4, -55.8),
+    pos = Vector(324.5-144.5, 4.4, -55.8),
     ang = Angle(-7,0,0),
     scale = 1.1, 
     nohide=true,
 }
 ENT.ClientProps["Head--_-0"] = {
     model = "models/metrostroi_train/81-740/body/headlight.mdl",
-    pos = Vector(324.5-144, 85.8, -55.8),
+    pos = Vector(324.5-144.5, 85.8, -55.8),
     ang = Angle(-7,0,0),
     scale = 1.1, 
     nohide=true,
@@ -218,14 +218,14 @@ ENT.ClientProps["Head--_-0"] = {
 
 ENT.ClientProps["Head-0_--"] = {
     model = "models/metrostroi_train/81-740/body/headlight.mdl",
-    pos = Vector(324.8-144, 17.5, -58.2),
+    pos = Vector(324.8-144.5, 17.5, -58.2),
     ang = Angle(-7,0,0),
     scale = 1.1, 
     nohide=true,
 }
 ENT.ClientProps["Head--_0-"] = {
     model = "models/metrostroi_train/81-740/body/headlight.mdl",
-    pos = Vector(324.8-144, 72.8, -58.2),
+    pos = Vector(324.8-144.5, 72.8, -58.2),
     ang = Angle(-7,0,0),
     scale = 1.1, 
     nohide=true,
@@ -240,7 +240,7 @@ ENT.ClientProps["Antenna"] = {
 	
 ENT.ClientProps["krepezh"] = {
     model = "models/metrostroi_train/81-740/body/krepezh.mdl",
-    pos = Vector(360-144,0,20),
+    pos = Vector(286,0,-71),
     ang = Angle(0,0,0),
     nohide = true,
 }
@@ -844,7 +844,7 @@ ENT.ButtonMap["IGLAButtons_C"] = {
     }
 }
 ENT.ButtonMap["Tickers"] = {
-    pos = Vector(163.5-144,-27.5,66.45), --446 -- 14 -- -0,5
+    pos = Vector(162.6-144,-27.2,66.45), --446 -- 14 -- -0,5
     ang = Angle(0,90,90),
     width = 1024,
     height = 64,
@@ -853,7 +853,7 @@ ENT.ButtonMap["Tickers"] = {
     hideseat=1,
 }
 ENT.ButtonMap["BackVent"] = {
-    pos = Vector(735.25-144,27,47), --446 -- 14 -- -0,5
+    pos = Vector(735.25-143.7,27,47), --446 -- 14 -- -0,5
     ang = Angle(0,90,90),
     width = 80,
     height = 110,
@@ -1190,7 +1190,7 @@ ENT.ButtonMap["VityazButtons"] = {
     }
 }
 ENT.ButtonMap["BTO"] = {
-    pos = Vector(775.12-144,-21,-42), --446 -- 14 -- -0,5
+    pos = Vector(775.12-144,-21,-44), --446 -- 14 -- -0,5
     ang = Angle(0,0,0),
     width = 224,
     height = 50,
@@ -1243,7 +1243,7 @@ ENT.ClientSounds["FrontBrakeLineIsolation"] = {{"FrontBrake",function() return "
 ENT.ClientSounds["FrontTrainLineIsolation"] = {{"FrontTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 
 ENT.ButtonMap["RearPneumatic"] = {
-    pos = Vector(-531-131,45,-46),
+    pos = Vector(-536-131,45,-46),
     ang = Angle(180,90,270),
     width = 900,
     height = 100,
@@ -1340,14 +1340,14 @@ ENT.ClientProps["lamp_b"] = {
 }
 
 ENT.ClientProps["fireextinguisher"] = {
-    model = "models/metrostroi_train/81-502/fireextinguisher.mdl",
-    pos = Vector(390-144,33.1, 7.6),
+    model = "models/metrostroi_train/81-502/fireextinguisher.mdl", scale=0.9,
+    pos = Vector(446-144,30.1, -0.6),
     ang = Angle(0,0,0),
     hideseat = 0.8,
 }
 ENT.ClientProps["fireextinguisher2"] = {
     model = "models/metrostroi_train/81-502/fireextinguisher.mdl", scale=0.9,
-    pos = Vector(1050.8-144,-220.5, 2.2),
+    pos = Vector(1050.8-144,-220.5, -0.6),
     ang = Angle(0,140,0),
     hideseat = 0.8,
 }
@@ -1508,16 +1508,16 @@ ENT.ClientProps["vityazpanel"] = {
 
 ENT.ClientProps["redlights740up1"] = {
     model = "models/metrostroi_train/81-740/body/cralix/headlights81-740up.mdl",
-    pos = Vector(468-144,0,0),
+    pos = Vector(464.2-144,0,-0.7),
     ang = Angle(0,0,0),
-    scale = 1,
+    scale = 1.01,
     nohide=true,
 }
 ENT.ClientProps["redlights740up2"] = {
     model = "models/metrostroi_train/81-740/body/cralix/headlights81-740up.mdl",
-    pos = Vector(468-144,-79.4,0),
+    pos = Vector(464.2-144,-80,-0.7),
     ang = Angle(0,0,0),
-    scale = 1,
+    scale = 1.01,
     nohide=true,
 }
 
@@ -1546,13 +1546,6 @@ ENT.ClientProps["stopkran"] = {
     pos = Vector(788.5-144,-59.7,13.2),
     ang = Angle(0,180,2),
 	hide=1,
-}
-ENT.ClientProps["Pult"] = {
-	model = "models/metrostroi_train/81-740/cabine/Cabine.mdl",
-	pos = Vector(-465.4+144, 0, 70),
-	ang = Angle(0,0,0),
-	--skin = self:GetNWInt("skin_skin_panel", 0),
-	hide=2,
 }
 ENT.ButtonMap["GV"] = {
     pos = Vector(366-144,45,-73),
@@ -1628,6 +1621,39 @@ ENT.ClientProps["PB"] = {
 }
 if not ENT.ClientSounds["PB"] then ENT.ClientSounds["PB"] = {} end
 table.insert(ENT.ClientSounds["PB"],{"PB",function(ent,var) return var > 0 and "pb_on" or "pb_off" end,1,1,30,1e3,Angle(-90,0,0)})
+
+ENT.ClientProps["Pult"] = {
+	model = "models/metrostroi_train/81-740/cabine/Pult/pult.mdl",
+	pos = Vector(465.4-144, 6, 0),
+	ang = Angle(0,0,0),
+	hide=2,
+}
+ENT.ClientProps["salon"] = {
+	model = "models/metrostroi_train/81-740/salon/salon.mdl",
+	pos = Vector(-144.8,0,0),
+	ang = Angle(0,0,0),
+	hide=2,
+}
+ENT.ClientProps["handrails"] = {
+	model = "models/metrostroi_train/81-740/salon/handrails/handrails.mdl",
+	pos = Vector(368-146,-5,0),
+	ang = Angle(0,0,0),
+	hide=2,
+}	
+ENT.ClientProps["door_cab_r"] = {
+	model = "models/metrostroi_train/81-740/cabine/cabin_right.mdl",
+	pos = Vector(766-144.7, -66.5,0),
+	ang = Angle(0,90,0.55),
+	scale = 1.001,		
+	hide = 1
+}
+ENT.ClientProps["door_cab_l"] = {
+	model = "models/metrostroi_train/81-740/cabine/cabin_left.mdl",
+	pos = Vector(765-144.45, 62.29, 0),
+	ang = Angle(0,-90,0.25),
+	scale = 1.01,
+	hide = 1
+}
 for i=1,4 do
     ENT.ClientProps["led_l_f"..i] = {
         model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
@@ -1685,14 +1711,15 @@ for i=1,4 do
 end
 
 ENT.ButtonMap["RearDoor"] = {
-    pos = Vector(-652,-23,55), ---334.8,14.5,9
+    pos = Vector(-660,-15,55), ---334.8,14.5,9
     ang = Angle(0,90,90),
     width = 642,
     height = 2000,
     scale = 0.1/2,
     buttons = {
-        {ID = "RearDoor",x=0,y=0,w=642,h=2000, tooltip="Задняя дверь", model = {
+        {ID = "RearDoor",x=0,y=0,w=642,h=3000, tooltip="", model = {
             var="RearDoor",sndid="door_cab_t",
+			
             sndvol = 1, snd = function(val) return val and "cab_door_open" or "cab_door_close" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
         }},
@@ -1776,28 +1803,25 @@ ENT.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "di
 
 
 ENT.ButtonMap["Tickers_rear"] = { --Работает с багами
-		pos = Vector(90.9,27,65.6), --446 -- 14 -- -0,5
+		pos = Vector(-42.9,27,65.6), --446 -- 14 -- -0,5
 		ang = Angle(0,-90,90),
-		callback = function(ent,cl_ent)
-		local VAGONK = ent:GetNW2Entity("VAGON")
-		if not IsValid(VAGONK) then
-			ent:HidePanel("Tickers_rear",1)
-			return
-		end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(90.9-144,27,65.6)))
-		local ang = VAGONK:GetAngles()	
-		cl_ent:SetAngles((Angle(-ang.x,90+ang.y,-ang.z)))
-        end,				
 		width = 1024,
 		height = 64,
 		scale = 0.055,
 		hide=true,
 		hideseat=1,	
-	}
+		system="81_740_4Ticker",		
+		callback = function(ent,ButtonMap)
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+        cl_ent:SetLocalPos(ent.ButtonMap["Tickers_rear"].pos)
+        cl_ent:SetLocalAngles(ent.ButtonMap["Tickers_rear"].ang)
+        cl_ent:SetLocalWidth(ent.ButtonMap["Tickers_rear"].width)		
+	    cl_ent:SetLocalHeight(ent.ButtonMap["Tickers_rear"].height)		
+    end,      
+}		
 
 ENT.ClientProps["krepezh1"] = {
-    model = "models/metrostroi_train/81-740/body/krepezh1.mdl",
+    model = "models/metrostroi_train/81-740/body/krepezh.mdl",
     pos = Vector(0,0,0),
     ang = Angle(0,180,0),
 	nohide=true,
@@ -1883,7 +1907,7 @@ ENT.ClientProps["lamps_salon_on_rear1"..i+1] = {
 		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
 		end,
 }
-end
+end 
 ENT.ClientProps["handrails_offside"] = {
     model = "models/metrostroi_train/81-740/body/740_body_additional.mdl",
     pos = Vector(0,0,0),
@@ -1931,7 +1955,7 @@ ENT.ClientProps["salonR"] = {
 				return
 			end
 		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(65, 0, -75)))
+		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(64.4, 0, -75)))
 		local ang = VAGONK:GetAngles()
 		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
 		end,
@@ -1981,10 +2005,29 @@ end
 
 local function GetDoorPositionRearLeft(i,k,j)
 	if j == 0 			--	x						--	y        --	z 195.5 265.6
-	then return Vector(230.3 - -35.0*k - 232.1*i, 66*(1-2*k), 4.3)
-	else return Vector(160.3 - -35.0*(1-k) - 232.1*i,67.5*(1-2*k),4.3)
+	then return Vector(230.5 - -35.0*k - 232.1*i, 66*(1-2*k), 4.3)
+	else return Vector(160.3 - -35.0*(1-k) - 232.1*i,67.4*(1-2*k),4.3)
 	end
 end
+
+for i=0,1 do
+    for k=0,1 do
+        ENT.ClientProps["door1"..i.."x1"..k.."first"] = {
+			model = "models/metrostroi_train/81-740/body/81-740_leftdoor2.mdl",
+			pos = GetDoorPosition(i,k,0),
+			ang = Angle(0,90 +180*k,0),
+			scale = 1.001,			
+            hide = 1,
+		}
+		ENT.ClientProps["door1"..i.."x1"..k.."right"] = {
+			model = "models/metrostroi_train/81-740/body/81-740_leftdoor1.mdl",
+			pos = GetDoorPosition(i,k,1),
+			ang = Angle(0,90 +180*k,0),
+            hide = 1,
+			scale = 1.001,					
+		}
+    end 
+	
 
 	for i=0,2 do
 	for k=0,0 do
@@ -1993,6 +2036,7 @@ end
 			pos = GetDoorPositionRear(i,k,0),
 			ang = Angle(0,180*k,0),      
 			hide=2,
+			scale = 1.001,				
 			callback = function(self,cl_ent)
 			local VAGONK = self:GetNW2Entity("VAGON")
 			if not IsValid(VAGONK) then
@@ -2011,6 +2055,7 @@ end
 			pos = GetDoorPositionRear(i,k,1),
 			ang = Angle(0,180*k,0),   
 			hide=2,
+			scale = 1.001,				
 			callback = function(self,cl_ent)
 			
 			local VAGONK = self:GetNW2Entity("VAGON")
@@ -2031,6 +2076,7 @@ end
 			pos = GetDoorPositionRearLeft(i,k,0),
 			ang = Angle(0,180*k,0),      
 			hide=2,
+			scale = 1.001,				
 			callback = function(self,cl_ent)
 			local VAGONK = self:GetNW2Entity("VAGON")
 			if not IsValid(VAGONK) then
@@ -2049,6 +2095,7 @@ end
 			pos = GetDoorPositionRearLeft(i,k,0),
 			ang = Angle(0,180*k,0),      
 			hide=2,
+			scale = 1.001,				
 			callback = function(self,cl_ent)
 			local VAGONK = self:GetNW2Entity("VAGON")
 			if not IsValid(VAGONK) then
@@ -2064,7 +2111,7 @@ end
 		}
 
 	end 
-
+end
 end
  ENT.Lights = {
     [1] = { "headlight",	Vector(858-144,0,0),Angle(0,0,0),Color(216,161,92),farz=5244,brightness = 4.5, fov=120, texture = "models/metrostroi_train/equipment/headlight",shadows = 1,headlight=true}, --Фары
@@ -2135,8 +2182,7 @@ function ENT:Initialize()
         self.VentVol[i] = 0
     end
 	
-	self.skinarecalled = false
-	
+	self.FrontBogey = self:GetNW2Entity("FrontBogey")	
 	self.RearBogey = self:GetNW2Entity("RearBogey")
 	self.MiddleBogey = self:GetNW2Entity("MiddleBogey")
 	self.RearCouple = self:GetNW2Entity("RearCouple")
@@ -2194,69 +2240,255 @@ end
 local Cpos = {
     0,0.24,0.5,0.55,0.6,1
 }
-local lasttimetextureloaded = os.clock()
+
+function ENT:ReInitBogeySounds(bogey)
+	if not IsValid(bogey) then return end
+	
+	local MotorType = self:GetNW2Int("MotorType",1)
+	if self:GetNW2Int("MotorType")==1 then		
+
+    -- Bogey-related sounds
+    bogey.SoundNames = {}
+    bogey.EngineSNDConfig = {}
+    
+	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
+    for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
+    table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,  1})--40
+    table.insert(bogey.EngineSNDConfig,{"ted2_740" ,16,08-4,24,1})--35
+    table.insert(bogey.EngineSNDConfig,{"ted3_740" ,24,16-4,32,1})--32
+    table.insert(bogey.EngineSNDConfig,{"ted4_740" ,32,24-4,40,1})--28
+    table.insert(bogey.EngineSNDConfig,{"ted5_740" ,40,32-4,48,1})--22
+    table.insert(bogey.EngineSNDConfig,{"ted6_740" ,48,40-4,56,1})--18
+    table.insert(bogey.EngineSNDConfig,{"ted7_740" ,56,48-4,64,1})--15
+    table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1})--10
+    table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1})--07
+    table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1})--05
+    --table.insert(bogey.EngineSNDConfig,{"ted11_720",88,80-4   ,0.00})--02
+
+    bogey.SoundNames = {}
+	
+    bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
+    bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
+    bogey.SoundNames["ted3_703"]  = "subway_trains/bogey/engines/703/speed_24.wav"
+    bogey.SoundNames["ted4_703"]  = "subway_trains/bogey/engines/703/speed_32.wav"
+    bogey.SoundNames["ted5_703"]  = "subway_trains/bogey/engines/703/speed_40.wav"
+    bogey.SoundNames["ted6_703"]  = "subway_trains/bogey/engines/703/speed_48.wav"
+    bogey.SoundNames["ted7_703"]  = "subway_trains/bogey/engines/703/speed_56.wav"
+    bogey.SoundNames["ted8_703"]  = "subway_trains/bogey/engines/703/speed_64.wav"
+    bogey.SoundNames["ted9_703"]  = "subway_trains/bogey/engines/703/speed_72.wav"
+    bogey.SoundNames["ted10_703"] = "subway_trains/bogey/engines/703/speed_80.wav"
+    bogey.SoundNames["ted11_703"] = "subway_trains/bogey/engines/703/speed_88.wav"
+    --bogey.SoundNames["tedm_703"]  = "subway_trains/bogey/engines/703/engines_medium.wav"
+
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    bogey.SoundNames["ted1_740"]  = "subway_trains/rusich/engines/engine_8.wav"
+    bogey.SoundNames["ted2_740"]  = "subway_trains/rusich/engines/engine_16.wav"
+    bogey.SoundNames["ted3_740"]  = "subway_trains/rusich/engines/engine_24.wav"
+    bogey.SoundNames["ted4_740"]  = "subway_trains/rusich/engines/engine_32.wav"
+    bogey.SoundNames["ted5_740"]  = "subway_trains/rusich/engines/engine_40.wav"
+    bogey.SoundNames["ted6_740"]  = "subway_trains/rusich/engines/engine_48.wav"
+    bogey.SoundNames["ted7_740"]  = "subway_trains/rusich/engines/engine_56.wav"
+    bogey.SoundNames["ted8_740"]  = "subway_trains/rusich/engines/engine_64.wav"
+    bogey.SoundNames["ted9_740"]  = "subway_trains/rusich/engines/engine_72.wav"
+    bogey.SoundNames["ted10_740"] = "subway_trains/rusich/engines/engine_80.wav"
+
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    self.SoundNames["ted11_720"] = "subway_trains/bogey/engines/720/speed_88.wav"
+    self.SoundNames["ted1_720"]  = "subway_trains/bogey/engines/720/speed_8.wav"
+    self.SoundNames["ted2_720"]  = "subway_trains/bogey/engines/720/speed_16.wav"
+    self.SoundNames["ted3_720"]  = "subway_trains/bogey/engines/720/speed_24.wav"
+    self.SoundNames["ted4_720"]  = "subway_trains/bogey/engines/720/speed_32.wav"
+    self.SoundNames["ted5_720"]  = "subway_trains/bogey/engines/720/speed_40.wav"
+    self.SoundNames["ted6_720"]  = "subway_trains/bogey/engines/720/speed_48.wav"
+    self.SoundNames["ted7_720"]  = "subway_trains/bogey/engines/720/speed_56.wav"
+    self.SoundNames["ted8_720"]  = "subway_trains/bogey/engines/720/speed_64.wav"
+    self.SoundNames["ted9_720"]  = "subway_trains/bogey/engines/720/speed_72.wav"
+    self.SoundNames["ted10_720"] = "subway_trains/bogey/engines/720/speed_80.wav"
+    --*0.975
+    --*1.025
+	local skr = math.random (1,4)
+	local skripit = math.random (1,5)	
+    bogey.SoundNames["flangea"]      = "subway_trains/rusich/bogey/skrip1_"..skr..".wav"
+    bogey.SoundNames["flangeb"]      = "subway_trains/rusich/bogey/skrip2_"..skripit..".wav"
+    bogey.SoundNames["flange1"]      = "subway_trains/rusich/bogey/flange_9.wav"
+    bogey.SoundNames["flange2"]      = "subway_trains/rusich/bogey/Flange_10.wav"
+    bogey.SoundNames["brakea_loop1"]       = "subway_trains/rusich/bogey/braking_async3.wav"
+    bogey.SoundNames["brakea_loop2"]       = "subway_trains/bogey/braking_async2.wav"
+    bogey.SoundNames["brake_loop1"]       = "subway_trains/bogey/brake_rattle3.wav"
+    bogey.SoundNames["brake_loop2"]       = "subway_trains/bogey/brake_rattle4.wav"
+    bogey.SoundNames["brake_loop3"]       = "subway_trains/bogey/brake_rattle5.wav"
+    bogey.SoundNames["brake_loop4"]       = "subway_trains/bogey/brake_rattle6.wav"
+    bogey.SoundNames["brake_loopb"]       = "subway_trains/common/junk/junk_background_braking1.wav"
+    bogey.SoundNames["brake2_loop1"]       = "subway_trains/bogey/brake_rattle2.wav"
+    bogey.SoundNames["brake2_loop2"]       = "subway_trains/bogey/brake_rattle_h.wav"
+    bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
+    bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
+
+    -- Remove old sounds
+    if bogey.Sounds then
+        for k,v in pairs(bogey.Sounds) do
+            v:Stop()
+        end
+    end
+
+    -- Create sounds
+    bogey.Sounds = {}
+    bogey.Playing = {}
+    for k,v in pairs(bogey.SoundNames) do
+        --if not file.Exists(v, "MOD") then
+--          bogey.SoundNames[k] = nil
+        --end
+        util.PrecacheSound(v)
+        local e = bogey
+        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
+            e = bogey:GetNW2Entity("TrainWheels")
+        end
+        bogey.Sounds[k] = CreateSound(e, Sound(v))
+    end
+
+    bogey.Async = nil
+    --bogey.MotorSoundType = nil
+
+end
+	if self:GetNW2Int("MotorType")==2 then		
+
+    -- Bogey-related sounds
+    bogey.SoundNames = {}
+    bogey.EngineSNDConfig = {}
+    
+	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
+    for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
+    table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,  1})--40
+    table.insert(bogey.EngineSNDConfig,{"ted2_740" ,16,08-4,24,1})--35
+    table.insert(bogey.EngineSNDConfig,{"ted3_740" ,24,16-4,32,1})--32
+    table.insert(bogey.EngineSNDConfig,{"ted4_740" ,32,24-4,40,1})--28
+    table.insert(bogey.EngineSNDConfig,{"ted5_740" ,40,32-4,48,1})--22
+    table.insert(bogey.EngineSNDConfig,{"ted6_740" ,48,40-4,56,1})--18
+    table.insert(bogey.EngineSNDConfig,{"ted7_740" ,56,48-4,64,1})--15
+    table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1})--10
+    table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1})--07
+    table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1})--05
+    table.insert(bogey.EngineSNDConfig,{"ted11_740",88,72-4,96,1})--05	
+
+    bogey.SoundNames = {}
+	
+    bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
+    bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
+    bogey.SoundNames["ted3_703"]  = "subway_trains/bogey/engines/703/speed_24.wav"
+    bogey.SoundNames["ted4_703"]  = "subway_trains/bogey/engines/703/speed_32.wav"
+    bogey.SoundNames["ted5_703"]  = "subway_trains/bogey/engines/703/speed_40.wav"
+    bogey.SoundNames["ted6_703"]  = "subway_trains/bogey/engines/703/speed_48.wav"
+    bogey.SoundNames["ted7_703"]  = "subway_trains/bogey/engines/703/speed_56.wav"
+    bogey.SoundNames["ted8_703"]  = "subway_trains/bogey/engines/703/speed_64.wav"
+    bogey.SoundNames["ted9_703"]  = "subway_trains/bogey/engines/703/speed_72.wav"
+    bogey.SoundNames["ted10_703"] = "subway_trains/bogey/engines/703/speed_80.wav"
+    bogey.SoundNames["ted11_703"] = "subway_trains/bogey/engines/703/speed_88.wav"
+    --bogey.SoundNames["tedm_703"]  = "subway_trains/bogey/engines/703/engines_medium.wav"
+
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    bogey.SoundNames["ted1_740"]  = "subway_trains/rusich/engines_new/speed_8.wav"
+    bogey.SoundNames["ted2_740"]  = "subway_trains/rusich/engines_new/speed_16.wav"
+    bogey.SoundNames["ted3_740"]  = "subway_trains/rusich/engines_new/speed_24.wav"
+    bogey.SoundNames["ted4_740"]  = "subway_trains/rusich/engines_new/speed_32.wav"
+    bogey.SoundNames["ted5_740"]  = "subway_trains/rusich/engines_new/speed_40.wav"
+    bogey.SoundNames["ted6_740"]  = "subway_trains/rusich/engines_new/speed_48.wav"
+    bogey.SoundNames["ted7_740"]  = "subway_trains/rusich/engines_new/speed_56.wav"
+    bogey.SoundNames["ted8_740"]  = "subway_trains/rusich/engines_new/speed_64.wav"
+    bogey.SoundNames["ted9_740"]  = "subway_trains/rusich/engines_new/speed_72.wav"
+    bogey.SoundNames["ted10_740"] = "subway_trains/rusich/engines_new/speed_80.wav"
+    bogey.SoundNames["ted11_740"] = "subway_trains/rusich/engines_new/speed_88.wav"	
+
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    self.SoundNames["ted11_720"] = "subway_trains/bogey/engines/720/speed_88.wav"
+    self.SoundNames["ted1_720"]  = "subway_trains/bogey/engines/720/speed_8.wav"
+    self.SoundNames["ted2_720"]  = "subway_trains/bogey/engines/720/speed_16.wav"
+    self.SoundNames["ted3_720"]  = "subway_trains/bogey/engines/720/speed_24.wav"
+    self.SoundNames["ted4_720"]  = "subway_trains/bogey/engines/720/speed_32.wav"
+    self.SoundNames["ted5_720"]  = "subway_trains/bogey/engines/720/speed_40.wav"
+    self.SoundNames["ted6_720"]  = "subway_trains/bogey/engines/720/speed_48.wav"
+    self.SoundNames["ted7_720"]  = "subway_trains/bogey/engines/720/speed_56.wav"
+    self.SoundNames["ted8_720"]  = "subway_trains/bogey/engines/720/speed_64.wav"
+    self.SoundNames["ted9_720"]  = "subway_trains/bogey/engines/720/speed_72.wav"
+    self.SoundNames["ted10_720"] = "subway_trains/bogey/engines/720/speed_80.wav"
+    --*0.975
+    --*1.025
+	local skr = math.random (1,4)
+	local skripit = math.random (1,5)	
+    bogey.SoundNames["flangea"]      = "subway_trains/rusich/bogey/skrip1_"..skr..".wav"
+    bogey.SoundNames["flangeb"]      = "subway_trains/rusich/bogey/skrip2_"..skripit..".wav"
+    bogey.SoundNames["flange1"]      = "subway_trains/rusich/bogey/flange_9.wav"
+    bogey.SoundNames["flange2"]      = "subway_trains/rusich/bogey/Flange_10.wav"
+    bogey.SoundNames["brakea_loop1"]       = "subway_trains/rusich/bogey/braking_async3.wav"
+    bogey.SoundNames["brakea_loop2"]       = "subway_trains/bogey/braking_async2.wav"
+    bogey.SoundNames["brake_loop1"]       = "subway_trains/bogey/brake_rattle3.wav"
+    bogey.SoundNames["brake_loop2"]       = "subway_trains/bogey/brake_rattle4.wav"
+    bogey.SoundNames["brake_loop3"]       = "subway_trains/bogey/brake_rattle5.wav"
+    bogey.SoundNames["brake_loop4"]       = "subway_trains/bogey/brake_rattle6.wav"
+    bogey.SoundNames["brake_loopb"]       = "subway_trains/common/junk/junk_background_braking1.wav"
+    bogey.SoundNames["brake2_loop1"]       = "subway_trains/bogey/brake_rattle2.wav"
+    bogey.SoundNames["brake2_loop2"]       = "subway_trains/bogey/brake_rattle_h.wav"
+    bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
+    bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
+
+    -- Remove old sounds
+    if bogey.Sounds then
+        for k,v in pairs(bogey.Sounds) do
+            v:Stop()
+        end
+    end
+
+    -- Create sounds
+    bogey.Sounds = {}
+    bogey.Playing = {}
+    for k,v in pairs(bogey.SoundNames) do
+        --if not file.Exists(v, "MOD") then
+--          bogey.SoundNames[k] = nil
+        --end
+        util.PrecacheSound(v)
+        local e = bogey
+        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
+            e = bogey:GetNW2Entity("TrainWheels")
+        end
+        bogey.Sounds[k] = CreateSound(e, Sound(v))
+    end
+
+    bogey.Async = nil
+    --bogey.MotorSoundType = nil
+
+end
+end
+
 function ENT:Think()
     self.BaseClass.Think(self)
-	Metrostroi740LoadTextures(self, skinsarecalled)
-	
-	
-	self.skinarecalled = true
-for i=0,1 do
-    for k=0,1 do
-        self.ClientProps["door1"..i.."x1"..k.."first"] = {
-			model = self:GetNW2String("skin_door_pass_2", "models/metrostroi_train/81-740/body/81-740_leftdoor2.mdl"),
-			pos = GetDoorPosition(i,k,0),
-			ang = Angle(0,90 +180*k,0),
-			skin = self:GetNWInt("skin_skin_body", 0),
-			scale = 1.001,			
-            hide = 1,
-		}
-		self.ClientProps["door1"..i.."x1"..k.."right"] = {
-			model = self:GetNW2String("skin_door_pass_1", "models/metrostroi_train/81-740/body/81-740_leftdoor1.mdl"),
-			pos = GetDoorPosition(i,k,1),
-			ang = Angle(0,90 +180*k,0),
-			skin = self:GetNWInt("skin_skin_body", 0),
-            hide = 1,
-			scale = 1.001,					
-		}
-    end
-	
-	self.ClientProps["door_cab_r"] = {
-		model = self:GetNW2String("skin_door_right","models/metrostroi_train/81-740/cabine/cabin_right.mdl"),
-		pos = Vector(766-144, -65.98,0),
-		ang = Angle(0,90,0.2),
-		skin = self:GetNWInt("skin_skin_body", 0),
-		hide = 1
-	}
-	self.ClientProps["door_cab_l"] = {
-		model = self:GetNW2String("skin_door_left","models/metrostroi_train/81-740/cabine/cabin_left.mdl"),
-		pos = Vector(765.4-144, 62.29, 0),
-		ang = Angle(0,-89.7,0.25),
-		skin = self:GetNWInt("skin_skin_body", 0),
-		hide = 1
-	}
-	self.ClientProps["Pult"] = {
-		model = self:GetNW2String("skin_cabin_panel", "models/metrostroi_train/81-740/cabine/Pult/pult.mdl"),
-		pos = Vector(465.4-144, 6, 0),
-		ang = Angle(0,0,0),
-		skin = self:GetNWInt("skin_skin_panel", 0),
-		hide=2,
-	}
-	self.ClientProps["salon"] = {
-		model = self:GetNW2String("skin_interior_740", "models/metrostroi_train/81-740/salon/salon.mdl"),
-		pos = Vector(-145,0,0),
-		ang = Angle(0,0,0),
-		skin = self:GetNWInt("skin_skin_interior", 0),
-		hide=2,
-	}
-	self.ClientProps["handrails"] = {
-		model = self:GetNW2String("skin_handrails_740", "models/metrostroi_train/81-740/salon/handrails/handrails.mdl"),
-		pos = Vector(368-144,-5,0),
-		ang = Angle(0,0,0),
-		skin = self:GetNWInt("skin_skin_interior", 0),
-		hide=2,
-	}	
-end
+	local refresh = false--true		
+	if self:GetNW2Int("MotorType")==1 then		
+		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.FrontBogey)
+	end
+	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.RearBogey)
+	end	
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
+	end
+	if self:GetNW2Int("MotorType")==2 then		
+		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/speed_8.wav" 
+	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.FrontBogey)
+	end
+	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/speed_8.wav" 
+	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.RearBogey)
+	end	
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/speed_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
+	end
  if not self.RenderClientEnts or self.CreatingCSEnts --[[and self.PassengerEnts and self.PassengerEntsRear]] then
  
   --[[ -- Update passengers
@@ -2456,6 +2688,7 @@ end
     local headlights = HL1*0.5+HL2*0.5
     self:SetLightPower(1,headlights>0,headlights)
     self:SetLightPower(2,RL>0,RL)
+	
     if IsValid(self.GlowingLights[1]) then
         if self:GetPackedRatio("Headlights") < 1 and self.GlowingLights[1]:GetFarZ() ~= 4096 then
             self.GlowingLights[1]:SetFarZ(4096)
@@ -2587,7 +2820,7 @@ end
     local door_m = self:GetPackedBool("PassengerDoor")
     local door_l = self:GetPackedBool("CabinDoorLeft")
     local door_r = self:GetPackedBool("CabinDoorRight")
-    local door_o = self:GetPackedBool("OtsekDoor") or self.CurrentCamera == 7
+    --local door_o = self:GetPackedBool("OtsekDoor") or self.CurrentCamera == 7
     local door_t = self:GetPackedBool("RearDoor")
     local door_cab_m = self:Animate("door_cab_m",door_m and 1 or -0.05,0,0.235, 8, 0.05)
 	
@@ -2602,11 +2835,11 @@ end
     local door_cab_r = self:Animate("door_cab_r",door_r	/*self:GetPackedBool(169)*/ and  0.99/*(self.Door4 or 0.99)*/ or 0,0,1, 4, 1)              --self:Animate("door_cab_r",door_r and 1 or -0.1,0,0.25, 2, 0.5)
     local door_cab_o = self:Animate("door_cab_o",door_o and 1 or -0.05,0,0.3, 8, 0.05)
 
-    local door1s = (door_cab_m > 0 or door_m)
+    --[[local door1s = (door_cab_m > 0 or door_m)
     if self.Door1 ~= door1s then
         self.Door1 = door1s
         self:PlayOnce("PassengerDoor","bass",door1s and 1 or 0)
-    end
+    end]]
        
     local door_cab_l = self:Animate("door_cab_l",door_l    /*self:GetPackedBool(169)*/ and 0.99/*(self.Door3 or 0.99)*/ or 0,0,1, -2, 1)               --self:Animate("door_cab_l",door_l and 1 or -0.1,1,0.75, 2, 0.5)
     local door_cab_r = self:Animate("door_cab_r",door_r    /*self:GetPackedBool(169)*/ and 0.99/*(self.Door4 or 0.99)*/ or 0,0,1, -2, 1)              --self:Animate("door_cab_r",door_r and 1 or -0.1,0,0.25, 2, 0.5)
@@ -2624,12 +2857,12 @@ end
         self:PlayOnce("CabinDoorRight","bass",door3s)
     end
 	
-    local door5s = (door_cab_o > 0 or door_o)
+    --[[local door5s = (door_cab_o > 0 or door_o)
     if self.Door5 ~= door5s then
         self.Door5 = door5s
         self:PlayOnce("OtsekDoor","bass",door5s and 1 or 0)
     end
-    self:HidePanel("PVZ",not self.Door5)
+    self:HidePanel("PVZ",not self.Door5)]]
 
     local dT = self.DeltaTime
 

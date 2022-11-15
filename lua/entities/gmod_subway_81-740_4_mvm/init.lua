@@ -41,6 +41,8 @@ function ENT:Initialize()
 	--self:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,150))
+	
+    self.NormalMass = 24000	
 
     -- Create seat entities
     self.DriverSeat = self:CreateSeat("driver",Vector(775-144,19,-30))
@@ -66,12 +68,16 @@ function ENT:Initialize()
     -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740")
 --------------------------------------------------------------------------------
-        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80 
+        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),true,"740NOTR") --110 0 -80 
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)
+		
+		self.FrontBogey:SetNWInt("MotorSoundType",2)
+		self.RearBogey:SetNWInt("MotorSoundType",2)
+        self.RearBogey.DisableContacts = true					
 --------------------------------------------------------------------------------
         self.FrontCouple = self:CreateCouple(Vector(635,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-610,0,-60),Angle(0,-180,0),false,"740")
+        self.RearCouple  = self:CreateCouple(Vector(-618,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
@@ -83,8 +89,6 @@ function ENT:Initialize()
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
-    self.FrontBogey:SetNWInt("MotorSoundType",2)
-    self.RearBogey:SetNWInt("MotorSoundType",2)
 	self.FrontCouple.EKKDisconnected = true
     local rand = math.random()*0.05
     self.FrontBogey:SetNWFloat("SqualPitch",1.45+rand)
@@ -92,15 +96,17 @@ function ENT:Initialize()
 --------------------------------------------------------------------------------		
 	timer.Simple(0.0, function() --взято с Томаса, спасибо авторам.
 		local rand = math.random()*0.05
-		self.MiddleBogey = self:CreateBogey(Vector(-5,0,-75),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75
+		self.MiddleBogey = self:CreateBogey(Vector(-8,0,-75),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75
 		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
-		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)
+		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
 		self.MiddleBogey:SetNWInt("MotorSoundType",2)
 		self.MiddleBogey:SetNWInt("Async",true)
+		self.MiddleBogey:SetNWBool("DisableEngines",true)			
+		self.MiddleBogey.DisableSound = 1		
 		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
 		constraint.AdvBallsocket( 
-		self.MiddleBogey,
 		self,
+		self.MiddleBogey,
 		0, --bone
 		0, --bone
 		Vector(0,0,0), --Vector(70,0,90)
@@ -108,37 +114,13 @@ function ENT:Initialize()
 		0, --forcelimit
 		0, --torquelimit
 		
-		-0, --xmin --высота
-		-0, --ymin  --поворот влево/вправо
-		-100, --zmin
+		0, --xmin
+		0, --ymin
+		-180, --zmin
 		
-		0, --xmax --высота
-		0, --ymax --20  --поворот влево/вправо
-		100, --zmax
-		
-		0, --yfric
-		0, --zfric
-		0, --xfric
-		0, --rotonly
-		1 --nocollide
-	)
-	constraint.AdvBallsocket( 
-		self.MiddleBogey,
-		self,
-		0, --bone
-		0, --bone
-		Vector(0,0,0), --Vector(70,0,90)
-		Vector(0,0,0), --Vector(80,0,90)
-		0, --forcelimit
-		0, --torquelimit
-		
-		-0, --xmin --высота
-		-0, --ymin  --поворот влево/вправо
-		-100, --zmin
-		
-		0, --xmax --высота
-		0, --ymax --20  --поворот влево/вправо
-		100, --zmax
+		0, --xmax
+		0, --ymax
+		180, --zmax
 		
 		0, --yfric
 		0, --zfric
@@ -149,7 +131,7 @@ function ENT:Initialize()
 end)	
 --взято с Томаса, спасибо авторам.
 timer.Simple(0.0, function()	
-	self.Rear1 = self:CreateRear1(Vector(-328,0,0),Angle(0,0,0)) --вагон
+	self.Rear1 = self:CreateRear1(Vector(-331,0,0),Angle(0,0,0)) --вагон
 end)
 --------------------------------------------------------------------------------				
     -- Initialize key mapping
@@ -240,6 +222,20 @@ end)
     self.KeyMap[KEY_RALT] = self.KeyMap[KEY_LALT]
     self.KeyMap[KEY_RSHIFT] = self.KeyMap[KEY_LSHIFT]
     self.KeyMap[KEY_RCONTROL] = self.KeyMap[KEY_LCONTROL]
+	
+function self:Use(ply)
+    local tr = ply:GetEyeTrace()
+    if not tr.Hit then return end
+    local hitpos = self:WorldToLocal(tr.HitPos)
+    print(hitpos)
+    if self.InteractionZones and ply:GetPos():Distance(tr.HitPos) < 0 then
+        for k,v in pairs(self.InteractionZones) do
+            if hitpos:Distance(v.Pos) < v.Radius then
+                self:ButtonEvent(v.ID,nil,ply)
+            end
+        end
+    end
+end	
     -- Cross connections in train wires
     self.TrainWireCrossConnections = {
         [4] = 3, -- Orientation F<->B
@@ -257,7 +253,7 @@ end)
         [3] = { "light",Vector(690, 41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
 		[4] = { "light",Vector(690, -41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
 		[5] = { "light",Vector(656, 40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
-		[6] = { "light",Vector(666, -40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+		[6] = { "light",Vector(656, -40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
         --освещение в кабине
         [10] = { "dynamiclight",    Vector( 755-144, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
         -- Interior
@@ -269,7 +265,8 @@ end)
 		[15] = { "dynamiclight",    Vector(-70+144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
         [16] = { "dynamiclight",    Vector( -510+144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
     }
-    self.InteractionZones = {
+
+	 self.InteractionZones = {
         {   Pos = Vector(476, 64, 30),
             Radius = 48,
             ID = "CabinDoorLeft" },
@@ -306,7 +303,7 @@ end)
         },
         {
             ID = "RearDoor",
-            Pos = Vector(-464.8,-30,0), Radius = 20,
+            Pos = Vector(-764.8,5,55), Radius = 20,
         },
         {
             ID = "GVToggle",
@@ -317,6 +314,7 @@ end)
             Pos = Vector(-177, -66, -50), Radius = 20,
         },
     }
+	
     self.PassengerDoor = false
     self.CabinDoorLeft = false
     self.CabinDoorRight = false
@@ -347,29 +345,7 @@ end)
 	
 	--Вырезано из-за возможных сторонних сигналок которые могут быть 1/5
 	--Если вы владелец сервера и у вас не работает автодешифратор то идите нахуй (ЪеЪ)
-	
-	--[[
-	local Map = game.GetMap():lower() or ""
-	if 
-	
-		--Map:find("gm_metronvl") or
-		Map:find("gm_mus_orange_metro_h") or
-		Map:find("gm_jar_pll_redux_v1") or
-		Map:find("gm_budapest_m5") or
-		Map:find("gm_metro_surfacemetro_w") or
-		Map:find("gm_metro_mosldl_v1") or
-		Map:find("gm_metro_mosldl_v2") or
-		Map:find("gm_metro_nsk_line_2_v4") or
-		Map:find("gm_smr_1987") or
-		--Map:find("gm_metro_nekrasovskaya_line_v5") or
-		Map:find("gm_dnipro") or
-		Map:find("gm_metro_kalininskaya_line_v1")
-	
-	then
-		self.ALSFreqBlock:TriggerInput("Set",0)
-end
-	]]
-	
+
 --наложение пломб
 	self.Plombs = {
         KAH = {true,"KAHk"},
@@ -578,7 +554,7 @@ function ENT:Think()
     self:SetPackedRatio("BC", math.min(3.2,self.Pneumatic.BrakeCylinderPressure)/6.0)
     self.Engines:TriggerInput("Speed",self.Speed)
 
-    if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
+   if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
 
         local A = 2*self.Engines.BogeyMoment
         self.FrontBogey.MotorForce = (24000+6500*(A < 0 and 1 or 0))--*add--35300+10000*(A < 0 and 1 or 0)
@@ -586,13 +562,14 @@ function ENT:Think()
         self.MiddleBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
         self.MiddleBogey.Reversed = self.KMR1.Value > 0.5
 		self.RearBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
+        self.RearBogey.Reversed = self.KMR1.Value > 0.5		
 
         -- These corrections are required to beat source engine friction at very low values of motor power
         local P = math.max(0,0.04449 + 1.09879*math.abs(A) - 0.565729*A^2)
         if math.abs(A) > 0.4 then P = math.abs(A) end
         if math.abs(A) < 0.05 then P = 0 end
         if self.Speed < 10 then P = P*(1.0 + 0.5*(10.0-self.Speed)/10.0) end
-        self.MiddleBogey.MotorPower  = P*0.5*((A > 0) and 1 or -1)
+        self.RearBogey.MotorPower  = P*0.5*((A > 0) and 1 or -1)
         self.FrontBogey.MotorPower = P*0.5*((A > 0) and 1 or -1)
 
         -- Apply brakes
@@ -604,7 +581,6 @@ function ENT:Think()
         self.MiddleBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
         self.MiddleBogey.BrakeCylinderPressure = self.Pneumatic.BrakeCylinderPressure
         self.MiddleBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.BrakeCylinderPressure_dPdT
-        self.MiddleBogey.DisableContacts = self.BUV.Pant
 		self.RearBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
         self.RearBogey.BrakeCylinderPressure = self.Pneumatic.BrakeCylinderPressure
         self.RearBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.BrakeCylinderPressure_dPdT
@@ -613,11 +589,11 @@ function ENT:Think()
     return retVal
 end
 
-local function CanConstrain( VAGON, Bone )
+local function CanConstrain( VAGON, self )
 
 	if ( !VAGON )	then return false end
 	if ( !VAGON:IsWorld() && !VAGON:IsValid() )	then return false end
-	if ( !VAGON:GetPhysicsObjectNum( Bone ) || !VAGON:GetPhysicsObjectNum( Bone ):IsValid() )	then return false end
+	if ( !VAGON:GetPhysicsObjectNum( self ) || !VAGON:GetPhysicsObjectNum( self ):IsValid() )	then return false end
 
 	return true
 
@@ -630,12 +606,11 @@ function ENT:CreateRear1(pos,ang,a)
 	VAGON:SetAngles(self:GetAngles())
 	VAGON:Spawn()
 	VAGON:SetOwner(self:GetOwner())	
-	VAGON:GetPhysicsObject():SetMass(10000)
+	VAGON:GetPhysicsObject():SetMass(13000)
     -- Assign ownership	
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
 	
 	self:SetNW2Entity("VAGON",VAGON)
-	
 	--Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
 		VAGON,
@@ -668,8 +643,8 @@ function ENT:CreateRear1(pos,ang,a)
 	self.RearBogey,
 		0, --bone
 		0, --bone
-		Vector(-200,0,70),
-		Vector(200,0,70),
+		Vector(-200,0,75),
+		Vector(200,0,75),
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -684,10 +659,8 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1, --nocollide
-	false)
-	
-	
+		1 --nocollide
+	)
 --Крепление вагона к средней тележке.
 	constraint.AdvBallsocket( 
 		self.MiddleBogey,

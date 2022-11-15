@@ -94,7 +94,7 @@ ENT.ButtonMap["FrontDoor"] = {
     height = 2000,
     scale = 0.1/2,
     buttons = {
-        {ID = "FrontDoor",x=0,y=0,w=642,h=2000, tooltip="Передняя дверь\nFront door", model = {
+        {ID = "FrontDoor",x=0,y=0,w=642,h=2000, tooltip="", model = {
             var="FrontDoor",sndid="door_cab_f",
             sndvol = 1, snd = function(val) return val and "door_cab_open" or "door_cab_close" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,180,0),
@@ -121,7 +121,7 @@ ENT.ClientProps["door_cab_f"] = {
 }
 ENT.ClientProps["krepezh"] = {
     model = "models/metrostroi_train/81-740/body/krepezh.mdl",
-    pos = Vector(195,0,16),
+    pos = Vector(263,0,-74.6),
     ang = Angle(0,0,0),
     nohide = true,
 }
@@ -283,9 +283,9 @@ ENT.ClientProps["lamps_salon_off"] = {
     hide=2,
 }
 ENT.ClientProps["handrails_offside_front"] = {
-    model = "models/metrostroi_train/81-741/body/741_body_additional_front.mdl",
-    pos = Vector(127,0,-80),
-    ang = Angle(0,0,0),
+    model = "models/metrostroi_train/81-740/body/740_body_additional.mdl",
+    pos = Vector(300.9,-10,-80),
+    ang = Angle(0,0.2,0),
     hide=2,
 }
 ENT.ButtonMap["Tickers"] = {
@@ -421,7 +421,7 @@ ENT.ClientProps["RearBrake"] = {
 	pos = Vector(0,0,-78),
 	ang = Angle(0,180,0),
 	hide=2,
-		callback = function(ent,cl_ent)
+	callback = function(ent,cl_ent)
 		local VAGONK = ent:GetNW2Entity("VAGON")
 		if not IsValid(VAGON) then
 				ent:ShowHide("RearBrake",true)
@@ -457,7 +457,7 @@ for i=0,3 do
 end 
 	
 ENT.ClientProps["krepezh1"] = {
-    model = "models/metrostroi_train/81-740/body/krepezh1.mdl",
+    model = "models/metrostroi_train/81-740/body/krepezh.mdl",
     pos = Vector(0,0,0),
     ang = Angle(0,180,0),
 	nohide=true,
@@ -468,7 +468,7 @@ ENT.ClientProps["krepezh1"] = {
 				return
 			end
 		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(61.5, 0, -75.2)))
+		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(61.5, 0, -75)))
 		local ang = VAGONK:GetAngles()
 		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
 		end,
@@ -685,7 +685,7 @@ end
 --------------------------------------------------------------------------------
 local function GetDoorPosition(i,k,j)
 	if j == 0 
-	then return Vector(592 - 35.0*k     - 232.5*i,-67.5*(1-2*k),4)
+	then return Vector(591.9 - 35.0*k     - 232.5*i,-67.5*(1-2*k),4)
 	else return Vector(592 - 35.0*(1-k) - 232.5*i,-66*(1-2*k),4)
 	end
 end
@@ -698,9 +698,30 @@ end
 
 local function GetDoorPositionRearLeft(i,k,j)
 	if j == 0 			--	x						--	y        --	z 195.5 265.6
-	then return Vector(230.3 - -35.0*k - 232.1*i, 66*(1-2*k), 4.3)
-	else return Vector(160.3 - -35.0*(1-k) - 232.1*i,67*(1-2*k),4.29)
+	then return Vector(230.5 - -35.0*k - 232.1*i, 66*(1-2*k), 4.3)
+	else return Vector(160.3 - -35.0*(1-k) - 232.1*i,67.4*(1-2*k),4.3)
 	end
+end
+
+for i=0,2 do
+	for k=0,1 do
+		ENT.ClientProps["door"..i.."x"..k.."a"] = {
+			model =  "models/metrostroi_train/81-740/body/81-740_leftdoor2.mdl",
+			pos = GetDoorPosition(i,k,0),
+			ang = Angle(0,90 +180*k,0),   
+			scale = 1.001,				
+            hide = 1,
+		}
+		ENT.ClientProps["door"..i.."x"..k.."b"] = {
+			model =  "models/metrostroi_train/81-740/body/81-740_leftdoor1.mdl",
+			pos = GetDoorPosition(i,k,1),
+			ang = Angle(0,90 +180*k,0),   
+			scale = 1.001,				
+            hide = 1,
+		}
+
+	end 
+
 end
 
 	for i=0,2 do
@@ -710,6 +731,7 @@ end
 			pos = GetDoorPositionRear(i,k,0),
 			ang = Angle(0,180*k,0),      
 			hide=2,
+			scale = 1.001,					
 			callback = function(self,cl_ent)
 			local VAGONK = self:GetNW2Entity("VAGON")
 			if not IsValid(VAGONK) then
@@ -728,6 +750,7 @@ end
 			pos = GetDoorPositionRear(i,k,1),
 			ang = Angle(0,180*k,0),   
 			hide=2,
+			scale = 1.001,					
 			callback = function(self,cl_ent)
 			
 			local VAGONK = self:GetNW2Entity("VAGON")
@@ -748,6 +771,7 @@ end
 			pos = GetDoorPositionRearLeft(i,k,0),
 			ang = Angle(0,180*k,0),      
 			hide=2,
+			scale = 1.001,					
 			callback = function(self,cl_ent)
 			local VAGONK = self:GetNW2Entity("VAGON")
 			if not IsValid(VAGONK) then
@@ -766,6 +790,7 @@ end
 			pos = GetDoorPositionRearLeft(i,k,0),
 			ang = Angle(0,180*k,0),      
 			hide=2,
+			scale = 1.001,					
 			callback = function(self,cl_ent)
 			local VAGONK = self:GetNW2Entity("VAGON")
 			if not IsValid(VAGONK) then
@@ -827,6 +852,7 @@ function ENT:Initialize()
     end
 	self.skinarecalled = false
 	
+	self.FrontBogey = self:GetNW2Entity("FrontBogey")	
 	self.RearBogey = self:GetNW2Entity("RearBogey")
 	self.MiddleBogey = self:GetNW2Entity("MiddleBogey")
 	self.RearCouple = self:GetNW2Entity("RearCouple")
@@ -855,37 +881,254 @@ function ENT:UpdateWagonNumber()
     end 
 end
 
-function ENT:Think()
-    self.BaseClass.Think(self)
+function ENT:ReInitBogeySounds(bogey)
+	if not IsValid(bogey) then return end
 	
-	Metrostroi740LoadTextures(self, skinsarecalled)
+	local MotorType = self:GetNW2Int("MotorType",1)
+	if self:GetNW2Int("MotorType")==1 then		
+
+    -- Bogey-related sounds
+    bogey.SoundNames = {}
+    bogey.EngineSNDConfig = {}
+    
+	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
+    for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
+    table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,  1})--40
+    table.insert(bogey.EngineSNDConfig,{"ted2_740" ,16,08-4,24,1})--35
+    table.insert(bogey.EngineSNDConfig,{"ted3_740" ,24,16-4,32,1})--32
+    table.insert(bogey.EngineSNDConfig,{"ted4_740" ,32,24-4,40,1})--28
+    table.insert(bogey.EngineSNDConfig,{"ted5_740" ,40,32-4,48,1})--22
+    table.insert(bogey.EngineSNDConfig,{"ted6_740" ,48,40-4,56,1})--18
+    table.insert(bogey.EngineSNDConfig,{"ted7_740" ,56,48-4,64,1})--15
+    table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1})--10
+    table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1})--07
+    table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1})--05
+    --table.insert(bogey.EngineSNDConfig,{"ted11_720",88,80-4   ,0.00})--02
+
+    bogey.SoundNames = {}
 	
-	self.skinarecalled = true
+    bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
+    bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
+    bogey.SoundNames["ted3_703"]  = "subway_trains/bogey/engines/703/speed_24.wav"
+    bogey.SoundNames["ted4_703"]  = "subway_trains/bogey/engines/703/speed_32.wav"
+    bogey.SoundNames["ted5_703"]  = "subway_trains/bogey/engines/703/speed_40.wav"
+    bogey.SoundNames["ted6_703"]  = "subway_trains/bogey/engines/703/speed_48.wav"
+    bogey.SoundNames["ted7_703"]  = "subway_trains/bogey/engines/703/speed_56.wav"
+    bogey.SoundNames["ted8_703"]  = "subway_trains/bogey/engines/703/speed_64.wav"
+    bogey.SoundNames["ted9_703"]  = "subway_trains/bogey/engines/703/speed_72.wav"
+    bogey.SoundNames["ted10_703"] = "subway_trains/bogey/engines/703/speed_80.wav"
+    bogey.SoundNames["ted11_703"] = "subway_trains/bogey/engines/703/speed_88.wav"
+    --bogey.SoundNames["tedm_703"]  = "subway_trains/bogey/engines/703/engines_medium.wav"
 
-for i=0,2 do
-	for k=0,1 do
-		self.ClientProps["door"..i.."x"..k.."a"] = {
-			model = self:GetNW2String("skin_door_pass_2", "models/metrostroi_train/81-740/body/81-740_leftdoor2.mdl"),
-			pos = GetDoorPosition(i,k,0),
-			ang = Angle(0,90 +180*k,0),      
-			skin = self:GetNWInt("skin_skin_body", 0),
-            hide = 1,
-		}
-		self.ClientProps["door"..i.."x"..k.."b"] = {
-			model = self:GetNW2String("skin_door_pass_1", "models/metrostroi_train/81-740/body/81-740_leftdoor1.mdl"),
-			pos = GetDoorPosition(i,k,1),
-			ang = Angle(0,90 +180*k,0),   
-			skin = self:GetNWInt("skin_skin_body", 0),
-            hide = 1,
-		}
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    bogey.SoundNames["ted1_740"]  = "subway_trains/rusich/engines/engine_8.wav"
+    bogey.SoundNames["ted2_740"]  = "subway_trains/rusich/engines/engine_16.wav"
+    bogey.SoundNames["ted3_740"]  = "subway_trains/rusich/engines/engine_24.wav"
+    bogey.SoundNames["ted4_740"]  = "subway_trains/rusich/engines/engine_32.wav"
+    bogey.SoundNames["ted5_740"]  = "subway_trains/rusich/engines/engine_40.wav"
+    bogey.SoundNames["ted6_740"]  = "subway_trains/rusich/engines/engine_48.wav"
+    bogey.SoundNames["ted7_740"]  = "subway_trains/rusich/engines/engine_56.wav"
+    bogey.SoundNames["ted8_740"]  = "subway_trains/rusich/engines/engine_64.wav"
+    bogey.SoundNames["ted9_740"]  = "subway_trains/rusich/engines/engine_72.wav"
+    bogey.SoundNames["ted10_740"] = "subway_trains/rusich/engines/engine_80.wav"
 
-	end 
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    self.SoundNames["ted11_720"] = "subway_trains/bogey/engines/720/speed_88.wav"
+    self.SoundNames["ted1_720"]  = "subway_trains/bogey/engines/720/speed_8.wav"
+    self.SoundNames["ted2_720"]  = "subway_trains/bogey/engines/720/speed_16.wav"
+    self.SoundNames["ted3_720"]  = "subway_trains/bogey/engines/720/speed_24.wav"
+    self.SoundNames["ted4_720"]  = "subway_trains/bogey/engines/720/speed_32.wav"
+    self.SoundNames["ted5_720"]  = "subway_trains/bogey/engines/720/speed_40.wav"
+    self.SoundNames["ted6_720"]  = "subway_trains/bogey/engines/720/speed_48.wav"
+    self.SoundNames["ted7_720"]  = "subway_trains/bogey/engines/720/speed_56.wav"
+    self.SoundNames["ted8_720"]  = "subway_trains/bogey/engines/720/speed_64.wav"
+    self.SoundNames["ted9_720"]  = "subway_trains/bogey/engines/720/speed_72.wav"
+    self.SoundNames["ted10_720"] = "subway_trains/bogey/engines/720/speed_80.wav"
+    --*0.975
+    --*1.025
+	local skr = math.random (1,4)
+	local skripit = math.random (1,5)	
+    bogey.SoundNames["flangea"]      = "subway_trains/rusich/bogey/skrip1_"..skr..".wav"
+    bogey.SoundNames["flangeb"]      = "subway_trains/rusich/bogey/skrip2_"..skripit..".wav"
+    bogey.SoundNames["flange1"]      = "subway_trains/rusich/bogey/flange_9.wav"
+    bogey.SoundNames["flange2"]      = "subway_trains/rusich/bogey/Flange_10.wav"
+    bogey.SoundNames["brakea_loop1"]       = "subway_trains/rusich/bogey/braking_async3.wav"
+    bogey.SoundNames["brakea_loop2"]       = "subway_trains/bogey/braking_async2.wav"
+    bogey.SoundNames["brake_loop1"]       = "subway_trains/bogey/brake_rattle3.wav"
+    bogey.SoundNames["brake_loop2"]       = "subway_trains/bogey/brake_rattle4.wav"
+    bogey.SoundNames["brake_loop3"]       = "subway_trains/bogey/brake_rattle5.wav"
+    bogey.SoundNames["brake_loop4"]       = "subway_trains/bogey/brake_rattle6.wav"
+    bogey.SoundNames["brake_loopb"]       = "subway_trains/common/junk/junk_background_braking1.wav"
+    bogey.SoundNames["brake2_loop1"]       = "subway_trains/bogey/brake_rattle2.wav"
+    bogey.SoundNames["brake2_loop2"]       = "subway_trains/bogey/brake_rattle_h.wav"
+    bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
+    bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
+
+    -- Remove old sounds
+    if bogey.Sounds then
+        for k,v in pairs(bogey.Sounds) do
+            v:Stop()
+        end
+    end
+
+    -- Create sounds
+    bogey.Sounds = {}
+    bogey.Playing = {}
+    for k,v in pairs(bogey.SoundNames) do
+        --if not file.Exists(v, "MOD") then
+--          bogey.SoundNames[k] = nil
+        --end
+        util.PrecacheSound(v)
+        local e = bogey
+        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
+            e = bogey:GetNW2Entity("TrainWheels")
+        end
+        bogey.Sounds[k] = CreateSound(e, Sound(v))
+    end
+
+    bogey.Async = nil
+    --bogey.MotorSoundType = nil
 
 end
+	if self:GetNW2Int("MotorType")==2 then		
 
-    if not self.RenderClientEnts or self.CreatingCSEnts then
-        return
+    -- Bogey-related sounds
+    bogey.SoundNames = {}
+    bogey.EngineSNDConfig = {}
+    
+	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
+    for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
+    table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,  1})--40
+    table.insert(bogey.EngineSNDConfig,{"ted2_740" ,16,08-4,24,1})--35
+    table.insert(bogey.EngineSNDConfig,{"ted3_740" ,24,16-4,32,1})--32
+    table.insert(bogey.EngineSNDConfig,{"ted4_740" ,32,24-4,40,1})--28
+    table.insert(bogey.EngineSNDConfig,{"ted5_740" ,40,32-4,48,1})--22
+    table.insert(bogey.EngineSNDConfig,{"ted6_740" ,48,40-4,56,1})--18
+    table.insert(bogey.EngineSNDConfig,{"ted7_740" ,56,48-4,64,1})--15
+    table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1})--10
+    table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1})--07
+    table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1})--05
+    table.insert(bogey.EngineSNDConfig,{"ted11_740",88,72-4,96,1})--05	
+
+    bogey.SoundNames = {}
+	
+    bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
+    bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
+    bogey.SoundNames["ted3_703"]  = "subway_trains/bogey/engines/703/speed_24.wav"
+    bogey.SoundNames["ted4_703"]  = "subway_trains/bogey/engines/703/speed_32.wav"
+    bogey.SoundNames["ted5_703"]  = "subway_trains/bogey/engines/703/speed_40.wav"
+    bogey.SoundNames["ted6_703"]  = "subway_trains/bogey/engines/703/speed_48.wav"
+    bogey.SoundNames["ted7_703"]  = "subway_trains/bogey/engines/703/speed_56.wav"
+    bogey.SoundNames["ted8_703"]  = "subway_trains/bogey/engines/703/speed_64.wav"
+    bogey.SoundNames["ted9_703"]  = "subway_trains/bogey/engines/703/speed_72.wav"
+    bogey.SoundNames["ted10_703"] = "subway_trains/bogey/engines/703/speed_80.wav"
+    bogey.SoundNames["ted11_703"] = "subway_trains/bogey/engines/703/speed_88.wav"
+    --bogey.SoundNames["tedm_703"]  = "subway_trains/bogey/engines/703/engines_medium.wav"
+
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    bogey.SoundNames["ted1_740"]  = "subway_trains/rusich/engines_new/speed_8.wav"
+    bogey.SoundNames["ted2_740"]  = "subway_trains/rusich/engines_new/speed_16.wav"
+    bogey.SoundNames["ted3_740"]  = "subway_trains/rusich/engines_new/speed_24.wav"
+    bogey.SoundNames["ted4_740"]  = "subway_trains/rusich/engines_new/speed_32.wav"
+    bogey.SoundNames["ted5_740"]  = "subway_trains/rusich/engines_new/speed_40.wav"
+    bogey.SoundNames["ted6_740"]  = "subway_trains/rusich/engines_new/speed_48.wav"
+    bogey.SoundNames["ted7_740"]  = "subway_trains/rusich/engines_new/speed_56.wav"
+    bogey.SoundNames["ted8_740"]  = "subway_trains/rusich/engines_new/speed_64.wav"
+    bogey.SoundNames["ted9_740"]  = "subway_trains/rusich/engines_new/speed_72.wav"
+    bogey.SoundNames["ted10_740"] = "subway_trains/rusich/engines_new/speed_80.wav"
+    bogey.SoundNames["ted11_740"] = "subway_trains/rusich/engines_new/speed_88.wav"	
+
+    --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
+    self.SoundNames["ted11_720"] = "subway_trains/bogey/engines/720/speed_88.wav"
+    self.SoundNames["ted1_720"]  = "subway_trains/bogey/engines/720/speed_8.wav"
+    self.SoundNames["ted2_720"]  = "subway_trains/bogey/engines/720/speed_16.wav"
+    self.SoundNames["ted3_720"]  = "subway_trains/bogey/engines/720/speed_24.wav"
+    self.SoundNames["ted4_720"]  = "subway_trains/bogey/engines/720/speed_32.wav"
+    self.SoundNames["ted5_720"]  = "subway_trains/bogey/engines/720/speed_40.wav"
+    self.SoundNames["ted6_720"]  = "subway_trains/bogey/engines/720/speed_48.wav"
+    self.SoundNames["ted7_720"]  = "subway_trains/bogey/engines/720/speed_56.wav"
+    self.SoundNames["ted8_720"]  = "subway_trains/bogey/engines/720/speed_64.wav"
+    self.SoundNames["ted9_720"]  = "subway_trains/bogey/engines/720/speed_72.wav"
+    self.SoundNames["ted10_720"] = "subway_trains/bogey/engines/720/speed_80.wav"
+    --*0.975
+    --*1.025
+	local skr = math.random (1,4)
+	local skripit = math.random (1,5)	
+    bogey.SoundNames["flangea"]      = "subway_trains/rusich/bogey/skrip1_"..skr..".wav"
+    bogey.SoundNames["flangeb"]      = "subway_trains/rusich/bogey/skrip2_"..skripit..".wav"
+    bogey.SoundNames["flange1"]      = "subway_trains/rusich/bogey/flange_9.wav"
+    bogey.SoundNames["flange2"]      = "subway_trains/rusich/bogey/Flange_10.wav"
+    bogey.SoundNames["brakea_loop1"]       = "subway_trains/rusich/bogey/braking_async3.wav"
+    bogey.SoundNames["brakea_loop2"]       = "subway_trains/bogey/braking_async2.wav"
+    bogey.SoundNames["brake_loop1"]       = "subway_trains/bogey/brake_rattle3.wav"
+    bogey.SoundNames["brake_loop2"]       = "subway_trains/bogey/brake_rattle4.wav"
+    bogey.SoundNames["brake_loop3"]       = "subway_trains/bogey/brake_rattle5.wav"
+    bogey.SoundNames["brake_loop4"]       = "subway_trains/bogey/brake_rattle6.wav"
+    bogey.SoundNames["brake_loopb"]       = "subway_trains/common/junk/junk_background_braking1.wav"
+    bogey.SoundNames["brake2_loop1"]       = "subway_trains/bogey/brake_rattle2.wav"
+    bogey.SoundNames["brake2_loop2"]       = "subway_trains/bogey/brake_rattle_h.wav"
+    bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
+    bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
+
+    -- Remove old sounds
+    if bogey.Sounds then
+        for k,v in pairs(bogey.Sounds) do
+            v:Stop()
+        end
     end
+
+    -- Create sounds
+    bogey.Sounds = {}
+    bogey.Playing = {}
+    for k,v in pairs(bogey.SoundNames) do
+        --if not file.Exists(v, "MOD") then
+--          bogey.SoundNames[k] = nil
+        --end
+        util.PrecacheSound(v)
+        local e = bogey
+        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
+            e = bogey:GetNW2Entity("TrainWheels")
+        end
+        bogey.Sounds[k] = CreateSound(e, Sound(v))
+    end
+
+    bogey.Async = nil
+    --bogey.MotorSoundType = nil
+
+end
+end
+
+function ENT:Think()
+    self.BaseClass.Think(self)
+	local refresh = false--true		
+	if self:GetNW2Int("MotorType")==1 then		
+		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.FrontBogey)
+	end
+	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.RearBogey)
+	end	
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
+	end
+	if self:GetNW2Int("MotorType")==2 then		
+		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/speed_8.wav" 
+	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.FrontBogey)
+	end
+	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/speed_8.wav" 
+	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.RearBogey)
+	end	
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/speed_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
+	end
     --[[if not self.PassSchemesDone then
         local sarmat = self.ClientEnts.PassSchemes
         local sarmatr = self.ClientEnts.PassSchemesR
@@ -1158,16 +1401,18 @@ end
 	end
 	
     local door_f = self:GetPackedBool("FrontDoor")
-    local door_b = self:GetPackedBool("RearDoor")
-    local door_cab_f = self:Animate("door_cab_f",door_f and 1 or -0.05, 0, 0.55, 8, 0.55)
-    local door_cab_b = self:Animate("door_cab_b",door_b and 1 or -0.05, 0, 0.55, 8, 0.55)
+    local door_t = self:GetPackedBool("RearDoor")	
+    local door_cab_f = self:Animate("door_cab_f",door_f and 0.99 or -0.05, 0, 0.55, 4.5, 0.55)
+    local door_cab_b = self:Animate("door_cab_b",door_t and 0.99 or -0.05, 0, 0.55, 4.5, 0.55)
+	
+	local RearDoor = self:Animate("RearDoor",door_t and  0.5/*(self.Door2 or 0.99)*/ or 0,0,1, 4, 1) 	
 
     local door1s = (door_cab_f > 0 or door_f)
     if self.Door1 ~= door1s then
         self.Door1 = door1s
         self:PlayOnce("FrontDoor","bass",door1s and 1 or 0)
     end
-    local door2s = (door_cab_b > 0 or door_b)
+    local door2s = (door_cab_b > 0 or door_t)
     if self.Door2 ~= door2s then
         self.Door2 = door2s
         self:PlayOnce("RearDoor","bass",door2s and 1 or 0)

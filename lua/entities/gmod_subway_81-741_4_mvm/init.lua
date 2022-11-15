@@ -18,6 +18,8 @@ function ENT:Initialize()
 	--self:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
+	
+    self.NormalMass = 24000		
 
     -- Create seat entities
     self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35))
@@ -29,12 +31,16 @@ function ENT:Initialize()
     -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740")
 --------------------------------------------------------------------------------
-        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  
+        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),true,"740NOTR") --110 0 -80  
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)		
+		
+		self.FrontBogey:SetNWInt("MotorSoundType",2)
+		self.RearBogey:SetNWInt("MotorSoundType",2)		
+	    self.RearBogey.DisableContacts = true		
 --------------------------------------------------------------------------------
-        self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")
+        self.FrontCouple = self:CreateCouple(Vector(610,0,-60),Angle(0,0,0),true,"717")
 --------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-609,0,-60),Angle(0,-180,0),false,"740")
+        self.RearCouple  = self:CreateCouple(Vector(-610,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
@@ -46,8 +52,6 @@ function ENT:Initialize()
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
-    self.FrontBogey:SetNWInt("MotorSoundType",2)
-    self.RearBogey:SetNWInt("MotorSoundType",2)
 
     local rand = math.random()*0.05
     self.FrontBogey:SetNWFloat("SqualPitch",1.45+rand)
@@ -60,10 +64,12 @@ function ENT:Initialize()
 		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)
 		self.MiddleBogey:SetNWInt("MotorSoundType",2)
 		self.MiddleBogey:SetNWInt("Async",true)
+		self.MiddleBogey:SetNWBool("DisableEngines",true)			
+		self.MiddleBogey.DisableSound = 1			
 		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
 		constraint.AdvBallsocket( 
-		self.MiddleBogey,
 		self,
+		self.MiddleBogey,
 		0, --bone
 		0, --bone
 		Vector(0,0,0), --Vector(70,0,90)
@@ -71,37 +77,13 @@ function ENT:Initialize()
 		0, --forcelimit
 		0, --torquelimit
 		
-		-0, --xmin --высота
-		-0, --ymin  --поворот влево/вправо
-		-100, --zmin
+		0, --xmin
+		0, --ymin
+		-180, --zmin
 		
-		0, --xmax --высота
-		0, --ymax --20  --поворот влево/вправо
-		100, --zmax
-		
-		0, --yfric
-		0, --zfric
-		0, --xfric
-		0, --rotonly
-		1 --nocollide
-	)
-	constraint.AdvBallsocket( 
-		self.MiddleBogey,
-		self,
-		0, --bone
-		0, --bone
-		Vector(0,0,0), --Vector(70,0,90)
-		Vector(0,0,0), --Vector(80,0,90)
-		0, --forcelimit
-		0, --torquelimit
-		
-		-0, --xmin --высота
-		-0, --ymin  --поворот влево/вправо
-		-100, --zmin
-		
-		0, --xmax --высота
-		0, --ymax --20  --поворот влево/вправо
-		100, --zmax
+		0, --xmax
+		0, --ymax
+		180, --zmax
 		
 		0, --yfric
 		0, --zfric
@@ -109,7 +91,7 @@ function ENT:Initialize()
 		0, --rotonly
 		1 --nocollide
 	)
-end)
+end)	
 timer.Simple(0.0, function()	
 	self.Rear1 = self:CreateRear1(Vector(-325,0,0),Angle(0,0,0)) --вагон
 end) 
@@ -151,7 +133,7 @@ end)
         },
         {
             ID = "RearDoor",
-            Pos = Vector(-464.8,-30,0), Radius = 20,
+            Pos = Vector(-654,-15,54.2), Radius = 20,
         },
         {
             ID = "FrontDoor",
@@ -242,8 +224,7 @@ function ENT:Think()
     --self:SetLightPower(12,self.BUV.Power and mul > 0, mul)
     self.Engines:TriggerInput("Speed",self.Speed)
     --мощность двигателей и тормозов    
-    if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
-
+   if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
 
         local A = 2*self.Engines.BogeyMoment
         self.FrontBogey.MotorForce = (24000+6500*(A < 0 and 1 or 0))--*add--35300+10000*(A < 0 and 1 or 0)
@@ -251,13 +232,14 @@ function ENT:Think()
         self.MiddleBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
         self.MiddleBogey.Reversed = self.KMR1.Value > 0.5
 		self.RearBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
+        self.RearBogey.Reversed = self.KMR1.Value > 0.5		
 
         -- These corrections are required to beat source engine friction at very low values of motor power
         local P = math.max(0,0.04449 + 1.09879*math.abs(A) - 0.565729*A^2)
         if math.abs(A) > 0.4 then P = math.abs(A) end
         if math.abs(A) < 0.05 then P = 0 end
         if self.Speed < 10 then P = P*(1.0 + 0.5*(10.0-self.Speed)/10.0) end
-        self.MiddleBogey.MotorPower  = P*0.5*((A > 0) and 1 or -1)
+        self.RearBogey.MotorPower  = P*0.5*((A > 0) and 1 or -1)
         self.FrontBogey.MotorPower = P*0.5*((A > 0) and 1 or -1)
 
         -- Apply brakes
@@ -269,19 +251,19 @@ function ENT:Think()
         self.MiddleBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
         self.MiddleBogey.BrakeCylinderPressure = self.Pneumatic.BrakeCylinderPressure
         self.MiddleBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.BrakeCylinderPressure_dPdT
-        self.MiddleBogey.DisableContacts = self.BUV.Pant
 		self.RearBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
         self.RearBogey.BrakeCylinderPressure = self.Pneumatic.BrakeCylinderPressure
         self.RearBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.BrakeCylinderPressure_dPdT
+
     end
     return retVal
 end
 
-local function CanConstrain( VAGON, Bone )
+local function CanConstrain( VAGON, self )
 
 	if ( !VAGON )	then return false end
 	if ( !VAGON:IsWorld() && !VAGON:IsValid() )	then return false end
-	if ( !VAGON:GetPhysicsObjectNum( Bone ) || !VAGON:GetPhysicsObjectNum( Bone ):IsValid() )	then return false end
+	if ( !VAGON:GetPhysicsObjectNum( self ) || !VAGON:GetPhysicsObjectNum( self ):IsValid() )	then return false end
 
 	return true
 
@@ -294,12 +276,11 @@ function ENT:CreateRear1(pos,ang,a)
 	VAGON:SetAngles(self:GetAngles())
 	VAGON:Spawn()
 	VAGON:SetOwner(self:GetOwner())	
-	VAGON:GetPhysicsObject():SetMass(10000)	
+	VAGON:GetPhysicsObject():SetMass(13000)	
     -- Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
 	
 	self:SetNW2Entity("VAGON",VAGON)
-
 	--Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
 		VAGON,
@@ -332,8 +313,8 @@ function ENT:CreateRear1(pos,ang,a)
 	self.RearBogey,
 		0, --bone
 		0, --bone
-		Vector(-200,0,70),
-		Vector(200,0,70),
+		Vector(-200,0,75),
+		Vector(200,0,75),
 		0, --forcelimit
 		0, --torquelimit
 		
@@ -348,27 +329,25 @@ function ENT:CreateRear1(pos,ang,a)
 		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1, --nocollide
-	false)
-	
-	
+		1 --nocollide
+	)
 --Крепление вагона к средней тележке.
 	constraint.AdvBallsocket( 
 		self.MiddleBogey,
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(-40,5,70), --Vector(70,0,90)
-		Vector(-40,5,70), --Vector(80,0,90)
+		Vector(0,5,70), --Vector(70,0,90)
+		Vector(100,5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --xmin --высота
-		-0.2, --ymin  --поворот влево/вправо
+		-100, --xmin --высота
+		0, --ymin  --поворот влево/вправо
 		-100, --zmin
 		
-		50, --xmax --высота
-		0.2, --ymax --20  --поворот влево/вправо
+		100, --xmax --высота
+		0, --ymax --20  --поворот влево/вправо
 		100, --zmax
 		
 		0, --yfric
@@ -382,17 +361,17 @@ function ENT:CreateRear1(pos,ang,a)
 		VAGON,
 		0, --bone
 		0, --bone
-		Vector(-40,-5,70), --Vector(70,0,90)
-		Vector(-40,-5,70), --Vector(80,0,90)
+		Vector(0,-5,70), --Vector(70,0,90)
+		Vector(100,-5,70), --Vector(80,0,90)
 		0, --forcelimit
 		0, --torquelimit
 		
-		-50, --xmin --высота
-		-0.2, --ymin  --поворот влево/вправо
+		-100, --xmin --высота
+		0, --ymin  --поворот влево/вправо
 		-100, --zmin
 		
-		50, --xmax --высота
-		0.2, --ymax --20  --поворот влево/вправо
+		100, --xmax --высота
+		0, --ymax --20  --поворот влево/вправо
 		100, --zmax
 		
 		0, --yfric
@@ -405,7 +384,6 @@ function ENT:CreateRear1(pos,ang,a)
 	table.insert(self.TrainEntities,VAGON)
 	return VAGON
 end 
-
 
 --При сцепке открывать краны
 function ENT:OnCouple(train,isfront)
