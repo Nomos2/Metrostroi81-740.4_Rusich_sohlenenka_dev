@@ -16,6 +16,10 @@ Train.740.CameraPVZ     = ПВЗ
 
 #common 
 
+Spawner.740.MotorType    = Тип звука ТЭД
+Spawner.740.MotorType1    = Тип 1
+Spawner.740.MotorType2    = Тип 2
+
 Common.740.CabinDoorLeft2 	= Левая дверь в кабину машиниста
 Common.740.CabinDoorRight2	= Правая дверь в кабину машиниста
 
@@ -37,27 +41,29 @@ Common.740.FrontTrainLineIsolationToggle 	= Концевой кран напор
 Common.740.RearTrainLineIsolationToggle 	= Концевой кран напорной магистрали
 Common.740.RearBrakeLineIsolationToggle 	= Концевой кран тормозной магистрали
 
-Common.740.RearDoor 						= Задняя торцевая дверь
+Common.740.RearDoor 						= Задняя торцевая дверь (Не работает. WIP)
+Common.741.RearDoor 						= Задняя торцевая дверь
+Common.740.FrontDoor 						= Передняя торцевая дверь
 
-Common740.Vityaz.F1             = Витязь: F1
-Common740.Vityaz.F2             = Витязь: Следующая страница
-Common740.Vityaz.F3             = Витязь: Предыдущая страница
-Common740.Vityaz.F4             = Витязь: Штатный режим
-Common740.Vityaz.1              = Витязь: 1
-Common740.Vityaz.4              = Витязь: 4
-Common740.Vityaz.7              = Витязь: 7
-Common740.Vityaz.2              = Витязь: 2
-Common740.Vityaz.5              = Витязь: 5
-Common740.Vityaz.8              = Витязь: 8
-Common740.Vityaz.0              = Витязь: 0
-Common740.Vityaz.3              = Витязь: 3
-Common740.Vityaz.6              = Витязь: 6
-Common740.Vityaz.9              = Витязь: 9
-Common740.Vityaz.F5             = Витязь: ЗВ
-Common740.Vityaz.F6             = Витязь: Вверх\Скорость
-Common740.Vityaz.F7             = Витязь: Вниз\Токи
-Common740.Vityaz.F8             = Витязь: Ввод\Вагонное оборудование
-Common740.Vityaz.F9             = Витязь: Выбор\Управление вагонным оборудованием
+Common.740.Vityaz.F1             = Витязь: F1
+Common.740.Vityaz.F2             = Витязь: Следующая страница
+Common.740.Vityaz.F3             = Витязь: Предыдущая страница
+Common.740.Vityaz.F4             = Витязь: Штатный режим
+Common.740.Vityaz.1              = Витязь: 1
+Common.740.Vityaz.4              = Витязь: 4
+Common.740.Vityaz.7              = Витязь: 7
+Common.740.Vityaz.2              = Витязь: 2
+Common.740.Vityaz.5              = Витязь: 5
+Common.740.Vityaz.8              = Витязь: 8
+Common.740.Vityaz.0              = Витязь: 0
+Common.740.Vityaz.3              = Витязь: 3
+Common.740.Vityaz.6              = Витязь: 6
+Common.740.Vityaz.9              = Витязь: 9
+Common.740.Vityaz.F5             = Витязь: ЗВ
+Common.740.Vityaz.F6             = Витязь: Вверх\Скорость
+Common.740.Vityaz.F7             = Витязь: Вниз\Токи
+Common.740.Vityaz.F8             = Витязь: Ввод\Вагонное оборудование
+Common.740.Vityaz.F9             = Витязь: Выбор\Управление вагонным оборудованием
 
 Common.740.VentCMode        = Режим работы вентилятора
 Common.740.VentCMode+       = Увеличение силы обогрева
@@ -204,9 +210,12 @@ Common.740.SFV32            = SF30: Видео
 Common.740.SFV33            = SF31: Камеры
 Common.740.SFV34            = SF32: ПрОст
 Common.740.SFV35            = SF33: Резерв
+Common.740.SFV35            = SF33: Резерв
 
 #gmod_subway_81-740_4_mvm
 #Buttons:
+
+Entities.gmod_subway_81-740_4_mvm.Buttons.RearDoor.RearDoor       = @[Common.741.RearDoor]
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.BackVent.VentCondMode-      = @[Common.740.VentCMode] @[Common.ALL.CCW]
 Entities.gmod_subway_81-740_4_mvm.Buttons.BackVent.VentCondMode+      = @[Common.740.VentCMode] @[Common.ALL.CW]
@@ -218,25 +227,25 @@ Entities.gmod_subway_81-740_4_mvm.Buttons.RV.EmerX2Set                = @[Common
 Entities.gmod_subway_81-740_4_mvm.Buttons.RV.EmerCloseDoorsSet        = @[Common.740.EmerCloseDoors]
 Entities.gmod_subway_81-740_4_mvm.Buttons.RV.EmergencyDoorsToggle     = @[Common.740.EmergencyDoors]
 
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF1Set = @[Common740.Vityaz.F1]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF2Set = @[Common740.Vityaz.F2]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF3Set = @[Common740.Vityaz.F3]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF4Set = @[Common740.Vityaz.F4]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz1Set = @[Common740.Vityaz.1]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz4Set = @[Common740.Vityaz.4]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz7Set = @[Common740.Vityaz.7]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz2Set = @[Common740.Vityaz.2]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz5Set = @[Common740.Vityaz.5]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz8Set = @[Common740.Vityaz.8]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz0Set = @[Common740.Vityaz.0]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz3Set = @[Common740.Vityaz.3]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz6Set = @[Common740.Vityaz.6]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz9Set = @[Common740.Vityaz.9]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF5Set = @[Common740.Vityaz.F5]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF6Set = @[Common740.Vityaz.F6]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF7Set = @[Common740.Vityaz.F7]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF8Set = @[Common740.Vityaz.F8]
-Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF9Set = @[Common740.Vityaz.F9]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF1Set = @[Common.740.Vityaz.F1]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF2Set = @[Common.740.Vityaz.F2]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF3Set = @[Common.740.Vityaz.F3]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF4Set = @[Common.740.Vityaz.F4]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz1Set = @[Common.740.Vityaz.1]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz4Set = @[Common.740.Vityaz.4]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz7Set = @[Common.740.Vityaz.7]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz2Set = @[Common.740.Vityaz.2]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz5Set = @[Common.740.Vityaz.5]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz8Set = @[Common.740.Vityaz.8]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz0Set = @[Common.740.Vityaz.0]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz3Set = @[Common.740.Vityaz.3]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz6Set = @[Common.740.Vityaz.6]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.Vityaz9Set = @[Common.740.Vityaz.9]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF5Set = @[Common.740.Vityaz.F5]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF6Set = @[Common.740.Vityaz.F6]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF7Set = @[Common.740.Vityaz.F7]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF8Set = @[Common.740.Vityaz.F8]
+Entities.gmod_subway_81-740_4_mvm.Buttons.VityazButtons.VityazF9Set = @[Common.740.Vityaz.F9]
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.BackPPZ.SF1Toggle           = @[Common.740.SF1]
 Entities.gmod_subway_81-740_4_mvm.Buttons.BackPPZ.SF2Toggle           = @[Common.740.SF2]
@@ -435,6 +444,7 @@ Entities.gmod_subway_81-741_4_mvm.Buttons.PVZ.SFV31Toggle         = @[Common.740
 Entities.gmod_subway_81-741_4_mvm.Buttons.PVZ.SFV32Toggle         = @[Common.740.SFV32]
 Entities.gmod_subway_81-741_4_mvm.Buttons.PVZ.SFV33Toggle         = @[Common.740.SFV33]
 
+Entities.gmod_subway_81-741_4_mvm.Buttons.FrontDoor.FrontDoor       = @[Common.740.FrontDoor]
 Entities.gmod_subway_81-741_4_mvm.Buttons.RearDoor.RearDoor       = @[Common.740.RearDoor]
 Entities.gmod_subway_81-741_4_mvm.Buttons.FrontPneumatic.FrontBrakeLineIsolationToggle    = @[Common.740.FrontBrakeLineIsolationToggle]
 Entities.gmod_subway_81-741_4_mvm.Buttons.FrontPneumatic.FrontTrainLineIsolationToggle    = @[Common.740.FrontTrainLineIsolationToggle]
@@ -444,10 +454,10 @@ Entities.gmod_subway_81-741_4_mvm.Buttons.RearPneumatic.RearBrakeLineIsolationTo
 #Spawner:
 
 Entities.gmod_subway_81-740_4_mvm.Spawner.Announcer.Name          = @[Common.Spawner.Announcer]
-
+Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.Name 		  = @[Spawner.740.MotorType] 
+Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.1         	  = @[Spawner.740.MotorType1]
+Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.2          	  = @[Spawner.740.MotorType2]
 Entities.gmod_subway_81-740_4_mvm.Spawner.SpawnMode.Name          = @[Common.Spawner.SpawnMode]
-
-Entities.gmod_subway_81-740_4_mvm.Spawner.Antenna.Name	          = Антенна
 
 Entities.gmod_subway_81-740_4_mvm.Spawner.SpawnMode.1             = @[Common.Spawner.SpawnMode.Full]
 Entities.gmod_subway_81-740_4_mvm.Spawner.SpawnMode.2             = @[Common.Spawner.SpawnMode.Deadlock]
