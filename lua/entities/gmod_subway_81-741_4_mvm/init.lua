@@ -165,6 +165,19 @@ end)
     self.FrontDoor = false
     self.RearDoor = false
 	
+function ENT:TrainSpawnerUpdate()
+	local MotorType = self:GetNW2Int("MotorType")	
+       if MotorType == 1 then
+            MotorType = math.ceil(math.random()*1+0.5)
+          else MotorType = MotorType-1 end	
+	self:SetNW2Int("MotorType",MotorType)	
+	self:SetNW2Int("MotorType",math.random(1, 2))		
+    --рандомизация цвета табло
+	--local ALS = math.random(1, 3)
+	--self:SetNW2Int("tablo_color", ALS)
+	--print(self:GetNW2String("Texture"))
+end	
+	
 end
 --------------------------------------------------------------------------------
 --Основное
