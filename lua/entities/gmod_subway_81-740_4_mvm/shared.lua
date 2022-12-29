@@ -569,7 +569,7 @@ ENT.Spawner = {
         if val==1 then ent.BV:TriggerInput("Close",1) end
         ent.Pneumatic.TrainLinePressure = 7.6+math.random()*0.6
     end},--]]
-	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType1","Spawner.740.MotorType2"}},	
+	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType.Random","Spawner.740.MotorType1","Spawner.740.MotorType2"}},	
 	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, nil,function(ent,val,rot,i,wagnum,rclk)
         if rclk then return end
         if ent._SpawnerStarted~=val then
