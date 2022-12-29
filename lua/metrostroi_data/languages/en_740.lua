@@ -17,8 +17,9 @@ Train.740.CameraPVZ     = PVZ
 #common 
 
 Spawner.740.MotorType     = Sound type TED
-Spawner.740.MotorType1    = Type 1
-Spawner.740.MotorType2    = Type 2
+Spawner.740.MotorType.Random   = Random
+Spawner.740.MotorType2    = Type 1
+Spawner.740.MotorType3    = Type 2
 
 Common.740.CabinDoorLeft2 	= Left door to the driver's cab
 Common.740.CabinDoorRight2	= Right door to the driver's cab
@@ -453,8 +454,9 @@ Entities.gmod_subway_81-741_4_mvm.Buttons.RearPneumatic.RearBrakeLineIsolationTo
 #Spawner:
 Entities.gmod_subway_81-740_4_mvm.Spawner.Announcer.Name          = @[Common.Spawner.Announcer]
 Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.Name 		  = @[Spawner.740.MotorType] 
-Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.1         	  = @[Spawner.740.MotorType1]
-Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.2          	  = @[Spawner.740.MotorType2]
+Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.1 		  	  = @[Spawner.740.MotorType.Random] 
+Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.2         	  = @[Spawner.740.MotorType2]
+Entities.gmod_subway_81-740_4_mvm.Spawner.MotorType.3          	  = @[Spawner.740.MotorType3]
 Entities.gmod_subway_81-740_4_mvm.Spawner.SpawnMode.Name          = @[Common.Spawner.SpawnMode]
 
 Entities.gmod_subway_81-740_4_mvm.Spawner.SpawnMode.1             = @[Common.Spawner.SpawnMode.Full]
