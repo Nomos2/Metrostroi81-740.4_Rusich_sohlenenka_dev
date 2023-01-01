@@ -19,7 +19,19 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
-    self.NormalMass = 24000		
+    self.NormalMass = 24000	
+
+    -- Prop-protection related
+    if CPPI and IsValid(self.Owner) then
+        self:CPPISetOwner(self.Owner)
+    end
+
+
+    -- Get default train mass
+    if IsValid(self:GetPhysicsObject()) then
+        self.NormalMass = self:GetPhysicsObject():GetMass()
+    end
+    	
 
     -- Create seat entities
     self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35))
@@ -165,6 +177,8 @@ end)
     self.FrontDoor = false
     self.RearDoor = false
 	
+end
+
 function ENT:TrainSpawnerUpdate()
 	local MotorType = self:GetNW2Int("MotorType")	
        if MotorType == 1 then
@@ -177,8 +191,6 @@ function ENT:TrainSpawnerUpdate()
 	--self:SetNW2Int("tablo_color", ALS)
 	--print(self:GetNW2String("Texture"))
 end	
-	
-end
 --------------------------------------------------------------------------------
 --Основное
 function ENT:Think()
@@ -272,31 +284,32 @@ function ENT:Think()
     return retVal
 end
 
-local function CanConstrain( VAGON, self )
+local function CanConstrain( ent, self )
 
-	if ( !VAGON )	then return false end
-	if ( !VAGON:IsWorld() && !VAGON:IsValid() )	then return false end
-	if ( !VAGON:GetPhysicsObjectNum( self ) || !VAGON:GetPhysicsObjectNum( self ):IsValid() )	then return false end
+	if ( !ent )	then return false end
+	if ( !ent:IsWorld() && !ent:IsValid() )	then return false end
+	if ( !ent:GetPhysicsObjectNum( self ) || !ent:GetPhysicsObjectNum( self ):IsValid() )	then return false end
 
 	return true
 
 end
 
 function ENT:CreateRear1(pos,ang,a)
-	local VAGON = ents.Create("prop_physics")--ents.Create("prop_physics")
-	VAGON:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear_reference.mdl")--ent:SetModel("models/sligwolf/blue-x12/bluex12_train_socket.mdl")	
-	VAGON:SetPos(self:LocalToWorld(pos))
-	VAGON:SetAngles(self:GetAngles())
-	VAGON:Spawn()
-	VAGON:SetOwner(self:GetOwner())	
-	VAGON:GetPhysicsObject():SetMass(13000)	
+	local ent = ents.Create("prop_physics")--ents.Create("prop_physics")
+	ent:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear_reference.mdl")--ent:SetModel("models/sligwolf/blue-x12/bluex12_train_socket.mdl")	
+	ent:SetPos(self:LocalToWorld(pos))
+	ent:SetAngles(self:GetAngles())
+	ent:Spawn()
+	ent:SetOwner(self:GetOwner())	
+	ent:GetPhysicsObject():SetMass(13000)	
+    ent:SetUseType(SIMPLE_USE)		
     -- Assign ownership
-    if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
+    if CPPI and IsValid(self:CPPIGetOwner()) then ent:CPPISetOwner(self:CPPIGetOwner()) end	
 	
-	self:SetNW2Entity("VAGON",VAGON)
+	self:SetNW2Entity("ent",ent)
 	--Сцепка, крепление к вагону.
 	constraint.AdvBallsocket(
-		VAGON,
+		ent,
 		self.RearCouple,
 		0, --bone
 		0, --bone
@@ -322,7 +335,7 @@ function ENT:CreateRear1(pos,ang,a)
 	)
 	--Шарнирное крепление задней телеги к вагону.
 	constraint.AdvBallsocket(
-	VAGON,
+	ent,
 	self.RearBogey,
 		0, --bone
 		0, --bone
@@ -347,7 +360,7 @@ function ENT:CreateRear1(pos,ang,a)
 --Крепление вагона к средней тележке.
 	constraint.AdvBallsocket( 
 		self.MiddleBogey,
-		VAGON,
+		ent,
 		0, --bone
 		0, --bone
 		Vector(0,5,70), --Vector(70,0,90)
@@ -371,7 +384,7 @@ function ENT:CreateRear1(pos,ang,a)
 	)
 	constraint.AdvBallsocket( 
 		self.MiddleBogey,
-		VAGON,
+		ent,
 		0, --bone
 		0, --bone
 		Vector(0,-5,70), --Vector(70,0,90)
@@ -394,8 +407,8 @@ function ENT:CreateRear1(pos,ang,a)
 		1 --nocollide
 	)
 	-- Add to cleanup list
-	table.insert(self.TrainEntities,VAGON)
-	return VAGON
+	table.insert(self.TrainEntities,ent)
+	return ent
 end 
 
 --При сцепке открывать краны
