@@ -152,7 +152,7 @@ function ENT:InitializeSounds()
         "subway_trains/common/pnm/pnm_button_release5.mp3",
     }
 
-    self.SoundNames["horn"] = {loop=0.6,"subway_trains/common/pneumatic/horn/horn3_start.wav","subway_trains/common/pneumatic/horn/horn3_loop.wav", "subway_trains/common/pneumatic/horn/horn3_end.wav"}
+    self.SoundNames["horn"] = {loop=0.6,"subway_trains/rusich/horn/horn8_start.wav","subway_trains/rusich/horn/horn8_loop.wav", "subway_trains/rusich/horn/horn8_end.wav"}
     self.SoundPositions["horn"] = {1100,1e9,Vector(820-144,0,-30),0.8}
 
     self.SoundNames["KV_-3_-2"] = "subway_trains/rusich/controller/t3_t2.mp3"
@@ -322,11 +322,7 @@ function ENT:InitializeSounds()
     self.SoundNames["gv_b"] = {"subway_trains/717/kv70/reverser_b-0_1.mp3","subway_trains/717/kv70/reverser_b-0_2.mp3"}
     self.SoundPositions["gv_f"] = {80,1e9,Vector(126.4-144,50,-60-23.5),0.8}
     self.SoundPositions["gv_b"] = {80,1e9,Vector(126.4-144,50,-60-23.5),0.8}
-
-    --self.SoundNames["doors"] = "subway_trains/720/door/door_roll.mp3"
-    --self.SoundNames["doorl"] = {loop=true,"subway_trains/722/door_loop.wav"}
-    --self.SoundPositions["doors"] = {300,1e9,Vector(0,0,0),0.5}
-    --self.SoundPositions["doorl"] = {300,1e9,Vector(0,0,0),0.5}
+	
     for i=0,1 do
         for k=0,1 do
             self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop.wav",loop=true}

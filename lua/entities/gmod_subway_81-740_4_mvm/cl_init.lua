@@ -1654,62 +1654,139 @@ ENT.ClientProps["door_cab_l"] = {
 	scale = 1.01,
 	hide = 1
 }
-for i=1,4 do
+for i=1,31 do
     ENT.ClientProps["led_l_f"..i] = {
         model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1)*10.5+278.6-144, -11.09, 14),
+        pos = Vector(-(i-1.99)*1.425+289.25-144, -11.5, 13.5),
+        ang = Angle(0,0,0),
+        skin=6,
+		scale = 1.01,		
+        hideseat = 1.5,
+    }
+end	
+for i=1,29 do
+ENT.ClientProps["led_l_r"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
+        pos = Vector(-(i-1.99)*1.45+626.1-144, -11.5, 13.5),
         ang = Angle(0,0,0),
         skin=6,
         hideseat = 1.5,
-    }
-    ENT.ClientProps["led_l_r"..i] = {
+		scale = 1.01,			
+    }		
+    ENT.ClientProps["led_right_f"..i] = {
         model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1)*10.5+278.6-86.9, 11.04, 14),
-        ang = Angle(0,-90,0),
+        pos = Vector(-(i-1.99)*1.44+631.6-144, -86.1, 13.5),
+        ang = Angle(0,0,0),
         skin=6,
+		scale = 1.01,		
         hideseat = 1.5,
-    }	
-end
---Задняя часть
-for i=1,4 do
-    ENT.ClientProps["led_l_f_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r_rear.mdl",
-		pos = Vector(0,0,0),
-        ang = Angle(0,180,0),
-        skin=6,
-        hideseat = 1.5,
-		callback = function(ent,cl_ent)
-		local VAGONK = ent:GetNW2Entity("VAGON")
-		if not IsValid(VAGONK) then
-			ent:ShowHide("led_l_f_rear"..i,true)
-			return
-		end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-(i-1)*10.5-31.6, 95.2, 13.1)))
-		local ang = VAGONK:GetAngles()	
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-        end,					
     }
-    ENT.ClientProps["led_l_f_left"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l_rear.mdl",
-		pos = Vector(0,0,0),
+    ENT.ClientProps["led_right1_f"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
+        pos = Vector(-(i-1.99)*1.442+299.2-144, -86.1, 13.5),
+        ang = Angle(0,0,0),
+        skin=6,
+		scale = 1.01,		
+        hideseat = 1.5,
+    }
+end	
+--Задняя часть
+--if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end --выдача родителя
+--cl_ent:SetParent(ent:GetNW2Entity("VAGON")) --подучение родителя
+--cl_ent:SetLocalPos(ent.ClientProps["pron_test"].pos) --позиция (настраивается через pos)
+--cl_ent:SetLocalAngles(ent.ClientProps["pron_test"].ang) --наклон (настраивается через Angle)
+--Огромное спасибо Hell за этот скрипт.
+
+for i=1,32 do
+ENT.ClientProps["led_l_f_rear"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
+        pos = Vector(-(i-1.99)*1.425+402.9-144, 11.7, 12.6),
+        ang = Angle(0,180,0),
+        skin=6,
+		scale = 1.01,		
+        hideseat = 1.5,
+		callback = function(ent,cl_ent)
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["led_l_f_rear"..i].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f_rear"..i].ang)
+    end,      
+}
+ENT.ClientProps["led_l_f2_rear"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
+        pos = Vector(-(i-1.99)*1.425-61.4-144, 11.18, 13),
         ang = Angle(0,180,0),
         skin=6,
         hideseat = 1.5,
 		callback = function(ent,cl_ent)
-		local VAGONK = ent:GetNW2Entity("VAGON")
-		if not IsValid(VAGONK) then
-			ent:ShowHide("led_l_f_left"..i,true)
-			return
-		end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-(i-1)*10.5-41, 169.2,13.1)))
-		local ang = VAGONK:GetAngles()	
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-        end,					
-    }	
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["led_l_f2_rear"..i].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f2_rear"..i	].ang)
+    end,      
+}
+    ENT.ClientProps["led_l_zad1_l"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
+        pos = Vector(-(i-1.99)*1.425+351.8-144, -11.9, 12.6),
+        ang = Angle(0,0,0),
+        skin=6,
+		scale = 1.01,		
+        hideseat = 1.5,
+		callback = function(ent,cl_ent)
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad1_l"..i].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad1_l"..i	].ang)
+    end,      
+}
+ENT.ClientProps["led_l_zad3_l"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
+        pos = Vector(-(i-1.99)*1.428-112.3-144, -11.78, 12.6),
+        ang = Angle(0,0,0),
+        skin=6,
+		scale = 1.01,		
+        hideseat = 1.5,
+		callback = function(ent,cl_ent)
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad3_l"..i].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad3_l"..i	].ang)
+    end,      
+}
 end
 
+for i=1,31 do
+ENT.ClientProps["led_l_zad2_l"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
+        pos = Vector(-(i-1.99)*1.435+119-144, -11.78, 12.6),
+        ang = Angle(0,0,0),
+        skin=6,
+		scale = 1.01,		
+        hideseat = 1.5,
+		callback = function(ent,cl_ent)
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad2_l"..i].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad2_l"..i	].ang)
+    end,      
+} 
+end
+
+for i=1,29 do
+ENT.ClientProps["led_l_f1_rear"..i] = {
+        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
+        pos = Vector(-(i-1.99)*1.44+172.4-144, 11.18, 13),
+        ang = Angle(0,180,0),
+        skin=6,
+        hideseat = 1.5,
+		callback = function(ent,cl_ent)
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["led_l_f1_rear"..i].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f1_rear"..i	].ang)
+    end,      
+}
+end
 ENT.ButtonMap["RearDoor"] = {
     pos = Vector(-660,-15,55), ---334.8,14.5,9
     ang = Angle(0,90,90),
@@ -1728,75 +1805,55 @@ ENT.ButtonMap["RearDoor"] = {
 for i=0,3 do
     ENT.ClientProps["TrainNumberL"..i] = {
         model = "models/metrostroi_train/common/bort_numbers.mdl",
-		pos = Vector(0,0,-78),
+		pos = Vector(-310+i*6.6-4*6.6/2, 63.4, 18),
         ang = Angle(0,180,-3.29),
         skin=1,
 		nohide=true,
 		callback = function(ent,cl_ent)
-		local VAGONK = ent:GetNW2Entity("VAGON")
-		if not IsValid(VAGONK) then
-			ent:ShowHide("TrainNumberL"..i,true)
-			return
-		end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-310+i*6.6-4*6.6/2, 63.4, 18)))
-		local ang = VAGONK:GetAngles()	
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-3.29-ang.z)))
-        end,			
-	}
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["TrainNumberL"..i].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["TrainNumberL"..i].ang)
+    end,      
+}
 end 
 
 ENT.ClientProps["door_cab_t"] = {
 		model = "models/metrostroi_train/81-740/salon/door_br.mdl",
-		pos = Vector(0,0,-78),
+		pos = Vector(-332, 15, 8.8),
 		ang = Angle(0,180,0),
 		hide = 2,
 		callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("door_cab_t",true)
-				return
-			end
-			cl_ent:SetParent(VAGONK)
-			cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-332, 15, 8.8)))
-			local ang = VAGONK:GetAngles()
-			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-        end,		
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["door_cab_t"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["door_cab_t"].ang)
+    end,      
 }
 	
 ENT.ClientProps["RearTrain"] = {
-		model = "models/metrostroi_train/81-740/bogey/disconnect_valve_blue.mdl",
-		pos = Vector(0,0,-78),
-		ang = Angle(0,180,0),
+		model = "models/metrostroi_train/bogey/disconnect_valve_blue.mdl",
+		pos = Vector(-336, -25, -54),
+		ang = Angle(0,90,0),
 		hide=2,
 		callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("RearTrain",true)
-				return
-			end
-			cl_ent:SetParent(VAGONK)
-			cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-336, -25, -54))) 
-			local ang = VAGONK:GetAngles()	
-			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-        end,		
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["RearTrain"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["RearTrain"].ang)
+    end,      
 }
 ENT.ClientProps["RearBrake"] = {
-    model = "models/metrostroi_train/81-740/bogey/disconnect_valve_red.mdl",
-	pos = Vector(0,0,-78),
-	ang = Angle(0,180,0),
+    model = "models/metrostroi_train/bogey/disconnect_valve_red.mdl",
+	pos = Vector(-336, 25, -54),
+	ang = Angle(0,90,0),
 	hide=2,
 		callback = function(ent,cl_ent)
-		local VAGONK = ent:GetNW2Entity("VAGON")
-		if not IsValid(VAGONK) then
-				ent:ShowHide("RearBrake",true)
-				return
-			end
-			cl_ent:SetParent(VAGONK)
-			cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-336, 25, -54))) 
-			local ang = VAGONK:GetAngles()	
-			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-        end,		
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["RearBrake"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["RearBrake"].ang)
+    end,      
 }
 ENT.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 ENT.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
@@ -1813,169 +1870,122 @@ ENT.ButtonMap["Tickers_rear"] = { --Работает с багами
 		system="81_740_4Ticker",		
 		callback = function(ent,ButtonMap)
         if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
-        cl_ent:SetLocalPos(ent.ButtonMap["Tickers_rear"].pos)
-        cl_ent:SetLocalAngles(ent.ButtonMap["Tickers_rear"].ang)
-        cl_ent:SetLocalWidth(ent.ButtonMap["Tickers_rear"].width)		
-	    cl_ent:SetLocalHeight(ent.ButtonMap["Tickers_rear"].height)		
+        ButtonMap:SetLocalPos(ent.ButtonMap["Tickers_rear"].pos)
+        ButtonMap:SetLocalAngles(ent.ButtonMap["Tickers_rear"].ang)	
     end,      
 }		
 
 ENT.ClientProps["krepezh1"] = {
     model = "models/metrostroi_train/81-740/body/krepezh.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(61.5, 0, -75.2),
     ang = Angle(0,180,0),
 	nohide=true,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("krepezh1",true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(61.5, 0, -75.2)))
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+        if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["krepezh1"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["krepezh1"].ang)
+    end,      
 }
 ENT.ClientProps["lamps_salon_on_rear_avar1"] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(-252.75, 0.3, -74.885),
     ang = Angle(0,180,0),
 	hide=2,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("lamps_salon_on_rear_avar",true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-252.75, 0.3, -74.885)))
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["lamps_salon_on_rear_avar1"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["lamps_salon_on_rear_avar1"].ang)
+    end,      
 }
 ENT.ClientProps["lamps_salon_on_rear_avar2"] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(286.15, -57.8, -74.88),
     ang = Angle(0,180,0),
 	hide=2,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("lamps_salon_on_rear_avar2",true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(286.15, -57.8, -74.88)))
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["lamps_salon_on_rear_avar2"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["lamps_salon_on_rear_avar2"].ang)
+    end,      
 }
 
 for i = 0,10 do
 ENT.ClientProps["lamps_salon_on_rear"..i+1] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(289.5-54*i+1,0.29,-74.88),
     ang = Angle(0,180,0),
 	hide=2,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("lamps_salon_on_rear"..i+1,true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(289.5-54*i+1,0.29,-74.88))) --338.2-63.83*i, 0, 67.0 288
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["lamps_salon_on_rear"..i+1].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["lamps_salon_on_rear"..i+1].ang)
+    end,      
 }
 ENT.ClientProps["lamps_salon_on_rear1"..i+1] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(289.5-54*i,-57.78,-74.88),
     ang = Angle(0,180,0),
 	hide=2,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("lamps_salon_on_rear1"..i+1,true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(289.5-54*i,-57.78,-74.88))) --338.2-63.83*i, 0, 67.0 288
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["lamps_salon_on_rear1"..i+1].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["lamps_salon_on_rear1"..i+1].ang)
+    end,      
 }
 end 
 ENT.ClientProps["handrails_offside"] = {
     model = "models/metrostroi_train/81-740/body/740_body_additional.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(21.8, 10, -76.5),
     ang = Angle(0,180,0),
 	nohide=true,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("handrails_offside",true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(21.8, 10, -76.5)))
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["handrails_offside"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["handrails_offside"].ang)
+    end,      
 }
 
 ENT.ClientProps["lamps_salon_off_r"] = {
     model = "models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(-120.1, 0.1, -75.15),
     ang = Angle(0,180,0),
 	hide=2,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("lamps_salon_off_r",true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-120.1, 0.1, -75.15)))
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["lamps_salon_off_r"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["lamps_salon_off_r"].ang)
+    end,      
 }
 ENT.ClientProps["salonR"] = {
 	model = "models/metrostroi_train/81-740/salon/salon_rear.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(65, 0, -75),
     ang = Angle(0,180,0),
 	hide=2,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("salonR",true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(64.4, 0, -75)))
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end --выдача родителя
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON")) --подучение родителя
+			cl_ent:SetLocalPos(ent.ClientProps["salonR"].pos) --позиция (настраивается через pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["salonR"].ang) --наклон (настраивается через Angle)
+    end,      
 }
 ENT.ClientProps["handrailsR"] = {
 	model = "models/metrostroi_train/81-740/salon/handrails/handrails_r.mdl",
-    pos = Vector(0,0,0),
+    pos = Vector(-115.5, -1, -73),
     ang = Angle(0,180,0),
 	hide=2,
-	callback = function(ent,cl_ent)
-			local VAGONK = ent:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-				ent:ShowHide("handrailsR",true)
-				return
-			end
-		cl_ent:SetParent(VAGONK)
-		cl_ent:SetPos(VAGONK:LocalToWorld(Vector(-115.5, -1, -73)))
-		local ang = VAGONK:GetAngles()
-		cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-		end,
+		callback = function(ent,cl_ent)
+			if cl_ent:GetParent() == ent:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(ent.ClientProps["handrailsR"].pos)
+			cl_ent:SetLocalAngles(ent.ClientProps["handrailsR"].ang)
+    end,      
 }
 local yventpos = {
     -414.5+0*117-144,
@@ -2032,83 +2042,58 @@ for i=0,1 do
 	for i=0,2 do
 	for k=0,0 do
 		ENT.ClientProps["door"..i.."x1"..k.."a1"] = {
-			model = "models/metrostroi_train/81-740/body/81-740_leftdoor3.mdl",
+			model = "models/metrostroi_train/81-740/body/81-740_leftdoor1.mdl",
 			pos = GetDoorPositionRear(i,k,0),
-			ang = Angle(0,180*k,0),      
+			ang = Angle(0,90,0),      
 			hide=2,
 			scale = 1.001,				
 			callback = function(self,cl_ent)
-			local VAGONK = self:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-			self:ShowHide("door"..i.."x1"..k.."a1",true)
-			return
-			end
-			
-			cl_ent:SetParent(VAGONK)
-			cl_ent:SetPos(VAGONK:LocalToWorld(Vector(GetDoorPositionRear(i,k,0))))
-			local ang = VAGONK:GetAngles()	
-			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-			end,
-		}
+			if cl_ent:GetParent() == self:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(self:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(self.ClientProps["door"..i.."x1"..k.."a1"].pos)
+			cl_ent:SetLocalAngles(self.ClientProps["door"..i.."x1"..k.."a1"].ang)
+		end,      
+	}
 		ENT.ClientProps["door"..i.."x1"..k.."b1"] = {
-			model = "models/metrostroi_train/81-740/body/81-740_leftdoor4.mdl",
+			model = "models/metrostroi_train/81-740/body/81-740_leftdoor2.mdl",
 			pos = GetDoorPositionRear(i,k,1),
-			ang = Angle(0,180*k,0),   
+			ang = Angle(0,90,0),   
 			hide=2,
 			scale = 1.001,				
 			callback = function(self,cl_ent)
-			
-			local VAGONK = self:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-			self:ShowHide("door"..i.."x1"..k.."b1",true)
-			return
-			end
-			
-			cl_ent:SetParent(VAGONK)
-			cl_ent:SetPos(VAGONK:LocalToWorld(Vector(GetDoorPositionRear(i,k,1))))
-			local ang = VAGONK:GetAngles()	
-			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-			end,
-		}
+			if cl_ent:GetParent() == self:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(self:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(self.ClientProps["door"..i.."x1"..k.."b1"].pos)
+			cl_ent:SetLocalAngles(self.ClientProps["door"..i.."x1"..k.."b1"].ang)
+		end,      
+	}
 		
 		ENT.ClientProps["door"..i.."x2"..k.."a2"] = {
-			model = "models/metrostroi_train/81-740/body/81-740_leftdoor6.mdl",
+			model = "models/metrostroi_train/81-740/body/81-740_leftdoor1.mdl",
 			pos = GetDoorPositionRearLeft(i,k,0),
-			ang = Angle(0,180*k,0),      
+			ang = Angle(0,-90,0),      
 			hide=2,
 			scale = 1.001,				
 			callback = function(self,cl_ent)
-			local VAGONK = self:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-			self:ShowHide("door"..i.."x2"..k.."a2",true)
-			return
-			end
-			
-			cl_ent:SetParent(VAGONK)
-			cl_ent:SetPos(VAGONK:LocalToWorld(Vector(GetDoorPositionRearLeft(i,k,0))))
-			local ang = VAGONK:GetAngles()	
-			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-			end,
-		}
+			if cl_ent:GetParent() == self:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(self:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(self.ClientProps["door"..i.."x2"..k.."a2"].pos)
+			cl_ent:SetLocalAngles(self.ClientProps["door"..i.."x2"..k.."a2"].ang)
+		end,      
+	}
 		ENT.ClientProps["door"..i.."x3"..k.."a3"] = {
-			model = "models/metrostroi_train/81-740/body/81-740_leftdoor5.mdl",
-			pos = GetDoorPositionRearLeft(i,k,0),
-			ang = Angle(0,180*k,0),      
+			model = "models/metrostroi_train/81-740/body/81-740_leftdoor2.mdl",
+			pos = GetDoorPositionRearLeft(i,k,1),
+			ang = Angle(0,-90,0),      
 			hide=2,
 			scale = 1.001,				
 			callback = function(self,cl_ent)
-			local VAGONK = self:GetNW2Entity("VAGON")
-			if not IsValid(VAGONK) then
-			self:ShowHide("door"..i.."x3"..k.."a3",true)
-			return
-			end
-			
-			cl_ent:SetParent(VAGONK)
-			cl_ent:SetPos(VAGONK:LocalToWorld(Vector(GetDoorPositionRearLeft(i,k,1))))
-			local ang = VAGONK:GetAngles()	
-			cl_ent:SetAngles((Angle(-ang.x,180+ang.y,-ang.z)))
-			end,
-		}
+			if cl_ent:GetParent() == self:GetNW2Entity("VAGON") then return end
+			cl_ent:SetParent(self:GetNW2Entity("VAGON"))
+			cl_ent:SetLocalPos(self.ClientProps["door"..i.."x3"..k.."a3"].pos)
+			cl_ent:SetLocalAngles(self.ClientProps["door"..i.."x3"..k.."a3"].ang)
+		end,      
+	}
 
 	end 
 end
@@ -2313,7 +2298,7 @@ function ENT:ReInitBogeySounds(bogey)
     bogey.SoundNames["flange1"]      = "subway_trains/rusich/bogey/flange_9.wav"
     bogey.SoundNames["flange2"]      = "subway_trains/rusich/bogey/Flange_10.wav"
     bogey.SoundNames["brakea_loop1"]       = "subway_trains/rusich/bogey/braking_async3.wav"
-    bogey.SoundNames["brakea_loop2"]       = "subway_trains/bogey/braking_async2.wav"
+    bogey.SoundNames["brakea_loop2"]       = "subway_trains/rusich/bogey/braking_async3.wav"
     bogey.SoundNames["brake_loop1"]       = "subway_trains/bogey/brake_rattle3.wav"
     bogey.SoundNames["brake_loop2"]       = "subway_trains/bogey/brake_rattle4.wav"
     bogey.SoundNames["brake_loop3"]       = "subway_trains/bogey/brake_rattle5.wav"
@@ -2368,7 +2353,6 @@ end
     table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1})--10
     table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1})--07
     table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1})--05
-    table.insert(bogey.EngineSNDConfig,{"ted11_740",88,72-4,96,1})--05	
 
     bogey.SoundNames = {}
 	
@@ -2396,7 +2380,6 @@ end
     bogey.SoundNames["ted8_740"]  = "subway_trains/rusich/engines_new/engine_64.wav"
     bogey.SoundNames["ted9_740"]  = "subway_trains/rusich/engines_new/engine_72.wav"
     bogey.SoundNames["ted10_740"] = "subway_trains/rusich/engines_new/engine_80.wav"
-    bogey.SoundNames["ted11_740"] = "subway_trains/rusich/engines_new/engine_88.wav"	
 
     --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
     self.SoundNames["ted11_720"] = "subway_trains/bogey/engines/720/speed_88.wav"
@@ -2419,7 +2402,7 @@ end
     bogey.SoundNames["flange1"]      = "subway_trains/rusich/bogey/flange_9.wav"
     bogey.SoundNames["flange2"]      = "subway_trains/rusich/bogey/Flange_10.wav"
     bogey.SoundNames["brakea_loop1"]       = "subway_trains/rusich/bogey/braking_async3.wav"
-    bogey.SoundNames["brakea_loop2"]       = "subway_trains/bogey/braking_async2.wav"
+    bogey.SoundNames["brakea_loop2"]       = "subway_trains/rusich/bogey/braking_async3.wav"
     bogey.SoundNames["brake_loop1"]       = "subway_trains/bogey/brake_rattle3.wav"
     bogey.SoundNames["brake_loop2"]       = "subway_trains/bogey/brake_rattle4.wav"
     bogey.SoundNames["brake_loop3"]       = "subway_trains/bogey/brake_rattle5.wav"
@@ -2649,29 +2632,58 @@ end
     local snext = self:GetNW2Int("PassSchemesLEDN")
     local led_back = self:GetPackedBool("PassSchemesLEDO",false)
     local ledwork = scurr~=0 or snext~=0
-    for i=1,4 do
-        self:ShowHide("led_l_f"..i,not led_back and ledwork)
+	
+	for i=1,29 do	
         self:ShowHide("led_l_r"..i,not led_back and ledwork)
+	    self:ShowHide("led_right_f"..i,not led_back and ledwork)	
+	    self:ShowHide("led_right1_f"..i,not led_back and ledwork)	
+	    self:ShowHide("led_l_f1_rear"..i,not led_back and ledwork)				
+	end
+	for i=1,31 do
+	    self:ShowHide("led_l_f"..i,not led_back and ledwork)
+        self:ShowHide("led_l_zad2_l"..i,not led_back and ledwork)
+	end	
+    for i=1,32 do
         self:ShowHide("led_l_f_rear"..i,not led_back and ledwork)
-        self:ShowHide("led_l_f_left"..i,not led_back and ledwork)
-    end
+        self:ShowHide("led_l_f2_rear"..i,not led_back and ledwork)
+        self:ShowHide("led_l_zad1_l"..i,not led_back and ledwork)	
+        self:ShowHide("led_l_zad3_l"..i,not led_back and ledwork)				
+	end	
+	
     local led = scurr
-    if snext ~= 0 and CurTime()%.5 > .25 then led = led + snext end
-    if scurr < 0 then led = math.floor(CurTime()%5*6.2) end
+    if snext ~= 0 and CurTime()%.9 > .30 then led = led + snext end
+    if scurr < 0 then led = math.floor(CurTime()%9*6.2) end
     if led_back then
         if ledwork then
         end
     else
         if ledwork then
-            for i=1,4 do
-                if IsValid(self.ClientEnts["led_l_f"..i]) then self.ClientEnts["led_l_f"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
-                if IsValid(self.ClientEnts["led_l_r"..i]) then self.ClientEnts["led_l_r"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end			
-                if IsValid(self.ClientEnts["led_l_f_rear"..i]) then self.ClientEnts["led_l_f_rear"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
-                if IsValid(self.ClientEnts["led_l_f_left"..i]) then self.ClientEnts["led_l_f_left"..i]:SetSkin(math.Clamp(led-((i-1)*6),0,6)) end
-            end
-        end
-    end	
-
+            for i=1,31 do
+                if IsValid(self.ClientEnts["led_l_f"..i]) then self.ClientEnts["led_l_f"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2))
+                if IsValid(self.ClientEnts["led_l_zad2_l"..i]) then self.ClientEnts["led_l_zad2_l"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2))								
+				end
+				end
+			
+	            for i=1,32 do
+                if IsValid(self.ClientEnts["led_l_f_rear"..i]) then self.ClientEnts["led_l_f_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end
+                if IsValid(self.ClientEnts["led_l_f2_rear"..i]) then self.ClientEnts["led_l_f2_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end	
+                if IsValid(self.ClientEnts["led_l_zad1_l"..i]) then self.ClientEnts["led_l_zad1_l"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end		
+				if IsValid(self.ClientEnts["led_l_zad3_l"..i]) then self.ClientEnts["led_l_zad3_l"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end			
+				end
+				end		
+				end
+				end
+				
+            for i=1,29 do				
+                if IsValid(self.ClientEnts["led_l_r"..i]) then self.ClientEnts["led_l_r"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
+                if IsValid(self.ClientEnts["led_right_f"..i]) then self.ClientEnts["led_right_f"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
+                if IsValid(self.ClientEnts["led_right1_f"..i]) then self.ClientEnts["led_right1_f"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
+                if IsValid(self.ClientEnts["led_l_f1_rear"..i]) then self.ClientEnts["led_l_f1_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 								
+				end		
+				end
+				end
+				end
+				end 
     local HL1 = self:Animate("Headlights1",self:GetPackedBool("Headlights1") and 1 or 0,0,1,6,false)
     local HL2 = self:Animate("Headlights2",self:GetPackedBool("Headlights2") and 1 or 0,0,1,6,false)
     local RL  = self:Animate("RedLights",  self:GetPackedBool("RedLights") and 1 or 0,0,1,6,false)
@@ -3006,8 +3018,25 @@ function ENT:DrawPost(special)
 end
 
 function ENT:OnButtonPressed(button)
+
 end
 
+local dist = {
+    RearDoor = 1550,
+}
+for id,panel in pairs(ENT.ButtonMap) do
+    if not panel.buttons then continue end
+    for k,v in pairs(panel.buttons) do
+        if v.model then
+            local dist = dist[id] or 1650
+            if v.model.model then
+                v.model.hideseat=dist
+            elseif v.model.lamp then
+                v.model.lamp.hideseat=dist
+            end
+        end
+    end
+end
 function ENT:OnPlay(soundid,location,range,pitch)
     if location == "stop" then
         if IsValid(self.Sounds[soundid]) then

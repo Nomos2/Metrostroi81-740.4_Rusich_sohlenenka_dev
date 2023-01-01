@@ -40,7 +40,7 @@ function ENT:Initialize()
 	
 	--self:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.BaseClass.Initialize(self)
-    self:SetPos(self:GetPos() + Vector(0,0,150))
+    self:SetPos(self:GetPos() + Vector(0,0,140))
 	
     self.NormalMass = 24000	
 
@@ -129,6 +129,136 @@ function ENT:Initialize()
 		1 --nocollide
 	)
 end)	
+
+local function CanConstrain( VAGON, self )
+
+	if ( !VAGON )	then return false end
+	if ( !VAGON:IsWorld() && !VAGON:IsValid() )	then return false end
+	if ( !VAGON:GetPhysicsObjectNum( self ) || !VAGON:GetPhysicsObjectNum( self ):IsValid() )	then return false end
+
+	return true
+
+end
+
+function self:CreateRear1(pos,ang,a)
+	local VAGON = ents.Create("prop_physics")--ents.Create("prop_physics")
+	VAGON:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear_reference.mdl")--ent:SetModel("models/sligwolf/blue-x12/bluex12_train_socket.mdl")	 --"models/hunter/plates/plate.mdl"
+	VAGON:SetPos(self:LocalToWorld(pos))
+	VAGON:SetAngles(self:GetAngles())
+	VAGON:Spawn()
+	VAGON:SetOwner(self:GetOwner())	
+	VAGON:GetPhysicsObject():SetMass(13000)
+    VAGON:SetUseType(SIMPLE_USE)	
+    -- Assign ownership	
+    if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
+	
+	self:SetNW2Entity("VAGON",VAGON)
+	--Сцепка, крепление к вагону.
+	constraint.AdvBallsocket(
+		VAGON,
+		self.RearCouple,
+		0, --bone
+		0, --bone
+		Vector(-320.2+20.8,0,-60),
+		Vector(0,0,0),
+		1, --forcelimit
+		1, --torquelimit
+		
+		-2, --xmin
+		-2, --ymin
+		-15, --zmin
+		
+		2, --xmax
+		2, --ymax
+		15, --zmax
+		
+		0.1, --xfric
+		0.1, --yfric
+		1, --zfric
+		
+		0, --rotonly
+		1 --nocollide
+	)	
+	
+	--Шарнирное крепление задней телеги к вагону.
+	constraint.AdvBallsocket(
+	VAGON,
+	self.RearBogey,
+		0, --bone
+		0, --bone
+		Vector(-200,0,75),
+		Vector(200,0,75),
+		0, --forcelimit
+		0, --torquelimit
+		
+		0, --xmin
+		0, --ymin
+		-180, --zmin
+		0, --xmax
+		0, --ymax
+		180, --zmax
+		
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1 --nocollide
+	)
+	
+--Крепление вагона к средней тележке.
+	constraint.AdvBallsocket( 
+		self.MiddleBogey,
+		VAGON,
+		0, --bone
+		0, --bone
+		Vector(0,5,70), --Vector(70,0,90)
+		Vector(100,5,70), --Vector(80,0,90)
+		0, --forcelimit
+		0, --torquelimit
+		
+		-100, --xmin --высота
+		0, --ymin  --поворот влево/вправо
+		-100, --zmin
+		
+		100, --xmax --высота
+		0, --ymax --20  --поворот влево/вправо
+		100, --zmax
+		
+		0, --yfric
+		0, --zfric
+		0, --xfric
+		0, --rotonly
+		1 --nocollide
+	)
+	constraint.AdvBallsocket( 
+		self.MiddleBogey,
+		VAGON,
+		0, --bone
+		0, --bone
+		Vector(0,-5,70), --Vector(70,0,90)
+		Vector(100,-5,70), --Vector(80,0,90)
+		0, --forcelimit
+		0, --torquelimit
+		
+		-100, --xmin --высота
+		0, --ymin  --поворот влево/вправо
+		-100, --zmin
+		
+		100, --xmax --высота
+		0, --ymax --20  --поворот влево/вправо
+		100, --zmax
+		
+		0, --yfric
+		0, --zfric
+		0, --xfric
+		0, --rotonly
+		1 --nocollide
+	)
+	-- Add to cleanup list
+	table.insert(self.TrainEntities,VAGON)
+	return VAGON
+end 
+
 --взято с Томаса, спасибо авторам.
 timer.Simple(0.0, function()	
 	self.Rear1 = self:CreateRear1(Vector(-331,0,0),Angle(0,0,0)) --вагон
@@ -222,20 +352,7 @@ end)
     self.KeyMap[KEY_RALT] = self.KeyMap[KEY_LALT]
     self.KeyMap[KEY_RSHIFT] = self.KeyMap[KEY_LSHIFT]
     self.KeyMap[KEY_RCONTROL] = self.KeyMap[KEY_LCONTROL]
-	
-function self:Use(ply)
-    local tr = ply:GetEyeTrace()
-    if not tr.Hit then return end
-    local hitpos = self:WorldToLocal(tr.HitPos)
-    print(hitpos)
-    if self.InteractionZones and ply:GetPos():Distance(tr.HitPos) < 0 then
-        for k,v in pairs(self.InteractionZones) do
-            if hitpos:Distance(v.Pos) < v.Radius then
-                self:ButtonEvent(v.ID,nil,ply)
-            end
-        end
-    end
-end	
+
     -- Cross connections in train wires
     self.TrainWireCrossConnections = {
         [4] = 3, -- Orientation F<->B
@@ -303,7 +420,7 @@ end
         },
         {
             ID = "RearDoor",
-            Pos = Vector(-764.8,5,55), Radius = 20,
+            Pos = Vector(764.8,5,55), Radius = 20,
         },
         {
             ID = "GVToggle",
@@ -314,6 +431,20 @@ end
             Pos = Vector(-177, -66, -50), Radius = 20,
         },
     }
+	
+	function self:Use(ply)
+    local tr = ply:GetEyeTrace()
+    if not tr.Hit then return end
+    local hitpos = self:WorldToLocal(tr.HitPos)
+    print(hitpos)
+    if self.InteractionZones and ply:GetPos():Distance(tr.HitPos) < 0 then
+        for k,v in pairs(self.InteractionZones) do
+            if hitpos:Distance(v.Pos) < v.Radius then
+                self:ButtonEvent(v.ID,nil,ply)
+            end
+        end
+    end
+end	
 	
     self.PassengerDoor = false
     self.CabinDoorLeft = false
@@ -342,9 +473,6 @@ end
 
 	--альтернативный способ выставления автодешифратора
 	--карты 2/6 в списке за 14.02.2021 (https://wiki.metrostroi.net/wiki/List_of_maps)
-	
-	--Вырезано из-за возможных сторонних сигналок которые могут быть 1/5
-	--Если вы владелец сервера и у вас не работает автодешифратор то идите нахуй (ЪеЪ)
 
 --наложение пломб
 	self.Plombs = {
@@ -594,132 +722,6 @@ function ENT:Think()
     end
     return retVal
 end
-
-local function CanConstrain( VAGON, self )
-
-	if ( !VAGON )	then return false end
-	if ( !VAGON:IsWorld() && !VAGON:IsValid() )	then return false end
-	if ( !VAGON:GetPhysicsObjectNum( self ) || !VAGON:GetPhysicsObjectNum( self ):IsValid() )	then return false end
-
-	return true
-
-end
-
-function ENT:CreateRear1(pos,ang,a)
-	local VAGON = ents.Create("prop_physics")--ents.Create("prop_physics")
-	VAGON:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear_reference.mdl")--ent:SetModel("models/sligwolf/blue-x12/bluex12_train_socket.mdl")	 --"models/hunter/plates/plate.mdl"
-	VAGON:SetPos(self:LocalToWorld(pos))
-	VAGON:SetAngles(self:GetAngles())
-	VAGON:Spawn()
-	VAGON:SetOwner(self:GetOwner())	
-	VAGON:GetPhysicsObject():SetMass(13000)
-    -- Assign ownership	
-    if CPPI and IsValid(self:CPPIGetOwner()) then VAGON:CPPISetOwner(self:CPPIGetOwner()) end	
-	
-	self:SetNW2Entity("VAGON",VAGON)
-	--Сцепка, крепление к вагону.
-	constraint.AdvBallsocket(
-		VAGON,
-		self.RearCouple,
-		0, --bone
-		0, --bone
-		Vector(-320.2+20.8,0,-60),
-		Vector(0,0,0),
-		1, --forcelimit
-		1, --torquelimit
-		
-		-2, --xmin
-		-2, --ymin
-		-15, --zmin
-		
-		2, --xmax
-		2, --ymax
-		15, --zmax
-		
-		0.1, --xfric
-		0.1, --yfric
-		1, --zfric
-		
-		0, --rotonly
-		1 --nocollide
-	)	
-	--Шарнирное крепление задней телеги к вагону.
-	constraint.AdvBallsocket(
-	VAGON,
-	self.RearBogey,
-		0, --bone
-		0, --bone
-		Vector(-200,0,75),
-		Vector(200,0,75),
-		0, --forcelimit
-		0, --torquelimit
-		
-		0, --xmin
-		0, --ymin
-		-180, --zmin
-		0, --xmax
-		0, --ymax
-		180, --zmax
-		
-		0, --xfric
-		0, --yfric
-		0, --zfric
-		0, --rotonly
-		1 --nocollide
-	)
---Крепление вагона к средней тележке.
-	constraint.AdvBallsocket( 
-		self.MiddleBogey,
-		VAGON,
-		0, --bone
-		0, --bone
-		Vector(0,5,70), --Vector(70,0,90)
-		Vector(100,5,70), --Vector(80,0,90)
-		0, --forcelimit
-		0, --torquelimit
-		
-		-100, --xmin --высота
-		0, --ymin  --поворот влево/вправо
-		-100, --zmin
-		
-		100, --xmax --высота
-		0, --ymax --20  --поворот влево/вправо
-		100, --zmax
-		
-		0, --yfric
-		0, --zfric
-		0, --xfric
-		0, --rotonly
-		1 --nocollide
-	)
-	constraint.AdvBallsocket( 
-		self.MiddleBogey,
-		VAGON,
-		0, --bone
-		0, --bone
-		Vector(0,-5,70), --Vector(70,0,90)
-		Vector(100,-5,70), --Vector(80,0,90)
-		0, --forcelimit
-		0, --torquelimit
-		
-		-100, --xmin --высота
-		0, --ymin  --поворот влево/вправо
-		-100, --zmin
-		
-		100, --xmax --высота
-		0, --ymax --20  --поворот влево/вправо
-		100, --zmax
-		
-		0, --yfric
-		0, --zfric
-		0, --xfric
-		0, --rotonly
-		1 --nocollide
-	)
-	-- Add to cleanup list
-	table.insert(self.TrainEntities,VAGON)
-	return VAGON
-end 
 
 function ENT:OnCouple(train,isfront)
     if isfront and self.FrontAutoCouple then
