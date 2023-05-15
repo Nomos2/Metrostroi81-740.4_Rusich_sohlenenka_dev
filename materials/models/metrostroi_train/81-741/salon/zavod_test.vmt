@@ -1,0 +1,24 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/metrostroi_train/81-741/salon/zavod_test"
+	"$model" "1"
+	"$surfaceprop" "metalvehicle"
+	
+	"$phong" "1"
+	"$bumpmap"			"models/metrostroi_train/81-741/salon/zavod_test_n"
+	"$phongexponenttexture"	"models/metrostroi_train/81-741/salon/zavod_test_s"
+	"$phongboost"				1
+	"$phongfresnelranges"		"[1 1 1]"
+	
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .01 .01 .01 ]"
+	"$envmapsaturation" ".01"
+	"$envmapcontrast" "0.1"
+	"$envmapFresnel" "1"
+	$normalmapalphaenvmapmask 1
+	
+	$detail detail\metal_detail_01
+	$detailscale 4
+	$detailblendfactor 0.5
+	$detailblendmode 0			
+}
