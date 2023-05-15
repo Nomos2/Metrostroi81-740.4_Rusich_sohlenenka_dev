@@ -228,6 +228,7 @@ Common.740.ARS.KVT				= КВС: бутон за възприемане на сп
 Common.740.Program1				= Стартиране на запис (програма 1)
 Common.740.Program2				= Стартиране на запис (програма 2)
 Common.740.Horn					= Тайфун
+Common.740.TPT                  = ТПТ: Спиране от междинни колички
 
 Common.740.CAMS5Set				= Преглед: пристанищен борд
 Common.740.CAMS6Set 			= Преглед: десен борд
@@ -359,7 +360,7 @@ Entities.gmod_subway_81-740_4_mvm.Buttons.BackDown.ALSFreqBlock+  		  =	@[Common
 Entities.gmod_subway_81-740_4_mvm.Buttons.BackDown.ALSFreqBlock-    	  = @[Common.740.ALSFreqBlock-] @[Common.ALL.CCW]
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.!DoorsClosed                = @[Common.740.LSD]
-Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.StandToggle                 = @[Common.740.Stand] @[Common.ALL.Unsused2]
+Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.StandToggle                 = @[Common.740.Stand]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.TickerToggle                = @[Common.740.Ticker]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHToggle                   = @[Common.740.KAH]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHkToggle                  = @[Common.740.KAHK]
@@ -396,6 +397,7 @@ Entities.gmod_subway_81-740_4_mvm.Buttons.PUR.AttentionSet                = @[Co
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUR.AttentionBrakeSet           = @[Common.740.ARS.KVT]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUR.HornBSet                    = @[Common.740.Horn]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUR.DoorRightSet                = @[Common.740.KDP]
+Entities.gmod_subway_81-740_4_mvm.Buttons.PUR.TPTToggle             	  = @[Common.740.TPT]
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUL.DoorSelectLToggle           = @[Common.740.DoorSelectL]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUL.DoorSelectRToggle           = @[Common.740.DoorSelectR]
