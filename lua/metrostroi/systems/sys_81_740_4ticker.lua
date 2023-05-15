@@ -175,7 +175,7 @@ function TRAIN_SYSTEM:Think()
                                 self.CurrentAdvert = Format("следующая станция %s.", self.Station)
                             end
                             if self.EnStations[self.Station] then
-                                self.CurrentAdvert = self.CurrentAdvert..Format(" The next station is \"%s\"", self.EnStations[self.Station])
+                                self.CurrentAdvert = self.CurrentAdvert..Format("The next station is %s.", self.EnStations[self.Station])
                             end
                             self.Status = 2
                         else
@@ -185,9 +185,9 @@ function TRAIN_SYSTEM:Think()
                                 self.EnShow = false
                             else
                                 if self.ReplaceStations[self.Station] then
-                                    self.CurrentAdvert = Format("станция %s", self.ReplaceStations[self.Station])
+                                    self.CurrentAdvert = Format("%s", self.ReplaceStations[self.Station])
                                 else
-                                    self.CurrentAdvert = Format("станция %s", self.Station)
+                                    self.CurrentAdvert = Format("%s", self.Station)
                                 end
                                 self.EnShow = true
                             end
@@ -196,9 +196,9 @@ function TRAIN_SYSTEM:Think()
                                 self.isMoving = false
                             else
                                 if self.ReplaceStations[self.Station] then
-                                    self.CurrentAdvert = Format("станция %s. This is \"%s\"", self.ReplaceStations[self.Station], self.EnStations[self.Station])
+                                    self.CurrentAdvert = Format("%s. This is \"%s\"", self.ReplaceStations[self.Station], self.EnStations[self.Station])
                                 else
-                                    self.CurrentAdvert = Format("станция %s. This is \"%s\"", self.Station, self.EnStations[self.Station])
+                                    self.CurrentAdvert = Format("%s. This is \"%s\"", self.Station, self.EnStations[self.Station])
                                 end
                             end
                         end

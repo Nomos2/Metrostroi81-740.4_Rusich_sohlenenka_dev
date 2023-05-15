@@ -169,7 +169,7 @@ function TRAIN_SYSTEM:Think(dT,iter)
         Train:WriteTrainWire(11,P*Train.ParkingBrake.Value)
         Train:WriteTrainWire(12,P*(RV["KRR3-4"]+KM1)*Train.SF11.Value)
         Train:WriteTrainWire(13,P*(RV["KRR9-10"]+KM2)*Train.SF11.Value)
-
+		Train:WriteTrainWire(46,P*Train.Vent2.Value)
         self.V2 = P*(RV["KRO13-14"]*Train.SF19.Value + RV["KRR11-12"]*Train.SF20.Value)
         self.V1 = P*(RV["KRO13-14"]*Train.SF19.Value + RV["KRR11-12"]*Train.SF20.Value)*Train.HornB.Value
 
@@ -226,7 +226,7 @@ function TRAIN_SYSTEM:Think(dT,iter)
         Panel.R_Announcer = P*Train.SF8.Value*Train.R_Announcer.Value
         Panel.R_Line = P*Train.SF8.Value*Panel.R_Announcer*Train.R_Line.Value
         ASNP_VV.Power = P*Train.SF8.Value*Train.R_ASNPOn.Value
-        ASNP_VV.AmplifierPower = ASNP_VV.Power*Train.ASNP.LineOut*Train.R_Announcer.Value*(1-Train.R_Line.Value)
+        ASNP_VV.AmplifierPower = ASNP_VV.Power*Train.ASNP.LineOut*(1-Train.R_Line.Value)
         Train:WriteTrainWire(20,ASNP_VV.AmplifierPower)
         --ASNP_VV.CabinSpeakerPower = ASNP_VV.Power*Train.ASNP.LineOut*Train.R_G.Value
         Panel.DoorLeft = P*Train.SF21.Value*Train.DoorSelectL.Value*(1-Train.DoorSelectR.Value)

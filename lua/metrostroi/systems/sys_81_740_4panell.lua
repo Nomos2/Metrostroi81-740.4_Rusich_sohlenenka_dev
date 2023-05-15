@@ -29,6 +29,7 @@ function TRAIN_SYSTEM:Initialize()
 
     self.Train:LoadSystem("EmergencyControls","Relay","Switch",{bass=true})
     self.Train:LoadSystem("Wiper","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("TPT","Relay","Switch",{bass=true})
 
 
     self.Train:LoadSystem("DoorSelectL","Relay","Switch",{bass=true})
@@ -123,7 +124,6 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("Pant1","Relay","Switch",{bass=true})
     self.Train:LoadSystem("Pant2","Relay","Switch",{bass=true})
     self.Train:LoadSystem("Vent2","Relay","Switch",{bass=true})
-    self.Train:LoadSystem("Vent","Relay","Switch",{bass=true})
     self.Train:LoadSystem("PassLight","Relay","Switch",{bass=true})
     self.Train:LoadSystem("CabLight","Relay","Switch",{bass=true})
     self.Train:LoadSystem("Headlights1","Relay","Switch",{bass=true})
@@ -148,6 +148,7 @@ function TRAIN_SYSTEM:Initialize()
     self.TargetController = 0
 
     self.Headlights1 = 0
+	self.TPT = 0
     self.Headlights2 = 0
     self.RedLights = 0
     self.DoorLeft = 0
@@ -181,7 +182,7 @@ function TRAIN_SYSTEM:Inputs()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return { "Controller","Headlights1","Headlights2","RedLights","DoorLeft","DoorRight","EmerBrakeWork","Ticker","KAH","ALS","PassScheme","R_Announcer","R_Line","AccelRate","DoorClose","DoorBlock","EqLights","CabLights","AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PassSchemeControl","CBKIPower","PCBKPower", }
+    return { "Controller","Headlights1","Headlights2","RedLights","DoorLeft","DoorRight","EmerBrakeWork","Ticker","TPT","KAH","ALS","PassScheme","R_Announcer","R_Line","AccelRate","DoorClose","DoorBlock","EqLights","CabLights","AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PassSchemeControl","CBKIPower","PCBKPower", }
 end
 --if not TURBOSTROI then return end
 function TRAIN_SYSTEM:TriggerInput(name,value)

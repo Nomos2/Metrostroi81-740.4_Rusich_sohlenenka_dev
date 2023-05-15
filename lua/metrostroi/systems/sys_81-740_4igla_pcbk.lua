@@ -68,11 +68,11 @@ function TRAIN_SYSTEM:Think(dT)
         local BRAKES = false
         local SCHEME = false
         if schengaged then
-            DOORS = Train.RD.Value < 0.5 and not schengagedB
+            DOORS = not schengagedB
             PARKING = Train.ParkingBrake and Train.ParkingBrake.Value > 0.5 and not schengagedB
             MANUAL = Train.ManualBrake and Train.ManualBrake > 0 and not schengagedB
             BRAKES = Train.Pneumatic.BrakeCylinderPressure > 0.5 and not schengagedB
-            SCHEME = Train.LK4.Value == 0
+            SCHEME = Train.K2.Value == 0
             if BPSN and schengagedD and not self.BPSNTimer then self.BPSNTimer = CurTime() end
         else
             if (not BPSN or not self.States.BPSN) and self.BPSNTimer then self.BPSNTimer = nil end

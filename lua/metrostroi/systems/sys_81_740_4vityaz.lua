@@ -9,47 +9,72 @@ function TRAIN_SYSTEM:Initialize()
 	self.PowerTarget = 0
 
 	self.CurrentCab = false
-	self.Train:LoadSystem("VityazF1","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF2","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF3","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF4","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz1","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz4","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz7","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz2","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz5","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz8","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz0","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz3","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz6","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("Vityaz9","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF5","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF6","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF7","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF8","Relay","Switch",{bass=true})
-	self.Train:LoadSystem("VityazF9","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazNoth","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF1","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF2","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazNext","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF4","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz1","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz4","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz7","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz2","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz5","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz8","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz0","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz3","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz6","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Vityaz9","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF5","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF6","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazBack","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF7","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazT","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazCurrent","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazNum","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazSOT","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazVO","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF8","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("VityazF9","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazPVU","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazUTV","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazTV1","Relay","Switch",{bass=true})
+	self.Train:LoadSystem("VityazTV2","Relay","Switch",{bass=true})
 	self.TriggerNames = {
-		"VityazF1",
-		"VityazF2",
-		"VityazF3",
-		"VityazF4",
-		"Vityaz1",
-		"Vityaz2",
-		"Vityaz3",
-		"Vityaz4",
-		"Vityaz5",
-		"Vityaz6",
-		"Vityaz7",
-		"Vityaz8",
-		"Vityaz9",
+        "Vityaz1",
+        "Vityaz2",
+        "Vityaz3",
+        "Vityaz4",
+        "Vityaz5",
+        "Vityaz6",
+        "Vityaz7",
+        "Vityaz8",
+        "Vityaz9",
+        "VityazF5",
 		"Vityaz0",
-		"VityazF5",
-		"VityazF6",
-		"VityazF7",
-		"VityazF8",
 		"VityazF9",
-		"AttentionMessage"
-	}
+		
+		"VityazF4",
+		"VityazPVU",
+		"VityazVO",
+		"VityazT",
+		"VityazCurrent",
+		"VityazSOT",
+		"VityazF2",
+		"VityazNum",
+		
+        "VityazF6",
+        "VityazF7",
+		"VityazNext",
+		"VityazBack",
+		
+		"VityazUTV",
+		"VityazTV1",
+		"VityazTV2",
+		"VityazNoth",
+		"VityazF8",
+		
+        "AttentionMessage"
+    }
 	self.Triggers = {}
 	for k,v in pairs(self.TriggerNames) do
 		if self.Train[v] then self.Triggers[v] = self.Train[v].Value > 0.5 end
@@ -61,13 +86,20 @@ function TRAIN_SYSTEM:Initialize()
 	self.Errors = {}
 	self.Error = 0
 	self.Counter = 0
+	
+	self.Recuperation = false
 
 	self.Password = ""
+	
+	self.Klimat1Mode = false -- Лето
+	self.Klimat2Mode = false
+	
+	self.PrOstVersion = true -- рандом мб потом на старую/новую (2022 г) версию когда инфа появится
 
 	self.Selected = 0
 	
-	self.Date = "0"
-	self.Time = "0"
+	self.Date = os.date("%d".."%m")
+    self.Time = os.date("%H".."%M")
 	self.RouteNumber = "0"
 	self.WagNum = 0
 	self.DepotCode = "0"
@@ -138,7 +170,7 @@ if SERVER then
 		KAH=false,ALS=false,Ring=false,
 		DoorSelectL=false,DoorSelectR=false,
 		DoorBlock=false, DoorClose=false,AttentionMessage=false,Attention=false,AttentionBrake=false,
-		DoorLeft=false, DoorRight=false,
+		DoorLeft=false, DoorRight=false, AccelRate = false, Stand = false,
 		Pant1=false,Pant2=false,Vent2=false,PassLight=false,
 		TorecDoors=false,BBE=false,Compressor=false
 	}
@@ -169,17 +201,16 @@ if SERVER then
 		elseif self.State == 2 then
 			if self.State2 == 0 then
 				if self.Entering then
-					local num = (self.Selected==2 or self.Selected==3) and 4 or (self.Selected==8 or self.Selected==9) and 1 or self.Selected==6 and 3 or 2
-					if name == "VityazF8" and value and #self.Entering  == num then
-						if self.Selected == 2 then self.Date = self.Entering end
-						if self.Selected == 3 then self.Time = self.Entering end
-						if self.Selected == 4 then self.RouteNumber = self.Entering end
-						if self.Selected == 5 and tonumber(self.Entering) < 10 then self.WagNum = tonumber(self.Entering) end
+					local num = (self.Selected==1 or self.Selected==2) and 4 or (self.Selected==8 or self.Selected==9) and 1 or self.Selected==6 and 3 or 2
+					if name == "VityazF8" and value and #self.Entering == num then
+						if self.Selected == 1 then self.Date = self.Entering end
+						if self.Selected == 2 then self.Time = self.Entering end
+						if self.Selected == 3 then self.RouteNumber = self.Entering end
+						if self.Selected == 4 and tonumber(self.Entering) < 10 then self.WagNum = tonumber(self.Entering) end
 						if self.Selected == 6 then self.DepotCode = self.Entering end
 						if self.Selected == 7 then self.DepeatStation = self.Entering end
 						if self.Selected == 8 then self.Path = self.Entering end
 						if self.Selected == 9 then self.Dir = self.Entering end
-						if self.Selected == 10 then self.Deadlock = self.Entering end
 						self.Entering = false
 					end
 					if name == "VityazF9" and value then
@@ -195,7 +226,7 @@ if SERVER then
 					if name == "VityazF6" and value and self.Selected > 0 then
 						self.Selected = self.Selected - 1
 					end
-					if name == "VityazF7" and value and self.Selected < 10 then
+					if name == "VityazF7" and value and self.Selected < 9 then
 						self.Selected = self.Selected + 1
 					end
 					if name == "VityazF8" and value and self.WagNum > 0 then
@@ -206,17 +237,10 @@ if SERVER then
 					end
 					if name == "VityazF9" and value then
 						if self.Selected == 0 then self.State2 = 1 self.Selected = 0 end
-						if self.Selected == 1 then self.State2 = 2 self.Selected = 0 end
-						if self.Selected > 1 then self.Entering = "" end
+						if self.Selected > 0 then self.Entering = "" end
 					end
 				end
 			elseif self.State2 == 1 then
-				if name == "VityazF8" and value then
-					self.State2 = 0
-					self.Selected = 0
-				end
-
-			elseif self.State2 == 2 then
 				if name == "VityazF8" and value then
 					if self.Entering and #self.Entering == 4 then
 						local wagnum = tonumber(self.Entering)
@@ -229,7 +253,7 @@ if SERVER then
 						self.Entering = false
 					elseif not self.Entering then
 						self.State2 = 0
-						self.Selected = 1
+						self.Selected = 0
 					end
 				end
 				if name == "VityazF9" and value then
@@ -253,7 +277,6 @@ if SERVER then
 						self.Selected = self.Selected + 1
 					end
 				end
-
 			end
 		elseif self.State == 3 and name == "VityazF8" and value then
 			self.State = 2
@@ -262,56 +285,39 @@ if SERVER then
 			self.Kos = true
 			self.Ovr = true
 			self.State = 5
+			self.State2 = 0
 			self.Errors = {}
 		elseif self.State == 5 and self.State2 == 0 and value then
-		if self.ProstTimer and CurTime()-self.ProstTimer > 0.5 and char then
-				if char == 3 then
-					self.Prost = not self.Prost
-					self.Kos = 	self.Prost
-				elseif char == 9 then
-					self.Prost = self.Kos and not self.Prost
-				elseif char == 0 and Train.BKL then
-					self.Kos = not self.Kos
-					self.Prost = self.Kos
-					self.Ovr = self.Kos
-				end
-			else
-			if name == "VityazF2" then self.State2 = 4 end
-			if name == "Vityaz2" then self.State2 = 5 end
-			if name == "VityazF6" then self.State2 = 1 end
-			if (name == "VityazF1" or name == "VityazF9") and Train.VityazF9.Value*Train.VityazF1.Value > 0 then
-				self.State2 = 6
-				self.Selected = 1
-			end
-			if name == "VityazF7" then
-				self.State2 = 2
-				self.Selected = 0
-			end
-			end
-			if name == "VityazF8" then
-				self.State2 = 3
-				self.Selected = 0
-				self.ProstTimer = CurTime()
+			if self.Prost and name == "VityazBack" and value then
+				self.Prost = false
+				self.Kos = 	false
+			elseif not self.Prost and name == "VityazBack" and value then
+				self.Prost = true
+				self.Kos = 	true
 			end
 		elseif self.State == 5 and self.State2 == 2 and value then
 			if name == "VityazF6" and self.Selected > 0 then
 				self.Selected = self.Selected - 1
 			end
-			if name == "VityazF7" and self.Selected < 3 then
+			if name == "VityazF7" and self.Selected < 1 then
 				self.Selected = self.Selected + 1
 			end
-			if name == "VityazF9" then
-				if self.Selected == 0 then self.State2 = 21 end
-				if self.Selected == 1 then self.State2 = 22 end
-				if self.Selected == 2 then self.State2 = 23 end
-				if self.Selected == 3 then self.State2 = 24 end
-			end
-		elseif self.State == 5 and self.State2 == 3 and value then
+		elseif self.State == 5 and self.State2 == 4 and value then
 			if name == "VityazF6" and self.Selected > 0 then
 				self.Selected = self.Selected - 1
 			end
 			if name == "VityazF7" and self.Selected < 3 then
 				self.Selected = self.Selected + 1
+			end
+			if name == "VityazF2" and self.Selected == 2 and self.Klimat1Mode then 
+				self.Klimat1Mode = false
+			elseif name == "VityazF2" and self.Selected == 2 and not self.Klimat1Mode then
+				self.Klimat1Mode = true
+			end
+			if name == "VityazF2" and self.Selected == 3 and self.Klimat2Mode then 
+				self.Klimat2Mode = false
+			elseif name == "VityazF2" and self.Selected == 3 and not self.Klimat2Mode then
+				self.Klimat2Mode = true
 			end
 		elseif self.State == 5 and self.State2 == 6 and value then
 			local train = self.Trains[self.Selected]
@@ -324,9 +330,21 @@ if SERVER then
 				self.Selected = self.Selected + 1
 			end
 		end
-		if self.State == 5 and self.State2 > 0 and value then
-			if name == "VityazF4" then
-				self.State2 = 0
+		if self.State == 5 and self.State2 >= 0 and value then
+			if self.WagNum < 5 then
+				if name == "VityazF4" then
+					self.State2 = 0
+				end
+				--if name == "VityazF2" then self.State2 = 4 end
+				if name == "Vityaz2" and self.State2 ~= 6 then self.State2 = 5 end
+				if name == "VityazT" then self.State2 = 1 end
+				if name == "VityazCurrent" then self.State2 = 2 self.Selected = 0 end
+				if name == "VityazVO" then self.State2 = 4 self.Selected = 0 end
+				if name == "Vityaz9" and self.State2 ~= 6 then self.State2 = 4 self.Selected = 1 end
+				if name == "VityazPVU" then self.State2 = 6 self.Selected = 1 end
+				if name == "VityazNum" then self.State2 = 0 end
+				if name == "VityazSOT" then self.State2 = 3 end
+				if self.State2 ~= 6 and name == "Vityaz1" and Train.Panel.Controller == -3 and self.Recuperation == true then self.Recuperation = false elseif name == "Vityaz1" and Train.Panel.Controller == -3 and self.Recuperation == false then self.Recuperation = true end
 			end
 		end
 		if self.State == 5 and name == "AttentionMessage" and value then
@@ -349,28 +367,29 @@ if SERVER then
 		end
 	end
 	function TRAIN_SYSTEM:Think(dT)
-		if self.State > 0 and self.Reset and self.Reset ~= 1 then self.Reset = false end
-		local Train = self.Train
-		local Panel = Train.Panel
-		local Power = Train.BUV.Power > 0
-		local VityazWork = Train.SF5.Value > 0 and Power
-		if not VityazWork and self.State ~= (Power and -2 or 0) and (not Power or self.State ~= -3) then
-			if self.State == 0 then
-				self.State = -3
-			else
-				self.State = (Power and -2 or 0)
-			end
-			self.VityazTimer = nil
-		end
-		if VityazWork and (self.State == 0 or self.State == -2 or Power and self.State == -3) then
-			self.State = Power and -1 or -3
-			self.VityazTimer = CurTime()
-			self.Reset = nil
-			self.Compressor = false
-			self.Ring = false
-			self.Error = 0
-			self.ErrorRing = nil
-		end
+        if self.State > 0 and self.Reset and self.Reset ~= 1 then self.Reset = false end
+        local Train = self.Train
+        local Panel = Train.Panel
+        local Power = Train.BUV.Power > 0 and Train.Electric.Battery80V > 0
+        local VityazWork = Train.SF5.Value > 0 and Power
+		--print(self.State)
+        if not VityazWork and self.State ~= (Power and -2 or 0) and (not Power or self.State ~= -3) then
+            if self.State == 0 then
+                self.State = -3
+            else
+                self.State = (Power and -2 or 0)
+            end
+            self.VityazTimer = nil
+            self.Reset = nil
+            self.Compressor = false
+            self.Ring = false
+            self.Error = 0
+            self.ErrorRing = nil
+        end
+        if VityazWork and (self.State == 0 or self.State == -2 or Power and self.State == -3) then
+            self.State = Power and -1 or -3
+            self.VityazTimer = CurTime()
+        end
 		if self.State == -1 and CurTime()-self.VityazTimer > 1 then
 
 			self.State = 1
@@ -402,7 +421,7 @@ if SERVER then
 			if self.Counter > 799 then
 				self.Counter = 0
 			end
-			if Train.SF5.Value > 0 then Train:SetNW2Int("VityazCounter",self.Counter) end
+			if Train.SF13.Value > 0 then Train:SetNW2Int("VityazCounter",self.Counter) end
 		end
 		if self.State > 0 then
 			if self.State == 2 then
@@ -416,21 +435,24 @@ if SERVER then
 				Train:SetNW2String("VityazDir",self.Dir)
 				Train:SetNW2String("VityazDeadlock",self.Deadlock)
 				Train:SetNW2String("VityazEnter",self.Entering or "-")
-				if self.AutoStart then
-					for i=1,self.WagNum do
-						Train:SetNW2Bool("VityazWagI"..i,true)
+				if self.WagNum < 6 then
+					if self.AutoStart then
+						for i=1,self.WagNum do
+							Train:SetNW2Bool("VityazWagI"..i,true)
+						end
+						initialized = true
+						self.State = 5
+						self.Prost = true
+						self.Kos = true
+						self.Ovr = true	
+						self.Errors = {}
+						self.AutoStart = false
 					end
-					initialized = true
-					self.State = 5
-					self.Prost = true
-					self.Kos = true
-					self.Ovr = true	
-					self.Errors = {}
-					self.AutoStart = false
 				end
 			end
 			if self.State == 3 then
-				local initialized = true
+				local initialized = self.WagNum<6
+				Train:SetNW2Bool("VityazNotInitialize",self.WagNum>5)
 				for i=1,self.WagNum do
 					local train = self.Trains[self.Trains[i]]
 					if train then
@@ -455,6 +477,7 @@ if SERVER then
 				end
 			end
 			if self.State == 4 then
+				Train:SetNW2Bool("VityazNotInitialize",self.WagNum>5)
 				local i = 1
 				local num = 0
 				local EnginesStrength = 0
@@ -475,6 +498,7 @@ if SERVER then
 			local doorLeft,doorRight,doorClose = false,false,false
 			self.DoorClosed = false
 			if self.State == 5 then
+				Train:SetNW2Bool("VityazNotInitialize",self.WagNum<6)
 				local Back = false--Train:ReadTrainWire(4) > 0 and (Train.SF2.Value*(1-Train.KV["KRO5-6"]) or Train.SF3.Value*Train.KV["KRR15-16"]) > 0
 				local err3,err4,err6,err7,err10,err11,err12,err17
 				local HVBad = false
@@ -545,9 +569,42 @@ if SERVER then
 						Train:SetNW2Bool("VityazDoors"..i,doorclose)
 						Train:SetNW2Bool("VityazBV"..i,train.BVEnabled)
 						Train:SetNW2Bool("VityazScheme"..i,not train.NoAssembly)
+						self:CState("Vent2C",Train.Vent2.Value > 0)
+						local trainsel = self.Trains[i]
+                        for a=1,9 do Train:SetNW2Bool("VityazRPVU"..a..i,self.PVU[trainsel] and self.PVU[trainsel][a]) end
 						self.SchemeEngaged = self.SchemeEngaged or not train.NoAssembly
+						Train:SetNW2Bool("VityazMPT"..i,not train.PTEnabled) -- ПТ ВКЛ
+						Train:SetNW2Bool("VityazMPB"..i,not train.ParkingBrakeEnabled) -- СТ ТОРМ
+						Train:SetNW2Bool("VityazMEB"..i,not train.EmergencyBrake) -- ЭКС ТОР
+						Train:SetNW2Bool("VityazMBUV"..i,not train.BUVWork) -- БУВ
+						Train:SetNW2Bool("VityazMBBEBroken"..i,not train.BBEBroken) -- ЗАЩ ДИП
+						Train:SetNW2Bool("VityazMRessora"..i,true) -- ЗАЩ ДИП, НЕИС ТП
+						Train:SetNW2Bool("VityazMBTBR"..i,train.BTBReady) -- БТБ ГОТ
+						Train:SetNW2Bool("VityazKKFull"..i,train.Vent2Enabled and Train:ReadTrainWire(46)>0)
+						Train:SetNW2Bool("VityazKKEmer"..i,not train.Vent2Enabled and Train:ReadTrainWire(46)>0)
+						--print(train.Vent2Enabled)
+						Train:SetNW2Bool("VityazMKK1Mode",self.Klimat1Mode)
+						Train:SetNW2Bool("VityazMKK2Mode",self.Klimat2Mode)
+						Train:SetNW2Bool("ProstVersion",self.PrOstVersion)
+						Train:SetNW2Bool("VityazMBTB",Train.BARS.BTB) -- БТБ
+						Train:SetNW2Int("VityazMBarsBlock",Train.BARSBlock.Value) -- БТБ
+						Train:SetNW2Bool("VityazMBARS1",Train.SF4.Value == 0 or Train.BARS.Speed == 0) -- БАРС 1
+						Train:SetNW2Bool("VityazMBARS2",Train.SF7.Value == 0 or Train.BARS.Speed == 0) -- БАРС 2
+						Train:SetNW2Bool("VityazDisableDrive",Train.BARS.DisableDrive or self.Errors[5] and Train.Panel.Controller > 0) -- ЗАПРЕТ ТР
+						Train:SetNW2Bool("VityazMRecuperation",self.Recuperation) -- БАРС 1
+						Train:SetNW2Bool("ProstDoorBlockL",Train.BARS.Speed < 2 and (not Train.Prost_Kos.BlockDoorsL or Train.DoorBlock.Value == 1))
+						Train:SetNW2Bool("ProstDoorBlockR",Train.BARS.Speed < 2 and (not Train.Prost_Kos.BlockDoorsR or Train.DoorBlock.Value == 1))
 					end
+					
 					local BARS = Train.BARS
+					Train:SetNW2Int("VityazSpeed",Train.BARS.Speed)
+					Train:SetNW2Int("VityazSpeedLimit",Train.BARS.SpeedLimit)
+					Train:SetNW2Int("BARSFreq",Train.ALSFreqBlock.Value)
+					if Train.BARS.BINoFreq > 0 then
+						Train:SetNW2Int("VityazSpeedLimitNext",-1)
+					else
+						Train:SetNW2Int("VityazSpeedLimitNext",Train.BARS.NextLimit)
+					end
 					self:CheckError(1,false)
 					self:CheckError(2,Train.SF2.Value == 0)
 					self:CheckError(3,err3)
@@ -565,10 +622,10 @@ if SERVER then
 						end
 						Train:SetNW2Bool("VityazBARSPN2",not Train.Prost_Kos.CommandKos and BARS.Brake == 0 and BARS.Active == 1 and BARS.PN2 > 0 and not Train.Pneumatic.EmerBrakeWork)
 						if Train.Prost_Kos.Command ~= 0 and Train.Prost_Kos.ProstActive == 1 and Train.Panel.Controller == 0 then
-							stength = Train.Prost_Kos.Command
+							stength = Train.Prost_Kos.Command*(self.WagNum>6 and 0 or 1)
 						end
-						if Train.Prost_Kos.CommandKos then stength = -3 end
-						if BARS.Brake > 0 then stength = -3 end
+						if Train.Prost_Kos.CommandKos then stength = -3*(self.WagNum>6 and 0 or 1) end
+						if BARS.Brake > 0 then stength = -3*(self.WagNum>6 and 0 or 1) end
 
 						if Train.Prost_Kos.Metka and (Train.Prost_Kos.Metka[2] or Train.Prost_Kos.Metka[3] or Train.Prost_Kos.Metka[4]) and (Train.Prost_Kos.DistToSt ~= 0 or Train.Prost_Kos.ProstActive == 1) then
 							Train:SetNW2Int("VityazS",(Train.Prost_Kos.Dist or -10)*100)--(Train:ReadCell(49165)-5-5)*100)
@@ -612,94 +669,89 @@ if SERVER then
 					Train:SetNW2Int("VityazPMax",max*10)
 					Train:SetNW2Int("VityazPNM",Train.Pneumatic.TrainLinePressure*10)
 					Train:SetNW2Int("VityazUbs",Train.Electric.Battery80V)
-					if self.State2  == 1 then
-						Train:SetNW2Int("VityazSpeed",Train.BARS.Speed)
-						Train:SetNW2Int("VityazSpeedLimit",Train.BARS.SpeedLimit)
-						if Train.BARS.BINoFreq > 0 then
-							Train:SetNW2Int("VityazSpeedLimitNext",-1)
-						else
-							Train:SetNW2Int("VityazSpeedLimitNext",Train.BARS.NextLimit)
-						end
-					elseif self.State2 == 21 then
+					if self.State2 == 2 and self.Selected == 0 then
 						for i=1,self.WagNum do
 							local train = self.Trains[self.Trains[i]]
 							Train:SetNW2Int("VityazIMK"..i,train.MKVoltage*10)
-						end
-					elseif self.State2 == 22 then
-						for i=1,self.WagNum do
 							Train:SetNW2Int("VityazIVO"..i,self.Trains[self.Trains[i]].VagEqConsumption*10)
+							Train:SetNW2Int("VityazLV"..i,train.LVValue)
 						end
-					elseif self.State2 == 23 then
+					elseif self.State2 == 2 and self.Selected == 1 then
 						for i=1,self.WagNum do
-							Train:SetNW2Int("VityazI13"..i,self.Trains[self.Trains[i]].I13*10)
+							local train = self.Trains[self.Trains[i]]
+							Train:SetNW2Int("VityazBrakeStrength"..i,math.abs((train.BrakeStrength or 0))*10)
+							Train:SetNW2Int("VityazDriveStrength"..i,math.abs((train.DriveStrength or 0))*10)
+							Train:SetNW2Int("VityazElectricEnergyUsed"..i,train.ElectricEnergyUsed*10)
 						end
-					elseif self.State2 == 24 then
-						for i=1,self.WagNum do
-							Train:SetNW2Int("VityazI24"..i,self.Trains[self.Trains[i]].I24*10)
-						end
-					elseif self.State2 == 3 then
-						if self.Selected == 0 then
+					elseif self.State2 == 0 then
 							for i=1,self.WagNum do
 								local train = self.Trains[self.Trains[i]]
-								Train:SetNW2Bool("VityazBUVState"..i,train.BUVWork) --"БУВ"
-								Train:SetNW2Bool("VityazBTBReady"..i,train.BTBReady) --"БТБ ГОТ"
-								Train:SetNW2Bool("VityazPTGood"..i,train.PTEnabled) --"ПТ ЭФФ"
-								Train:SetNW2Bool("VityazEPTGood"..i,train.EmergencyBrakeGood) --"ЭТ ЭФФ"
+								Train:SetNW2Bool("VityazWagOr"..i,train.Orientation)
+							end
+						
+						elseif self.State2 == 3 then
+							for i=1,self.WagNum do
+								local train = self.Trains[self.Trains[i]]
+								Train:SetNW2Bool("VityazPSOT"..i,not train.PTEnabled) 
+							end
+						elseif self.State2 == 4 then
+							if self.Selected == 0 then
+							for i=1,self.WagNum do
+								local train = self.Trains[self.Trains[i]]
+								Train:SetNW2Bool("VityazMufta"..i,true) --"муфта"
+								Train:SetNW2Bool("VityazAxles"..i,true) --"буксы"
+								Train:SetNW2Bool("VityazCompressor"..i,true) --"мк" (исправность)
+								Train:SetNW2Bool("VityazDoorBlock"..i,Train.BUV.BlockTorec) --"торц дв"
 								Train:SetNW2Bool("VityazPTWork"..i,not train.PTBad) --"ТОРМ ОБ" !
-								Train:SetNW2Bool("VityazEmerActive"..i, not train.EmergencyBrake) --"ЭКС ТОРМ"
+								Train:SetNW2Bool("VityazKZ75"..i, Train.Electric.Battery80V > 62) --"КЗ75"
 								Train:SetNW2Bool("VityazEmPT"..i,not train.EmPT) --"ТОРМ РК"
+								Train:SetNW2Bool("VityazLightsWork"..i,train.PassLightEnabled) --"ОСВ ВКЛ"
 							end
 						elseif self.Selected == 1 then
 							for i=1,self.WagNum do
 								local train = self.Trains[self.Trains[i]]
-								Train:SetNW2Bool("VityazPTApply"..i,not train.PTEnabled) --"ПТ ВКЛ"
-								Train:SetNW2Bool("VityazEDTBroken"..i,not train.EnginesBrakeBroke) --"ОТКАЗ ЭТ" FIXME
-								Train:SetNW2Bool("VityazEDTDone"..i,not train.EnginesDone) --"ИСТОЩ ЭТ" FIXME
-								Train:SetNW2Bool("VityazPBApply"..i,not train.ParkingBrakeEnabled) --"СТ ТОРМ"
-								--Train:SetNW2Bool("VityazEKKGood"..i,) --"МежВаг С"
-								Train:SetNW2Bool("VityazBBEProtection"..i,not train.BBEBroken) --"ЗАЩ ББЭ"
-								Train:SetNW2Bool("VityazBBEEnabled"..i,train.BBEEnabled) --"ББЭ"
-							end
-						elseif self.Selected == 2 then
-							for i=1,self.WagNum do
-								local train = self.Trains[self.Trains[i]]
-								Train:SetNW2Bool("VityazLVGood"..i,not train.LVBad) --"НАПР БС"
-								Train:SetNW2Bool("VityazMKWork"..i,train.MKWork) --"МК"
-								Train:SetNW2Bool("VityazBVEnabled"..i,train.BVEnabled) --"ЗАЩИТ ТП"
-								Train:SetNW2Bool("VityazTPEnabled"..i,true) --"ТЯГ ПРИВ" FIXME
-								Train:SetNW2Bool("VityazPantDisabled"..i,not train.PantDisabled) --"ТКПР ОТЖ"
-								Train:SetNW2Bool("VityazBadCombination"..i,not train.BadCombination) --"ЗАПР КОМ"
-								Train:SetNW2Bool("VityazLightsWork"..i,train.PassLightEnabled) --"ОСВ ВКЛ"
-							end
-						elseif self.Selected == 3 then
-							for i=1,self.WagNum do
-								local train = self.Trains[self.Trains[i]]
-								Train:SetNW2Bool("VityazVent2Work"..i,train.Vent2Enabled) --"ВЕНТИЛ"
 								Train:SetNW2Bool("VityazHVGood"..i,not train.HVBad) --"НАПР КС"
-								Train:SetNW2Bool("VityazDoorBlock"..i,not train.DoorTorec) --"ТОРЦ ДВ" FIXME
+								Train:SetNW2Bool("VityazPantDisabled"..i,not train.PantDisabled) --"ТКПР ОТЖ"
+								Train:SetNW2Bool("VityazPTEff"..i,true) --"ПТ ЭФФ"
+								Train:SetNW2Bool("VityazEDTBroken"..i,not train.EnginesBrakeBroke) --"ОТКАЗ ЭТ"
+								Train:SetNW2Bool("VityazInvPro"..i,true) --"защ инв" 
+								Train:SetNW2Bool("VityazInvOverH"..i,true) --"пер инв"
+								Train:SetNW2Bool("VityazMejWag"..i,train.MejWag) --"МежВаг С"
+								Train:SetNW2Bool("VityazVTR"..i,true) --"НЕИС ВТР"
+							end
+						elseif self.Selected >= 2 then
+							for i=1,self.WagNum do
+								local train = self.Trains[self.Trains[i]]
+								Train:SetNW2Bool("VityazSOVSGreen"..i,true) -- Почти всё
+								Train:SetNW2Bool("VityazSOVSRed"..i,false)
+								Train:SetNW2Bool("VityazMKK1Mode",self.Klimat1Mode)
+								Train:SetNW2Bool("VityazMKK2Mode",self.Klimat2Mode)
+								--Train:SetNW2Bool("VityazSOVSHeating"..i,train.SOVSHeating and self.SOVSH)
+								--Train:SetNW2Bool("VityazSOVSNHeating"..i,train.SOVSHeating and not self.SOVSH)
 							end
 						end
-					elseif self.State2 == 4 then
-						for i=1,self.WagNum do
-							local train = self.Trains[self.Trains[i]]
-							Train:SetNW2Bool("VityazWagOr"..i,train.Orientation)
-						end
-					elseif self.State2 == 5 then
-						for i=1,self.WagNum do
-							local train = self.Trains[self.Trains[i]]
-							local orientation = train.Orientation
-							Train:SetNW2Bool("VityazWagOr"..i,orientation)
-							for d=1,4 do
-								Train:SetNW2Bool("VityazDoor"..d.."L"..i,train["Door"..(orientation and d or d+4).."Closed"])
-								Train:SetNW2Bool("VityazDoor"..d.."R"..i,train["Door"..(orientation and d+4 or d).."Closed"])
+						elseif self.State2 == 5 then
+							for i=1,self.WagNum do
+								local train = self.Trains[self.Trains[i]]
+								local orientation = train.Orientation
+								Train:SetNW2Bool("VityazWagOr"..i,orientation)
+								if i == 1 or i == self.WagNum then
+									doorcount = 5
+								else
+									doorcount = 6
+								end
+								for d=1,doorcount do
+									Train:SetNW2Bool("VityazDoor"..d.."L"..i,train["LeftDoor"..d.."Closed"])
+									Train:SetNW2Bool("VityazDoor"..d.."R"..i,train["RightDoor"..d.."Closed"])
+									--print(i.." вагон",d.." дверь",Train:GetNW2Bool("VityazDoor"..d.."L"..i,train["Door"..(orientation and d or d+6).."Closed"]),Train:GetNW2Bool("VityazDoor"..d.."R"..i,train["Door"..(orientation and d+6 or d).."Closed"]))
+								end
 							end
+						elseif self.State2 == 6 then
+							local train = self.Trains[self.Selected]
+							for i=1,9 do Train:SetNW2Bool("VityazPVU"..i,self.PVU[train] and self.PVU[train][i]) end
 						end
-					elseif self.State2 == 6 then
-						local train = self.Trains[self.Selected]
-						for i=1,9 do Train:SetNW2Bool("VityazPVU"..i,self.PVU[train] and self.PVU[train][i]) end
-					end
-                    if not self.Slope and Train.AccelRate.Value > 0 and Train.BARS.Speed <= 2 then self.Slope = true end
-					if self.Slope and (self.SchemeEngaged or Train.BARS.Speed > 2) then self.Slope = false end
+						if not self.Slope and Train.AccelRate.Value > 0 and Train.BARS.Speed <= 2 then self.Slope = true end
+						if self.Slope and (self.SchemeEngaged or Train.BARS.Speed > 2) then self.Slope = false end
 				else
 					self.Reset = nil
 					self.Slope = false
@@ -753,7 +805,7 @@ if SERVER then
 				self.EnginesStrength = 0
 			end
 			self:CState("RV",RV*Train.SF2.Value > 0,"BUKP")
-			self:CState("RVPB",(1-Train.KV["KRO5-6"])*Train.SF2.Value > 0)
+			--self:CState("RVPB",(1-Train.KV["KRO5-6"])*Train.SF2.Value > 0)
 			self:CState("Ring",Train.Ring.Value > 0,"BUKP")
 			self.ControllerState = stength
 			self:CState("DriveStrength",math.abs(stength))
@@ -793,6 +845,7 @@ if SERVER then
 			self:CState("DoorTorec",Train.TorecDoors.Value > 0)
 			self:CState("BBE",Train.BBE.Value > 0)
 			self:CState("BVOn",Train.Panel.Controller == 0 and Train.EnableBV.Value > 0)
+			--self:CState("Vent2On",Train.Vent2.Value > 0)
 			self:CState("BVOff",Train.DisableBV.Value > 0)
 
 			self:CState("Ticker",Train.Ticker.Value > 0)
@@ -802,12 +855,12 @@ if SERVER then
 		self:CState("BUPWork",self.State > 0)
 		Train:SetNW2Int("VityazSelected",self.Selected)
 		Train:SetNW2Int("VityazState2",self.State2)
-		Train:SetNW2Int("VityazState",Train.SF5.Value*self.State)
+		Train:SetNW2Int("VityazState",Train.SF13.Value*self.State)
 		if self.State > 0 and self.Reset and self.Reset == 1 then self.Reset = false end
 	end
 else
 	local function createFont(name,font,size,weight,blur,scanlines,underline)
-		surface.CreateFont("Metrostroi_740_"..name, {
+		surface.CreateFont("Metrostroi_7404_"..name, {
 			font = font,
 			size = size,
 			weight = weight or 400,
@@ -825,43 +878,12 @@ else
 			scanlines = scanlines or false,
 		})
 	end
-    createFont("VityazSmall","Moscow Sans Regular",50,400,0,0,false)
-	createFont("Vityaz","Moscow Sans Regular",61,400,0,0,false)
-    createFont("VityazB","Moscow Sans Regular",58,400,0,0,false)
-	createFont("VityazB_small","Moscow Sans Regular",58,400,0,0,false)
-	function TRAIN_SYSTEM:DrawBox(x,y,w,h,col)
-		for i=0,w-1 do
-			if i==0 then
-				self:PrintText(x+i,y,"╔",col)
-				for i1=0,h-1 do self:PrintText(x+i,y+h,"║",col) end
-				self:PrintText(x+i,y+h,"╚",col)
-			elseif i == w then
-				self:PrintText(x+i,y,"╗",yellow)
-				for i1=0,h-1 do self:PrintText(x+i,y+h,"║",col) end
-				self:PrintText(x+i,y+h,"╝",col)
-			else
-				self:PrintText(x+i,y,"═",col)
-				self:PrintText(x+i,h,"═",col)
-			end
-		end
-	end
+	createFont("VityazComm","FreeSans",53,400,0,0,false)
+    createFont("VityazBold","FreeSans",40,400,0,0,false)
+	createFont("VityazPU","PerfectDOSVGA437",68,400,0,0,false)
+	local State5 = surface.GetTextureID("models/81-740/State5_1")
 	
 	function TRAIN_SYSTEM:ClientThink()
-		
-		function self:DrawBox(x,y,w,h,col)
-			self:PrintText(x,y,"╔",col)
-			self:PrintText(x,y+h+1,"╚",col)
-			self:PrintText(x+w+1,y,"╗",col)
-			self:PrintText(x+w+1,y+h+1,"╝",col)
-			for i=1,h do
-				self:PrintText(x,y+i,"║",col)
-				self:PrintText(x+w+1,y+i,"║",col)
-			end
-			for i=1,w do
-				self:PrintText(x+i,y,"═",col)
-				self:PrintText(x+i,y+h+1,"═",col)
-			end
-		end
 		local state = self.Train:GetNW2Int("VityazState",0)
 		--print(state.." state")
 		local counter = self.Train:GetNW2Int("VityazCounter",0)
@@ -870,7 +892,7 @@ else
 			if state ~= -2 then
 				self.State = state
 			end
-			render.PushRenderTarget(self.Train.Vityaz,0,0,1024, 1024)
+			render.PushRenderTarget(self.Train.Vityaz,0,0,1024, 1024) -- 23 x 
 			render.Clear(0, 0, 0, 0)
 			cam.Start2D()
 				self:VityazMonitor(self.Train)
@@ -882,59 +904,28 @@ else
 		local str = {utf8.codepoint(text,1,-1)}
 		for i=1,#str do
 			local char = utf8.char(str[i])
-			if size == 3 then
-				draw.SimpleText(char,"Metrostroi_740_VityazB_small",(x+i)*34-15,y*58+38,col,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
-			elseif size == 1 then
-				draw.SimpleText(char,"Metrostroi_740_Vityaz",(x+i)*40-8,y*58+38,col,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
-			elseif size == 2 or text == "█" then
-				draw.SimpleText(char,"Metrostroi_740_VityazB",(x+i)*40-8,y*58+30,col,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
+			if char == "█" then
+				draw.SimpleText(char,"Metrostroi_7404_VityazBold",(x+i)*25.8,y*40.5,col,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
 			else
-                draw.SimpleText(char,"Metrostroi_740_Vityaz",(x+i)*40-8,y*58+30,col,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
+                draw.SimpleText(char,"Metrostroi_7404_VityazComm",(x+i)*25.8,y*40.5,col,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
+			end
 		end
-	end
-        end
-
-	local VO = {
-		"БУВ","BUVState",
-		"БТБ ГОТ","BTBReady",
-		"ПТ ЭФФ","PTGood",
-		"ЭТ ЭФФ","EPTGood",
-		"ТОРМ ОБ","PTWork",
-		"ЭКС ТОРМ","EmerActive",
-		"ТОРМ РК","EmPT",
-		"ПТ ВКЛ","PTApply",
-		"ОТКАЗ ЭТ","EDTBroken",
-		"ИСТОЩ ЭТ","EDTDone",
-		"СТ ТОРМ","PBApply",
-		"МежВаг С","EKKGood",
-		"ЗАЩ ББЭ","BBEProtection",
-		"ББЭ","BBEEnabled",
-		"НАПР БС","LVGood",
-		"МК","MKWork",
-		"ЗАЩИТ ТП","BVEnabled",
-		"ТЯГ ПРИВ","TPEnabled",
-		"ТКПР ОТЖ","PantDisabled",
-		"ЗАПР КОМ","BadCombination",
-		"ОСВ ВКЛ","LightsWork",
-		"ВЕНТИЛ","Vent2Work",
-		"НАПР КС","HVGood",
-		"ТОРЦ ДВ","DoorBlock",
-	}
+    end
 	local Errors = {
 			"Сбой КМ",
 			"Сбой РВ",
-			"Неиспр. БУВ",
-			"Вагон не ориент.",
+			"Неисправн БУВ",
+			"Ваг не ориентир",
 			"Запрет ТР от БАРС",
-			"Экстренный тормоз",
-			"Стояночный тормоз",
+			"ЭКСТР ТОРМОЖЕН",
+			"Стоян ТОРМ приж",
 			"Дверной проем",
 			"Пневмотормоз вкл.",
-			"Uкс не в норме",
-			"ДВ не закрыты",--11
+			"U КС не в норме",
+			"ДВЕРИ не закрыты",--11
 			"Открыта кабина ХВ",
 			"Кузов не в норме",
-			"Защита ББЭ",
+			"Защита ДИП",
 			"Буксы не в норме",
 			"Неисправность МК",
 			"Освещение не вкл.",
@@ -949,8 +940,9 @@ else
     local darkgreen = Color(30,75,28)
 	local blue = Color(36,119,219)
     local darkblue = Color(6,37,89)
-    local aqua = Color(139,222,230)
+    local aqua = Color(109,215,230)
     local darkaqua = Color(28,105,109)
+	local aqua = Color(150,193,225)
 	local yellow = Color(223,217,94)
     local darkyellow = Color(100,90,27)
     local purple = Color(210,152,229)
@@ -969,422 +961,594 @@ else
 			surface.DrawRect(0,0,1024,1024)
 		end
 		if self.State == -3 then
-			self:PrintText(6,0,"ТЕСТ МНММ",yellow)
-			for i=1,4 do
-				self:PrintText(4,0+i*2,"█",Train:GetNW2Bool("VityazMNMM"..i) and green or red)
-				self:PrintText(16,0+i*2,"█",Train:GetNW2Bool("VityazMNMM"..(i+15)) and green or red)
+			surface.SetDrawColor(30,30,190)
+			surface.DrawRect(0,0,1024,1024)
+			local pix = 120 					-- Размер пикселя
+			local generalPosX = 110				-- Начальная позиция по Х
+			local generalPosY = 165				-- Начальная позиция по Y
+			local pixoffset = pix+10			-- Маленький отступ
+			local pixoffsetbig = pix+10*2.5		-- Большой отступ
+			local function drawBoxPU(PosX,PosY,bool)
+				surface.SetDrawColor(240,240,240)
+				local onOffset = 5 				-- отступ для полуобводки
+				surface.DrawOutlinedRect(bool and PosX-onOffset+2 or PosX-2, bool and PosY-onOffset+2 or PosY-2, bool and pix-onOffset+2 or pix-2, bool and pix-onOffset+2 or pix-2, 3)
+				surface.SetDrawColor(bool and red or Color(22,125,12))
+				surface.DrawRect(PosX,PosY,bool and pix - onOffset or pix,bool and pix-onOffset or pix)
 			end
-			for i=0,11 do
-				if i~=9 then
-					self:PrintText(8+i%3*2,2+math.floor(i/3)*2,"█",Train:GetNW2Bool("VityazMNMM"..(i<9 and i+5 or i+4)) and green or red)
-				end
-			end
+			draw.SimpleText("ТЕСТ ПУ","Metrostroi_7404_VityazPU",512,75,Color(225,219,131),TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
+			-- Левый двойной ряд
+			drawBoxPU(generalPosX,generalPosY,Train:GetNW2Bool("VityazMNMM13"))
+			drawBoxPU(generalPosX+pixoffset,generalPosY,Train:GetNW2Bool("VityazMNMM14"))
+			drawBoxPU(generalPosX,generalPosY+pixoffset,Train:GetNW2Bool("VityazMNMM15"))
+			drawBoxPU(generalPosX+pixoffset,generalPosY+pixoffset,Train:GetNW2Bool("VityazMNMM16"))
+			drawBoxPU(generalPosX,generalPosY+pixoffset*2,Train:GetNW2Bool("VityazMNMM17"))
+			drawBoxPU(generalPosX+pixoffset,generalPosY+pixoffset*2,Train:GetNW2Bool("VityazMNMM18"))
+			drawBoxPU(generalPosX,generalPosY+pixoffset*3,Train:GetNW2Bool("VityazMNMM19"))
+			drawBoxPU(generalPosX+pixoffset,generalPosY+pixoffset*3,Train:GetNW2Bool("VityazMNMM20"))
+			-- Нижние четыре
+			drawBoxPU(generalPosX,generalPosY+pixoffsetbig+pixoffset*3,Train:GetNW2Bool("VityazMNMM25"))
+			drawBoxPU(generalPosX+pixoffset,generalPosY+pixoffsetbig+pixoffset*3,Train:GetNW2Bool("VityazMNMM26"))
+			drawBoxPU(generalPosX+pixoffset*2,generalPosY+pixoffsetbig+pixoffset*3,Train:GetNW2Bool("VityazMNMM27"))
+			drawBoxPU(generalPosX+pixoffset*3,generalPosY+pixoffsetbig+pixoffset*3,Train:GetNW2Bool("VityazMNMM28"))
+			-- Центральные 12
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset,generalPosY,Train:GetNW2Bool("VityazMNMM1"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*2,generalPosY,Train:GetNW2Bool("VityazMNMM2"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*3,generalPosY,Train:GetNW2Bool("VityazMNMM3"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset,generalPosY+pixoffset,Train:GetNW2Bool("VityazMNMM4"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*2,generalPosY+pixoffset,Train:GetNW2Bool("VityazMNMM5"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*3,generalPosY+pixoffset,Train:GetNW2Bool("VityazMNMM6"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset,generalPosY+pixoffset*2,Train:GetNW2Bool("VityazMNMM7"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*2,generalPosY+pixoffset*2,Train:GetNW2Bool("VityazMNMM8"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*3,generalPosY+pixoffset*2,Train:GetNW2Bool("VityazMNMM9"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset,generalPosY+pixoffset*3,Train:GetNW2Bool("VityazMNMM10"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*2,generalPosY+pixoffset*3,Train:GetNW2Bool("VityazMNMM11"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*3,generalPosY+pixoffset*3,Train:GetNW2Bool("VityazMNMM12"))
+			-- Правый ряд (+ ввод)
+			drawBoxPU(generalPosX+pixoffsetbig*2+pixoffset*3,generalPosY,Train:GetNW2Bool("VityazMNMM21"))
+			drawBoxPU(generalPosX+pixoffsetbig*2+pixoffset*3,generalPosY+pixoffset,Train:GetNW2Bool("VityazMNMM22"))
+			drawBoxPU(generalPosX+pixoffsetbig*2+pixoffset*3,generalPosY+pixoffset*2,Train:GetNW2Bool("VityazMNMM23"))
+			drawBoxPU(generalPosX+pixoffsetbig*2+pixoffset*3,generalPosY+pixoffset*3,Train:GetNW2Bool("VityazMNMM24"))
+			drawBoxPU(generalPosX+pixoffsetbig+pixoffset*4,generalPosY+pixoffsetbig+pixoffset*3,Train:GetNW2Bool("VityazMNMM29"))
 		elseif self.State == 1 or self.WrongPassword == false then
 			if os.date( "%m-%d" ) == "04-01" then
-			self:PrintText(8,4,"Иди нахуй",yellow)
+				self:PrintText(0,4,"В̵̓в̴͓е̵̲д̸̲͂и̷̬̕т̷̥ё̴̜́͑п̙а̷̬̜̒р̴̲оль̴",yellow)
 			else
-			self:PrintText(5,4,"Введите пароль",yellow)
+				if os.date( "%m-%d" ) == "05-15" then
+				self:PrintText(1,4,"С днем рождения Московского метро :)",yellow)
+			else				
+				self:PrintText(10,4,"Введите  пароль",yellow)
 			end
+			end
+			--print("тута")
 			local pass = Train:GetNW2String("VityazPass","")
-			self:PrintText(10,6.5,pass..string.rep(" ",4-#pass),yellow)
-            --
+			self:PrintText(19-0.5*#pass,6.5,pass..string.rep(" ",4-#pass),purple)
+            local yPOS = 20
+			--
             for i=0,1 do
-                self:PrintText(0,13.5+i/1.5,"█",darkblue,3)--23
-                self:PrintText(1,13.5+i/1.5,"█",darkblue,3)--23
+                self:PrintText(0,yPOS+i/1.5,"█",darkblue,3)--23
+                self:PrintText(1,yPOS+i/1.5,"█",darkblue,3)--23
+
+                self:PrintText(2,yPOS+i/1.5,"█",darkgreen,3)--23
+                self:PrintText(3,yPOS+i/1.5,"█",darkgreen,3)--23
+
+                self:PrintText(4,yPOS+i/1.5,"█",darkaqua,3)--23
+                self:PrintText(5,yPOS+i/1.5,"█",darkaqua,3)--23
+
+                self:PrintText(6,yPOS+i/1.5,"█",darkred,3)--23
+                self:PrintText(7,yPOS+i/1.5,"█",darkred,3)--23
+
+                self:PrintText(8,yPOS+i/1.5,"█",darkpurple,3)--ахахах пле
+                self:PrintText(9,yPOS+i/1.5,"█",darkpurple,3)--пле сука оррр
+
+                self:PrintText(10,yPOS+i/1.5,"█",darkyellow,3)
+                self:PrintText(11,yPOS+i/1.5,"█",darkyellow,3)
+
+                self:PrintText(12,yPOS+i/1.5,"█",darkwhite,3)
+                self:PrintText(13,yPOS+i/1.5,"█",darkwhite,3)
+
+                self:PrintText(14,yPOS+i/1.5,"█",darkblack,3)
+                self:PrintText(15,yPOS+i/1.5,"█",darkblack,3)
+
+                self:PrintText(16,yPOS+i/1.5,"█",blue,3)
+                self:PrintText(17,yPOS+i/1.5,"█",blue,3)
+				
+                self:PrintText(18,yPOS+i/1.5,"█",green,3)
+                self:PrintText(19,yPOS+i/1.5,"█",green,3)
+
+                self:PrintText(20,yPOS+i/1.5,"█",aqua,3)
+                self:PrintText(21,yPOS+i/1.5,"█",aqua,3)
+
+                self:PrintText(22,yPOS+i/1.5,"█",red,3)
+                self:PrintText(23,yPOS+i/1.5,"█",red,3)
+				
+                self:PrintText(24,yPOS+i/1.5,"█",purple,3)
+                self:PrintText(25,yPOS+i/1.5,"█",purple,3)
+
+                self:PrintText(26,yPOS+i/1.5,"█",yellow,3)
+                self:PrintText(27,yPOS+i/1.5,"█",yellow,3)
+    
+                self:PrintText(28,yPOS+i/1.5,"█",white,3)
+                self:PrintText(29,yPOS+i/1.5,"█",white,3)
+				
+                self:PrintText(30,yPOS+i/1.5,"█",darkblue,3)--23
+                self:PrintText(31,yPOS+i/1.5,"█",darkblue,3)--23
+				
+                self:PrintText(32,yPOS+i/1.5,"█",darkgreen,3)--23
+                self:PrintText(33,yPOS+i/1.5,"█",darkgreen,3)--23
+
+                self:PrintText(34,yPOS+i/1.5,"█",darkaqua,3)--23
+                self:PrintText(35,yPOS+i/1.5,"█",darkaqua,3)--23
+				
+                self:PrintText(36,yPOS+i/1.5,"█",darkred,3)--23
+                self:PrintText(37,yPOS+i/1.5,"█",darkred,3)--23
+				
+                self:PrintText(38,yPOS+i/1.5,"█",darkpurple,3)
+                self:PrintText(39,yPOS+i/1.5,"█",darkpurple,3)
             end
-            --
-            for i=0,1 do
-                self:PrintText(2,13.5+i/1.5,"█",darkgreen,3)--23
-                self:PrintText(3,13.5+i/1.5,"█",darkgreen,3)--23
-            end
-            --
-            for i=0,1 do
-                self:PrintText(4,13.5+i/1.5,"█",darkaqua,3)--23
-                self:PrintText(5,13.5+i/1.5,"█",darkaqua,3)--23
-            end
-            --
-            for i=0,1 do
-                self:PrintText(6,13.5+i/1.5,"█",darkred,3)--23
-                self:PrintText(7,13.5+i/1.5,"█",darkred,3)--23
-            end
-            --
-            for i=0,1 do
-                self:PrintText(8,13.5+i/1.5,"█",darkpurple,3)--ахахах пле
-                self:PrintText(9,13.5+i/1.5,"█",darkpurple,3)--пле сука оррр
-            end
-            --
-            for i=0,1 do
-                self:PrintText(10,13.5+i/1.5,"█",darkyellow,3)
-                self:PrintText(11,13.5+i/1.5,"█",darkyellow,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(12,13.5+i/1.5,"█",darkwhite,3)
-                self:PrintText(13,13.5+i/1.5,"█",darkwhite,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(14,13.5+i/1.5,"█",darkblack,3)
-                self:PrintText(15,13.5+i/1.5,"█",darkblack,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(16,13.5+i/1.5,"█",blue,3)
-                self:PrintText(17,13.5+i/1.5,"█",blue,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(18,13.5+i/1.5,"█",green,3)
-                self:PrintText(19,13.5+i/1.5,"█",green,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(20,13.5+i/1.5,"█",aqua,3)
-                self:PrintText(21,13.5+i/1.5,"█",aqua,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(22,13.5+i/1.5,"█",red,3)
-                self:PrintText(23,13.5+i/1.5,"█",red,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(24,13.5+i/1.5,"█",purple,3)
-                self:PrintText(25,13.5+i/1.5,"█",purple,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(26,13.5+i/1.5,"█",yellow,3)
-                self:PrintText(27,13.5+i/1.5,"█",yellow,3)
-            end
-            --
-            for i=0,1 do
-                self:PrintText(28,13.5+i/1.5,"█",white,3)
-                self:PrintText(29,13.5+i/1.5,"█",white,3)
-            end
-            --
-            --[[for i=0,1 do
-                self:PrintText(30,13.5+i/1.5,"█",red,3)
-                self:PrintText(31,13.5+i/1.5,"█",red,3)
-            end]]
-            --[[ настроечная таблица
-            for i=0,22 do
-                self:PrintText(0,0+i/1.36,"█",darkblue)--23
-            end   
-             настроечная таблица
-            for i=0,33 do
-                self:PrintText(0+i/1.38,0,"█",darkblue)--23
-            end ]]       
 		elseif self.State == 2 then
 			local enter = Train:GetNW2String("VityazEnter","-")
 			if enter == "-" then enter = false end
-			if state2 == 0 and sel < 6 then
-				--[[
-				Train:GetNW2String("VityazDepotCode","")
-				Train:GetNW2String("VityazDepeatStation","")
-				Train:GetNW2String("VityazPath","")
-				Train:GetNW2String("VityazDir","")
-				Train:GetNW2String("VityazDeadlock","")]]
-				self:PrintText(5,0,"Режим депо",yellow)
-				self:PrintText(0,1,"1 Коды типов",yellow)
-					self:PrintText(10,2,"вагонов",yellow)
-					self:PrintText(18,2,">",yellow)
-				self:PrintText(0,3,"2 Номер вагонов",yellow)
-					self:PrintText(7,4,"в составе",yellow)
-					self:PrintText(18,4,">",yellow)
-				self:PrintText(0,5,"3 Дата",yellow)
-					if sel==2 and enter then self:PrintText(15,5,enter..string.rep("█",4-#enter),yellow) else self:PrintText(15,5,Format("%04d", Train:GetNW2String("VityazDate","0")),yellow) end
-				self:PrintText(0,6,"4 Время выдачи",yellow)
-					self:PrintText(7,7,"состава",yellow)
-					if sel==3 and enter then self:PrintText(15,7,enter..string.rep("█",4-#enter),yellow) else self:PrintText(15,7,Format("%04d", Train:GetNW2String("VityazTime","0")),yellow) end
-				self:PrintText(0,8,"5 Номер маршрута",yellow)
-					if sel==4 and enter then self:PrintText(17,8,enter..string.rep("█",2-#enter),yellow) else self:PrintText(17,8,Format("%02d", Train:GetNW2String("VityazRouteNumber","0")),yellow) end
-				self:PrintText(0,9,"6 Число вагонов",yellow)
-					if sel==5 and enter then self:PrintText(17,9,enter..string.rep("█",2-#enter),yellow) else self:PrintText(17,9,Format("%02d", Train:GetNW2Int("VityazWagNum","0")),yellow) end
-
-				if sel == 0 then self:PrintText(19,2,"<",yellow) end
-				if sel == 1 then self:PrintText(19,4,"<",yellow) end
-				if sel == 2 then self:PrintText(19,5,"<",yellow) end
-				if sel == 3 then self:PrintText(19,7,"<",yellow) end
-				if sel == 4 then self:PrintText(19,8,"<",yellow) end
-				if sel == 5 then self:PrintText(19,9,"<",yellow) end
-			elseif state2 == 0 then
-				self:PrintText(5,0,"Режим депо",yellow)
-				self:PrintText(0,1,"7 Диаметр бандажа",yellow)
-					self:PrintText(3,2,"КП",yellow)
-					self:PrintText(16,2,"860",yellow)
-				self:PrintText(0,3,"8 Код депо",yellow)
-					if sel==6 and enter then self:PrintText(16,3,enter..string.rep("█",3-#enter),yellow) else self:PrintText(16,3,Format("%03d", Train:GetNW2String("VityazDepotCode","0")),yellow) end
-				self:PrintText(0,4,"9 Номер станции",yellow)
-					self:PrintText(4,5,"отправления",yellow)
-					if sel==7 and enter then self:PrintText(17,5,enter..string.rep("█",2-#enter),yellow) else self:PrintText(17,5,Format("%02d", Train:GetNW2String("VityazDepeatStation","0")),yellow) end
-				self:PrintText(0,6,"10 Номер пути",yellow)
-					if sel==8 and enter then self:PrintText(18,6,enter..string.rep("█",1-#enter),yellow) else self:PrintText(18,6,Format("%d", Train:GetNW2String("VityazPath","0")),yellow) end
-				self:PrintText(0,7,"11 Направление",yellow)
-					self:PrintText(6,8,"движения",yellow)
-					if sel==9 and enter then self:PrintText(18,8,enter..string.rep("█",1-#enter),yellow) else self:PrintText(18,8,Format("%d", Train:GetNW2String("VityazDir","0")),yellow) end
-				self:PrintText(0,9,"12 Номер тупика",yellow)
-					if sel==10 and enter then self:PrintText(17,9,enter..string.rep("█",2-#enter),yellow) else self:PrintText(17,9,Format("%02d", Train:GetNW2String("VityazDeadlock","0")),yellow) end
-
-				if sel == 6 then self:PrintText(19,3,"<",yellow) end
-				if sel == 7 then self:PrintText(19,5,"<",yellow) end
-				if sel == 8 then self:PrintText(19,6,"<",yellow) end
-				if sel == 9 then self:PrintText(19,8,"<",yellow) end
-				if sel == 10 then self:PrintText(19,9,"<",yellow) end
+			if state2 == 0 then
+				self:PrintText(15,2,"Режим ДЕПО",yellow)
+				self:PrintText(2,4,"1 Тип и номера вагонов",yellow)
+					self:PrintText(34,4,">",blue)
+				self:PrintText(2,6,"2 Дата",yellow)
+					if sel == 1 and enter then self:PrintText(31,6,enter..string.rep("█",4-#enter),yellow) else self:PrintText(31,6,Format("%04d", Train:GetNW2String("VityazDate",os.date("%d".."%m"))),yellow) end
+				self:PrintText(2,8,"3 Время выдачи состава",yellow)
+					if sel == 2 and enter then self:PrintText(31,8,enter..string.rep("█",4-#enter),yellow) else self:PrintText(31,8,Format("%04d", Train:GetNW2String("VityazTime",os.date("%H".."%M"))),yellow) end
+				self:PrintText(2,10,"4 Номер маршрута",yellow)
+					if sel==3 and enter then self:PrintText(33,10,enter..string.rep("█",2-#enter),yellow) else self:PrintText(33,10,Format("%02d", Train:GetNW2String("VityazRouteNumber","0")),yellow) end
+				self:PrintText(2,12,"5 Число вагонов",yellow)
+					if sel==4 and enter then self:PrintText(33,12,enter..string.rep("█",2-#enter),yellow) else self:PrintText(33,12,Format("%02d", Train:GetNW2Int("VityazWagNum","0")),yellow) end
+				self:PrintText(2,14,"6 Диаметр бандажа КП",yellow)
+					self:PrintText(32,14,"860",yellow)
+				self:PrintText(2,16,"7 Код депо",yellow)
+					if sel==6 and enter then self:PrintText(32,16,enter..string.rep("█",3-#enter),yellow) else self:PrintText(32,16,Format("%03d", Train:GetNW2String("VityazDepotCode","0")),yellow) end
+				self:PrintText(2,18,"8 Номер станции отправления",yellow)
+					if sel==7 and enter then self:PrintText(33,18,enter..string.rep("█",2-#enter),yellow) else self:PrintText(33,18,Format("%02d", Train:GetNW2String("VityazDepeatStation","0")),yellow) end
+				self:PrintText(2,20,"9 Номер пути",yellow)
+					if sel==8 and enter then self:PrintText(34,20,enter..string.rep("█",1-#enter),yellow) else self:PrintText(34,20,Format("%d", Train:GetNW2String("VityazPath","0")),yellow) end
+				self:PrintText(2,22,"10 Направление движения",yellow)
+					if sel==9 and enter then self:PrintText(34,22,enter..string.rep("█",1-#enter),yellow) else self:PrintText(34,22,Format("%d", Train:GetNW2String("VityazDir","0")),yellow) end
+			self:PrintText(36, 4+sel*2,"<",blue)
 			elseif state2 == 1 then
-			elseif state2 == 2 then
-				self:PrintText(3,0,"Номера вагонов",yellow)
-				self:PrintText(1,1,"№  тип",yellow)
-					self:PrintText(9,1,"заводской №",yellow)
+				self:PrintText(10,2,"ТИП И НОМЕРА ВАГОНОВ",yellow)
+				self:PrintText(5,4,"№ ваг.",yellow)
+				self:PrintText(13,4,"код типа",yellow)
+					self:PrintText(22,4,"заводской №",yellow)
 				for i=1,9 do
-					self:PrintText(1,1+i,tostring(i),yellow)
-					self:PrintText(5,1+i,"1",yellow)
+					self:PrintText(6,4+i*2,tostring(i),yellow)
+					self:PrintText(17,4+i*2,"2",yellow)
 					if not enter or sel ~= i-1 then
-						self:PrintText(13,1+i,Format("%04d",Train:GetNW2Int("VityazWagNum"..i)),yellow)
+						self:PrintText(26,4+i*2,Format("%04d",Train:GetNW2Int("VityazWagNum"..i)),yellow)
 					end
 				end
 				if enter then
-					self:PrintText(13,2+sel,enter..string.rep("█",4-#enter),yellow)
+					self:PrintText(26,6+sel*2,enter..string.rep("█",4-#enter),yellow)
 				end
-				self:PrintText(19,2+sel,"<",yellow)
+				self:PrintText(32,6+sel*2,"<",blue)
 			end
 		elseif self.State == 3 then
-			self:PrintText(2,3,"Неиндентифиц ваг",yellow)
+		local init = Train:GetNW2Bool("VityazNotInitialize",false)
+		if init then --[[surface.SetTexture(State5) surface.SetDrawColor(255,255,255) surface.DrawTexturedRectRotated(512,512,1024,1024,0) ]] else
+			self:PrintText(12,4,"Неиндентифиц ваг",yellow)
 			for i=1,wagnum do
-				self:PrintText(5+i+(9-wagnum)/2,5,"█",Train:GetNW2Bool("VityazWagI"..i,false) and green or red)
+				self:PrintText(13+i+(9-wagnum)/2,6,"█",Train:GetNW2Bool("VityazWagI"..i,false) and green or red)
 			end
+		end
 		elseif self.State == 4 then
-			self:PrintText(4,0,"Основной  ПУ",yellow)
-			self:PrintText(5,1,"█",Train:GetNW2Bool("VityazBTestKAH") and green or red)
-				self:PrintText(7,1,"█",Train:GetNW2Bool("VityazBTestALS") and green or darkwhite)
-				self:PrintText(11,1,"█",Train:GetNW2Bool("VityazBTestRing") and green or red)
-			self:PrintText(2,2,"█",Train:GetNW2Bool("VityazBTestDoorSelectL") and green or red)
-				self:PrintText(4,2,"█",Train:GetNW2Bool("VityazBTestDoorSelectR") and green or red)
-			self:PrintText(3,3,"█",Train:GetNW2Bool("VityazBTestDoorBlock") and green or red)
-				self:PrintText(10,3,"█",Train:GetNW2Bool("VityazBTestDoorClose") and green or red)
-				self:PrintText(12,3,"█",Train:GetNW2Bool("VityazBTestAttentionMessage") and green or red)
-				self:PrintText(14,3,"█",Train:GetNW2Bool("VityazBTestAttention") and green or red)
-				self:PrintText(16,3,"█",Train:GetNW2Bool("VityazBTestAttentionBrake") and green or red)
-			self:PrintText(2,4,"█",Train:GetNW2Bool("VityazBTestDoorLeft") and green or red)
-				self:PrintText(17	,4,"█",Train:GetNW2Bool("VityazBTestDoorRight") and green or red)
-			self:PrintText(1,6,"Вспомогательный ПУ",yellow)
-			self:PrintText(3,7,"█",Train:GetNW2Bool("VityazBTestPant1") and green or red)
-				self:PrintText(5,7,"█",Train:GetNW2Bool("VityazBTestPant2") and green or red)
-				self:PrintText(9,7,"█",Train:GetNW2Bool("VityazBTestVent2") and green or red)
-				self:PrintText(13,7,"█",Train:GetNW2Bool("VityazBTestPassLight") and green or red)
-			self:PrintText(6,8,"█",Train:GetNW2Bool("VityazBTestTorecDoors") and green or red)
-				self:PrintText(10,8,"█",Train:GetNW2Bool("VityazBTestBBE") and green or red)
-				self:PrintText(12,8,"█",Train:GetNW2Bool("VityazBTestCompressor") and green or red)
-			self:PrintText(1,10,"Исправных клавиш",yellow)
-			self:PrintText(18,10,tostring(Train:GetNW2Int("VityazBTest")),yellow)
+		local xbase,ybase =  8,5
+		self:PrintText(xbase+4,ybase,"Основной   ПУ",yellow)
+		self:PrintText(xbase+10,ybase+1,"█",Train:GetNW2Bool("VityazBTestStand") and green or red)
+		self:PrintText(xbase+13,ybase+1,"█",Train:GetNW2Bool("VityazBTestALS") and green or red)
+		self:PrintText(xbase+16,ybase+1,"█",Train:GetNW2Bool("VityazBTestAccelrate") and green or red)
+			self:PrintText(xbase+19,ybase+1,"█",Train:GetNW2Bool("VityazBTestRing") and green or red)
+		self:PrintText(xbase+8,ybase+2,"█",Train:GetNW2Bool("VityazBTestTPT") and green or red)
+		--self:PrintText(2,9,"█",Train:GetNW2Bool("VityazBTestDoorSelectL") and green or red)
+			--self:PrintText(4,9,"█",Train:GetNW2Bool("VityazBTestDoorSelectR") and green or red)
+		self:PrintText(xbase+3,ybase+3,"█",Train:GetNW2Bool("VityazBTestDoorBlock") and green or red)
+			self:PrintText(xbase+9,ybase+3,"█",Train:GetNW2Bool("VityazBTestDoorClose") and green or red)
+			self:PrintText(xbase+12,ybase+3,"█",Train:GetNW2Bool("VityazBTestAttentionMessage") and green or red)
+			self:PrintText(xbase+15,ybase+3,"█",Train:GetNW2Bool("VityazBTestAttention") and green or red)
+			self:PrintText(xbase+18,ybase+3,"█",Train:GetNW2Bool("VityazBTestAttentionBrake") and green or red)
+		self:PrintText(xbase+2,ybase+4,"█",Train:GetNW2Bool("VityazBTestDoorLeft") and green or red)
+			self:PrintText(xbase+19,ybase+4,"█",Train:GetNW2Bool("VityazBTestDoorRight") and green or red)
+		self:PrintText(xbase+1,ybase+6,"Вспомогательный ПУ",yellow)
+		self:PrintText(xbase+1,ybase+7,"█",Train:GetNW2Bool("VityazBTestPant1") and green or red)
+			self:PrintText(xbase+3,ybase+7,"█",Train:GetNW2Bool("VityazBTestPant2") and green or red)
+			self:PrintText(xbase+13,ybase+7,"█", red)
+			self:PrintText(xbase+15,ybase+7,"█",Train:GetNW2Bool("VityazBTestPassLight") and green or red)
+			--self:PrintText(15,15,"█",Train:GetNW2Bool("VityazBTestVent2") and green or red)
+		self:PrintText(xbase+5,ybase+8,"█",Train:GetNW2Bool("VityazBTestTorecDoors") and green or red)
+			self:PrintText(xbase+7,ybase+8,"█",Train:GetNW2Bool("VityazBTestBBE") and green or red)
+			self:PrintText(xbase+9,ybase+8,"█",Train:GetNW2Bool("VityazBTestCompressor") and green or red)
+		self:PrintText(xbase,ybase+12,"Исправных клавиш",yellow)
+		self:PrintText(xbase+18,ybase+12,tostring(Train:GetNW2Int("VityazBTest")),yellow)
 		elseif self.State == 5 and mainmsg > 0 then
 			if mainmsg == 3 then
-				self:PrintText(3,0,"ВКЛЮЧЕНЫ 2 РВ",yellow)
+				self:PrintText(10,2,"Включены 2 РВ",yellow)
 			elseif mainmsg == 2 then
-				self:PrintText(3,0,"ХВОСТОВОЙ ПУ",yellow)
+				self:PrintText(10,2,"Хвостовой ПУ",yellow)
 			else
-				self:PrintText(6.5,0,"РВ ОТКЛЮЧЕНЫ",yellow)
+				self:PrintText(10,2,"РВ отключены",yellow)
+			end
+			for i = 1,wagnum do
+				if not Train:GetNW2Bool("VityazMBTBR"..i,false) then
+					self:PrintText(10,3,"█████ █████ █████", red)
+					self:PrintText(10,4,"█       █   █", red)
+					self:PrintText(10,5,"█       █   █", red)
+					self:PrintText(10,6,"█████   █   █████", red)
+					self:PrintText(10,7,"█   █   █   █   █", red)
+					self:PrintText(10,8,"█   █   █   █   █", red)
+					self:PrintText(10,9,"█████   █   █████", red)
+				end
+			end
+		elseif self.State == 5 and state2 == 1 then
+			self:PrintText(20,14,"№ Т°салона Т°окр ср",yellow)
+			for i=1,wagnum do
+				self:PrintText(20,15+i,tostring(i),yellow)
+				for a = 1,2 do
+					self:PrintText(18+a*4,15+i,"20",aqua)
+					self:PrintText(27+a*4,15+i,"19",aqua)
+				end
+			end
+		elseif self.State == 5 and state2 == 2 then
+			self:PrintText(19,15,"№",yellow)
+			if sel == 0 then
+				self:PrintText(22,13,"ТОКИ",yellow)
+				self:PrintText(23,15,"ВО",yellow)
+				self:PrintText(29,15,"МК",yellow)
+				self:PrintText(32,13,"НАПРЯЖ",yellow)
+				self:PrintText(34,15,"БС",yellow)
+				for i = 1,wagnum do 
+					self:PrintText(19,16+i,tostring(i),yellow)
+					self:PrintText(22,16+i,Format("%03d",Train:GetNW2Int("VityazIVO"..i,0)/10),green)
+					self:PrintText(28,16+i,Format("%04.1f",Train:GetNW2Int("VityazIMK"..i,0)/10),aqua)
+					self:PrintText(34,16+i,Format("%02d",Train:GetNW2Int("VityazLV"..i,0)),red)
+				end
+			elseif sel == 1 then
+				self:PrintText(21,13,"УСИЛИЕ",yellow)
+				self:PrintText(21,15,"ТЯГ",yellow)
+				self:PrintText(26,15,"ТОРМ",yellow)
+				self:PrintText(30,13,"ЭНЕРГИЯ",yellow)
+				self:PrintText(31,15,"ПОТР",yellow)
+				for i = 1,wagnum do 
+					self:PrintText(19,16+i,tostring(i),yellow)
+					self:PrintText(21,16+i,Format("%02d",Train:GetNW2Int("VityazBrakeStrength"..i,0)*2),green)
+					self:PrintText(27,16+i,Format("%02d",Train:GetNW2Int("VityazDriveStrength"..i,0)*2),aqua)
+					self:PrintText(30,16+i,Format("%07.1f",Train:GetNW2Int("VityazElectricEnergyUsed"..i,0)),red)
+				end
 			end
 		elseif self.State == 5 and state2 == 0 then
-			self:PrintText(2,0,"РЕЖИМ",yellow)
-				local typ = Train:GetNW2Int("VityazType",0)
-				if typ == 1 then self:PrintText(8,0,"ХОД",blue)
-				elseif typ == 0 then self:PrintText(8,0,"ВЫБЕГ",blue)
-				elseif typ == -1 then self:PrintText(8,0,"ТОРМОЗ",blue) end
-			self:PrintText(1,2,"№ вагона:",yellow)
-				for i=1,wagnum do
-					self:PrintText(9+i,2,tostring(i),yellow)
-				end
-			self:PrintText(4,4,"Двери:",yellow)
-				for i=1,wagnum do
-					self:PrintText(9+i,4,"█",Train:GetNW2Bool("VityazDoors"..i,false) and green or red)
-				end
-			self:PrintText(7,5,"БВ:",yellow)
-				for i=1,wagnum do
-					self:PrintText(9+i,5,"█",Train:GetNW2Bool("VityazBV"..i,false) and green or red)
-				end
-			self:PrintText(2,6,"Сбор СХ:",yellow)
-				for i=1,wagnum do
-					self:PrintText(9+i,6,"█",Train:GetNW2Bool("VityazScheme"..i,false) and green or red)
-				end
-			self:PrintText(1,8,"Pmin",yellow)
-				self:PrintText(1,9,Format("%.1f",Train:GetNW2Int("VityazPMin",0)/10),blue)
-			self:PrintText(6,8,"Pmax",yellow)
-				self:PrintText(6,9,Format("%.1f",Train:GetNW2Int("VityazPMax",0)/10),blue)
-			self:PrintText(11,8,"Pнм",yellow)
-				self:PrintText(11,9,Format("%.1f",Train:GetNW2Int("VityazPNM",0)/10),blue)
-			self:PrintText(16,8,"Uбс",yellow)
-				self:PrintText(16,9,tostring(Train:GetNW2Int("VityazUbs",0)),blue)
-			if err > 0 then
-				self:PrintText(0,10,Errors[err],yellow)
-			end
-			local Prost = Train:GetNW2Bool("VityazProst",false)
-			local Kos = Train:GetNW2Bool("VityazKos",false)
-			local Metka,ProstActive,Kos2 = Train:GetNW2Bool("VityazProstMetka",false),Train:GetNW2Bool("VityazProstActive",false),Train:GetNW2Bool("VityazProstKos",false)
-			if ProstActive then
-				if CurTime()%1 < 0.4 then
-					if Prost then
-						self:PrintText(15,0,"ПРОСТ",Metka and green or (Train:GetNW2Bool("BKL",false) and Color(80,80,80) or Color(170,170,170)),true)
-					end
-				end
-			else
-				local vityazs = Train:GetNW2Int("VityazS",-1000)/100
-				local prostact = vityazs~=-1000 and (vityazs < 200 and ProstActive or Metka and vityazs > 200)
-				if Prost then
-					self:PrintText(15,0,"ПРОСТ",prostact and green or (Train:GetNW2Bool("BKL",false) and Color(80,80,80) or Color(170,170,170)),true)
-				end
-			end
-				if Kos then
-					self:PrintText(21,0,"КОС",(Metka and Kos2) and green or (Train:GetNW2Bool("BKL",false) and Color(80,80,80) or Color(170,170,170)),true)
-				end
-		elseif self.State == 5 and state2 == 1 then
-			local speed   = Train:GetNW2Int("VityazSpeed",0)
-			local speedL  = Train:GetNW2Int("VityazSpeedLimit",0)
-			local speedLN = Train:GetNW2Int("VityazSpeedLimitNext",-1)
-			self:PrintText(1,1,"СКОРОСТЬ",yellow)
-			self:PrintText(1,3,"ФАКТИЧ",yellow)
-			self:PrintText(1,5,"РЕКОМ",yellow)
-			self:PrintText(1,7,"ДОПУСТ",yellow)
-			for i=0,2 do self:PrintText(11,3+i*2,"КМ\\Ч",yellow) end
-			self:PrintText(8,3,Format("%02d",speed),green)
-			if speedLN == -1 and speedL < 20 then
-				self:PrintText(8,5,"ОЧ",yellow)
-				self:PrintText(8,7,"ОЧ",red)
-			elseif speedLN == -1 and speedL >= 20 then
-				self:PrintText(8,5,Format("%02d",0),yellow)
-				self:PrintText(8,7,Format("%02d",speedL),red)
-			else
-				self:PrintText(8,5,Format("%02d",speedLN),yellow)
-				self:PrintText(8,7,Format("%02d",speedL),red)
-			end
-			
-		elseif self.State == 5 and state2 == 2 then
-			self:PrintText(2,0,"ПОТРЕБЛЯЕМЫЙ ТОК",yellow)
-			self:PrintText(1,2,"МОТОР",yellow)
-				self:PrintText(3,3,"КОМПРЕССОРА",yellow)
-			self:PrintText(1,4,"ВАГОННОГО",yellow)
-				self:PrintText(3,5,"ОБОРУДОВАНИЯ",yellow)
-			self:PrintText(1,6,"1-Й ГР ТЯГОВЫХ",yellow)
-				self:PrintText(3,7,"ДВИГАТЕЛЕЙ",yellow)
-			self:PrintText(1,8,"2-Й ГР ТЯГОВЫХ",yellow)
-				self:PrintText(3,9,"ДВИГАТЕЛЕЙ",yellow)
-			if sel == 0 then self:PrintText(16,3,"<",yellow) end
-			if sel == 1 then self:PrintText(16,5,"<",yellow) end
-			if sel == 2 then self:PrintText(16,7,"<",yellow) end
-			if sel == 3 then self:PrintText(16,9,"<",yellow) end
-		elseif self.State == 5 and state2 == 21 then
-			self:PrintText(2,0,"ПОТРЕБЛЯЕМЫЙ ТОК",yellow)
-			self:PrintText(1,1,"МОТОР",yellow)
-					self:PrintText(3,2,"КОМПРЕССОРА",yellow)
-					for i=1,wagnum do
-						self:PrintText(1,2+i,i.." ВАГОН",yellow)
-						self:PrintText(10	,2+i,Format("%04.1f А",Train:GetNW2Int("VityazIMK"..i,0)/10),yellow)
-				end
-		elseif self.State == 5 and state2 == 22 then
-			self:PrintText(2,0,"ПОТРЕБЛЯЕМЫЙ ТОК",yellow)
-			self:PrintText(1,1,"ВАГОННОГО",yellow)
-				self:PrintText(3,2,"ОБОРУДОВАНИЯ",yellow)
-				for i=1,wagnum do
-						self:PrintText(1,2+i,i.." ВАГОН",yellow)
-						self:PrintText(10,	2+i,Format("% 4.1f А",Train:GetNW2Int("VityazIVO"..i,0)/10),yellow)
-				end
-		elseif self.State == 5 and state2 == 23 then
-			self:PrintText(2,0,"ПОТРЕБЛЯЕМЫЙ ТОК",yellow)
-			self:PrintText(1,1,"1-Й ГР ТЯГОВЫХ",yellow)
-				self:PrintText(3,2,"ДВИГАТЕЛЕЙ",yellow)
-				for i=1,wagnum do
-						self:PrintText(1,2+i,i.." ВАГОН",yellow)
-						self:PrintText(10	,2+i,Format("% 4.1f А",Train:GetNW2Int("VityazI13"..i,0)/10),yellow)
-				end
-		elseif self.State == 5 and state2 == 24 then
-			self:PrintText(2,0,"ПОТРЕБЛЯЕМЫЙ ТОК",yellow)
-			self:PrintText(1,1,"2-Й ГР ТЯГОВЫХ",yellow)
-				self:PrintText(3,2,"ДВИГАТЕЛЕЙ",yellow)
-				for i=1,wagnum do
-						self:PrintText(1,2+i,i.." ВАГОН",yellow)
-						self:PrintText(10	,2+i,Format("% 4.1f А",Train:GetNW2Int("VityazI24"..i,0)/10),yellow)
-				end
-		elseif self.State == 5 and state2 == 3 then
-			self:PrintText(4	,0,"СОСТОЯНИЕ ВО",yellow)
-			self:PrintText(1,2,"№ вагона:",yellow)
+			self:PrintText(21,13,"НОМЕРА ВАГ",yellow)
+			self:PrintText(21,15,"№ ваг",yellow)
+			self:PrintText(27,15,"зав №",yellow)
+			self:PrintText(34,15,"ОР",yellow)
 			for i=1,wagnum do
-				self:PrintText(9+i,2,tostring(i),yellow)
+				self:PrintText(22,16+i,tostring(i),yellow)
+				self:PrintText(27,16+i,Format("%04d",Train:GetNW2Int("VityazWagNum"..i)),yellow)
+				if Train:GetNW2Bool("VityazWagOr"..i) then
+					self:PrintText(34,16+i,"о",yellow) -- я хуй знает почему, но тут рил маленькие буквы
+				else
+					self:PrintText(34,16+i,"п",purple)
+				end
 			end
-			for i=0,6 do
-				local text,var = VO[i*2+sel*14+1],VO[i*2+sel*14+2]
-				if text then
-					self:PrintText(1,4+i,text,yellow)
-					for w=1,wagnum do
-						self:PrintText(9+w,4+i,"█",Train:GetNW2Bool("Vityaz"..var..w,false) and green or red)
-					end
+		elseif self.State == 5 and state2 == 3 then
+			self:PrintText(18,14,"ПРОТИВОЮЗОВАЯ ЗАЩИТА",yellow)
+			self:PrintText(18,15,"№ вагона:",yellow)
+			for i = 1,wagnum do
+				for a = 1,6 do
+					self:PrintText(27+i,15,tostring(i),yellow)
+					self:PrintText(27+i,15+a,"█",Train:GetNW2Bool("VityazPSOT"..i) and green or purple)
+					self:PrintText(27+i,22,"█", green)
+					---self:PrintText(30+i,21,"█", green)
+					self:PrintText(20,15+a,"сот "..a,yellow)
+					self:PrintText(20,22,"юз кп",yellow)
+					--self:PrintText(23,21,"дукс",yellow)
 				end
 			end
 		elseif self.State == 5 and state2 == 4 then
-			self:PrintText(0,0,"НОМЕРА ВАГ В СОСТАВЕ",yellow)
-			self:PrintText(1,2,"№",yellow)
-			self:PrintText(4,2,"зав №",yellow)
-			self:PrintText(11,2,"ориент",yellow)
-			for i=1,wagnum do
-				self:PrintText(1,2+i,tostring(i),yellow)
-				self:PrintText(4,2+i,Format("%04d",Train:GetNW2Int("VityazWagNum"..i)),yellow)
-				if Train:GetNW2Bool("VityazWagOr"..i) then
-					self:PrintText(11,2+i,"ОДИНАК",yellow)
-				else
-					self:PrintText(11,2+i,"ПРОТИВОП",yellow)
+			local iCount
+			local xPos
+			if sel < 2 then self:PrintText(22,13,"СОСТОЯНИЕ ВО",yellow) iCount = 7 elseif sel >= 2 then iCount = 6 self:PrintText(22,13,"КЛИМАТ "..sel-1,yellow) end
+			self:PrintText(20,14,"№ вагона:",yellow)
+			for w=1,wagnum do
+				self:PrintText(29+w,14,tostring(w),yellow)
+				if sel == 0 then
+					self:PrintText(21,15,"муфта",yellow)
+					self:PrintText(29+w,15,"█",Train:GetNW2Bool("VityazMufta"..w,false) and green or purple)
+					self:PrintText(21,16,"буксы",yellow)
+					self:PrintText(29+w,16,"█",Train:GetNW2Bool("VityazAxles"..w,false) and green or purple)
+					self:PrintText(21,17,"мк",yellow)
+					if not Train:GetNW2Bool("VityazRPVU".."2"..w,false) then 
+						self:PrintText(29+w,17,"█",Train:GetNW2Bool("VityazCompressor"..w,false) and green or purple)
+					else
+						self:PrintText(29+w,17,"Р", red)
+					end
+					self:PrintText(21,18,"торц дв",yellow)
+					if not Train:GetNW2Bool("VityazRPVU".."6"..w,false) then 
+						self:PrintText(29+w,18,"█",Train:GetNW2Bool("VityazDoorBlock"..w,false) and green or purple)
+					else
+						self:PrintText(29+w,18,"Р", red)
+					end
+					self:PrintText(21,19,"осв вкл",yellow)
+					if not Train:GetNW2Bool("VityazRPVU".."5"..w,false) then 
+						self:PrintText(29+w,19,"█",Train:GetNW2Bool("VityazLightsWork"..w,false) and green or purple)
+					else
+						self:PrintText(29+w,19,"Р", red)
+					end
+					self:PrintText(21,20,"неис тп",yellow)
+					self:PrintText(29+w,20,"█",Train:GetNW2Bool("VityazKZ75"..w,false) and green or purple)
+					self:PrintText(21,21,"торм об",yellow)
+					self:PrintText(29+w,21,"█",Train:GetNW2Bool("VityazPTWork"..w,false) and green or purple)
+					self:PrintText(21,22,"торм рк",yellow)
+					self:PrintText(29+w,22,"█",Train:GetNW2Bool("VityazEmPT"..w,false) and green or purple)
+				elseif sel == 1 then
+					self:PrintText(21,15,"ткпр отж",yellow)
+					if not Train:GetNW2Bool("VityazRPVU".."4"..w,false) then 
+						self:PrintText(29+w,15,"█",Train:GetNW2Bool("VityazPantDisabled"..w,false) and green or purple)
+					else
+						self:PrintText(29+w,15,"Р", red)
+					end
+					self:PrintText(21,16,"напр кс",yellow)
+					self:PrintText(29+w,16,"█",Train:GetNW2Bool("VityazHVGood"..w,false) and green or purple)
+					self:PrintText(21,17,"пт эфф",yellow)
+					self:PrintText(29+w,17,"█",Train:GetNW2Bool("VityazPTEff"..w,false) and green or purple)
+					self:PrintText(21,18,"отказ эт",yellow)
+					self:PrintText(29+w,18,"█",Train:GetNW2Bool("VityazEDTBroken"..w,false) and green or purple)
+					self:PrintText(21,19,"защ инв",yellow)
+					self:PrintText(29+w,19,"█",Train:GetNW2Bool("VityazInvPro"..w,false) and green or purple)
+					self:PrintText(21,20,"пер инв",yellow)
+					self:PrintText(29+w,20,"█",Train:GetNW2Bool("VityazInvOverH"..w,false) and green or purple)
+					self:PrintText(21,21,"неис втр",yellow)
+					self:PrintText(29+w,21,"█",Train:GetNW2Bool("VityazVTR"..w,false) and green or purple)
+					self:PrintText(21,22,"межваг с",yellow)
+					self:PrintText(29+w,22,"█",Train:GetNW2Bool("VityazMejWag"..w,false) and green or purple)
+				elseif sel == 2 then
+					if Train:GetNW2Bool("VityazMKK1Mode",false) then
+						self:PrintText(29+w,15,"З",blue)
+					else
+						self:PrintText(29+w,15,"Л",red)
+					end
+				elseif sel == 3 then
+					if Train:GetNW2Bool("VityazMKK2Mode",false) then
+						self:PrintText(29+w,15,"З",blue)
+					else
+						self:PrintText(29+w,15,"Л",red)
+					end
+				end
+				if sel > 1 then
+					self:PrintText(21,16,"кк вкл",yellow)
+					self:PrintText(29+w,16,"█",Train:GetNW2Bool("VityazSOVSRed"..w,false) and green or purple)
+					self:PrintText(21,17,"кк неис",yellow)
+					self:PrintText(29+w,17,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
+					self:PrintText(21,18,"ав вент",yellow)
+					self:PrintText(29+w,18,"█",Train:GetNW2Bool("VityazSOVSRed"..w,false) and green or purple)
+					self:PrintText(21,19,"вент",yellow)
+					if not Train:GetNW2Bool("VityazRPVU".."4"..w,false) then 
+						self:PrintText(29+w,19,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
+						self:PrintText(29+w,20,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
+						self:PrintText(29+w,21,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
+					else
+						self:PrintText(29+w,19,"Р", red)
+						self:PrintText(29+w,20,"Р", red)
+						self:PrintText(29+w,21,"Р", red)
+					end
+					self:PrintText(21,20,"охлаж",yellow)
+					self:PrintText(21,21,"отопл",yellow)
+					self:PrintText(21,22,"датчики",yellow)
+					self:PrintText(29+w,22,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
 				end
 			end
 		elseif self.State == 5 and state2 == 5 then
-			self:PrintText(2,0,"СОСТОЯНИЕ ДВЕРЕЙ",yellow)
-			self:PrintText(1,2,"№",yellow)
-			self:PrintText(4,2,"ЛЕВЫЕ",yellow)
-			self:PrintText(10,2,"ПРАВЫЕ",yellow)
-			self:PrintText(18,2,"Ор",yellow)
+			self:PrintText(21,13,"СОСТОЯНИЕ ДВЕРЕЙ",yellow)
+			self:PrintText(19,15,"№",yellow)
+			self:PrintText(21,15,"левые",yellow)
+			self:PrintText(29,15,"правые",yellow)
+			self:PrintText(36,15,"ор",yellow)
 			for i=1,wagnum do
-				self:PrintText(1,2+i,tostring(i),yellow)
-				for d=1,4 do
-					self:PrintText(3+d,2+i,"█",Train:GetNW2Bool("VityazDoor"..d.."L"..i,false) and green or red)
-					self:PrintText(11+d,2+i,"█",Train:GetNW2Bool("VityazDoor"..d.."R"..i,false) and green or red)
+				if i == 1 or i == wagnum then
+					doorcount = 5
+				else
+					doorcount = 6
+				end
+				local orient = Train:GetNW2Bool("VityazWagOr"..i)
+				self:PrintText(19,16+i,tostring(i),yellow)
+				for d=1,doorcount do
+					self:PrintText(i == 1 and 22+d or 21+d and orient and 21+d or 28+d,16+i,"█",Train:GetNW2Bool("VityazDoor"..d.."L"..i,false) and green or red)
+					self:PrintText(i == 1 and 29+d or 28+d and orient and 28+d or 21+d,16+i,"█",Train:GetNW2Bool("VityazDoor"..d.."R"..i,false) and green or red) 
 				end
 				if Train:GetNW2Bool("VityazWagOr"..i) then
-					self:PrintText(18,2+i,"О",yellow)
+					self:PrintText(36,16+i,"О",yellow)
 				else
-					self:PrintText(18,2+i,"П",yellow)
+					self:PrintText(36,16+i,"П",purple)
 				end
 			end
 		elseif self.State == 5 and state2 == 6 then
-			self:PrintText(0,0,"ПО ВАГОННОЕ УПРАВЛ-Е",yellow)
-			self:PrintText(2,1,"вагон",yellow)
-				self:PrintText(10,1,"№",yellow)
-				self:PrintText(14,1,tostring(sel),yellow)
-			self:PrintText(0,2,"1 БВ",yellow)
-				self:PrintText(14,2,Train:GetNW2Bool("VityazPVU1") and "ВЫКЛ" or "ВКЛ",yellow)
-			self:PrintText(0,3,"2 ДВЕРИ",yellow)
-				self:PrintText(14,3,Train:GetNW2Bool("VityazPVU2") and "БЛОК" or "НЕБЛ",yellow)
-			self:PrintText(0,4,"3 КОМПРЕССОР",yellow)
-				self:PrintText(14,4,Train:GetNW2Bool("VityazPVU3") and "ВЫКЛ" or "ВКЛ",yellow)
-			self:PrintText(0,5,"4 ТОКОПР",yellow)
-				self:PrintText(14,5,Train:GetNW2Bool("VityazPVU4") and "ОТЖ" or "ПРИЖ",yellow)
-			self:PrintText(0,6,"5 ОСВЕЩ",yellow)
-				self:PrintText(14,6,Train:GetNW2Bool("VityazPVU5") and "ВЫКЛ" or "ВКЛ",yellow)
-			self:PrintText(0,7,"6 БЛОКИР Т/ДВ",yellow)
-				self:PrintText(14,7,Train:GetNW2Bool("VityazPVU6") and "ВЫКЛ" or "ВКЛ",yellow)
-			self:PrintText(0,8,"7 ВЕНТИЛ",yellow)
-				self:PrintText(14,8,Train:GetNW2Bool("VityazPVU7") and "ВЫКЛ" or "ВКЛ",yellow)
-			self:PrintText(0,9,"8 ББЭ",yellow)
-				self:PrintText(14,9,Train:GetNW2Bool("VityazPVU8") and "ВЫКЛ" or "ВКЛ",yellow)
-			self:PrintText(0,10,"9 ТЯГ ПРИВОД",yellow)
-				self:PrintText(14,10,Train:GetNW2Bool("VityazPVU9") and "ВЫКЛ" or "ВКЛ",yellow)
+			self:PrintText(19,13,"ПОВАГОННОЕ УПРАВЛ-Е",yellow)
+			self:PrintText(20,14,"вагон №",yellow)
+				self:PrintText(35,14,tostring(sel),purple)
+			self:PrintText(19,15,"1 бв",yellow)
+				self:PrintText(34,15,Train:GetNW2Bool("VityazPVU1") and "выкл" or "вкл",yellow)
+			self:PrintText(19,16,"2 двери",yellow)
+				self:PrintText(34,16,Train:GetNW2Bool("VityazPVU2") and "блок" or "небл",yellow)
+			self:PrintText(19,17,"3 компрессор",yellow)
+				self:PrintText(34,17,Train:GetNW2Bool("VityazPVU3") and "выкл" or "вкл",yellow)
+			self:PrintText(19,18,"4 токопр",yellow)
+				self:PrintText(34,18,Train:GetNW2Bool("VityazPVU4") and "отж" or "приж",yellow)
+			self:PrintText(19,19,"5 освещ",yellow)
+				self:PrintText(34,19,Train:GetNW2Bool("VityazPVU5") and "выкл" or "вкл",yellow)
+			self:PrintText(19,20,"6 блокир т/дв",yellow)
+				self:PrintText(34,20,Train:GetNW2Bool("VityazPVU6") and "выкл" or "вкл",yellow)
+			self:PrintText(19,21,"7 вентил",yellow)
+				self:PrintText(34,21,Train:GetNW2Bool("VityazPVU7") and "выкл" or "вкл",yellow)
+			self:PrintText(19,22,"8 ббэ",yellow)
+				self:PrintText(34,22,Train:GetNW2Bool("VityazPVU8") and "выкл" or "вкл",yellow)
+			self:PrintText(19,23,"9 тяг привод",yellow)
+				self:PrintText(34,23,Train:GetNW2Bool("VityazPVU9") and "выкл" or "вкл",yellow)
+		end
+		if self.State == 5 and not (mainmsg > 0 or mainmsg > 1 or mainmsg > 2) and state2 >= 0 then
+			local init = Train:GetNW2Bool("VityazNotInitialize", false)
+			if init then
+				local cb = 10 --- cubebegin
+				self:PrintText(2,1,"█",Color(80,10,10))
+				if self.Counter%100 > 50 then	self:PrintText(2,1,"?", yellow) end -- Пока что пусть будет так # ПРОВЕРЬТЕ НА ЛАГИ
+				self:PrintText(4,1,"РЕЖИМ:",yellow)
+					local typ = Train:GetNW2Int("VityazType",0)
+					if typ == 1 then self:PrintText(12,1,"ХОД",red)
+					elseif typ == 0 then self:PrintText(12,1,"ВЫБЕГ",red)
+					elseif typ == -1 then self:PrintText(12,1,"ТОРМОЗ",red) end
+				self:PrintText(2,3,"№ вагона:",yellow)
+					for i=1,wagnum do
+						self:PrintText(10+i,3,tostring(i),yellow)
+					end
+				if Train:GetNW2Bool("ProstVersion",false) then
+					self:PrintText(5,5,"двери:",yellow)
+				else
+					self:PrintText(3,5,"двери  :",yellow)
+					self:PrintText(8,5,"Л",Train:GetNW2Bool("ProstDoorBlockL",false) and green or purple)
+					self:PrintText(9,5,"П",Train:GetNW2Bool("ProstDoorBlockR",false) and green or purple)
+				end
+				for i=1,wagnum do	-- Двери
+					if not Train:GetNW2Bool("VityazRPVU".."2"..i,false) then 
+						self:PrintText(cb+i,5,"█",Train:GetNW2Bool("VityazDoors"..i,false) and green or red) 
+					else
+						self:PrintText(cb+i,5,"Р",red) 
+					end
+					if not Train:GetNW2Bool("VityazRPVU".."1"..i,false) then -- Бв
+						self:PrintText(cb+i,6,"█",Train:GetNW2Bool("VityazBV"..i,false) and green or red)
+					else
+						self:PrintText(cb+i,6,"Р",red) 
+					end
+					if not Train:GetNW2Bool("VityazRPVU".."9"..i,false) then -- Сбор сх
+						self:PrintText(cb+i,7,"█",Train:GetNW2Bool("VityazScheme"..i,false) and green or purple)
+					else
+						self:PrintText(cb+i,7,"Р",red) 
+					end
+					self:PrintText(cb+i,8,"█",Train:GetNW2Bool("VityazMPT"..i,false) and green or purple)			-- пт вкл
+					self:PrintText(cb+i,9,"█",Train:GetNW2Bool("VityazMPB"..i,false) and green or purple)			-- ст торм
+					self:PrintText(cb+i,10,"█",Train:GetNW2Bool("VityazMEB"..i,false) and green or purple)			-- экс торм
+					self:PrintText(cb+i,11,"█",Train:GetNW2Bool("VityazMBUV"..i,false) and purple or green)			-- був
+					self:PrintText(cb+i,12,"█",Train:GetNW2Bool("VityazMBBEBroken"..i,false) and green or purple) 	-- защ ипп
+					self:PrintText(cb+i,13,"█",Train:GetNW2Bool("VityazMRessora"..i,false) and green or purple)		-- рессора
+					self:PrintText(cb+i,14,"█",Train:GetNW2Bool("VityazMRessora"..i,false) and green or purple)		-- дукс
+					self:PrintText(cb+i,15,"█",Train:GetNW2Bool("VityazMBTBR"..i,false) and green or purple)		-- бтб гот
+					if not Train:GetNW2Bool("VityazRPVU".."7"..i,false) then
+						self:PrintText(cb+i,17,"█", Train:GetNW2Bool("VityazKKEmer"..i,false) and yellow or Train:GetNW2Bool("VityazKKFull"..i,false) and green or purple)			-- климат 2
+						self:PrintText(cb+i,16,"█", Train:GetNW2Bool("VityazKKEmer"..i,false) and yellow or Train:GetNW2Bool("VityazKKFull"..i,false) and green or purple)			-- климат 1
+					else
+						self:PrintText(cb+i,16,"Р",red)
+						self:PrintText(cb+i,17,"Р",red)
+					end
+				end
+				self:PrintText(8,6,"бв:",yellow)
+				self:PrintText(3,7,"сбор сх:",yellow)
+				if Train:GetNW2Bool("VityazMRecuperation",false) then
+					self:PrintText(1,7,"р", green)
+				end
+				self:PrintText(4,8,"пт вкл:",yellow)
+				self:PrintText(3,9,"ст торм:",yellow)
+				self:PrintText(3,10,"экс тор:",yellow)
+				self:PrintText(7,11,"був:",yellow)
+				self:PrintText(3,12,"защ ипп:",yellow)
+				self:PrintText(3,13,"рессора:",yellow)
+				self:PrintText(6,14,"дукс:",yellow)
+				self:PrintText(3,15,"бтб гот:",yellow)
+				self:PrintText(3,16,"климат1:",yellow)
+				self:PrintText(3,17,"климат2:",yellow)
+				if Train:GetNW2Bool("VityazMKK1Mode",false) then
+					self:PrintText(1,16,"з", blue)
+				else
+					self:PrintText(1,16,"л", red)
+				end
+				if Train:GetNW2Bool("VityazMKK2Mode",false) then
+					self:PrintText(1,17,"з", blue)
+				else
+					self:PrintText(1,17,"л", red)
+				end
+				-- Справа
+				local BarsBlock = Train:GetNW2Int("VityazMBarsBlock",0)
+				if BarsBlock == 1 then self:PrintText(32,1,"барс1",yellow) elseif BarsBlock == 2 then self:PrintText(32,1,"барс2",yellow) elseif BarsBlock == 3 then self:PrintText(32,1,"уос",yellow) end
+				self:PrintText(22,2,"БТБ",yellow)
+						self:PrintText(26,2,"█",Train:GetNW2Bool("VityazMBTB",false) and green or red)
+				self:PrintText(28,2,"АРС",yellow)
+						self:PrintText(32,2,"█",Train:GetNW2Bool("VityazDisableDrive",false) and yellow or Train:GetNW2Bool("VityazMBARS1",false) and red or green)
+						self:PrintText(34,2,"█",Train:GetNW2Bool("VityazDisableDrive",false) and yellow or Train:GetNW2Bool("VityazMBARS2",false) and red or green)
+				local speed   = Train:GetNW2Int("VityazSpeed",0)
+				local speedL  = Train:GetNW2Int("VityazSpeedLimit",0)
+				local speedLN = Train:GetNW2Int("VityazSpeedLimitNext",-1)
+				self:PrintText(22,4,"V доп",yellow)
+				self:PrintText(22,6,"V факт",yellow)
+				self:PrintText(22,8,"V пред",yellow)
+				for i=0,2 do self:PrintText(32,4+i*2,"км/ч",yellow) end
+				self:PrintText(speed > 9 and 29 or 30,6,Format("%01d",speed),green)
+				if speedLN == -1 and speedL < 20 then
+					self:PrintText(29,8,"ОЧ",yellow)
+					self:PrintText(29,4,"ОЧ",red)
+				elseif speedLN == -1 and speedL >= 20 then
+					self:PrintText(speedLN > 9 and 29 or 30,8,Format("%01d",0),yellow)
+					self:PrintText(speedL > 9 and 29 or 30,4,Format("%01d",speedL),aqua)
+				else
+					self:PrintText(speedLN > 9 and 29 or 30,8,Format("%01d",speedLN),aqua)
+					self:PrintText(speedL > 9 and 29 or 30,4,Format("%01d",speedL),red)
+				end
+				local Prost = Train:GetNW2Bool("VityazProst",false)
+				local Kos = Train:GetNW2Bool("VityazKos",false)
+				local Metka,ProstActive,Kos2 = Train:GetNW2Bool("VityazProstMetka",false),Train:GetNW2Bool("VityazProstActive",false),Train:GetNW2Bool("VityazProstKos",false)
+				self:PrintText(22,10,"РЕЖИМ:",yellow)
+				local alsfreq = Train:GetNW2Int("BARSFreq",0)
+				local CurrentMode = ""
+				local vityazs = Train:GetNW2Int("VityazS",-1000)/100
+				local prostact = vityazs~=-1000 and (vityazs < 200 and ProstActive or Metka and vityazs > 200)
+				if Train:GetNW2Bool("ProstVersion",false) then
+					if prostact or ProstActive and speed > 0 then
+						CurrentMode = "Пр Ост"
+					else
+						CurrentMode = (Prost and Kos2 and Metka) and "КОС" or alsfreq == 0 and "2/6" or alsfreq == 1 and "АБ" or alsfreq == 2 and "АРС-ДАУ" or "1/5"
+					end
+					self:PrintText(36,10,"К",Prost and green or red)
+				else
+					CurrentMode = alsfreq == 0 and "2/6" or alsfreq == 1 and "АБ" or alsfreq == 2 and "АРС-ДАУ" or "1/5"
+					if ProstActive and speed > 0 then
+						if CurTime()%1 < 0.5 then
+							if Prost then
+								self:PrintText(22,1,"прост",Metka and green or Color(170,170,170))
+							end
+						end
+					else
+						if Prost then
+							self:PrintText(22,1,"прост",prostact and speed > 0 and green or Color(170,170,170))
+						end
+					end
+					if Kos then
+						self:PrintText(28,1,"кос",(Metka and Kos2) and green or Color(170,170,170))
+					end
+				end
+				self:PrintText(29,10,CurrentMode,yellow)
+				-- Внизу
+				self:PrintText(1,19,"Pmin",yellow)
+					self:PrintText(2,20,Format("%.1f",Train:GetNW2Int("VityazPMin",0)/10),red)
+				self:PrintText(6,19,"Pmax",yellow)
+					self:PrintText(7,20,Format("%.1f",Train:GetNW2Int("VityazPMax",0)/10),red)
+				self:PrintText(11,19,"Pнм",yellow)
+					self:PrintText(11,20,Format("%.1f",Train:GetNW2Int("VityazPNM",0)/10),red)
+				self:PrintText(15,19,"Uбс",yellow)
+					self:PrintText(15,20,tostring(Train:GetNW2Int("VityazUbs",0)),red)
+				if err > 0 then
+					self:PrintText(2,22,Errors[err],yellow)
+				end
+			else
+				self:PrintText(4,1,"Зачем тебе так много вагонов?",yellow) -- Хз зачем, меня попросили это добавить
+			end
 		end
 		if self.State > 0 then
-			self:PrintText(0,16.4,Format("B%03d",self.Counter),purple, 1)
-			if mainmsg > 0 then
-				self:PrintText(4,16.5,Format("00003",err > 0 and ErrorNums[err+3] or 0),yellow)
-                self:PrintText(10,16.5,Format("0002",ErrorNums[mainmsg]),yellow)
-			else
-				self:PrintText(4,16.5,Format("00003",err > 0 and ErrorNums[err+3] or 0),yellow)
-                self:PrintText(10,16.5,Format("0002",err > 0 and ErrorNums[err+3] or 0),yellow)
+			if wagnum < 6 then
+				self:PrintText(0,24,Format("B%03d",self.Counter),purple, 0)
+				self:PrintText(5,24,"0000",yellow)
+				self:PrintText(10,24,"0000",yellow)
+				self:PrintText(15,24,"0000",yellow)
+				self:PrintText(34,24,"0000",yellow)
 			end
-			self:PrintText(15,16.5,Format("02D0",self.State,state2,sel),yellow)
 		end
 	end
 end

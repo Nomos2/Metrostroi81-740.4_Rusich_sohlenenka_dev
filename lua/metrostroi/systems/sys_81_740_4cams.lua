@@ -568,7 +568,7 @@ else
 				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam1",1/train:GetNW2Int("CAMSFPS",05),self.Cam1,Cam1E,Vector(760-144,-75,60)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(10,180,0),1024,768,1,1,1)
 			end
             if Cam1 then
-				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam3",1/train:GetNW2Int("CAMSFPS",05),self.Cam2,Cam1E,Vector(760-144,-75,60)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
+				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam3",1/train:GetNW2Int("CAMSFPS",05),self.Cam2,Cam1E,Vector(760-144,-70,60)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,-1)),Angle(5,180,0),1024,768,1,1,1)
 			end
 			if Cam2 then
 				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam2",1/train:GetNW2Int("CAMSFPS",05),self.Cam3,Cam2E,Vector(760-144,-75,60)+(Cam2Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)

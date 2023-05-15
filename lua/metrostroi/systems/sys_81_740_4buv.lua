@@ -124,10 +124,24 @@ function TRAIN_SYSTEM:Think()
         if not self.States.BUVWork then
             self.Train:CANWrite("BUV",Train:GetWagonNumber(),"BUKP",nil,"Get",1)
         end
-        for i=1,4 do
-            self:CState("Door"..i.."Closed", Train.Pneumatic.LeftDoorState[i] == 0)
-            self:CState("Door"..(i+4).."Closed", Train.Pneumatic.RightDoorState[i] == 0)
-        end
+		local doorcount
+		for i = 1,wagcount do
+			if i == 1 or i == wagcount then
+				doorcount = 5
+			else
+				doorcount = 6
+			end
+		end
+		for i=1,wagcount do
+			--self:CState("Door"..i.."Closed", Train.Pneumatic.LeftDoorState[d] == 0)
+			for d = 1,6 do
+				 self:CState("Door"..d.."Closed", Train.Pneumatic.LeftDoorState[d] == 0)
+				self:CState("Door"..(d+doorcount).."Closed", Train.Pneumatic.RightDoorState[d] == 0)
+				self:CState("LeftDoor"..d.."Closed", Train.Pneumatic.LeftDoorState[d] == 0)
+				self:CState("RightDoor"..d.."Closed", Train.Pneumatic.RightDoorState[d] == 0)
+				--print("Left Door"..d.."Closed", Train.Pneumatic.LeftDoorState[d] == 0,"Right Door"..(i+d).."Closed", Train.Pneumatic.RightDoorState[d] == 0)
+			end
+		end
         self:CState("DoorTorec", Train.RearDoor or Train.FrontDoor)
         self:CState("DoorBack", Train.PassengerDoor or Train.CabinDoorLeft or Train.CabinDoorRight)
         self:CState("EmPT",Train:ReadTrainWire(28) > 0)

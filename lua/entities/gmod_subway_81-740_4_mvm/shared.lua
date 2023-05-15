@@ -1,3 +1,15 @@
+local Map = game.GetMap() 
+if (Map:find("gm_metro_minsk_1984") 
+or Map:find("gm_metro_nsk_line_2_v6")
+or Map:find("gm_metro_kalinin_v2")
+or Map:find("gm_metro_krl_v1")
+or Map:find("gm_dnipro")
+or Map:find("gm_bolshya_kolsewya_line")
+or Map:find("gm_metrostroi_practice_d")
+or Map:find("gm_metronvl")) then
+	return
+end
+
 ENT.Type            = "anim"
 ENT.Base            = "gmod_subway_base"
 
@@ -14,38 +26,29 @@ ENT.AdminSpawnable  = true
 ENT.DontAccelerateSimulation = false
 
 function ENT:PassengerCapacity()
-    return 200
-end
-
-function ENT:Initialize()
-	self.BaseClass.Initialize(self)
-	VAGON = self:GetNW2Entity("VAGON")	
+    return 344
 end
 
 function ENT:GetStandingArea()
-	return Vector(530,-25,-47),Vector(50,25,-47)
+	return Vector(520,-25,-47),Vector(15,25,-46)
 end 
 
---[[function ENT:GetStandingAreaRear() 
-	return Vector(-530,-25,-47),Vector(-50,25,-47) 	
-end	]]
+function ENT:GetStandingAreaRear()    --смещение пассажиров
+	return Vector(270,-25,-47),Vector(-285,25,-46) 	
+end 
 
+local function GetDoorPosition(n,G)	--Правые двери			--Левые двери
+	return Vector(652.5  - 35.0*G     -  338.8*n, -67.5*(1-2*G), 4.3)
+end
 
-local function GetDoorPosition(i,k)	--Правые двери			--Левые двери
-	return Vector(652.5  - 35.0*k     -  338.8*i, -67.5*(1-2*k), 4.3)
+local function GetDoorPositionRear(n,G)			--	x						--	y        --	z
+	return Vector(-195.5 - -35.0*G - 232.1*n, -66*(1-2*G), 4.3)
 end
-local function GetDoorPositionRear(i,k,j)
-	if j == 0 			--	x						--	y        --	z
-	then return Vector(195.5 - -35.0*k - 232.1*i, -66*(1-2*k), 4.3)
-	else return Vector(265.6 - 35.0*(1-k) - 232.1*i,-67.5*(1-2*k),4.3)
-	end
+	
+local function RearDoorPosition(g2)		--	x						--	y        --	z
+	Vector(-134.5, 15, 8.8) 
 end
-local function GetDoorPositionRearLeft(i,k,j)
-	if j == 0 			--	x						--	y        --	z 195.5 265.6
-	then return Vector(230.3 - -35.0*k - 232.1*i, 66*(1-2*k), 4.3)
-	else return Vector(160.3 - -35.0*(1-k) - 232.1*i,67*(1-2*k),4.29)
-	end
-end
+
 local yventpos = {
     -414.5+0*117-144,
 	-414.5+1*117+6.2-144,
@@ -55,22 +58,54 @@ local yventpos = {
 	-414.5+5*117-2.3-144,
 	-414.5+6*117-144,
 }
+
 function ENT:InitializeSounds()
-    self.BaseClass.InitializeSounds(self)
-    --[[self.SoundNames["tisu"]   = {"subway_trains/rusich/inverter.wav",loop = true}
-    self.SoundPositions["tisu"] = {800,1e9,Vector(0,0,-40),1} --FIXME: Pos
-    self.SoundNames["tisu2"]   = {"subway_trains/rusich/inverter.wav",loop = true}
-    self.SoundPositions["tisu2"] = {50,1e9,Vector(430,0,0),1} --FIXME: Pos--]]
-	local inv = math.random (1,2)
-    self.SoundNames["async"]   = {"subway_trains/rusich/inverter"..inv..".wav",loop = true}
-    self.SoundPositions["async"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
+    self.BaseClass.InitializeSounds(self)	
 
+local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+function Pricep740:InitializeSounds()
+    Pricep740.BaseClass.InitializeSounds(Pricep740)	
+if IsValid(Pricep740) then
+if not Pricep740.SoundNames then
+Pricep740.SoundNames = {}
+Pricep740.SoundPositions = {}
 
-    self.SoundNames["bbe"]   = {"subway_trains/rusich/bbe.wav",loop = true}
-    self.SoundPositions["bbe"] = {800,1e9,Vector(400-144,0,-40),0.02} --FIXME: Pos
+    Pricep740.SoundNames["rolling_5_tst"] = {loop=true,"subway_trains/rusich/rolling/skrip1.mp3"}	
+    Pricep740.SoundNames["rolling_10_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_10.wav"}
+	local rol = math.random (1,2)
+    Pricep740.SoundNames["rolling_30_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_30_"..rol..".wav"}
+    Pricep740.SoundNames["rolling_55_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
+    Pricep740.SoundNames["rolling_75_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}		
+    Pricep740.SoundPositions["rolling_5_tst"] = {485,1e9,Vector(516-144,0,0),0.4}	
+    Pricep740.SoundPositions["rolling_10_tst"] = {485,1e9,Vector(516-144,0,0),0.53}
+    Pricep740.SoundPositions["rolling_30_tst"] = {485,1e9,Vector(516-144,0,0),0.7}
+    Pricep740.SoundPositions["rolling_55_tst"] = {485,1e9,Vector(516-144,0,0),0.85}
+    Pricep740.SoundPositions["rolling_75_tst"] = {485,1e9,Vector(516-144,0,0),0.90}
+
+end
+end
+end 
 	
-	self.SoundNames["bbe1"]   = {"subway_trains/rusich/bbe.wav",loop = true}
-    self.SoundPositions["bbe1"] = {-800,1e9,Vector(-400+144,0,-40),0.02} --FIXME: Pos
+    self.SoundNames["async1"]   = {"subway_trains/rusich/inverter/inverter1.wav",loop = true}
+    self.SoundPositions["async1"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
+    self.SoundNames["async2"]   = {"subway_trains/rusich/inverter/inverter2.wav",loop = true}
+    self.SoundPositions["async2"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
+    self.SoundNames["async3"]   = {"subway_trains/rusich/inverter/inverter3.wav",loop = true}
+    self.SoundPositions["async3"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
+    self.SoundNames["async4"]   = {"subway_trains/rusich/inverter/inverter4.wav",loop = true}
+    self.SoundPositions["async4"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
+    self.SoundNames["async5"]   = {"subway_trains/rusich/inverter/inverter5.wav",loop = true}
+    self.SoundPositions["async5"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
+    self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true}
+    self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
+
+    self.SoundNames["bbe_v1"]   = {"subway_trains/rusich/bbes/bbe.wav",loop = true}
+    self.SoundPositions["bbe_v1"] = {800,1e9,Vector(400-144,0,-40),0.55} --FIXME: Pos	
+    self.SoundNames["bbe_v2"]   = {"subway_trains/rusich/bbes/bbe_1.wav",loop = true}
+    self.SoundPositions["bbe_v2"] = {800,1e9,Vector(400-144,0,-40),0.55} --FIXME: Pos	
+    self.SoundNames["bbe_v3"]   = {"subway_trains/rusich/bbes/bbe_new.wav",loop = true}
+    self.SoundPositions["bbe_v3"] = {800,1e9,Vector(400-144,0,-40),0.55} --FIXME: Pos	
+	
     for i=1,7 do
         self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent_loop.wav"}
         self.SoundPositions["vent"..i] = {130,1e9,Vector(yventpos[i],0,30),0.2}
@@ -87,19 +122,28 @@ function ENT:InitializeSounds()
         "subway_trains/717/cover/cover_close3.mp3",
     }
 
-    self.SoundNames["ring"] = {loop=0.0,"subway_trains/rusich/ring_new/ring_start.wav","subway_trains/rusich/ring_new/ring_loop.wav","subway_trains/rusich/ring_new/ring_end.wav"}
+    self.SoundNames["ring"] = {loop=0.0,"subway_trains/rusich/rings/ring_start.wav","subway_trains/rusich/rings/ring_loop.wav","subway_trains/rusich/rings/ring_end.wav"}
     self.SoundPositions["ring"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}
 	
-	self.SoundNames["ring_vityaz"] = "subway_trains/rusich/ring/ring_start.wav"
+    self.SoundNames["ring_old"] = {loop=0.0,"subway_trains/rusich/rings/ring_start1.wav","subway_trains/rusich/rings/ring_loop1.wav","subway_trains/rusich/rings/ring_end1.wav"}
+    self.SoundPositions["ring_old"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}	
+	
+    self.SoundNames["ring_new"] = {loop=0.0,"subway_trains/rusich/rings/ring_start2.wav","subway_trains/rusich/rings/ring_loop2.wav","subway_trains/rusich/rings/ring_end2.wav"}
+    self.SoundPositions["ring_new"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}	
+
+    self.SoundNames["ring_1"] = {loop=0.0,"subway_trains/rusich/rings/ring_start3.wav","subway_trains/rusich/rings/ring_loop3.wav","subway_trains/rusich/rings/ring_end3.wav"}
+    self.SoundPositions["ring_1"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}		
+	
+	self.SoundNames["ring_vityaz"] = "subway_trains/rusich/rings/ring_start.wav"
 	self.SoundPositions["ring_vityaz"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}
 	
-	self.SoundNames["ring_cams"] = "subway_trains/rusich/ring/ring_start.wav"
+	self.SoundNames["ring_cams"] = "subway_trains/rusich/rings/ring_start.wav"
 	self.SoundPositions["ring_cams"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}
 
     self.SoundNames["compressor"] = {loop=2,"subway_trains/rusich/compressor/compressor740_start.wav","subway_trains/rusich/compressor/compressor740_loop.wav","subway_trains/rusich/compressor/compressor740_stop.wav"}
     self.SoundPositions["compressor"] = {800,1e9,Vector(-18+144,-40,-66)}
-    self.SoundNames["compressor_pn"] = "subway_trains/722/compressor_pssh.mp3"
-    self.SoundPositions["compressor_pn"] = {485,1e9,Vector(-18+-144,-40,-66),0.45} --FIXME: Pos
+    self.SoundNames["compressor_pn"] = "subway_trains/rusich/compressor/compressor_psh.wav"
+    self.SoundPositions["compressor_pn"] = {485,1e9,Vector(-18+-144,-40,-66),0.7} --FIXME: Pos
 
 	local j = math.random (1,3)
     self.SoundNames["release"] = {loop=true,"subway_trains/rusich/pneumo_release_"..j..".wav"}
@@ -127,7 +171,7 @@ function ENT:InitializeSounds()
     }
     self.SoundPositions["pneumo_disconnect_close"] = {800,1e9,Vector(795-144,40,-55),0.4}
     self.SoundPositions["pneumo_disconnect_open"] = {800,1e9,Vector(795-144,40,-55),0.4}
-    self.SoundNames["disconnect_valve"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3"
+    self.SoundNames["disconnect_valve"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3" 
 
     self.SoundNames["pnm_on"]           = {"subway_trains/common/pnm/pnm_switch_on.mp3","subway_trains/common/pnm/pnm_switch_on2.mp3"}
     self.SoundNames["pnm_off"]          = "subway_trains/common/pnm/pnm_switch_off.mp3"
@@ -237,28 +281,6 @@ function ENT:InitializeSounds()
     self.SoundPositions["krr_1_0"] = self.SoundPositions["krr_in"]
     self.SoundPositions["krr_0_-1"] = self.SoundPositions["krr_in"]
 
-    self.SoundNames["k2_on"] = "subway_trains/717/pneumo/lk2_on.mp3"
-    self.SoundNames["k2_off"] = "subway_trains/717/pneumo/lk2_off.mp3"
-    self.SoundNames["k1_on"] = "subway_trains/717/pneumo/lk1_on.mp3"
-    self.SoundNames["k3_on"] = self.SoundNames["k2_on"]
-    self.SoundNames["kmr1_on"] = self.SoundNames["k1_on"]
-    self.SoundNames["kmr2_on"] = self.SoundNames["k1_on"]
-    self.SoundNames["k1_off"] = self.SoundNames["k2_off"]
-    self.SoundNames["k3_off"] = self.SoundNames["k2_off"]
-    self.SoundNames["kmr1_off"] = self.SoundNames["k2_off"]
-    self.SoundNames["kmr2_off"] = self.SoundNames["k2_off"]
-    --self.SoundNames["ksh1_off"] = "subway_trains/717/pneumo/ksh1.mp3"
-    self.SoundPositions["k2_on"] = {440,1e9,Vector(-60+144,-40,-66),0.45}
-    self.SoundPositions["k1_on"] = {440,1e9,Vector(-60+144,-40,-66),0.6}
-    self.SoundPositions["k2_off"] = self.SoundPositions["k2_on"]
-    self.SoundPositions["k3_off"] = self.SoundPositions["k2_on"]
-    self.SoundPositions["k3_on"] = self.SoundPositions["k2_on"]
-    self.SoundPositions["k3_off"] = self.SoundPositions["k2_on"]
-    self.SoundPositions["kmr1_on"] = self.SoundPositions["k2_on"]
-    self.SoundPositions["kmr1_off"] = self.SoundPositions["k2_on"]
-    self.SoundPositions["kmr2_on"] = self.SoundPositions["k2_on"]
-    self.SoundPositions["kmr2_off"] = self.SoundPositions["k2_on"]
-
     self.SoundNames["switch_batt_on"] = {"subway_trains/720/switches/batt_on.mp3","subway_trains/720/switches/batt_on2.mp3"}
     self.SoundNames["switch_batt_off"] = {"subway_trains/720/switches/batt_off.mp3","subway_trains/720/switches/batt_off2.mp3"}
 
@@ -274,14 +296,10 @@ function ENT:InitializeSounds()
     self.SoundNames["button_vityaz1_release"] = {"subway_trains/720/switches/buttv_release.mp3","subway_trains/720/switches/buttv_release2.mp3","subway_trains/720/switches/buttv_release3.mp3"}
     self.SoundNames["button_vityaz2_press"] = {"subway_trains/720/switches/buttv_press4.mp3","subway_trains/720/switches/buttv_press5.mp3","subway_trains/720/switches/buttv_press6.mp3"}
     self.SoundNames["button_vityaz2_release"] = {"subway_trains/720/switches/buttv_release4.mp3","subway_trains/720/switches/buttv_release5.mp3","subway_trains/720/switches/buttv_release6.mp3"}
-    self.SoundNames["button_vityaz3_press"] = {"subway_trains/720/switches/buttv_press.mp3","subway_trains/720/switches/buttv_press3.mp3","subway_trains/720/switches/buttv_press7.mp3",
-	"subway_trains/720/switches/buttv_press8.mp3"}
-    self.SoundNames["button_vityaz3_release"] = {"subway_trains/720/switches/buttv_release.mp3","subway_trains/720/switches/buttv_release3.mp3","subway_trains/720/switches/buttv_release7.mp3",
-	"subway_trains/720/switches/buttv_release8.mp3"}
-    self.SoundNames["button_vityaz4_press"] = {"subway_trains/720/switches/buttv3_press.mp3","subway_trains/720/switches/buttv_press2.mp3","subway_trains/720/switches/buttv_press.mp3",
-	"subway_trains/720/switches/buttv_press8.mp3"}
-    self.SoundNames["button_vityaz4_release"] = {"subway_trains/720/switches/buttv4_release.mp3","subway_trains/720/switches/buttv_release5.mp3","subway_trains/720/switches/buttv_release7.mp3",
-	"subway_trains/720/switches/buttv_release6.mp3"}
+    self.SoundNames["button_vityaz3_press"] = {"subway_trains/720/switches/buttv_press.mp3","subway_trains/720/switches/buttv_press3.mp3","subway_trains/720/switches/buttv_press7.mp3","subway_trains/720/switches/buttv_press8.mp3"}
+    self.SoundNames["button_vityaz3_release"] = {"subway_trains/720/switches/buttv_release.mp3","subway_trains/720/switches/buttv_release3.mp3","subway_trains/720/switches/buttv_release7.mp3","subway_trains/720/switches/buttv_release8.mp3"}
+    self.SoundNames["button_vityaz4_press"] = {"subway_trains/720/switches/buttv3_press.mp3","subway_trains/720/switches/buttv_press2.mp3","subway_trains/720/switches/buttv_press.mp3","subway_trains/720/switches/buttv_press8.mp3"}
+    self.SoundNames["button_vityaz4_release"] = {"subway_trains/720/switches/buttv4_release.mp3","subway_trains/720/switches/buttv_release5.mp3","subway_trains/720/switches/buttv_release7.mp3","subway_trains/720/switches/buttv_release6.mp3"}
 
     self.SoundNames["button_press"] = {"subway_trains/720/switches/butt_press.mp3","subway_trains/720/switches/butt_press2.mp3","subway_trains/720/switches/butt_press3.mp3"}
     self.SoundNames["button_release"] = {"subway_trains/720/switches/butt_release.mp3","subway_trains/720/switches/butt_release2.mp3","subway_trains/720/switches/butt_release3.mp3"}
@@ -296,81 +314,89 @@ function ENT:InitializeSounds()
     self.SoundNames["door_cab_close"] = {"subway_trains/rusich/door/door_torec_close.mp3","subway_trains/rusich/door/door_torec_close2.mp3"}
 	
     self.SoundNames["door_cab_roll"] = "subway_trains/rusich/door/cabdoor_roll.wav"
-    self.SoundNames["cab_door_open"] = {"subway_trains/rusich/door/door_torec_open.mp3","subway_trains/rusich/door/door_torec_open2.mp3"}
-    self.SoundNames["cab_door_close"] = {"subway_trains/rusich/door/door_torec_close.mp3","subway_trains/rusich/door/door_torec_close2.mp3"}
-
+    self.SoundNames["rolling_5"] = {loop=true,"subway_trains/rusich/rolling/skrip1.mp3"}	
     self.SoundNames["rolling_10"] = {loop=true,"subway_trains/rusich/rolling/rolling_10.wav"}
 	local rol = math.random (1,2)
     self.SoundNames["rolling_30"] = {loop=true,"subway_trains/rusich/rolling/rolling_30_"..rol..".wav"}
     self.SoundNames["rolling_55"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
     self.SoundNames["rolling_75"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}
-    self.SoundPositions["rolling_10"] = {485,1e9,Vector(816-144,0,0),0.33}
-    self.SoundPositions["rolling_30"] = {485,1e9,Vector(816-144,0,0),0.7}
-    self.SoundPositions["rolling_55"] = {485,1e9,Vector(816-144,0,0),0.85}
-    self.SoundPositions["rolling_75"] = {485,1e9,Vector(816-144,0,0),0.90}
+    self.SoundPositions["door_cab_roll"] = {485,1e9,Vector(516-144,0,0),0.3}		
+    self.SoundPositions["rolling_5"] = {485,1e9,Vector(516-144,0,0),0.4}	
+    self.SoundPositions["rolling_10"] = {485,1e9,Vector(516-144,0,0),0.53}
+    self.SoundPositions["rolling_30"] = {485,1e9,Vector(516-144,0,0),0.7}
+    self.SoundPositions["rolling_55"] = {485,1e9,Vector(516-144,0,0),0.85}
+    self.SoundPositions["rolling_75"] = {485,1e9,Vector(516-144,0,0),0.90}
     self.SoundNames["rolling_low"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_low.wav"}
-    self.SoundNames["rolling_medium1"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium1.wav"}
-    self.SoundNames["rolling_medium2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium2.wav"}
+    self.SoundNames["rolling_medium2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium"..rol..".wav"}
     self.SoundNames["rolling_high2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high2.wav"}
-    self.SoundPositions["rolling_low"] = {480,1e12,Vector(816-144,0,0),0.6*0.4}
-    self.SoundPositions["rolling_medium1"] = {480,1e12,Vector(816-144,0,0),0.90*0.4}
-    self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(816-144,0,0),0.90*0.4}
-    self.SoundPositions["rolling_high2"] = {480,1e12,Vector(816-144,0,0),1.00*0.4}
-
+    self.SoundPositions["rolling_low"] = {480,1e12,Vector(516-144,0,0),0.6*0.4}
+    self.SoundPositions["rolling_medium1"] = {480,1e12,Vector(516-144,0,0),0.90*0.4}
+    self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(516-144,0,0),0.90*0.4}
+    self.SoundPositions["rolling_high2"] = {480,1e12,Vector(516-144,0,0),1.00*0.4}
 
     self.SoundNames["gv_f"] = {"subway_trains/717/kv70/reverser_0-b_1.mp3","subway_trains/717/kv70/reverser_0-b_2.mp3"}
     self.SoundNames["gv_b"] = {"subway_trains/717/kv70/reverser_b-0_1.mp3","subway_trains/717/kv70/reverser_b-0_2.mp3"}
     self.SoundPositions["gv_f"] = {80,1e9,Vector(126.4-144,50,-60-23.5),0.8}
     self.SoundPositions["gv_b"] = {80,1e9,Vector(126.4-144,50,-60-23.5),0.8}
+
+    self.SoundPositions["pneumo_disconnect_close"] = {800,1e9,Vector(-295,40,-55),0.4}
+    self.SoundPositions["pneumo_disconnect_open"] = {800,1e9,Vector(-295,40,-55),0.4}
+    self.SoundNames["disconnect_valve_740"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3"
 	
+    self.SoundNames["rolling_low_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_740/rolling_outside_low.wav"}
+    self.SoundNames["rolling_medium2_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_740/rolling_outside_medium2.wav"}
+    self.SoundNames["rolling_high2_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_740/rolling_outside_high2.wav"}
+    self.SoundPositions["rolling_low_740"] = {480,1e12,Vector(-19.5,0,0),0.6*0.6}
+    self.SoundPositions["rolling_medium2_740"] = {480,1e12,Vector(-19.5,0,0),0.90*0.6}
+    self.SoundPositions["rolling_high2_740"] = {480,1e12,Vector(-19.5,0,0),1.00*0.6}
+
+for g2=0,1 do		
+	self.SoundNames["cab_door_open"] = {"subway_trains/rusich/door/door_torec_open.mp3","subway_trains/rusich/door/door_torec_open2.mp3"}
+    self.SoundNames["cab_door_close"] = {"subway_trains/rusich/door/door_torec_close.mp3","subway_trains/rusich/door/door_torec_close2.mp3"}
+    self.SoundPositions["cab_door_open"] = {200,1e9,RearDoorPosition(g2)}
+    self.SoundPositions["cab_door_close"] = {200,1e9,RearDoorPosition(g2)}
+end 
+	
+	local loop = math.random (1,2)
+	local start = math.random (1,4)		
+	local closed = math.random (3,5)		
+    for i=0,2 do	
     for i=0,1 do
         for k=0,1 do
-            self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop.wav",loop=true}
-            self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPosition(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start.wav"}
-            self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPosition(i,k),0.15}
+            self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop_"..loop..".wav",loop=true}
+            self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPosition(i,k),1}
+            self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start_"..start..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPosition(i,k),1}
             self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPosition(i,k),0.15}
+            self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPosition(i,k),1}
             self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPosition(i,k),0.15}
+            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPosition(i,k),0.5}
             self.SoundNames["door"..i.."x"..k.."c2"] = {"subway_trains/rusich/doors/door_close2.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c2"] = {200,1e9,GetDoorPosition(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."c3"] = {"subway_trains/rusich/doors/door_close3.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c3"] = {200,1e9,GetDoorPosition(i,k),0.15}
-        end
-    end
-    for i=0,2 do
-        for k=0,1 do	
-            self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop.wav",loop=true}
-            self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPositionRear(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."y"] = {"subway_trains/rusich/doors/door_start.wav"}
-            self.SoundPositions["door"..i.."x"..k.."y"] = {200,1e9,GetDoorPositionRear(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."k1"] = {"subway_trains/rusich/doors/door_open1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."k1"] = {200,1e9,GetDoorPositionRear(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."j1"] = {"subway_trains/rusich/doors/door_close1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."j1"] = {200,1e9,GetDoorPositionRear(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."j2"] = {"subway_trains/rusich/doors/door_close2.wav"}
-            self.SoundPositions["door"..i.."x"..k.."j2"] = {200,1e9,GetDoorPositionRear(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."j3"] = {"subway_trains/rusich/doors/door_close3.wav"}
-            self.SoundPositions["door"..i.."x"..k.."j3"] = {200,1e9,GetDoorPositionRear(i,k),0.15}
+            self.SoundPositions["door"..i.."x"..k.."c2"] = {200,1e9,GetDoorPosition(i,k),0.5}
+            self.SoundNames["door"..i.."x"..k.."c3"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."c3"] = {200,1e9,GetDoorPosition(i,k),0.5}
+	        end
+    end		
 			
-            self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop.wav",loop=true}
-            self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPositionRearLeft(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start.wav"}
-            self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPositionRearLeft(i,k),0.15}
+        for k=0,1 do	
+            self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop_"..loop..".wav",loop=true}
+            self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPositionRear(i,k),1}
+            self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start_"..start..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPositionRear(i,k),1}
             self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPositionRearLeft(i,k),0.15}
+            self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPositionRear(i,k),1}
             self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPositionRearLeft(i,k),0.15}
+            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPositionRear(i,k),0.5}
             self.SoundNames["door"..i.."x"..k.."c2"] = {"subway_trains/rusich/doors/door_close2.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c2"] = {200,1e9,GetDoorPositionRearLeft(i,k),0.15}
-            self.SoundNames["door"..i.."x"..k.."c3"] = {"subway_trains/rusich/doors/door_close3.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c3"] = {200,1e9,GetDoorPositionRearLeft(i,k),0.15}
+            self.SoundPositions["door"..i.."x"..k.."c2"] = {200,1e9,GetDoorPositionRear(i,k),0.5}
+            self.SoundNames["door"..i.."x"..k.."c3"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."c3"] = {200,1e9,GetDoorPositionRear(i,k),0.5}			
         end
     end
-
-    self.SoundNames["work_beep"] = {loop=true,"subway_trains/720/work_beep_loop.wav"}
-    self.SoundPositions["work_beep"] = {65,1e9,Vector(816-144,23,10),0.03}
+	-- ХВАТИТ БЛЯТЬ ПИЩАТЬ!!!
+    --self.SoundNames["work_beep"] = {loop=true,"subway_trains/720/work_beep_loop.wavv"}
+    --self.SoundPositions["work_beep"] = {65,1e9,Vector(816-144,23,10),0.03}	
+	
     self.SoundNames["batt_on"] = "subway_trains/720/batt_on.mp3"
     self.SoundPositions["batt_on"] = {400,1e9,Vector(816.4-144,50,-60-23.5),0.23}
 
@@ -378,39 +404,22 @@ function ENT:InitializeSounds()
     self.SoundNames["igla_off"] = "subway_trains/common/other/igla/igla_off2.mp3"
     self.SoundNames["igla_start1"]  = "subway_trains/common/other/igla/igla2_start1.mp3"
     self.SoundNames["igla_start2"]  = "subway_trains/common/other/igla/igla2_start2.mp3"
-    self.SoundPositions["igla_on"] = {50,1e9,Vector(800-144,42.3,45.71),0.05}
-    self.SoundPositions["igla_off"] = {50,1e9,Vector(800-144,42.3,45.71),0.05}
-    self.SoundPositions["igla_start1"] = {50,1e9,Vector(800-144,42.3,45.71),0.05}
-    self.SoundPositions["igla_start2"] = {50,1e9,Vector(800-144,42.3,45.71),0.05}
+    self.SoundPositions["igla_on"] = {50,1e9,Vector(800-155,42.3,45.71),0.05}
+    self.SoundPositions["igla_off"] = {50,1e9,Vector(800-155,42.3,45.71),0.05}
+    self.SoundPositions["igla_start1"] = {50,1e9,Vector(800-155,42.3,45.71),0.05}
+    self.SoundPositions["igla_start2"] = {50,1e9,Vector(800-155,42.3,45.71),0.05}
 
 
     self.SoundNames["emer_brake"] = {loop=true,"subway_trains/common/pneumatic/autostop_loop.wav"}
     self.SoundPositions["emer_brake"] = {90,1e9,Vector(780-144,-45,-75),0.85}
-
-    for i = 1,10 do
-        local id1 = Format("b1tunnel_%d",i)
-        local id2 = Format("b2tunnel_%d",i)
-        self.SoundPositions[id1.."a"] = {500,1e9,Vector( 800-5-144,0,-84),0.5}
-        self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
-        self.SoundPositions[id2.."a"] = {500,1e9,Vector(-800+0-144,0,-84),0.5}
-        self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
-    end
-    for i = 1,14 do
-        local id1 = Format("b1street_%d",i)
-        local id2 = Format("b2street_%d",i)
-        self.SoundPositions[id1.."a"] = {500,1e9,Vector( 800-5-144,0,-84),0.5}
-        self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
-        self.SoundPositions[id2.."a"] = {500,1e9,Vector(-800+0-144,0,-84),0.5}
-        self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
-    end
+	
 end
-
+ 
 function ENT:InitializeSystems()
     self:LoadSystem("TR","TR_3B_4740")
     self:LoadSystem("Engines","DK_120AM")
     self:LoadSystem("Electric","81_740_4ELECTRICA")
     self:LoadSystem("BPTI","81_740_4BPTI")
-    --self:LoadSystem("RV","81_740_RV")
 	self:LoadSystem("KV","81_740_4RV")
 
     self:LoadSystem("BUKP","81_740_4VITYAZ")
@@ -430,23 +439,33 @@ function ENT:InitializeSystems()
 
     self:LoadSystem("Tickers","81_740_4Ticker")
     --self:LoadSystem("Tickers","81_760_Ticker")
-    self:LoadSystem("PassSchemes","81_740_4PassScheme")
+    --self:LoadSystem("PassSchemes","81_740_4PassScheme")
 	
 	--self:LoadSystem("81_740_RED_LAMPS")
 	self:LoadSystem("IGLA_CBKI","IGLA_740_4CBKI")
 	self:LoadSystem("IGLA_PCBK","IGLA_740_4PCBK")
 	self:LoadSystem("Prost_Kos","81_740_4PROST")
-    self:LoadSystem("81_740_4router")
+    self:LoadSystem("81_740_4router")	
+	
+	self:LoadSystem("AsyncInverter","81_760_AsyncInverter")	
 end
+
+--ENT.AnnouncerPositions = {
+	--{Vector(-520,-49 ,51),80,1},
+    --{Vector(443,-60, 51),250,1},
+    --{Vector(143,60 ,62),250,1},
+--}
 ENT.AnnouncerPositions = {}
 for i=1,3 do
-    table.insert(ENT.AnnouncerPositions,{Vector(0-(i-1)*230+38,47*(i%2 > 0 and -1 or 1)-144 ,44),-200,0.15})
-end
+    table.insert(ENT.AnnouncerPositions,{
+	Vector(0-(i-1)*230+38,
+	47*(i%2 > 0 and -1 or 1) ,44),450,0.5})
+end  
 ENT.Cameras = {
     {Vector(770-144,36,42),Angle(0,180,0),"Train.740.CameraCond"},
     {Vector(750-144,36,26),Angle(0,180,0),"Train.740.CameraPPZ"},
     {Vector(800-144,36,2),Angle(0,180,0),"Train.740.CameraPV"},
-    {Vector(805-144,-9,0),Angle(50,0,0),"Train.Common.ASNP"},
+    {Vector(815-144,-42,-4),Angle(50,0,0),"Train.Common.ASNP"},
     {Vector(800-144,-9,8),Angle(90-46,0,0),"Train.740.CameraVityaz"},
     {Vector(777-144,-35,-30),Angle(40,90,0),"Train.740.CameraKRMH"},
     {Vector(767-144,36,-18),Angle(0,180,0),"Train.740.CameraPVZ"},
@@ -480,17 +499,36 @@ for k,v in pairs(Metrostroi.AnnouncementsASNP or {}) do Announcer[k] = v.name or
 	
 ENT.Spawner = {
 	model = {
-	"models/metrostroi_train/81-740/body/81-740_4_defualt_mos_front.mdl",
+	"models/metrostroi_train/81-740/body/81-740_4_front.mdl",
 	{"models/metrostroi_train/81-740/salon/salon.mdl",pos = Vector(-145,0,0), ang=Angle(0,0,0)},
 	{"models/metrostroi_train/81-740/salon/handrails/handrails.mdl",pos = Vector(370-150,-5,0), ang=Angle(0,0,0)},
 	{"models/metrostroi_train/81-740/cabine/Pult/pult.mdl",pos = Vector(465.4-144, 6, 0), ang=Angle(0,0,0)},	
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",pos = Vector(425, 0.1, -74.85), ang=Angle(0,0,0)},		
-	
-	{"models/metrostroi_train/81-741/body/81-741_4_defualt_mos_front.mdl",pos = Vector(0,0,0), ang=Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(852-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(799-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(746-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(691-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(636-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(581-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(527-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(474-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(419-144,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(852-144,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(799-144,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(746-144,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(691-144,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(636-144,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(581-144,-58.5,0),ang = Angle(0,-180,0)},	
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(527-144,-58.5,0),ang = Angle(0,-180,0)},	
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(474-144,-58.5,0),ang = Angle(0,-180,0)},	
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(419-144,-58.5,0),ang = Angle(0,-180,0)},			
+	{"models/metrostroi_train/81-741/body/81-741_4_front.mdl",pos = Vector(-10,0,0), ang=Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/cabine/Pult/bucik.mdl",pos = Vector(465.4-144, 6, 0), ang=Angle(0,0,0)},
 	{"models/metrostroi_train/81-740/body/Garm.mdl",pos = Vector(330,0,-1.5), ang=Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/salon/salon_rear.mdl",pos = Vector(-255, 0, -75), ang=Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",pos = Vector(-440.1, 0.1, -75.15), ang=Angle(0,-180,0)},		
-	{"models/metrostroi_train/81-741/salon/handrails/handrails.mdl",pos = Vector(-320,0,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/salon/salon_rear.mdl",pos = Vector(-544, 0, 5.5), ang=Angle(0,180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",pos = Vector(-450.1, 0.1, -75.15), ang=Angle(0,-180,0)},		
+	{"models/metrostroi_train/81-741/salon/handrails/handrails.mdl",pos = Vector(-330,0,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(283,2,-74.6),ang = Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(-273,1,-74.6),ang = Angle(0,-180,0)},		
 	},
 	interim = "gmod_subway_81-741_4_mvm", 
 	postfunc = function(trains,WagNum)
@@ -507,66 +545,15 @@ ENT.Spawner = {
 			end
 		end
 	end,
+    WagNumTable = {1,2,3,4,5},	
 	
-	{"Announcer","Spawner.740.Announcer","List",Announcer},
-	
-	--[[{"SpawnMode","Spawner.740.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Depot"},nil,function(ent,val,rot,i,wagnum,rclk)
-        if rclk then return end
-        if ent._SpawnerStarted~=val then
-            ent.Battery:TriggerInput("Set",val<=2 and 1 or 0)
-            if ent.SF1 then
-                local first = i==1 or _LastSpawner~=CurTime()
-		        ent.Battery:TriggerInput("Set",val==1 and 1 or 0)
-		        ent.PassLight:TriggerInput("Set",val==1 and 1 or 0)
-		        ent.BBE:TriggerInput("Set",val==1 and 1 or 0)
-		        ent.Compressor:TriggerInput("Set",val==1 and 1 or 0)
-		        ent.Headlights1:TriggerInput("Set",val==1 and 1 or 0)
-				ent.Headlights2:TriggerInput("Set",val==1 and 1 or 0)
-				ent.CabLight:TriggerInput("Set",val==1 and 1 or 0)
-				ent.Vent2:TriggerInput("Set",val==1 and 1 or 0)
-                _LastSpawner=CurTime()
-                ent.CabinDoorLeft = val==2 and first
-                ent.CabinDoorRight = val==2 and first
-                ent.PassengerDoor = val==2
-                ent.RearDoor = val==2
-				ent.Ticker:TriggerInput("Set",val==1 and 1 or 0)
-				timer.Simple(0.5,function()
-					if ent then
-						ent.CAMS.State = -1
-						ent.CAMS.StateTimer = CurTime()+17
-						ent.BUKP.State = 2
-						ent.BUKP.Errors = {}
-						ent.BUKP.InitTimer = CurTime()+0.0
-						ent.BUKP.Timer2 = CurTime()+3
-						ent.BUKP.Prost = true
-						ent.BUKP.Kos = true
-						ent.BUKP.Ovr = true	
-					end
-				end)
-				timer.Simple(1.2,function()
-					if ent then
-						ent.BUKP.State = 5
-						ent.BUKP.State2 = 11
-					end
-				end)
-				ent.SF4:TriggerInput("Set",val<=2 and 1 or 0)
-                ent.SF5:TriggerInput("Set",val<=2 and 1 or 0)
-                ent.SF6:TriggerInput("Set",val<=2 and 1 or 0)
-                ent.SF12:TriggerInput("Set",val<=2 and 1 or 0)
-                ent.SF13:TriggerInput("Set",val<=2 and 1 or 0)
-                ent.SF15:TriggerInput("Set",val<=2 and 1 or 0)
-            else
-                ent.FrontDoor = val==2
-                ent.RearDoor = val==2
-            end
-            ent.GV:TriggerInput("Set",val==1 and 1 or 0)
-            ent._SpawnerStarted = val
-        end
-        if val==1 then ent.BV:TriggerInput("Close",1) end
-        ent.Pneumatic.TrainLinePressure = 7.6+math.random()*0.6
-    end},--]]
-	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType.Random","Spawner.740.MotorType1","Spawner.740.MotorType2"}},	
-	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, nil,function(ent,val,rot,i,wagnum,rclk)
+	{"Announcer","Spawner.740.Announcer","List",Announcer},		
+	{"AsyncSound","Spawner.740.AsyncSound","List",{"Spawner.740.AsyncSound1","Spawner.740.AsyncSound2","Spawner.740.AsyncSound3","Spawner.740.AsyncSound4","Spawner.740.AsyncSound5","Spawner.740.AsyncSound6","Spawner.740.AsyncSound.Random"}},	
+	{"RingSound","Spawner.740.RingSound","List",{"Spawner.740.RingSound1","Spawner.740.RingSound2","Spawner.740.RingSound3","Spawner.740.RingSound4","Spawner.740.RingSound.Random"}},	
+	{"ZavodTable","Spawner.740.ZavodTable","List",{"Spawner.740.ZavodTable.Random","Spawner.740.ZavodTable1","Spawner.740.ZavodTable2","Spawner.740.ZavodTable3"}}, 
+	{"BBESound","Spawner.740.BBESound","List",{"Spawner.740.BBESound.Random","Spawner.740.BBESound1","Spawner.740.BBESound2","Spawner.740.BBESound3"}}, 	
+	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType.Random","Spawner.740.MotorType1","Spawner.740.MotorType2","Spawner.740.MotorType3","Spawner.740.MotorType4","Spawner.740.MotorType5"}},	
+	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, nil,function(ent,val,rot,i,wagnum,rclk)	
         if rclk then return end
         if ent._SpawnerStarted~=val then
             ent.Battery:TriggerInput("Set",val<=2 and 1 or 0)
@@ -587,7 +574,7 @@ ENT.Spawner = {
                 ent.PassScheme:TriggerInput("Set",val==1 and 1 or 0)
 				--ent.BUKP.State = 0	
 				ent.Ticker:TriggerInput("Set",val==1 and 1 or 0)
-				ent.R_ASNPOn:TriggerInput("Set",val<=2 and 1 or 0)
+				--ent.R_ASNPOn:TriggerInput("Set",val<=2 and 1)
                 if val==1 then
 					timer.Simple(1,function()
                         if not IsValid(ent) then return end
@@ -606,8 +593,9 @@ ENT.Spawner = {
                 ent.SF12:TriggerInput("Set",val<=2 and 1 or 0)
                 ent.SF13:TriggerInput("Set",val<=2 and 1 or 0)
                 ent.SF15:TriggerInput("Set",val<=2 and 1 or 0)
-
+			
                 _LastSpawner=CurTime()
+				local Pricep740 = ent:GetNW2Entity("gmod_pricep_kuzov")					
                 ent.CabinDoorLeft = val==4 and first
                 ent.CabinDoorRight = val==4 and first
                 ent.RearDoor = val==4
@@ -624,90 +612,5 @@ ENT.Spawner = {
         end
         if val==1 then ent.BV:TriggerInput("Close",1) end
         ent.Pneumatic.TrainLinePressure = val==3 and math.random()*4 or val==2 and 4.5+math.random()*3 or 7.6+math.random()*0.6
-    end},--]]
-	
-	--[[
-	{"Scheme","Spawner.740.Schemes","List",function()
-        local Schemes = {}
-        for k,v in pairs(Metrostroi.Skins["720_schemes"] or {}) do Schemes[k] = v.name or k end
-        return Schemes
     end},
-    {"PassSchemesInvert","Spawner.720.InvertSchemes","Boolean",false,function(ent,val,rot) ent:SetNW2Bool("PassSchemesInvert",rot and not val or not rot and val) end},
-]]
-    --{"PassSchemesInvert","Spawner.720.InvertSchemes","Boolean",false,function(ent,val,rot) ent:SetNW2Bool("PassSchemesInvert",rot and not val or not rot and val) end},
-	--[[
-	{"NM","Spawner.720.NM","Slider",1,0,9.0,8.2,function(ent,val) ent.Pneumatic.TrainLinePressure = val end},
-	{"Battery","Spawner.720.Battery","Boolean",true,function(ent,val) ent.Battery:TriggerInput("Set",val and 1 or 0) end},
-	{"BRU","Spawner.720.BRU","Boolean",true,function(ent,val) ent.GV:TriggerInput("Set",val and 1 or 0) end},
-	{"PVZR","Spawner.720.PVZR","Boolean",false,function(ent,val)
-		if val then
-			for i=1,33 do
-				ent["SFV"..i]:TriggerInput("Set",math.random() > 0.2 and 1 or 0)
-			end
-		end
-	end},
-	{"PPZ","Spawner.720.PPZ","Boolean",true,function(ent,val)
-		if ent.SF1 then
-			for i=1,22 do
-				ent["SF"..i]:TriggerInput("Set",val and 1 or 0)
-			end
-		--TriggerInput("Set",val and 1 or 0)
-		end
-	end,function(CB,VGUI)
-		VGUI.PPZR:SetDisabled(not VGUI.PPZ:GetChecked() or VGUI.PPZDepot:GetChecked())
-		VGUI.PPZDepot:SetDisabled(not VGUI.PPZ:GetChecked() or VGUI.PPZR:GetChecked())
-		if (not VGUI.PPZ:GetChecked() or VGUI.PPZDepot:GetChecked()) and VGUI.PPZR:GetChecked() then VGUI.PPZR:SetValue(false) end
-		if (not VGUI.PPZ:GetChecked() or VGUI.PPZR:GetChecked()) and VGUI.PPZDepot:GetChecked() then VGUI.PPZDepot:SetValue(false) end
-	end},
-	{"PPZDepot","Spawner.720.PPZDepot","Boolean",false,function(ent,val)
-		if ent.SF1 then
-			ent.SF4:TriggerInput("Set",val and 0 or 1)
-			ent.SF5:TriggerInput("Set",val and 0 or 1)
-			ent.SF6:TriggerInput("Set",val and 0 or 1)
-			ent.SF7:TriggerInput("Set",val and 0 or 1)
-			ent.SF12:TriggerInput("Set",val and 0 or 1)
-			ent.SF13:TriggerInput("Set",val and 0 or 1)
-			ent.SF15:TriggerInput("Set",val and 0 or 1)
-		end
-	end,function(CB,VGUI)
-		VGUI.PPZR:SetDisabled(not VGUI.PPZ:GetChecked() or VGUI.PPZDepot:GetChecked())
-		VGUI.PPZDepot:SetDisabled(not VGUI.PPZ:GetChecked() or VGUI.PPZR:GetChecked())
-		if (not VGUI.PPZ:GetChecked() or VGUI.PPZDepot:GetChecked()) and VGUI.PPZR:GetChecked() then VGUI.PPZR:SetValue(false) end
-		if (not VGUI.PPZ:GetChecked() or VGUI.PPZR:GetChecked()) and VGUI.PPZDepot:GetChecked() then VGUI.PPZDepot:SetValue(false) end
-	end},
-	{"PPZR","Spawner.720.PPZR","Boolean",false,function(ent,val)
-		if val and ent.SF1 then
-			for i=1,22 do
-				ent["SF"..i]:TriggerInput("Set",math.random() > 0.2 and 1 or 0)
-			end
-		end
-	end,function(CB,VGUI)
-		VGUI.PPZR:SetDisabled(not VGUI.PPZ:GetChecked() or VGUI.PPZDepot:GetChecked())
-		VGUI.PPZDepot:SetDisabled(not VGUI.PPZ:GetChecked() or VGUI.PPZR:GetChecked())
-		if (not VGUI.PPZ:GetChecked() or VGUI.PPZDepot:GetChecked()) and VGUI.PPZR:GetChecked() then VGUI.PPZR:SetValue(false) end
-		if (not VGUI.PPZ:GetChecked() or VGUI.PPZR:GetChecked()) and VGUI.PPZDepot:GetChecked() then VGUI.PPZDepot:SetValue(false) end
-	end},
-	{"DoorsL","Spawner.720.DoorsL","Boolean",false, function(ent,val,rot)
-		if not val then return end
-		if rot then
-			ent.Pneumatic.RightDoorState = {1,1,1,1}
-			ent.Pneumatic.DoorRight = true
-		else
-			ent.Pneumatic.LeftDoorState = {1,1,1,1}
-			ent.Pneumatic.DoorLeft = true
-		end
-	end},
-	{"DoorsR","Spawner.720.DoorsR","Boolean",false, function(ent,val,rot)
-		if not val then return end
-		if rot then
-			ent.Pneumatic.LeftDoorState = {1,1,1,1}
-			ent.Pneumatic.DoorLeft = true
-		else
-			ent.Pneumatic.RightDoorState = {1,1,1,1}
-			ent.Pneumatic.DoorRight = true
-		end
-	end},
-	]]
-	--{"GV","Spawner.717.GV","Boolean",true,function(ent,val) ent.GV:TriggerInput("Set",val) end},
-	--{"PB","Spawner.717.PB","Boolean",false,function(ent,val) ent.ParkingBrake:TriggerInput("Set",val) end},
 }

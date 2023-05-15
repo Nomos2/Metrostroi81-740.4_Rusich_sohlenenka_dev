@@ -121,9 +121,9 @@ if CLIENT then
         ARS = "прев арс 9км\\ч",
         RU = "резерв котнрол",
     }
-    local colorb = Color(20,140,255,1.3)
-    local colorf = Color(60,160,200,255)
-    local colorh = Color(60,160,200,75)
+    local colorb = Color(60,160,140,1)
+    local colorf = Color(60,160,140,255)
+    local colorh = Color(60,160,140,75)
     function TRAIN_SYSTEM:IGLA()
         local Train = self.Train
         surface.SetDrawColor(60*0.075,160*0.075,140*0.075)
@@ -276,6 +276,8 @@ else
         end
     end
     local Logging = {
+        PTROverheat = true,
+        PTROverheating = true,
         SCHEME = false,
         RP = true,
         DOORS = true,
@@ -372,6 +374,11 @@ else
                 self.StandbyTimer = CurTime()
                 self.ShowTimeTimer = nil
                 self.ShowTime = false
+				
+				self.FireAlarm = false
+                self.OverhAlarm = false
+                self.FireState = false
+                self.OverhState = false
 
                 Train:PlayOnce("igla_start2","cabin",nil,1)
 
@@ -386,7 +393,7 @@ else
             self.Error = CurTime()%0.5 > 0.25
         elseif self.State == 2 then
             if #self.Log > 100 then table.remove(self.Log,1) end
-            local Standby = CurTime()-self.StandbyTimer > 10
+            local Standby = CurTime()-self.StandbyTimer > (self.State2==3 and 60 or 10)
             if self.State2 > 0 and Standby then self.State2 = 0 end
             if self.ShowTimeTimer and self.ShowTimeTimer ~= true and CurTime()-self.ShowTimeTimer > 1.5 then
                 self.ShowTime = not self.ShowTime
@@ -452,7 +459,9 @@ else
                 local err = self.Messages[self.Selected]
                 Train:SetNW2String("IGLA:ErrorID",err[1])
                 Train:SetNW2Int("IGLA:WagNumber",err[2])
-
+				if err[1] == "PTROverheating" or err[1] == "PTROverheat" then
+                    Train:SetNW2Int("IGLA:Temp",math.floor(self.States[err[2]][err[1]]))
+                end
 
                 self.ButtonL1 = true
                 self.ButtonL2 = self.Selected > 1

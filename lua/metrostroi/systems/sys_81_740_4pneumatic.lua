@@ -8,12 +8,6 @@ Metrostroi.DefineSystem("81_740_4Pneumatic")
 TRAIN_SYSTEM.DontAccelerateSimulation = true
 
 function TRAIN_SYSTEM:Initialize()
-    -- (013)
-    -- 1 Accelerated charge
-    -- 2 Normal charge (brake release)
-    -- 3 Closed
-    -- 4 Service application
-    -- 5 Emergency application
     self.DriverValvePosition = 6
     self.RealDriverValvePosition = self.DriverValvePosition
 
@@ -81,12 +75,12 @@ function TRAIN_SYSTEM:Initialize()
     self.DoorRight = false
     self.CloseDoors = false
     if not TURBOSTROI then
-        self.LeftDoorState = { 0,0,0,0 }
-        self.RightDoorState = { 0,0,0,0 }
-        self.LeftDoorDir = { 0,0,0,0 }
-        self.RightDoorDir = { 0,0,0,0 }
-        self.LeftDoorSpeed = {0,0,0,0}
-        self.RightDoorSpeed = {0,0,0,0}
+        self.LeftDoorState = { 0,0,0,0,0,0 }
+        self.RightDoorState = { 0,0,0,0,0,0 }
+        self.LeftDoorDir = { 0,0,0,0,0,0 }
+        self.RightDoorDir = { 0,0,0,0,0,0 }
+        self.LeftDoorSpeed = {0,0,0,0,0,0}
+        self.RightDoorSpeed = {0,0,0,0,0,0}
         local start = math.Rand(0.4,0.7)
         self.DoorSpeedMain = math.Rand(start,math.Rand(start+0.1,start+0.3))
         for i=1,#self.LeftDoorSpeed do
@@ -394,6 +388,7 @@ function TRAIN_SYSTEM:Think(dT)
         targetPressure = PMPressure
     end
     self.DisableScheme = not Train.BUV:Get("Slope") and self.BrakeCylinderPressure > 0.6 or self.BrakeCylinderPressure > 1.8
+	--local targetPressureM = max(targetPressure, Power and Train:ReadTrainWire(28) == 0 and Train.BUV.PNTPT and 0.8+self.WeightLoadRatio*0.8 or 0)	--ошибка ТПТ заготовка
     --end
     ----------------------------------------------------------------------------
     -- Fill brake cylinders
@@ -413,7 +408,7 @@ function TRAIN_SYSTEM:Think(dT)
         self:equalizePressure(dT,"BrakeCylinderPressure", 0.0, 2.00)
     end
 
-    if (Train.BUV:Get("RVPB") or Train:ReadTrainWire(11) > 0) and Train.SFV22.Value > 0 and Train.Electric.Battery80V > 62  then
+    if --[[(Train.BUV:Get("RVPB") or]] Train:ReadTrainWire(11) == 0 and Train.SFV22.Value > 0 and Train.Electric.Battery80V > 62  then
         self:equalizePressure(dT,"ParkingBrakePressure", self.TrainLinePressure, 0.4,1,nil,0.5)
     else
         self:equalizePressure(dT,"ParkingBrakePressure", 0, 0.4,1,nil,0.5)
@@ -504,7 +499,13 @@ function TRAIN_SYSTEM:Think(dT)
     elseif commandRight then self.DoorRight = true end
     Train.LeftDoorsOpen = false
     Train.RightDoorsOpen = false
-    for i=1,4 do
+    for i=1,6 do
+		if not self.RightDoorState[i] then
+			self.RightDoorState[i] = 0
+		end
+		if not self.LeftDoorState[i] then
+			self.LeftDoorState[i] = 0
+		end
         self.LeftDoorDir[i] = math.Clamp(self.LeftDoorDir[i]+dT/(self.DoorLeft and 2*self.LeftDoorSpeed[i] or -self.LeftDoorSpeed[i]),-1.5,1)
         self.RightDoorDir[i] = math.Clamp(self.RightDoorDir[i]+dT/(self.DoorRight and 2*self.RightDoorSpeed[i] or -self.RightDoorSpeed[i]),-1.5,1)
         self.LeftDoorState[i]  = math.Clamp(self.LeftDoorState[i] + (self.LeftDoorDir[i]/self.LeftDoorSpeed[i]*dT),0,1)
