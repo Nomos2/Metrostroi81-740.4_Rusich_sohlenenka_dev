@@ -30,10 +30,12 @@ function TRAIN_SYSTEM:Initialize()
     self.Vent2 = 0
     self.CurTime = CurTime()
 	self.FirstHalf = false
+	self.TPT = 0
+	self.HPds = 0
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return {"Brake", "Drive", "DriveStrength", "Disassembly" ,"BBE","MK","Vent2"}
+    return {"Brake", "Drive", "DriveStrength", "Disassembly" ,"BBE","MK","Vent2","TPT"}
 end
 
 function TRAIN_SYSTEM:Inputs()
@@ -142,23 +144,28 @@ function TRAIN_SYSTEM:Think()
 				--print("Left Door"..d.."Closed", Train.Pneumatic.LeftDoorState[d] == 0,"Right Door"..(i+d).."Closed", Train.Pneumatic.RightDoorState[d] == 0)
 			end
 		end
+		self:CState("MinBCAnyPressure", math.min(math.Round(Train.Pneumatic.MiddleBogeyBrakeCylinderPressure,1),math.Round(Train.Pneumatic.BrakeCylinderPressure,1)))
+		self:CState("MaxBCAnyPressure", math.max(math.Round(Train.Pneumatic.MiddleBogeyBrakeCylinderPressure,1),math.Round(Train.Pneumatic.BrakeCylinderPressure,1)))
         self:CState("DoorTorec", Train.RearDoor or Train.FrontDoor)
         self:CState("DoorBack", Train.PassengerDoor or Train.CabinDoorLeft or Train.CabinDoorRight)
         self:CState("EmPT",Train:ReadTrainWire(28) > 0)
         self:CState("NoAssembly", Train.KMR1.Value == 0 and Train.KMR2.Value == 0 or Train.K2.Value == 0 and Train.K3.Value==0)
 		--self:CState("Scheme", ((Train.Speed < 6.5 and 0 or brake)+drive > 0 and (drive > 0 and (Train.Pneumatic.BrakeCylinderPressure < 0.7 or self.Slope1 or Train:ReadTrainWire(19)+Train:ReadTrainWire(45) > 0) or brake > 0 and Train.Pneumatic.BrakeCylinderPressure < 1.7+Train.Pneumatic.WeightLoadRatio)) and SchemeWork > 0.5)
         self:CState("ParkingBrakeEnabled", Train.Pneumatic.ParkingBrakePressure < 3)
+		self:CState("MejWag", Train:ElectricConnected(Train.FrontTrain, false) and Train:ElectricConnected(Train.RearTrain, true))
         self:CState("BEPPBroken", false)
         self:CState("EmergencyBrakeGood", Train.Pneumatic.BrakeCylinderPressure >= (2.6+Train.Pneumatic.WeightLoadRatio*0.6)-0.1)
         self:CState("EmergencyBrake", self.States.EmergencyBrakeGood--[[  and Train:ReadTrainWire(27) == 0--]] )
         self:CState("ReserveChannelBraking", Train:ReadTrainWire(28)>0)
         self:CState("PTEnabled", Train.Pneumatic.BrakeCylinderPressure > 0.2)
+		self:CState("MPTEnabled", Train.Pneumatic.MiddleBogeyBrakeCylinderPressure > 0.2)
         self:CState("PTBad", false)
         self:CState("PTReady", Train.Pneumatic.AirDistributorPressure >= (2.6+Train.Pneumatic.WeightLoadRatio*0.6)-0.1)
         self:CState("PTReplace", self.PTReplace and CurTime()-self.PTReplace > 1.5)
         self:CState("BTBReady", Train.Pneumatic.BTBReady)
         self:CState("TLPressure", math.Round(Train.Pneumatic.TrainLinePressure,1))
         self:CState("BLPressure", math.Round(Train.Pneumatic.BrakeLinePressure,1))
+		self:CState("MBLPressure", math.Round(Train.Pneumatic.MiddleBogeyBrakeCylinderPressure,1))
         self:CState("BCPressure", math.Round(Train.Pneumatic.BrakeCylinderPressure,1))
         self:CState("HPPressure", math.Round(Train.Pneumatic.AirDistributorPressure,1))
         self:CState("WeightLoad", math.Round(Train.Pneumatic.WeightLoadRatio,2))
@@ -168,6 +175,7 @@ function TRAIN_SYSTEM:Think()
         self:CState("BBEBroken", false)
         self:CState("HVBad", Train.Electric.Power750V < 550)
         self:CState("LVBad", Train.Electric.Battery80V < 62)
+		self:CState("LVValue", Train.Electric.Battery80V)
         self:CState("EnginesDone", self.EnginesDone and math.abs(Train.Speed) < 7.5)
         --self:CState("EnginesBrakeBroke", (self:Get("Brake") or 0) > 0 and Train.BV.Value == 0 or Train.Electric.IT > 0 and Train.K3.Value == 0)
         self:CState("EnginesBrakeBroke", (self:Get("Brake") or 0) > 0 and (Train.BV.Value == 0 or Train.K3.Value == 0))
@@ -214,7 +222,10 @@ function TRAIN_SYSTEM:Think()
     if not self:Get("Slope") and self.Slope and Train.Pneumatic.BrakeCylinderPressure < 0.5 then self.Slope = false end
 --]]
 	if self:Get("Slope") then self.Slope = CurTime() end
-    if not self:Get("Slope") and self.Slope and Train.Pneumatic.BrakeCylinderPressure < 0.5 then self.Slope = false end
+	if self:Get("TPTOn") then self.TPT = 1 else self.TPT = 0 end
+	if self:Get("HeatinPads") then self.HPds = 1 else self.HPds = 0 end
+  --  print(self.HPds)
+	if not self:Get("Slope") and self.Slope and Train.Pneumatic.BrakeCylinderPressure < 0.5 then self.Slope = false end
     --self.Reverser = Train:ReadTrainWire(12)
     local brake = self:Get("Brake") or 0
     local strength = not self:Get("PVU9") and (self.Slope or brake>0 and Train.Pneumatic.BrakeCylinderPressure < 1.5 or brake==0 and Train.Pneumatic.BrakeCylinderPressure < 0.5) and self:Get("DriveStrength") or 0

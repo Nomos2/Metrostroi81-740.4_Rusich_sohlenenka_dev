@@ -22,6 +22,7 @@ function TRAIN_SYSTEM:Initialize()
     self.BrakeLinePressure = 0.0 -- atm
     -- Pressure in brake cylinder
     self.BrakeCylinderPressure = 0.0 -- atm
+	self.MiddleBogeyBrakeCylinderPressure = 0.0 -- atm
     -- Pressure in the door line
     self.DoorLinePressure = 0.0 -- atm
 
@@ -51,6 +52,7 @@ function TRAIN_SYSTEM:Initialize()
 
     -- Brake cylinder atmospheric valve open
     self.BrakeCylinderValve = 0
+	self.MiddleBogeyBrakeCylinderValve = 0
 
     -- Overpressure protection valve open
     self.TrainLineOverpressureValve = false
@@ -110,8 +112,8 @@ function TRAIN_SYSTEM:Inputs()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return { "BrakeLinePressure", "BrakeCylinderPressure", "DriverValvePosition",
-             "ReservoirPressure", "TrainLinePressure", "DoorLinePressure", "WeightLoadRatio","SD2" }
+    return { "BrakeLinePressure", "BrakeCylinderPressure", "MiddleBogeyBrakeCylinderPressure", "DriverValvePosition",
+             "ReservoirPressure", "TrainLinePressure", "DoorLinePressure", "WeightLoadRatio","SD2","ALLBCPmin","ALLBCPmax" }
 end
 
 function TRAIN_SYSTEM:TriggerInput(name,value)
@@ -264,6 +266,7 @@ function TRAIN_SYSTEM:Think(dT)
     self.BrakeLinePressure_dPdT = 0.0
     self.ReservoirPressure_dPdT = 0.0
     self.BrakeCylinderPressure_dPdT = 0.0
+	self.MiddleBogeyBrakeCylinderPressure_dPdT = 0.0
     self.AirDistributorPressure_dPdT = 0.0
     self.ParkingBrakePressure_dPdT = 0.0
     -- Reduce pressure for brake line
@@ -356,19 +359,22 @@ function TRAIN_SYSTEM:Think(dT)
     end]]
     local targetPressure = 0--math.max(0,math.min(5.2,1.5*(math.min(5.1,self.TrainToBrakeReducedPressure) - self.BrakeLinePressure)))
     --if self.BrakeLinePressure <= 3.3 then
+	local middletargetPr = 0
     local PMPressure = 0
     local EPMPressure = 0
     local from = self.TrainToBrakeReducedPressure
-    self:equalizePressure(dT,"AirDistributorPressure", math.Clamp(((from-self.BrakeLinePressure)/(from-3.2)),0,1)*(2.6+self.WeightLoadRatio*0.6)+0.01, 2.50, 2.50, nil, 1.3)
+	--print(self.BrakeCylinderPressure,self.MiddleBogeyBrakeCylinderPressure)
+   self:equalizePressure(dT,"AirDistributorPressure", math.Clamp(((from-self.BrakeLinePressure)/(from-3.2)),0,1)*(2.6+self.WeightLoadRatio*0.6)+0.01, 2.50, 2.50, nil, 1.3)
 
     self.EmergencyBrakeActive = (1-Train:ReadTrainWire(26))+(1-Train:ReadTrainWire(25)) > 0
     self.BTBReady = self.AirDistributorPressure >= (2.6+self.WeightLoadRatio*0.6)-0.1
     if self.EmergencyBrakeActive then
         PMPressure = self.AirDistributorPressure
         if self.BrakeCylinderPressure < self.AirDistributorPressure and self.AirDistributorPressure-self.BrakeCylinderPressure > 0.1 then
-            self:equalizePressure(dT,"AirDistributorPressure",0, (self.AirDistributorPressure-self.BrakeCylinderPressure)*1, (self.AirDistributorPressure-self.BrakeCylinderPressure)*1, nil, 2)
+            self:equalizePressure(dT,"AirDistributorPressure",0, (self.AirDistributorPressure-(self.BrakeCylinderPressure+self.MiddleBogeyBrakeCylinderPressure)/2)*1, (self.AirDistributorPressure-self.BrakeCylinderPressure)*1, nil, 2)
         end
     end
+	--print(self.AirDistributorPressure)
     if Train:ReadTrainWire(28) > 0 then
         if Train:ReadTrainWire(27)*Train:ReadTrainWire(29) > 0 then
             EPMPressure = 1.7+self.WeightLoadRatio*0.7 --2 уставка
@@ -387,6 +393,17 @@ function TRAIN_SYSTEM:Think(dT)
     else
         targetPressure = PMPressure
     end
+	if Train.BUV.HPds > 0 then
+		targetPressure = 1
+		middletargetPr = 1
+	end
+	if EPMPressure > PMPressure and Train.BUV.TPT == 0 then
+        middletargetPr = EPMPressure
+    elseif EPMPressure < PMPressure and Train.BUV.TPT == 0 then
+        middletargetPr = PMPressure
+	elseif Train.BUV.TPT > 0 then
+		middletargetPr = 1
+    end
     self.DisableScheme = not Train.BUV:Get("Slope") and self.BrakeCylinderPressure > 0.6 or self.BrakeCylinderPressure > 1.8
 	--local targetPressureM = max(targetPressure, Power and Train:ReadTrainWire(28) == 0 and Train.BUV.PNTPT and 0.8+self.WeightLoadRatio*0.8 or 0)	--ошибка ТПТ заготовка
     --end
@@ -404,18 +421,32 @@ function TRAIN_SYSTEM:Think(dT)
         if self.BrakeCylinderValve == 1 then
             self:equalizePressure(dT,"BrakeCylinderPressure", math.min(3.3,targetPressure), 2.50, 2.50, nil, self.BrakeCylinderPressure > targetPressure and 0.3+math.Clamp((self.BrakeCylinderPressure-0.4)/3.3,0,0.6) or 0.9)
         end
-    else
+		-- TPT and MiddleBogey // На всякий случай разделю по телегам
+		--print(middletargetPr,self.MiddleBogeyBrakeCylinderValve,self.MiddleBogeyBrakeCylinderPressure) 
+		if math.abs(self.MiddleBogeyBrakeCylinderPressure - middletargetPr) > 0.150 then
+            self.MiddleBogeyBrakeCylinderValve = 1
+        end
+        if math.abs(self.MiddleBogeyBrakeCylinderPressure - middletargetPr) < 0.025 then
+            self.MiddleBogeyBrakeCylinderValve = 0
+		end
+		if self.MiddleBogeyBrakeCylinderValve == 1 then
+			self:equalizePressure(dT,"MiddleBogeyBrakeCylinderPressure", math.min(3.3,middletargetPr), 2.50, 2.50, nil, self.MiddleBogeyBrakeCylinderPressure > middletargetPr and 0.3+math.Clamp((self.MiddleBogeyBrakeCylinderPressure-0.4)/3.3,0,0.6) or 0.9)
+		end
+	else
         self:equalizePressure(dT,"BrakeCylinderPressure", 0.0, 2.00)
+		self:equalizePressure(dT,"MiddleBogeyBrakeCylinderPressure", 0.0, 2.00)
     end
-
+	--print(self.MiddleBogeyBrakeCylinderPressure)
+	
     if --[[(Train.BUV:Get("RVPB") or]] Train:ReadTrainWire(11) == 0 and Train.SFV22.Value > 0 and Train.Electric.Battery80V > 62  then
         self:equalizePressure(dT,"ParkingBrakePressure", self.TrainLinePressure, 0.4,1,nil,0.5)
     else
         self:equalizePressure(dT,"ParkingBrakePressure", 0, 0.4,1,nil,0.5)
     end
     Train:SetPackedRatio("ParkingBrakePressure_dPdT",self.ParkingBrakePressure_dPdT)
-    trainLineConsumption_dPdT = trainLineConsumption_dPdT + math.max(0,self.BrakeCylinderPressure_dPdT + self.ParkingBrakePressure_dPdT)
+    trainLineConsumption_dPdT = trainLineConsumption_dPdT + math.max(0,(self.BrakeCylinderPressure_dPdT+self.MiddleBogeyBrakeCylinderPressure_dPdT)/2 + self.ParkingBrakePressure_dPdT)
     self.Train:SetPackedRatio("BrakeCylinderPressure_dPdT", self.BrakeCylinderPressure_dPdT)
+	self.Train:SetPackedRatio("MiddleBogeyBrakeCylinderPressure_dPdT", self.MiddleBogeyBrakeCylinderPressure_dPdT)
 
     -- Simulate cross-feed between different wagons
     self:UpdatePressures(Train,dT)

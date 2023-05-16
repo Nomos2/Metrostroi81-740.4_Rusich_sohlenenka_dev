@@ -572,10 +572,10 @@ ENT.ButtonMap["PUR"] = {
         }},*/
 		
 		{ID = "TPTToggle",x=24, y=55, radius=15, tooltip = "",model = {
-            model = "models/metrostroi_train/81-722/button_red.mdl",z=-5.1,--blue
-            lamp = {model = "models/metrostroi_train/81-720/buttons/l3.mdl",var="TPT",anim=true},
-            speed=8, vmin=0, vmax=0.7,
-            sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
+            model = "models/metrostroi_train/81-722/button_red.mdl",z=-6,
+            var="TPT",speed=12, vmin=0, vmax=0.5,
+            lamp = {model = "models/metrostroi_train/81-722/lamp_red.mdl",var="TPT",anim=true},
+            sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
 		

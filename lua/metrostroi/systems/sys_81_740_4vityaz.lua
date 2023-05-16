@@ -344,7 +344,7 @@ if SERVER then
 				if name == "VityazPVU" then self.State2 = 6 self.Selected = 1 end
 				if name == "VityazNum" then self.State2 = 0 end
 				if name == "VityazSOT" then self.State2 = 3 end
-				if self.State2 ~= 6 and name == "Vityaz1" and Train.Panel.Controller == -3 and self.Recuperation == true then self.Recuperation = false elseif name == "Vityaz1" and Train.Panel.Controller == -3 and self.Recuperation == false then self.Recuperation = true end
+				if self.State2 ~= 6 and name == "Vityaz1" and Train.BARS.Speed == 0 and self.Recuperation == true then self.Recuperation = false elseif name == "Vityaz1" and Train.BARS.Speed == 0 and self.Recuperation == false then self.Recuperation = true end
 			end
 		end
 		if self.State == 5 and name == "AttentionMessage" and value then
@@ -541,10 +541,6 @@ if SERVER then
 					for i=1,self.WagNum do
 						local trainid = self.Trains[i]
 						local train = self.Trains[trainid]
-						if train then
-							if not min then min = train.BCPressure end
-							if not max then max = train.BCPressure end
-						end
 						local doorclose = true
 						for i=1,8 do
 							if not train["Door"..i.."Closed"] then
@@ -560,12 +556,17 @@ if SERVER then
 						err6 = err6 or train.EmergencyBrake
 						err7 = err7 or train.ParkingBrakeEnabled
 						--err7 = err7 or train.WagNOrientated
-						err10 = err10 or train.PTEnabled
+						err10 = err10 or train.PTEnabled or train.MPTEnabled
 						err11 = err11 or not doorclose
 						err12 = err12 or train.DoorBack and trainid ~= Train:GetWagonNumber()
 						err17 = err17 --or not train.PassLightEnabled
 						--Errors
 						--self:CheckError(15,not train.MainLights)
+						--print(train.BCPressure,train.MBLPressure)
+						if train then
+							if not min then min = train.MinBCAnyPressure end
+                            if not max then max = train.MaxBCAnyPressure end
+						end
 						Train:SetNW2Bool("VityazDoors"..i,doorclose)
 						Train:SetNW2Bool("VityazBV"..i,train.BVEnabled)
 						Train:SetNW2Bool("VityazScheme"..i,not train.NoAssembly)
@@ -573,7 +574,7 @@ if SERVER then
 						local trainsel = self.Trains[i]
                         for a=1,9 do Train:SetNW2Bool("VityazRPVU"..a..i,self.PVU[trainsel] and self.PVU[trainsel][a]) end
 						self.SchemeEngaged = self.SchemeEngaged or not train.NoAssembly
-						Train:SetNW2Bool("VityazMPT"..i,not train.PTEnabled) -- ПТ ВКЛ
+						Train:SetNW2Bool("VityazMPT"..i,not train.PTEnabled and not train.MPTEnabled) -- ПТ ВКЛ
 						Train:SetNW2Bool("VityazMPB"..i,not train.ParkingBrakeEnabled) -- СТ ТОРМ
 						Train:SetNW2Bool("VityazMEB"..i,not train.EmergencyBrake) -- ЭКС ТОР
 						Train:SetNW2Bool("VityazMBUV"..i,not train.BUVWork) -- БУВ
@@ -661,12 +662,8 @@ if SERVER then
 					self:CheckError(10,self.HVBad and CurTime()-self.HVBad > 10)
 
 					Train:SetNW2Int("VityazType",stength ~= 0 and (stength < 0 and -1 or 1) or 0)
-					if not min and not max then
-						min = 0
-						max = 0
-					end
-					Train:SetNW2Int("VityazPMin",min*10)
-					Train:SetNW2Int("VityazPMax",max*10)
+					Train:SetNW2Int("VityazPMin",(min or 0)*10)
+                    Train:SetNW2Int("VityazPMax",(max or 0)*10)
 					Train:SetNW2Int("VityazPNM",Train.Pneumatic.TrainLinePressure*10)
 					Train:SetNW2Int("VityazUbs",Train.Electric.Battery80V)
 					if self.State2 == 2 and self.Selected == 0 then
@@ -692,7 +689,8 @@ if SERVER then
 						elseif self.State2 == 3 then
 							for i=1,self.WagNum do
 								local train = self.Trains[self.Trains[i]]
-								Train:SetNW2Bool("VityazPSOT"..i,not train.PTEnabled) 
+								Train:SetNW2Bool("VityazPSOT"..i,not train.PTEnabled)
+								Train:SetNW2Bool("VityazMSOT"..i,not train.MPTEnabled) 
 							end
 						elseif self.State2 == 4 then
 							if self.Selected == 0 then
@@ -845,6 +843,8 @@ if SERVER then
 			self:CState("DoorTorec",Train.TorecDoors.Value > 0)
 			self:CState("BBE",Train.BBE.Value > 0)
 			self:CState("BVOn",Train.Panel.Controller == 0 and Train.EnableBV.Value > 0)
+			self:CState("TPTOn",Train.Panel.Controller == -3 and Train.TPT.Value > 0 and Train.BARS.Speed > 1)
+			self:CState("HeatinPads",Train.Stand.Value > 0 and Train.BARS.Speed > 1 and Train.Panel.Controller <= 0)
 			--self:CState("Vent2On",Train.Vent2.Value > 0)
 			self:CState("BVOff",Train.DisableBV.Value > 0)
 
@@ -878,8 +878,8 @@ else
 			scanlines = scanlines or false,
 		})
 	end
-	createFont("VityazComm","FreeSans",53,400,0,0,false)
-    createFont("VityazBold","FreeSans",40,400,0,0,false)
+	createFont("VityazComm","FreeSans",53,400,0.5,2,false)
+    createFont("VityazBold","FreeSans",40,400,0.5,2,false)
 	createFont("VityazPU","PerfectDOSVGA437",68,400,0,0,false)
 	local State5 = surface.GetTextureID("models/81-740/State5_1")
 	
@@ -1237,12 +1237,16 @@ else
 			self:PrintText(18,14,"ПРОТИВОЮЗОВАЯ ЗАЩИТА",yellow)
 			self:PrintText(18,15,"№ вагона:",yellow)
 			for i = 1,wagnum do
-				for a = 1,6 do
+				for a = 1,2 do
 					self:PrintText(27+i,15,tostring(i),yellow)
 					self:PrintText(27+i,15+a,"█",Train:GetNW2Bool("VityazPSOT"..i) and green or purple)
+					self:PrintText(27+i,17+a,"█",Train:GetNW2Bool("VityazMSOT"..i) and green or purple)
+					self:PrintText(27+i,19+a,"█",Train:GetNW2Bool("VityazPSOT"..i) and green or purple)
 					self:PrintText(27+i,22,"█", green)
 					---self:PrintText(30+i,21,"█", green)
-					self:PrintText(20,15+a,"сот "..a,yellow)
+					for s = 1,6 do
+						self:PrintText(20,15+s,"сот "..s,yellow)
+					end
 					self:PrintText(20,22,"юз кп",yellow)
 					--self:PrintText(23,21,"дукс",yellow)
 				end
@@ -1392,7 +1396,7 @@ else
 			if init then
 				local cb = 10 --- cubebegin
 				self:PrintText(2,1,"█",Color(80,10,10))
-				if self.Counter%100 > 50 then	self:PrintText(2,1,"?", yellow) end -- Пока что пусть будет так # ПРОВЕРЬТЕ НА ЛАГИ
+				if err > 0 then	self:PrintText(2,1,"?", yellow) end -- Пока что пусть будет так # ПРОВЕРЬТЕ НА ЛАГИ
 				self:PrintText(4,1,"РЕЖИМ:",yellow)
 					local typ = Train:GetNW2Int("VityazType",0)
 					if typ == 1 then self:PrintText(12,1,"ХОД",red)

@@ -1115,6 +1115,8 @@ end
     self:SetNW2Bool("DoorCloseLamp",self.Panel.DoorClose>0)
     self:SetNW2Bool("DoorBlockLamp",self.Panel.DoorBlock>0)
     self:SetPackedBool("AppLights", self.Panel.EqLights>0)
+	self:SetNW2Bool("TPTLamp",self.Panel.TPT>0)	
+	
 	
 	self:SetNW2Bool("DAU",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.DAU)
 	self:SetNW2Bool("XOD",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.Speed > 0.2)
@@ -1215,7 +1217,7 @@ end
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-    self:SetPackedRatio("BC", math.min(3.2,self.Pneumatic.BrakeCylinderPressure)/6.0	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetPackedRatio("BC", math.max(math.min(3.2,self.Pneumatic.BrakeCylinderPressure),math.min(3.2,self.Pneumatic.MiddleBogeyBrakeCylinderPressure))/6.0	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -1258,10 +1260,10 @@ end
         self.FrontBogey.ParkingBrakePressure = math.max(0,(3-self.Pneumatic.ParkingBrakePressure)/3)
         self.FrontBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.BrakeCylinderPressure_dPdT
         self.FrontBogey.DisableContacts = self.BUV.Pant
-        self.MiddleBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
-        self.MiddleBogey.BrakeCylinderPressure = self.Pneumatic.BrakeCylinderPressure
-        self.MiddleBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.BrakeCylinderPressure_dPdT
-        self.MiddleBogey.ParkingBrakePressure = math.max(0,(3-self.Pneumatic.ParkingBrakePressure)/3)		
+		self.MiddleBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
+        self.MiddleBogey.BrakeCylinderPressure = self.Pneumatic.MiddleBogeyBrakeCylinderPressure
+        self.MiddleBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.MiddleBogeyBrakeCylinderPressure_dPdT
+        self.MiddleBogey.ParkingBrakePressure = math.max(0,(3-self.Pneumatic.ParkingBrakePressure)/3)         		
         self.MiddleBogey.DisableContacts = self.BUV.Pant		
 		self.RearBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
         self.RearBogey.BrakeCylinderPressure = self.Pneumatic.BrakeCylinderPressure
