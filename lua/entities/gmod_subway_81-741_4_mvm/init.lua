@@ -42,7 +42,7 @@ function ENT:Initialize()
     self.DriverSeat:SetColor(Color(0,0,0,0))
 
     -- Create bogeys
-        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75.4),Angle(0,180,0),true,"740")	
+        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75.4),Angle(0,180,0),true,"740PER")	
 --------------------------------------------------------------------------------
         self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),true,"740NOTR") --110 0 -80  
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)	
@@ -58,7 +58,26 @@ function ENT:Initialize()
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
 		
+	self.Timer = CurTime()	
+	self.Timer2 = CurTime()		
+	
 timer.Simple(0, function()
+
+function self:PreEntityCopy()
+    local BaseDupe = {}
+    local Tbl = {}
+    if IsValid(self.MiddleBogey) then
+        Tbl[1] = {
+            self.MiddleBogey:EntIndex(),
+            self.MiddleBogey.NoPhysics,
+            self.MiddleBogey:GetAngles(),
+        }
+    end
+    BaseDupe.Tbl = Tbl
+    duplicator.StoreEntityModifier(self, "BaseDupe", BaseDupe)
+end
+duplicator.RegisterEntityModifier( "BaseDupe" , function() end)	
+ 
 		local rand = math.random()*0.05
 		self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74.5),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
@@ -67,9 +86,11 @@ timer.Simple(0, function()
 		self.MiddleBogey:SetNWBool("DisableEngines",true)			
 		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
 		self.MiddleBogey.DisableSound = 1			
-        self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)			
+        --self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)			
 		table.insert(self.TrainEntities,self.MiddleBogey)		
-		self.Rear1 = self:CreatePricep(Vector(-326.1,0,0))		--вагон		
+		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)			
+		self.Rear1 = self:CreatePricep(Vector(-326.1,0,0),true)		--вагон		
+		return MiddleBogey		
 end)
 	
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
@@ -145,41 +166,6 @@ end)
 	
 end
 
-function ENT:TrainSpawnerUpdate()
-	local MotorType = self:GetNW2Int("MotorType")	
-       if MotorType == 1 then
-            MotorType = math.ceil(math.random()*4+0.5)
-          else MotorType = MotorType-1 end	
-	self:SetNW2Int("MotorType",MotorType)	
-	--self:SetNW2Int("MotorType",math.random(1, 2))	
-
-	local AsyncSound = self:GetNW2Int("AsyncSound")	
-       if AsyncSound == 1 then
-            AsyncSound = math.ceil(math.random()*5+0.5)
-          else AsyncSound = AsyncSound-1 end	
-	self:SetNW2Int("AsyncSound",AsyncSound)	
-	--self:SetNW2Int("AsyncSound",math.random(1, 2))	
-
-	local ZavodTable = self:GetNW2Int("ZavodTable")	
-       if ZavodTable == 1 then
-            ZavodTable = math.ceil(math.random()*2+0.5)
-          else ZavodTable = ZavodTable-1 end	
-	self:SetNW2Int("ZavodTable",ZavodTable)	
-
-	local BBEs = self:GetNW2Int("BBESound")	
-       if BBEs == 1 then
-            BBEs = math.ceil(math.random()*2+0.5)
-          else BBEs = BBEs-1 end	
-	self:SetNW2Int("BBESound",BBEs)	
-    --рандомизация цвета табло
-	--local ALS = math.random(1, 3)
-	--self:SetNW2Int("tablo_color", ALS)
-	--print(self:GetNW2String("Texture"))
-	
-    self:UpdateLampsColors()
-	
-end	
-
 function ENT:UpdateLampsColors()
     local lCol,lCount = Vector(),0
 	local mr = math.random
@@ -223,25 +209,47 @@ function ENT:UpdateLampsColors()
 	end
 end
 
-function CanConstrain( gmod_pricep_kuzov, self )
+function ENT:TrainSpawnerUpdate()
+	local MotorType = self:GetNW2Int("MotorType")	
+       if MotorType == 1 then
+            MotorType = math.ceil(math.random()*4+0.5)
+          else MotorType = MotorType-1 end	
+	self:SetNW2Int("MotorType",MotorType)	
+	--self:SetNW2Int("MotorType",math.random(1, 2))	
 
-	if ( !gmod_pricep_kuzov ) then return false end
-	if ( !isnumber( self ) ) then return false end
-	if ( !gmod_pricep_kuzov:IsWorld() && !gmod_pricep_kuzov:IsValid() ) then return false end
-	if ( !IsValid( gmod_pricep_kuzov:GetPhysicsObjectNum( self ) ) ) then return false end
+	local AsyncSound = self:GetNW2Int("AsyncSound")	
+       if AsyncSound == 1 then
+            AsyncSound = math.ceil(math.random()*5+0.5)
+          else AsyncSound = AsyncSound-1 end	
+	self:SetNW2Int("AsyncSound",AsyncSound)	
+	--self:SetNW2Int("AsyncSound",math.random(1, 2))	
 
-	return true
+	local ZavodTable = self:GetNW2Int("ZavodTable")	
+       if ZavodTable == 1 then
+            ZavodTable = math.ceil(math.random()*2+0.5)
+          else ZavodTable = ZavodTable-1 end	
+	self:SetNW2Int("ZavodTable",ZavodTable)	
 
-end 
+	local BBEs = self:GetNW2Int("BBESound")	
+       if BBEs == 1 then
+            BBEs = math.ceil(math.random()*2+0.5)
+          else BBEs = BBEs-1 end	
+	self:SetNW2Int("BBESound",BBEs)	
+    --рандомизация цвета табло
+	--local ALS = math.random(1, 3)
+	--self:SetNW2Int("tablo_color", ALS)
+	--print(self:GetNW2String("Texture"))
+	
+    self:UpdateLampsColors()
+	
+end	
+
 function ENT:SpawnFunction(ply, tr,className,rotate)
 
  local verticaloffset = 5 -- Offset for the train model
     local distancecap = 2000 -- When to ignore hitpos and spawn at set distanace
     local pos, ang = nil
     local inhibitrerail = false
-
-    --TODO: Make this work better for raw base ent
-
     if tr.Hit and self.NoTrain then
         -- Regular spawn
         if tr.HitPos:Distance(tr.StartPos) > distancecap then
@@ -251,7 +259,7 @@ function ENT:SpawnFunction(ply, tr,className,rotate)
             -- Spawn is near
             pos = tr.HitPos + tr.HitNormal * verticaloffset
         end
-        ang = Angle(0,tr.Normal:Angle().y,0)
+        ang = Angle(-180,tr.Normal:Angle().y,0)
     elseif tr.Hit and not self.NoTrain then
         -- Setup trace to find out of this is a track
         local tracesetup = {}
@@ -265,7 +273,7 @@ function ENT:SpawnFunction(ply, tr,className,rotate)
             -- Trackspawn
             pos = (tr.HitPos + tracedata.HitPos)/2 + Vector(0,0,verticaloffset)
             ang = tracedata.HitNormal
-            ang:Rotate(Angle(0,0,0))
+            ang:Rotate(Angle(0,-180,0))
             ang = ang:Angle()
             -- Bit ugly because Rotate() messes with the orthogonal vector | Orthogonal? I wrote "origional?!" :V
         else
@@ -278,7 +286,7 @@ function ENT:SpawnFunction(ply, tr,className,rotate)
                 -- Spawn is near
                 pos = tr.HitPos + tr.HitNormal * verticaloffset
             end
-            ang = Angle(0,tr.Normal:Angle().y,0)
+            ang = Angle(-180,tr.Normal:Angle().y,0)
         end
     else
         -- Trace didn't hit anything, spawn at distancecap
@@ -288,7 +296,7 @@ function ENT:SpawnFunction(ply, tr,className,rotate)
     local ent = ents.Create(className or self.ClassName)
     ent:SetPos(pos)
     ent:SetAngles(ang)
-    if rotate then ent:SetAngles(ent:LocalToWorldAngles(Angle(0,0,0))) end
+    if rotate then ent:SetAngles(ent:LocalToWorldAngles(Angle(0,-180,0))) end
     ent.Owner = ply
     ent:Spawn()
     ent:Activate()
@@ -298,8 +306,18 @@ function ENT:SpawnFunction(ply, tr,className,rotate)
 	return ent
 end	
 
+function CanConstrain( gmod_pricep_kuzov, self )
+
+	if ( !gmod_pricep_kuzov ) then return false end
+	if ( !isnumber( self ) ) then return false end
+	if ( !gmod_pricep_kuzov:IsWorld() && !gmod_pricep_kuzov:IsValid() ) then return false end
+	if ( !IsValid( gmod_pricep_kuzov:GetPhysicsObjectNum( self ) ) ) then return false end
+
+	return true
+
+end
+
 function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
-	local train = Pricep740	
 	local Pricep740 = ents.Create("gmod_pricep_kuzov")--ents.Create("base_entity")
 	Pricep740:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl")		
     if not IsValid(Pricep740) or not IsValid(self) then return end	
@@ -344,6 +362,21 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 
     if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
     seat_1:SetParent(Pricep740)]]	
+	
+	constraint.Axis(
+		self.MiddleBogey,
+		self,
+		0,
+		0,
+        Vector(0,0,0),
+		Vector(0,0,0),
+        0,
+		0,
+		0,
+		1,
+		Vector(0,0,1)
+	)	
+	
         
 	if 
 	Map:find("gm_metro_pink_line_redux_v1") or
@@ -371,7 +404,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		Vector(0,0,1),
 		false)
 	else
-	constraint.AdvBallsocket(
+constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,
 		0, --bone
@@ -386,8 +419,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		20, --xmax
 		20, --ymax
 		180, --zmax
-		0, --xfric
-		0, --yfric
+		0.1, --xfric
+		0.1, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
@@ -407,8 +440,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		20, --xmax
 		20, --ymax
 		180, --zmax
-		0, --xfric
-		0, --yfric
+		0.1, --xfric
+		0.1, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
@@ -428,31 +461,28 @@ end
 		Vector(0,0,-1)
 		)
 	--Сцепка, крепление к вагону.
+	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.AdvBallsocket(
 		Pricep740,
-		self.RearCouple,
-		0, --bone
-		0, --bone
-		Vector(-320.2+20.8,0,-50),
-		Vector(0,0,0),
-		1, --forcelimit
-		1, --torquelimit
-		
-		-2, --xmin
-		-2, --ymin
-		-15, --zmin
-		
-		2, --xmax
-		2, --ymax
-		15, --zmax
-		
-		0.1, --xfric
-		0.1, --yfric
-		1, --zfric
-		
-		0, --rotonly
-		1 --nocollide
-	)  	
+        self.RearCouple,
+        0, --bone
+        0, --bone
+        self.RearCouple.SpawnPos-pos,
+        Vector(0,0,0),
+        1, --forcelimit
+        1, --torquelimit
+        -2, --xmin
+        -2, --ymin
+        -15, --zmin
+        2, --xmax
+        2, --ymax
+        15, --zmax
+        0.1, --xfric
+        0.1, --yfric
+        1, --zfric
+        0, --rotonly
+        1 --nocollide
+    ) 	 	
 
 function Pricep740:TrainSpawnerUpdate()
 	local MotorType = self:GetNW2Int("MotorType")	
@@ -648,15 +678,8 @@ end
 
     Pricep740.ButtonBuffer = {}
     Pricep740.KeyBuffer = {}
-    Pricep740.KeyMap = {}	
-	
-self.RearDoor = false	
-function Pricep740:Think()	
-    self:SetPackedBool("RearDoor",self.RearDoor)	
-end
-function Pricep740:OnButtonPress(button,ply)
-    if button == "RearDoor" and (self.RearDoor or not self.BlockTorec) then self.RearDoor = not self.RearDoor end	
-end		
+    Pricep740.KeyMap = {}		
+	return Pricep740
 end	
 --------------------------------------------------------------------------------
 --Основное
@@ -668,6 +691,14 @@ function ENT:Think()
     if not IsValid(Pricep740) then return end	
 	Pricep740.SyncTable = {	"RearBrakeLineIsolation","RearTrainLineIsolation"}		
     --print(self,self.BPTI.T,self.BPTI.State)
+	
+	self.RearDoor = false		
+function Pricep740:Think()	
+    self:SetPackedBool("RearDoor",self.RearDoor)	
+end	
+function Pricep740:OnButtonPress(button,ply)
+    if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
+end		
 
     --[[ if self.BUV.Brake > 0 then
         self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and (1-self.Electric.RNState)+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)

@@ -803,7 +803,7 @@ ENT.ButtonMap["IGLA_C"] = {
     width = 512,--18333.333333333333333333333333333
     height = 107,--7916.6666666666666666666666666667
     scale = 0.0171,
-    hideseat=0.2,
+    hideseat=0.8,
     hide=true,
 }
 ENT.ButtonMap["IGLAButtons_C"] = {
@@ -878,8 +878,9 @@ ENT.ButtonMap["BackPPZ"] = {
     width = 400,
     height = 310,
     scale = 0.0625,
-    hide=0.8,
-
+    hideseat=0.8,
+    hide=true,
+	
 	buttons = {
         {ID = "SF1Toggle",x=61.5+0*28.8, y=73, w=20,h=40, tooltip = "",},
         {ID = "SF2Toggle",x=61.5+1*28.8, y=73, w=20,h=40, tooltip = "",},
@@ -920,7 +921,7 @@ ENT.ButtonMap["PVZ"] = {
     width = 330,
     height = 160,
     scale = 0.0625,
-    hideseat=0.2,
+    hide=0.8,
 
     buttons = {
         {ID = "SFV1Toggle",x=0*30, y=0, w=30,h=50, tooltip = "",},
@@ -1474,7 +1475,7 @@ ENT.ClientProps["PPZpanel"] = {
     pos = Vector(735.5-144,50,50),
     ang = Angle(180,270,0),
     scale = 1,
-    hide = 1,
+    nohide = true,
 }
 --ИГЛА
 
@@ -1483,7 +1484,7 @@ ENT.ClientProps["PPZpanel_IGLA"] = {
     pos = Vector(735.4-144,38,40.5),
     ang = Angle(0,180,0),
     scale = 1,
-    hide = 1,
+    hide = 2,
 }
 
 ENT.ClientProps["manometresp"] = {
@@ -1535,13 +1536,13 @@ ENT.ClientProps["EmergencyBrakeValve"] = {
 	model = "models/metrostroi_train/81-740/cabine/StopKran.mdl",
 	pos = Vector(1197-144,-58.8,2),--Vector(455,-55.2,26),
 	ang = Angle(0,180,2),
-	hide = 1,
+	hide = 2,
 }
 ENT.ClientProps["stopkran"] = {
     model = "models/metrostroi_train/81-717/stop_mvm.mdl",
     pos = Vector(788.5-144,-59.7,13.2),
     ang = Angle(0,180,2),
-	hide = 1,
+	hide = 2,
 }
 ENT.ButtonMap["GV"] = {
     pos = Vector(222,50,-82),
@@ -1623,39 +1624,39 @@ ENT.ClientProps["Pult"] = {
 	model = "models/metrostroi_train/81-740/cabine/Pult/pult.mdl",
 	pos = Vector(465.4-144, 6, 0),
 	ang = Angle(0,0,0),
-	hide = 1,
+	nohide = true,
 }
 ENT.ClientProps["bucik_old"] = {
 	model = "models/metrostroi_train/81-740/cabine/Pult/bucik.mdl",
 	pos = Vector(465.4-144, 6, 0),
 	ang = Angle(0,0,0),
-	hide = 1,
+	nohide = true,
 }
 ENT.ClientProps["salon"] = {
 	model = "models/metrostroi_train/81-740/salon/salon.mdl",
 	pos = Vector(-144.8,0,0),
 	ang = Angle(0,0,0),
-	hide = 1.5,
+	nohide = true,
 }
 ENT.ClientProps["handrails"] = {
 	model = "models/metrostroi_train/81-740/salon/handrails/handrails.mdl",
 	pos = Vector(368-146,-5,0),
 	ang = Angle(0,0,0),
-	hide = 1,
+	hide = 2,
 }	
 ENT.ClientProps["door_cab_r"] = {
 	model = "models/metrostroi_train/81-740/cabine/cabin_right.mdl",
 	pos = Vector(766-144.7, -66.5,0),
 	ang = Angle(0,90,0.55),
 	scale = 1.001,		
-	hide = 1,
+	hide = 2,
 }
 ENT.ClientProps["door_cab_l"] = {
 	model = "models/metrostroi_train/81-740/cabine/cabin_left.mdl",
 	pos = Vector(765-144.45, 62.29, 0),
 	ang = Angle(0,-90,0.25),
 	scale = 1.01,
-	hide = 1,
+	hide = 2,
 }
 
 --Новые модели 2023.
@@ -2831,20 +2832,18 @@ Pricep740.ClientProps["lamps_salon_on_rear_avar2"] = {
     color = Color(245,238,223),
 }
 
-for i = 1,10 do
+for i = 1,11 do
 Pricep740.ClientProps["lamps_salon_on_rear"..i] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(289.5-54*i,0.29,-74.88),
+    pos = Vector(341.5-54*i+1,0.29,-74.88),
     ang = Angle(0,180,0),
     color = Color(245,238,223),	
 	hide = 1,  	
-} 
-end
+}
 --правый ряд НЕ ТРОГАТЬ!!!!
-for i = 1,10 do
 Pricep740.ClientProps["lamps_salon_on_rear1"..i] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(290.5-54*i+1,-57.78,-74.88),
+    pos = Vector(341.5-54*i+1,-57.78,-74.88),
     ang = Angle(0,180,0),
     color = Color(245,238,223),
 	hide = 1, 	   
@@ -2907,18 +2906,12 @@ Pricep740.ButtonMap["RearPneumatic"] = {
     }
 }	
 
-local function RearDoorPosition(g2)		--	x						--	y        --	z
-	Vector(-334.5*g2, 15, 8.8) 
-end
-
-for g2=0,1 do
-Pricep740.ClientProps["door_cab_t"..g2] = {
+Pricep740.ClientProps["door_cab_t"] = {
 	model = "models/metrostroi_train/81-740/salon/door_br.mdl",
 	pos = Vector(-334.5, 15, 8.8),
 	ang = Angle(0,180,0),
 	hide = 2, 	
 }
-end
   
 local function GetDoorPositionRear(n,G,j)
 	if j == 0 			--	x						--	y        --	z
@@ -3197,6 +3190,11 @@ for i = 1,10 do
     local col = Color(colV.x,colV.y,colV.z)		
     self:ShowHideSmooth("lamps_salon_on"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)
     self:ShowHideSmooth("lamps_salon_on_fr"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
+end
+for i = 1,11 do	
+	--Головная часть
+    local colV = self:GetNW2Vector("Lamp7404"..i)
+    local col = Color(colV.x,colV.y,colV.z)			
 	--Задняя часть		
 	Pricep740:ShowHideSmooth("lamps_salon_on_rear"..i,Pricep740:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
     Pricep740:ShowHideSmooth("lamps_salon_on_rear1"..i,Pricep740:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
@@ -3484,15 +3482,13 @@ end
         self.Door3 = door3s
         self:PlayOnce("CabinDoorRight","bass",door3s)
     end	
-
-for g2=0,1 do	
-	local door_cab_t = Pricep740:Animate("door_cab_t"..g2,Pricep740:GetPackedBool("RearDoor") and 0.99 or -0.05, 0, 0.55, 4.5, 0.55) 	
+	
+	local door_cab_t = Pricep740:Animate("door_cab_t",Pricep740:GetPackedBool("RearDoor") and 0.99 or -0.05, 0, 0.55, 4.5, 0.55) 	
 	local door4s = (door_cab_t > 0 or Pricep740:GetPackedBool("RearDoor"))
     if self.Door4 ~= door4s then
         self.Door4 = door4s
         self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
-    end		
-end	
+    end			
     --[[local door5s = (door_cab_o > 0 or door_o)
     if self.Door5 ~= door5s then
         self.Door5 = door5s

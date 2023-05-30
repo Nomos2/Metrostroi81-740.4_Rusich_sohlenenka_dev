@@ -43,6 +43,7 @@ ENT.SyncTable = {
     "PB",   "GV",	"EmergencyBrakeValve","stopkran",
 }
 --------------------------------------------------------------------------------
+
 function ENT:Initialize()
     -- Set model and initialize
 	--print(self:GetNW2String("Texture"))		
@@ -76,40 +77,62 @@ function ENT:Initialize()
 	self.LightSensor = self:AddLightSensor(Vector(698-144,0,-130),Angle(0,90,0))
 	
     -- Create bogeys
-        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740")				
+        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740PER")	
+		self.FrontBogey.PneumaticPow = 0.7		
 --------------------------------------------------------------------------------
         self.RearBogey  = self:CreateBogey(Vector(-532,0,-74.5),Angle(0,0,0),true,"740NOTR") --110 0 -80 
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)			
 		
 		self.FrontBogey:SetNWInt("MotorSoundType",2)
 		self.RearBogey:SetNWInt("MotorSoundType",2)
-        self.RearBogey.DisableContacts = true					
+        self.RearBogey.DisableContacts = true	
+		self.RearBogey.PneumaticPow = 0.7		
 --------------------------------------------------------------------------------
         self.FrontCouple = self:CreateCouple(Vector(636,0,-60),Angle(0,0,0),true,"717")
 -------------------------------------------------------------------
         self.RearCouple  = self:CreateCouple(Vector(-625,0,-60),Angle(0,-180,0),false,"740") --627
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
-		self.RearCouple:GetPhysicsObject():SetMass(5000)			
+		self.RearCouple:GetPhysicsObject():SetMass(5000)		
+
+	self.Timer = CurTime()	
+	self.Timer2 = CurTime()		
 	
 timer.Simple(0, function()
+
+function self:PreEntityCopy()
+    local BaseDupe = {}
+    local Tbl = {}
+    if IsValid(self.MiddleBogey) then
+        Tbl[1] = {
+            self.MiddleBogey:EntIndex(),
+            self.MiddleBogey.NoPhysics,
+            self.MiddleBogey:GetAngles(),
+        }
+    end
+    BaseDupe.Tbl = Tbl
+    duplicator.StoreEntityModifier(self, "BaseDupe", BaseDupe)
+end
+duplicator.RegisterEntityModifier( "BaseDupe" , function() end)
+
 		local rand = math.random()*0.05
 		self.MiddleBogey = self:CreateBogey(Vector(-15,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
-		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
+		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
+		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand) 		
 		self.MiddleBogey:SetNWInt("MotorSoundType",2)
 		self.MiddleBogey:SetNWInt("Async",true)
 		self.MiddleBogey:SetNWBool("DisableEngines",true)			
-		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
 		self.MiddleBogey.DisableSound = 1				
-        self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)
+        --self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)
 		table.insert(self.TrainEntities,self.MiddleBogey)	
-		self.Rear1 = self:CreatePricep(Vector(-340,0,0)) --вагон		
+		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
+		self.Rear1 = self:CreatePricep(Vector(-340,0,0),true) --вагон	
+		return MiddleBogey		
 end)
-		
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
 	self:SetNW2Entity("RearBogey",self.RearBogey)
 	self:SetNW2Entity("FrontCouple",self.FrontCouple)
-	self:SetNW2Entity("RearCouple",self.RearCouple)
+	self:SetNW2Entity("RearCouple",self.RearCouple)      	
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
@@ -472,55 +495,38 @@ function CanConstrain( Pricep740, self )
 end 
 	
 function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
-	local Pricep740 = ents.Create("gmod_pricep_kuzov")--ents.Create("base_entity") gmod_pricep_kuzov	
+	local Pricep740 = ents.Create("gmod_pricep_kuzov")--ents.Create("base_entity") gmod_pricep_kuzov
 	Pricep740:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear.mdl")		
-    if not IsValid(Pricep740) or not IsValid(self) then return end		
+    if not IsValid(Pricep740) or not IsValid(self) then return end
 	Pricep740:SetPos(self:LocalToWorld(pos))
 	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
-    Pricep740:DrawShadow(false)
-	
-    if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
+	Pricep740:DrawShadow(false)		
+			
+	 if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
 	
 	self:SetNW2Entity("gmod_pricep_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)
-    table.insert(Pricep740.TrainEntities,self)	
-	
---Метод mirror 
-	self.Train2 = self	
-	self.Train2.HeadTrain = Pricep740
-	
-	--[[
-    local seat = ents.Create("prop_vehicle_prisoner_pod")
-    seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
-    seat:SetPos(self:LocalToWorld(Vector(-657,-30.2,-25)))
-    seat:SetAngles(self:GetAngles()+Angle(0,0,0))
-    seat:SetKeyValue("limitview",0)
-    seat:Spawn()
-    seat:GetPhysicsObject():SetMass(0)
-    seat:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    self:DrawShadow(false)
-	seat:SetNoDraw(true)
-	seat.ExitPos = self.ExitPos	
-	
-    --Assign ownership
-    if CPPI and IsValid(self:CPPIGetOwner()) then seat:CPPISetOwner(self:CPPIGetOwner()) end
-    seat:SetParent(Pricep740)	
+    table.insert(Pricep740.TrainEntities,self)		
 
-    local seat_1 = ents.Create("prop_vehicle_prisoner_pod")	
-    seat_1:SetModel("models/nova/jeep_seat.mdl") --jalopy
-    seat_1:SetPos(self:LocalToWorld(Vector(-658,36,-25)))
-    seat_1:SetAngles(self:GetAngles()+Angle(0,180,0))
-    seat_1:SetKeyValue("limitview",0)
-    seat_1:Spawn()
-    seat_1:GetPhysicsObject():SetMass(0)
-    seat_1:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    seat_1:DrawShadow(false)
-	seat_1:SetNoDraw(true)	
+	--Метод mirror 
+	self.Train2 = self	
+	self.Train2.HeadTrain = Pricep740		
 	
-    if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
-    seat_1:SetParent(Pricep740)]]		
+	constraint.Axis(
+		self.MiddleBogey,
+		self,
+		0,
+		0,
+        Vector(0,0,0),
+		Vector(0,0,0),
+        0,
+		0,
+		0,
+		1,
+		Vector(0,0,1)
+	)	
         
 	if 
 	Map:find("gm_metro_pink_line_redux_v1") or
@@ -563,8 +569,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		20, --xmax
 		20, --ymax
 		180, --zmax
-		0, --xfric
-		0, --yfric
+		0.1, --xfric
+		0.1, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
@@ -584,8 +590,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		20, --xmax
 		20, --ymax
 		180, --zmax
-		0, --xfric
-		0, --yfric
+		0.1, --xfric
+		0.1, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
@@ -605,31 +611,28 @@ end
 		Vector(0,0,-1)
 		)
 	--Сцепка, крепление к вагону.
+	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.AdvBallsocket(
 		Pricep740,
-		self.RearCouple,
-		0, --bone
-		0, --bone
-		Vector(-320.2+20.8,0,-50),
-		Vector(0,0,0),
-		1, --forcelimit
-		1, --torquelimit
-		
-		-2, --xmin
-		-2, --ymin
-		-15, --zmin
-		
-		2, --xmax
-		2, --ymax
-		15, --zmax
-		
-		0.1, --xfric
-		0.1, --yfric
-		1, --zfric
-		
-		0, --rotonly
-		1 --nocollide
-	)  	
+        self.RearCouple,
+        0, --bone
+        0, --bone
+        self.RearCouple.SpawnPos-pos,
+        Vector(0,0,0),
+        1, --forcelimit
+        1, --torquelimit
+        -2, --xmin
+        -2, --ymin
+        -15, --zmin
+        2, --xmax
+        2, --ymax
+        15, --zmax
+        0.1, --xfric
+        0.1, --yfric
+        1, --zfric
+        0, --rotonly
+        1 --nocollide
+    ) 	
 	
 function Pricep740:TrainSpawnerUpdate()
 	local MotorType = self:GetNW2Int("MotorType")	
@@ -819,37 +822,142 @@ function Pricep740:HandleKeyboardInput(ply)
 end	
 end
 
-function Pricep740:CreateJointSound(sndnum)
-    local jID = self.SpeedSign>0 and 1 or #self.JointPositions
-    table.insert(self.Joints,
-        {
-            type = sndnum,
-            state = jID,
-            dist = self.JointPositions[jID]
-        }
-    )
-end 
-
-    Pricep740.ButtonBuffer = {}
-    Pricep740.KeyBuffer = {}
-    Pricep740.KeyMap = {}		
+function Pricep740:TriggerTurbostroiInput(sys,name,val)
+    if name == "Value" then
+        -- Autosend values to client
+        if self.SyncTable and table.HasValue(self.SyncTable,sys) then
+            self:SetPackedBool(sys,val > 0)
+        end
+    end
 end
----------------------------------------------------------------------------
-function ENT:Think()
-    local retVal = self.BaseClass.Think(self)
-    local power = self.Electric.Battery80V > 62
-    local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")	
-    if not IsValid(Pricep740) then return end
-	Pricep740.SyncTable = {"RearBrakeLineIsolation","RearTrainLineIsolation"}		
-    --print(self,self.BPTI.T,self.BPTI.State)		
+
+Pricep740.ButtonBuffer = {}
+Pricep740.KeyBuffer = {}
+Pricep740.KeyMap = {}	
+Pricep740.SyncTable = {"RearBrakeLineIsolation","RearTrainLineIsolation"}	
+
 	
-	self.RearDoor = false		
 function Pricep740:Think()	
     self:SetPackedBool("RearDoor",self.RearDoor)	
 end	
 function Pricep740:OnButtonPress(button,ply)
     if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
 end	
+end
+	--Pricep740:SetPos(self:LocalToWorld(pos))
+	--Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
+	--Pricep740:Spawn()
+	--Pricep740:SetOwner(self:GetOwner())	
+	
+	--[[
+    local seat = ents.Create("prop_vehicle_prisoner_pod")
+    seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
+    seat:SetPos(self:LocalToWorld(Vector(-657,-30.2,-25)))
+    seat:SetAngles(self:GetAngles()+Angle(0,0,0))
+    seat:SetKeyValue("limitview",0)
+    seat:Spawn()
+    seat:GetPhysicsObject():SetMass(0)
+    seat:SetCollisionGroup(COLLISION_GROUP_WORLD)
+    self:DrawShadow(false)
+	seat:SetNoDraw(true)
+	seat.ExitPos = self.ExitPos	
+	
+    --Assign ownership
+    if CPPI and IsValid(self:CPPIGetOwner()) then seat:CPPISetOwner(self:CPPIGetOwner()) end
+    seat:SetParent(Pricep740)	
+
+    local seat_1 = ents.Create("prop_vehicle_prisoner_pod")	
+    seat_1:SetModel("models/nova/jeep_seat.mdl") --jalopy
+    seat_1:SetPos(self:LocalToWorld(Vector(-658,36,-25)))
+    seat_1:SetAngles(self:GetAngles()+Angle(0,180,0))
+    seat_1:SetKeyValue("limitview",0)
+    seat_1:Spawn()
+    seat_1:GetPhysicsObject():SetMass(0)
+    seat_1:SetCollisionGroup(COLLISION_GROUP_WORLD)
+    seat_1:DrawShadow(false)
+	seat_1:SetNoDraw(true)	
+	
+    if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
+    seat_1:SetParent(Pricep740)]]				
+		
+	--[[if 
+	Map:find("gm_metro_pink_line_redux_v1") or
+	Map:find("gm_jar_pll_redux_v1") or
+	Map:find("gm_metro_crossline_r199h") or	
+	Map:find("gm_metro_crossline_n4a") or	
+	Map:find("gm_metro_crossline_c4") or		
+	Map:find("gm_metro_crossline_m12") or	
+	Map:find("gm_metro_crossline_n3") or
+	Map:find("gm_metro_mosldl_v1") or	
+	Map:find("gm_metro_mosldl_v1m") or	
+	Map:find("gm_smr_1987") or			
+	Map:find("gm_jar_pll_redux_v1_fs") then
+        constraint.Axis(
+		self.MiddleBogey,
+		Pricep740,
+		0,
+		0,
+        Vector(0,0,0),
+		Vector(0,0,0),
+        0,
+		0,
+		0,
+		1,
+		Vector(0,0,1)
+		)
+	else
+	constraint.AdvBallsocket(
+		Pricep740,
+		self.MiddleBogey,
+		0, --bone
+		0, --bone		
+		Vector(290,1,35),
+		Vector(-290,0,0),		
+		0, --forcelimit
+		0, --torquelimit
+		-20, --xmin
+		-20, --ymin
+		-180, --zmin
+		20, --xmax
+		20, --ymax
+		180, --zmax
+		0.1, --xfric
+		0.1, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)
+	constraint.AdvBallsocket(
+		Pricep740,
+		self.MiddleBogey,
+		0, --bone
+		0, --bone		
+		Vector(290,1,-5),
+		Vector(-290,0,0),	
+		0, --forcelimit
+		0, --torquelimit
+		-20, --xmin
+		-20, --ymin
+		-180, --zmin
+		20, --xmax
+		20, --ymax
+		180, --zmax
+		0.1, --xfric
+		0.1, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)
+end	]]
+---------------------------------------------------------------------------
+function ENT:Think()
+    local retVal = self.BaseClass.Think(self)
+    local power = self.Electric.Battery80V > 62
+    local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")	
+    if not IsValid(Pricep740) then return end	
+    --print(self,self.BPTI.T,self.BPTI.State)		
+	
+	self.RearDoor = false		
 
     --[[ if self.BUV.Brake > 0 then
         self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and (1-self.Electric.RNState)+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
@@ -923,7 +1031,7 @@ end
     self:SetPackedRatio("VentCondMode",self.VentCondMode.Value/3)
     self:SetPackedRatio("VentStrengthMode",self.VentStrengthMode.Value/3)
     --self:SetPackedRatio("VentHeatMode",self.VentHeatMode.Value/2)
-    self:SetPackedRatio("BARSBlock",self.BARSBlock.Value/3 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetPackedRatio("BARSBlock",self.BARSBlock.Value/3 or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -931,7 +1039,7 @@ end
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-	self:SetPackedRatio("ALSFreqBlock",self.ALSFreqBlock.Value/3 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	self:SetPackedRatio("ALSFreqBlock",self.ALSFreqBlock.Value/3 or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -948,7 +1056,7 @@ end
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
     --self:SetPackedBool("WorkBeep",power)
-	self:SetPackedBool("BUKPRing",power and self.BUKP.State == 5 and self.BUKP.ProstRinging 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	self:SetPackedBool("BUKPRing",power and self.BUKP.State == 5 and self.BUKP.ProstRinging or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 

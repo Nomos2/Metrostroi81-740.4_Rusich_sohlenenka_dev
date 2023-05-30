@@ -8,7 +8,7 @@ if Metrostroi.Version >= 1623941696 then
 			-- регистрируем тележки
 			local tbl = scripted_ents.Get("gmod_train_bogey")
 			if tbl then	
-				tbl.Types["740"] = { -- тележка
+				tbl.Types["740PER"] = { -- тележка
 					"models/metrostroi_train/81-740/bogey/metro_bogey_740.mdl",
 					Vector(0,0.0,-10.5),Angle(0,90,0),"models/metrostroi_train/bogey/metro_wheels_collector.mdl",
 					Vector(0,-61,-14),Vector(0,61,-14),
@@ -103,7 +103,7 @@ timer.Simple(0,function()
 			-- регистрируем тележки
 			local tbl = scripted_ents.Get("gmod_train_bogey")
 			if tbl then	
-				tbl.Types["740"] = { -- тележка
+				tbl.Types["740PER"] = { -- тележка
 					"models/metrostroi_train/81-740/bogey/metro_bogey_740.mdl",
 					Vector(0,0,-10.5),Angle(0,90,0),"models/metrostroi_train/bogey/metro_wheels_collector.mdl",
 					Vector(0,-61,-14),Vector(0,61,-14),
