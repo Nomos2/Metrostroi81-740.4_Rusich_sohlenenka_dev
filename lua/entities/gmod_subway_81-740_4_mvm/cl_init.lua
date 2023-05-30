@@ -2114,45 +2114,39 @@ for k=0,3 do
         model = "models/metrostroi_train/common/bort_numbers.mdl",
         pos = Vector(705-k*6.6+4*6.6/2-144, -63.9, 14),
         ang = Angle(0,0,-3.29),
-		hide = 1.5,
+		hide = 1,
         callback = function(ent)
             ent.WagonNumber = false
         end,
     }
-	
-    ENT.ClientProps["TrainNumberL"..k] = {
-        model = "models/metrostroi_train/common/bort_numbers.mdl",
-        pos = Vector(0,0,0),
-        ang = Angle(0,180,-3),
-        skin=k,
-        hide = 1.5,
-        callback = function(ent,cl_ent)
-            ent.WagonNumber = false
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["TrainNumberL"..k].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["TrainNumberL"..k].ang) 			
-        end,
-    } 
 end  
 
 function ENT:UpdateWagonNumber()	
-for k=0,3 do	
+for k=0,3 do
+local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+
+Pricep740.ClientProps["TrainNumberL"..k] = {
+        model = "models/metrostroi_train/common/bort_numbers.mdl",
+        pos = Vector(-310+k*6.6-4*6.6/2, 63.4, 18),
+        ang = Angle(0,180,-3.29),
+        skin=k,
+        hide = 1,
+        callback = function(ent)
+            ent.WagonNumber = false
+		end,
+    }  	
         --if i< count then			
 			if self.WagonNumber then
-            local ent = self:GetNW2Entity("gmod_pricep_kuzov")		
-            local leftNum,rightNum = self.ClientEnts["TrainNumberL"..k],self.ClientEnts["TrainNumberR"..k]
+            local leftNum,rightNum = Pricep740.ClientEnts["TrainNumberL"..k],self.ClientEnts["TrainNumberR"..k]
 	        local num = math.floor(self.WagonNumber%(10^(k+1))/10^k)
-			
             if IsValid(rightNum) then
 				rightNum:SetPos(self:LocalToWorld(Vector(705-k*6.6+4*6.6/2-144, -63.9, 14)))
                 rightNum:SetSkin(num)
             end											
-            if IsValid(leftNum) and IsValid(ent) then				
-                leftNum:SetParent(ent)
+            if IsValid(leftNum) then				
                 leftNum:SetLocalPos(Vector(-310+k*6.6-4*6.6/2, 63.4, 18))
-                leftNum:SetLocalAngles(Angle(0,180,-3.29))
                 leftNum:SetSkin(num)		
-				end
+			end
 			self.HeadLightBroken1 = self:GetNW2Bool("HeadLightBroken1",false)
 			self.HeadLightBroken2 = self:GetNW2Bool("HeadLightBroken2",false)
 			self.HeadLightBroken3 = self:GetNW2Bool("HeadLightBroken3",false)
@@ -2161,17 +2155,7 @@ for k=0,3 do
 			self.RedLightBroken1 = self:GetNW2Bool("RedLightBroken1",false)
 			self.RedLightBroken2 = self:GetNW2Bool("RedLightBroken2",false)
 			self.RedLightBroken3 = self:GetNW2Bool("RedLightBroken3",false)
-			self.RedLightBroken4 = self:GetNW2Bool("RedLightBroken4",false)
-			
-			self.SalonLightBroken1 = self:GetNW2Bool("SalonLightBroken1",false)
-			self.SalonLightBroken2 = self:GetNW2Bool("SalonLightBroken2",false)
-			self.SalonLightBroken3 = self:GetNW2Bool("SalonLightBroken3",false)
-			self.SalonLightBroken4 = self:GetNW2Bool("SalonLightBroken4",false)
-			self.SalonLightBroken5 = self:GetNW2Bool("SalonLightBroken5",false)
-			self.SalonLightBroken6 = self:GetNW2Bool("SalonLightBroken6",false)
-			self.SalonLightBroken7 = self:GetNW2Bool("SalonLightBroken7",false)
-			self.SalonLightBroken8 = self:GetNW2Bool("SalonLightBroken8",false)
-			self.SalonLightBroken9 = self:GetNW2Bool("SalonLightBroken9",false)				
+			self.RedLightBroken4 = self:GetNW2Bool("RedLightBroken4",false)			
             end   		
 		end			
 	end				

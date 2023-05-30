@@ -824,20 +824,6 @@ local male_sequences = {2,3,4,6,10}
 end	
 
 for m=0,3 do
-    ENT.ClientProps["TrainNumberL"..m] = {
-        model = "models/metrostroi_train/common/bort_numbers.mdl",
-		pos = Vector(-310+m*6.6-4*6.6/2, 63.4, 18),
-        ang = Angle(0,180,-3.29),
-        skin=1,
-		hide = 2,
-		callback = function(ent,cl_ent)
-            ent.WagonNumber = false		
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["TrainNumberL"..m].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["TrainNumberL"..m].ang)
-    end,	
-}
-
     ENT.ClientProps["TrainNumberR"..m] = {
         model = "models/metrostroi_train/common/bort_numbers.mdl",
         pos = Vector(635-m*6.6+4*6.6/2,-63.35,18),
@@ -852,20 +838,28 @@ end
 
 function ENT:UpdateWagonNumber()
 for m=0,3 do		
+local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+    Pricep740.ClientProps["TrainNumberL"..m] = {
+        model = "models/metrostroi_train/common/bort_numbers.mdl",
+		pos = Vector(-310+m*6.6-4*6.6/2, 63.4, 18),
+        ang = Angle(0,180,-3.29),
+        skin=k,
+		hide = 1,
+		callback = function(ent)
+            ent.WagonNumber = false	
+    end,	
+}
         --if i< count then
-			if self.WagonNumber then
-            local ent = self:GetNW2Entity("gmod_pricep_kuzov")		
-            local leftNum,rightNum = self.ClientEnts["TrainNumberL"..m],self.ClientEnts["TrainNumberR"..m]
+			if self.WagonNumber then	
+            local leftNum,rightNum = Pricep740.ClientEnts["TrainNumberL"..m],self.ClientEnts["TrainNumberR"..m]
 	        local num = math.floor(self.WagonNumber%(10^(m+1))/10^m)	
 			
 	        if IsValid(rightNum) then
                 rightNum:SetPos(self:LocalToWorld(Vector(635-m*6.6+4*6.6/2, -63.5 ,18)))
                 rightNum:SetSkin(num)
             end
-            if IsValid(leftNum) and IsValid(ent) then		
-                leftNum:SetParent(ent)
+            if IsValid(leftNum) then		
                 leftNum:SetLocalPos(Vector(-310+m*6.6-4*6.6/2, 63.4, 18))
-                leftNum:SetLocalAngles(Angle(0,180,-3.29))
                 leftNum:SetSkin(num)
 				end
             end				
