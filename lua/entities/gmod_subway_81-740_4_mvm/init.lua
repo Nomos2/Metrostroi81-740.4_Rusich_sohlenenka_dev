@@ -99,22 +99,6 @@ function ENT:Initialize()
 	self.Timer2 = CurTime()		
 	
 timer.Simple(0, function()
-
-function self:PreEntityCopy()
-    local BaseDupe = {}
-    local Tbl = {}
-    if IsValid(self.MiddleBogey) then
-        Tbl[1] = {
-            self.MiddleBogey:EntIndex(),
-            self.MiddleBogey.NoPhysics,
-            self.MiddleBogey:GetAngles(),
-        }
-    end
-    BaseDupe.Tbl = Tbl
-    duplicator.StoreEntityModifier(self, "BaseDupe", BaseDupe)
-end
-duplicator.RegisterEntityModifier( "BaseDupe" , function() end)
-
 		local rand = math.random()*0.05
 		self.MiddleBogey = self:CreateBogey(Vector(-15,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
@@ -123,11 +107,10 @@ duplicator.RegisterEntityModifier( "BaseDupe" , function() end)
 		self.MiddleBogey:SetNWInt("Async",true)
 		self.MiddleBogey:SetNWBool("DisableEngines",true)			
 		self.MiddleBogey.DisableSound = 1				
-        --self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)
+        self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)
 		table.insert(self.TrainEntities,self.MiddleBogey)	
 		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
 		self.Rear1 = self:CreatePricep(Vector(-340,0,0),true) --вагон	
-		return MiddleBogey		
 end)
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
 	self:SetNW2Entity("RearBogey",self.RearBogey)
