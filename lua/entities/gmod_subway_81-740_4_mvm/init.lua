@@ -320,14 +320,14 @@ end
 
 --наложение пломб
 	self.Plombs = {
-        KAH = {true,"KAHk"},
+		KAH = {true,"KAHk"},
         KAHk = true,
         ALS = {true,"ALSk"},
         ALSk = true,
         BARSBlock = true,
         UAVA = true,
         Init = true,
-        ALSFreqBlock = true,	
+        ALSFreqBlock = true,		
 		R_ASNPOn = true,		
 		--ALSFreqBlock = ALSFreqPlomb,
     }
@@ -468,6 +468,15 @@ function ENT:UpdateLampsColors()
         self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7
 	end
 end
+
+function ENT:RerailChange(ent, bool)
+    if not IsValid(ent) then return end
+    if bool then
+        timer.Remove("metrostroi_rerailer_solid_reset_"..ent:EntIndex())    
+    else
+        timer.Create("metrostroi_rerailer_solid_reset_"..ent:EntIndex(),1e9,1,function() end)    
+    end
+end
 	
 function CanConstrain( Pricep740, self )
 	if ( !Pricep740 ) then return false end
@@ -493,6 +502,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	table.insert(self.TrainEntities,Pricep740)
     table.insert(Pricep740.TrainEntities,self)		
 
+	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
+	
 	--Метод mirror 
 	self.Train2 = self	
 	self.Train2.HeadTrain = Pricep740		
@@ -536,13 +547,15 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		1,
 		Vector(0,0,1),
 		false)
-	else
+	else	
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
 	constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,0.5,35),
+		Vector(315,0.5,25),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -557,13 +570,15 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		0, --zfric
 		0, --rotonly
 		1--nocollide
-	)
+	)	
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
 	constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,0.5,-5),
+		Vector(315,0.5,-15),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
@@ -616,6 +631,10 @@ end
         0, --rotonly
         1 --nocollide
     ) 	
+	
+    self:RerailChange(self.FrontBogey, true)
+    self:RerailChange(self.MiddleBogey, true)
+    self:RerailChange(self.RearBogey, true)	
 	
 function Pricep740:TrainSpawnerUpdate()
 	local MotorType = self:GetNW2Int("MotorType")	
@@ -1391,6 +1410,10 @@ function ENT:OnButtonPress(button,ply)
 	if button == "EmergencyBrakeValveToggle" and (self.K29.Value == 1 or self.Pneumatic.V4 and self:ReadTrainWire(27) == 1) and not self.Pneumatic.KVTBTimer and self.Pneumatic.BrakeLinePressure > 2 then	
 		self:SetPackedRatio("EmerValve",CurTime()+3.8)
 	end
+    if button == "KAH" and not self.Plombs.KAH then
+        self.KAHk:TriggerInput("Open",1)
+        self.KAH:TriggerInput("Close",1)
+    end	
     if button == "PassengerDoor" then self.PassengerDoor = not self.PassengerDoor end
     if button == "CabinDoorLeft" then self.CabinDoorLeft = not self.CabinDoorLeft end
     if button == "OtsekDoor" then self.OtsekDoor = not self.OtsekDoor end
@@ -1469,6 +1492,9 @@ function ENT:OnButtonRelease(button,ply)
         self.IGLA2:TriggerInput("Set",0)
         self.IGLA3:TriggerInput("Set",0)
     end
+    if button == "KAH" then
+        self.KAH:TriggerInput("Open",1)
+    end	
     if button == "DoorLeft" then
         self.DoorLeft:TriggerInput("Set",0)
     end

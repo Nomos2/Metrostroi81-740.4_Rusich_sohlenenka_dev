@@ -62,37 +62,19 @@ function ENT:Initialize()
 	self.Timer2 = CurTime()		
 	
 timer.Simple(0, function()
-
-function self:PreEntityCopy()
-    local BaseDupe = {}
-    local Tbl = {}
-    if IsValid(self.MiddleBogey) then
-        Tbl[1] = {
-            self.MiddleBogey:EntIndex(),
-            self.MiddleBogey.NoPhysics,
-            self.MiddleBogey:GetAngles(),
-        }
-    end
-    BaseDupe.Tbl = Tbl
-    duplicator.StoreEntityModifier(self, "BaseDupe", BaseDupe)
-end
-duplicator.RegisterEntityModifier( "BaseDupe" , function() end)	
- 
 		local rand = math.random()*0.05
 		self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74.5),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
-		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
+		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
+		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand) 		
 		self.MiddleBogey:SetNWInt("MotorSoundType",2)
 		self.MiddleBogey:SetNWInt("Async",true)
 		self.MiddleBogey:SetNWBool("DisableEngines",true)			
-		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
-		self.MiddleBogey.DisableSound = 1			
-        --self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)			
-		table.insert(self.TrainEntities,self.MiddleBogey)		
-		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)			
-		self.Rear1 = self:CreatePricep(Vector(-326.1,0,0),true)		--вагон		
-		return MiddleBogey		
+		self.MiddleBogey.DisableSound = 1				
+        self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)
+		table.insert(self.TrainEntities,self.MiddleBogey)	
+		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
+		self.Rear1 = self:CreatePricep(Vector(-326.1,0,0),true)		--вагон			
 end)
-	
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
 	self:SetNW2Entity("RearBogey",self.RearBogey)
 	self:SetNW2Entity("FrontCouple",self.FrontCouple)
@@ -244,6 +226,16 @@ function ENT:TrainSpawnerUpdate()
 	
 end	
 
+function ENT:RerailChange(ent, bool)
+    if not IsValid(ent) then return end
+    if bool then
+        timer.Remove("metrostroi_rerailer_solid_reset_"..ent:EntIndex())    
+    else
+        timer.Create("metrostroi_rerailer_solid_reset_"..ent:EntIndex(),1e9,1,function() end)    
+    end
+end
+
+
 function ENT:SpawnFunction(ply, tr,className,rotate)
 
  local verticaloffset = 5 -- Offset for the train model
@@ -332,7 +324,12 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	self:SetNW2Entity("gmod_pricep_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)
     table.insert(Pricep740.TrainEntities,self)		
-
+	
+	constraint.RemoveConstraints(self.MiddleBogey, "Axis")
+	
+	--Метод mirror 
+	self.Train2 = self	
+	self.Train2.HeadTrain = Pricep740	
 
     --[[local seat = ents.Create("prop_vehicle_prisoner_pod")
     seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
@@ -376,8 +373,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		1,
 		Vector(0,0,1)
 	)	
-	
-        
+	      
 	if 
 	Map:find("gm_metro_pink_line_redux_v1") or
 	Map:find("gm_jar_pll_redux_v1") or
@@ -404,7 +400,9 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		Vector(0,0,1),
 		false)
 	else
-constraint.AdvBallsocket(
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
+	constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,
 		0, --bone
@@ -425,6 +423,8 @@ constraint.AdvBallsocket(
 		0, --rotonly
 		1--nocollide
 	)
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
 	constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,
@@ -482,7 +482,11 @@ end
         1, --zfric
         0, --rotonly
         1 --nocollide
-    ) 	 	
+    ) 	 
+
+    self:RerailChange(self.FrontBogey, true)
+    self:RerailChange(self.MiddleBogey, true)
+    self:RerailChange(self.RearBogey, true)		
 
 function Pricep740:TrainSpawnerUpdate()
 	local MotorType = self:GetNW2Int("MotorType")	
