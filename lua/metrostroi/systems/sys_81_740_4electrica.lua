@@ -5,7 +5,7 @@
 -- Contains proprietary code. See license.txt for additional information.
 --------------------------------------------------------------------------------
 Metrostroi.DefineSystem("81_740_4ELECTRICA")
-TRAIN_SYSTEM.DontAccelerateSimulation = false
+TRAIN_SYSTEM.DontAccelerateSimulation = false	
 
 function TRAIN_SYSTEM:Initialize()
 
@@ -242,7 +242,7 @@ function TRAIN_SYSTEM:Think(dT,iter)
         Panel.ALS = P*Train.ALS.Value
 		Panel.TPT = P*Train.TPT.Value
         --Panel.AccelRate = P*Train.AccelRate.Value
-        Panel.EqLights = P*Train.SF15.Value*Train.AppLights1.Value
+        Panel.EqLights = P*Train.SF15.Value*Train.AppLights1.Value		
         Panel.CabLights = P*Train.SF15.Value*Train.CabLight.Value*(0.5+Train.CabLightStrength.Value*0.5)
 
         Panel.Headlights1 = P*(RV["KRO3-4"]+RV["KRR5-6"])*Train.Headlights1.Value*Train.SF12.Value

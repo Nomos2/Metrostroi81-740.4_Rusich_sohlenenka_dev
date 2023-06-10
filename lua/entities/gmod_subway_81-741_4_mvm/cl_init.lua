@@ -71,8 +71,8 @@ for k,buttbl in ipairs(ENT.ButtonMap["PVZ"].buttons) do
     }
 end
 ENT.ButtonMap["Battery"] = {
-    pos = Vector(650,-18.11,-5), --446 -- 14 -- -0,5
-    ang = Angle(0,180,90),
+    pos = Vector(650,18.11,-5), --446 -- 14 -- -0,5
+    ang = Angle(0,0,90),
     width = 30,
     height = 30,
     scale = 0.0625,
@@ -1659,7 +1659,11 @@ function self:OnRemove(nfinal)
         SafeRemoveEntity(v)
     end	
     if self.GUILocker then self:BlockInput(false) end
+	if Metrostroi.Version >= 1537278077 then 
+    self.Sounds = {loop = {}, isloop = {}}	
+	else
     self.Sounds = {loop = {}}
+	end
     self.PassengerEnts = {}
 	self.PassengerEntsRear = {}
 end
@@ -1839,14 +1843,14 @@ end
 for i = 0,11 do	
     -----------------------Передняя часть
     local colV = self:GetNW2Vector("Lamp7404"..i)
-    local col = Color(colV.x,colV.y,colV.z)		
+    local col = Color(colV.x,colV.y,colV.z)	
 	self:ShowHideSmooth("lamps_salon_on_front"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
 	self:ShowHideSmooth("lamps_salon_on_front_left"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
 	-----------------------Передняя часть
 end
-for i = 1,11 do	
+for i = 1,11 do		
     local colV = self:GetNW2Vector("Lamp7404"..i)
-    local col = Color(colV.x,colV.y,colV.z)		
+    local col = Color(colV.x,colV.y,colV.z)	
     -----------------------Задняя часть	
     Pricep740:ShowHideSmooth("lamps_salon_on_test"..i-1,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
     Pricep740:ShowHideSmooth("lamps_salon_on_test1"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)

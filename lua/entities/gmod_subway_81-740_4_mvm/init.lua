@@ -57,20 +57,20 @@ function ENT:Initialize()
 
     -- Create seat entities
     self.DriverSeat = self:CreateSeat("driver",Vector(775-144,19,-27))
-    --self.InstructorsSeat = self:CreateSeat("instructor",Vector(285,48,-40),Angle(0,40,0),"models/vehicles/prisoner_pod_inner.mdl")
+    self.InstructorsSeat = self:CreateSeat("instructor",Vector(586,-40,-30),Angle(0,90,0),"models/nova/jeep_seat.mdl")
     self.InstructorsSeat2 = self:CreateSeat("instructor",Vector(767-144,45,-35),Angle(0,75,0),"models/vehicles/prisoner_pod_inner.mdl") 
-    self.InstructorsSeat3 = self:CreateSeat("instructor",Vector(760-144,0,-40),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
-    self.InstructorsSeat4 = self:CreateSeat("instructor",Vector(787-144,-25,-40),Angle(0,115,0),"models/vehicles/prisoner_pod_inner.mdl")
+    --self.InstructorsSeat3 = self:CreateSeat("instructor",Vector(760-144,0,-40),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
+    self.InstructorsSeat4 = self:CreateSeat("instructor",Vector(787-144,-25,-40),Angle(0,115,0),"models/vehicles/prisoner_pod_inner.mdl")	
 
     --Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
 	self.DriverSeat:SetColor(Color(0,0,0,0))
-    --self.InstructorsSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
-    --self.InstructorsSeat:SetColor(Color(0,0,0,0))
+    self.InstructorsSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
+    self.InstructorsSeat:SetColor(Color(0,0,0,0))	
     self.InstructorsSeat2:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat2:SetColor(Color(0,0,0,0))
-    self.InstructorsSeat3:SetRenderMode(RENDERMODE_TRANSALPHA)
-    self.InstructorsSeat3:SetColor(Color(0,0,0,0))
+    --self.InstructorsSeat3:SetRenderMode(RENDERMODE_TRANSALPHA)
+    --self.InstructorsSeat3:SetColor(Color(0,0,0,0))
     self.InstructorsSeat4:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat4:SetColor(Color(0,0,0,0))
 	
@@ -500,13 +500,15 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	
 	self:SetNW2Entity("gmod_pricep_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)
-    table.insert(Pricep740.TrainEntities,self)		
-
-	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
+    table.insert(Pricep740.TrainEntities,self)				
 	
 	--Метод mirror 
 	self.Train2 = self	
-	self.Train2.HeadTrain = Pricep740		
+	self.Train2.HeadTrain = Pricep740	
+
+	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
+	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
+	constraint.RemoveConstraints(self.MiddleBogey, "Axis")		
 	
 	constraint.Axis(
 		self.MiddleBogey,
@@ -634,7 +636,7 @@ end
 	
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
-    self:RerailChange(self.RearBogey, true)	
+    self:RerailChange(self.RearBogey, true)		
 	
 function Pricep740:TrainSpawnerUpdate()
 	local MotorType = self:GetNW2Int("MotorType")	
@@ -708,129 +710,6 @@ end
             Pos = Vector(-310, -13, 7), Radius = 31
         },
 	} 
---------------------------------------------------------------------------------
--- Keyboard input
---------------------------------------------------------------------------------
-function Pricep740:IsModifier(key)
-    return type(self.KeyMap[key]) == "table"
-end
-
-function Pricep740:HasModifier(key)
-    return self.KeyMods[key] ~= nil
-end
-
-function Pricep740:GetActiveModifiers(key)
-    local tbl = {}
-    local mods = self.KeyMods[key]
-    for k,v in pairs(mods) do
-        if self.KeyBuffer[k] ~= nil then
-            table.insert(tbl,k)
-        end
-    end
-    return tbl
-end
-
-function Pricep740:OnKeyEvent(key,state,ply,helper)
-    if state then
-        self:OnKeyPress(key)
-    else
-        self:OnKeyRelease(key)
-    end
-    local keyT = self.KeyMap[key]
-    if self:HasModifier(key) and not helper then
-        --If we have a modifier
-        local actmods = self:GetActiveModifiers(key)
-        if #actmods > 0 then
-            --Modifier is being preseed
-            for k,v in pairs(actmods) do
-                if self.KeyMap[v][key] ~= nil then
-                    self:ButtonEvent(self.KeyMap[v][key],state,ply)
-                end
-            end
-            return
-        end
-    end
-    if self:IsModifier(key) then
-        if keyT.helper then
-            self:ButtonEvent(helper and keyT.helper or keyT[1],state,ply)
-        elseif not helper then
-            if state and keyT.def and not helper then
-                self:ButtonEvent(keyT.def,state,ply)
-            elseif not state then
-                if keyT.def then
-                    self:ButtonEvent(keyT.def,state,ply)
-                end
-                for k,v in pairs(keyT) do
-                    self:ButtonEvent(v,false,ply)
-                end
-            end
-        end
-    elseif keyT ~= nil and type(keyT) == "string" and not helper then
-        --If we're a regular binded key
-        self:ButtonEvent(keyT,state,ply)
-    end
-end
-function Pricep740:OnKeyPress(key)
-
-end
-
-function Pricep740:OnKeyRelease(key)
-
-end
-
-function Pricep740:ProcessKeyMap()
-    self.KeyMods = {}
-
-    for mod,v in pairs(self.KeyMap) do
-        if type(v) == "table" then
-            for k,_ in pairs(v) do
-                if not self.KeyMods[k] then
-                    self.KeyMods[k]={}
-                end
-                self.KeyMods[k][mod]=true
-            end
-        end
-    end
-end
-
-
-local function HandleKeyHook(ply,k,state)
-    local train = ply:GetTrain()
-    if IsValid(train) then
-        train.KeyMap[k] = state or nil
-    end
-end
-
-function Pricep740:HandleKeyboardInput(ply)
-    if not self.KeyMods and self.KeyMap then
-        self:ProcessKeyMap()
-    end
-
-    -- Check for newly pressed keys
-    for k,v in pairs(ply.keystate) do
-        if self.KeyBuffer[k] == nil then
-            self.KeyBuffer[k] = true
-            self:OnKeyEvent(k,true,ply)
-        end
-    end
-
-    -- Check for newly released keys
-    for k,v in pairs(self.KeyBuffer) do
-        if ply.keystate[k] == nil then
-            self.KeyBuffer[k] = nil
-            self:OnKeyEvent(k,false,ply)
-        end
-    end
-end	
-end
-
-function Pricep740:TriggerTurbostroiInput(sys,name,val)
-    if name == "Value" then
-        -- Autosend values to client
-        if self.SyncTable and table.HasValue(self.SyncTable,sys) then
-            self:SetPackedBool(sys,val > 0)
-        end
-    end
 end
 
 Pricep740.ButtonBuffer = {}
@@ -846,10 +725,6 @@ function Pricep740:OnButtonPress(button,ply)
     if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
 end	
 end
-	--Pricep740:SetPos(self:LocalToWorld(pos))
-	--Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
-	--Pricep740:Spawn()
-	--Pricep740:SetOwner(self:GetOwner())	
 	
 	--[[
     local seat = ents.Create("prop_vehicle_prisoner_pod")
@@ -881,76 +756,6 @@ end
 	
     if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
     seat_1:SetParent(Pricep740)]]				
-		
-	--[[if 
-	Map:find("gm_metro_pink_line_redux_v1") or
-	Map:find("gm_jar_pll_redux_v1") or
-	Map:find("gm_metro_crossline_r199h") or	
-	Map:find("gm_metro_crossline_n4a") or	
-	Map:find("gm_metro_crossline_c4") or		
-	Map:find("gm_metro_crossline_m12") or	
-	Map:find("gm_metro_crossline_n3") or
-	Map:find("gm_metro_mosldl_v1") or	
-	Map:find("gm_metro_mosldl_v1m") or	
-	Map:find("gm_smr_1987") or			
-	Map:find("gm_jar_pll_redux_v1_fs") then
-        constraint.Axis(
-		self.MiddleBogey,
-		Pricep740,
-		0,
-		0,
-        Vector(0,0,0),
-		Vector(0,0,0),
-        0,
-		0,
-		0,
-		1,
-		Vector(0,0,1)
-		)
-	else
-	constraint.AdvBallsocket(
-		Pricep740,
-		self.MiddleBogey,
-		0, --bone
-		0, --bone		
-		Vector(290,1,35),
-		Vector(-290,0,0),		
-		0, --forcelimit
-		0, --torquelimit
-		-20, --xmin
-		-20, --ymin
-		-180, --zmin
-		20, --xmax
-		20, --ymax
-		180, --zmax
-		0.1, --xfric
-		0.1, --yfric
-		0, --zfric
-		0, --rotonly
-		1--nocollide
-	)
-	constraint.AdvBallsocket(
-		Pricep740,
-		self.MiddleBogey,
-		0, --bone
-		0, --bone		
-		Vector(290,1,-5),
-		Vector(-290,0,0),	
-		0, --forcelimit
-		0, --torquelimit
-		-20, --xmin
-		-20, --ymin
-		-180, --zmin
-		20, --xmax
-		20, --ymax
-		180, --zmax
-		0.1, --xfric
-		0.1, --yfric
-		0, --zfric
-		0, --rotonly
-		1--nocollide
-	)
-end	]]
 ---------------------------------------------------------------------------
 function ENT:Think()
     local retVal = self.BaseClass.Think(self)
@@ -1225,7 +1030,7 @@ function ENT:Think()
     self:SetNW2Bool("DoorCloseLamp",self.Panel.DoorClose>0)
     self:SetNW2Bool("DoorBlockLamp",self.Panel.DoorBlock>0)
     self:SetPackedBool("AppLights", self.Panel.EqLights>0)
-	self:SetNW2Bool("TPTLamp",self.Panel.TPT>0)	
+	self:SetNW2Bool("TPTLamp",self.Panel.TPT>0)
 	
 	
 	self:SetNW2Bool("DAU",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.DAU)
@@ -1349,11 +1154,11 @@ function ENT:Think()
    if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
 
         local A = 2*self.Engines.BogeyMoment
-        self.FrontBogey.MotorForce = (24000+6500*(A < 0 and 1 or 0))--*add--35300+10000*(A < 0 and 1 or 0)
+        self.FrontBogey.MotorForce = (25000+6500*(A < 0 and 1 or 0))--*add--35300+10000*(A < 0 and 1 or 0)
         self.FrontBogey.Reversed = self.KMR2.Value > 0.5
-        self.MiddleBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
+        self.MiddleBogey.MotorForce  = (25000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
         self.MiddleBogey.Reversed = self.KMR1.Value > 0.5
-		self.RearBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
+		self.RearBogey.MotorForce  = (25000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
         self.RearBogey.Reversed = self.KMR1.Value > 0.5		
 
         -- These corrections are required to beat source engine friction at very low values of motor power

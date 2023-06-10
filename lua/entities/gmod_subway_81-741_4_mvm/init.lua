@@ -35,14 +35,15 @@ function ENT:Initialize()
     self:DrawShadow(true)	
 
     -- Create seat entities
-    self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35))
+	self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
 
     -- Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.DriverSeat:SetColor(Color(0,0,0,0))
 
-    -- Create bogeys
-        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75.4),Angle(0,180,0),true,"740PER")	
+ -- Create bogeys
+        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75.4),Angle(0,180,0),true,"740PER")
+		self.FrontBogey.PneumaticPow = 0.7			
 --------------------------------------------------------------------------------
         self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),true,"740NOTR") --110 0 -80  
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)	
@@ -108,15 +109,15 @@ end)
     self.InteractionZones = {
         {
             ID = "FrontBrakeLineIsolationToggle",
-            Pos = Vector(463.4, -22, -60), Radius = 16,
+            Pos = Vector(660,-35.0,-45), Radius = 16,
         },
         {
             ID = "FrontTrainLineIsolationToggle",
-            Pos = Vector(463.4, 22, -60), Radius = 16,
+            Pos = Vector(660,-35.0,-45), Radius = 16,
         },
         {
             ID = "FrontDoor",
-            Pos = Vector(458,30,0), Radius = 20,
+            Pos = Vector(654,15,55), Radius = 20,
         },
         {
             ID = "GVToggle",
@@ -146,10 +147,15 @@ end)
         broken = {},
     }		
 	
+    local rand = math.random() > 0.9 and 1 or math.random(0.95,0.99)
+    for i = 1,40 do
+        if math.random() > rand then self.Lamps.broken[i] = math.random() > 0.7 end
+    end	
+	
 end
 
 function ENT:UpdateLampsColors()
-    local lCol,lCount = Vector(),0
+    local lCol,lCount = Vector(),40
 	local mr = math.random
     local rand = mr() > 0.8 and 1 or mr(0.95,0.99)
 	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
@@ -157,7 +163,7 @@ function ENT:UpdateLampsColors()
 	local r,g = 15,15
 	for i = 1,40 do
 		local chtp = mr() > rnd1
-		if typ == 0 and not chtp or typ == 1 and chtp then
+		if typ == 0 and chtp then
 			if mr() > rnd2 then
 				r = -20+mr()*25
 				g = 0
@@ -181,12 +187,13 @@ function ENT:UpdateLampsColors()
 		if i%8.3<1 then
 			local id = 9+math.ceil(i/8.3)
 			--self:SetLightPower(id,false)
+			
 			local tcol = (lCol/lCount)/255
 			--self.Lights[id][4] = Vector(tcol.r,tcol.g^3,tcol.b^3)*255
 			lCol = Vector() lCount = 0
 		end
 		self:SetNW2Vector("Lamp7404"..i,col)
-		self.Lamps.broken[i] = mr() > rand and mr() > 0.65
+		self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7
 		--PrintTable(self.Lamps.broken)
 	end
 end
@@ -325,11 +332,13 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	table.insert(self.TrainEntities,Pricep740)
     table.insert(Pricep740.TrainEntities,self)		
 	
-	constraint.RemoveConstraints(self.MiddleBogey, "Axis")
-	
 	--Метод mirror 
 	self.Train2 = self	
-	self.Train2.HeadTrain = Pricep740	
+	self.Train2.HeadTrain = Pricep740
+
+	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
+	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
+	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
 
     --[[local seat = ents.Create("prop_vehicle_prisoner_pod")
     seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
@@ -488,38 +497,6 @@ end
     self:RerailChange(self.MiddleBogey, true)
     self:RerailChange(self.RearBogey, true)		
 
-function Pricep740:TrainSpawnerUpdate()
-	local MotorType = self:GetNW2Int("MotorType")	
-       if MotorType == 1 then
-            MotorType = math.ceil(math.random()*4+0.5)
-          else MotorType = MotorType-1 end	
-	self:SetNW2Int("MotorType",MotorType)	
-	--self:SetNW2Int("MotorType",math.random(1, 2))	
-
-	local AsyncSound = self:GetNW2Int("AsyncSound")	
-       if AsyncSound == 1 then
-            AsyncSound = math.ceil(math.random()*5+0.5)
-          else AsyncSound = AsyncSound-1 end	
-	self:SetNW2Int("AsyncSound",AsyncSound)	
-	--self:SetNW2Int("AsyncSound",math.random(1, 2))	
-
-	local ZavodTable = self:GetNW2Int("ZavodTable")	
-       if ZavodTable == 1 then
-            ZavodTable = math.ceil(math.random()*2+0.5)
-          else ZavodTable = ZavodTable-1 end	
-	self:SetNW2Int("ZavodTable",ZavodTable)	
-
-	local BBEs = self:GetNW2Int("BBESound")	
-       if BBEs == 1 then
-            BBEs = math.ceil(math.random()*2+0.5)
-          else BBEs = BBEs-1 end	
-	self:SetNW2Int("BBESound",BBEs)		
-    --рандомизация цвета табло
-	--local ALS = math.random(1, 3)
-	--self:SetNW2Int("tablo_color", ALS)
-	--print(self:GetNW2String("Texture"))
-end
-
 function Pricep740:Use(ply)
     local tr = ply:GetEyeTrace()
     if not tr.Hit then return end
@@ -532,12 +509,12 @@ function Pricep740:Use(ply)
             end
         end
     end
-	
+end	
 function Pricep740:ShowInteractionZones()
     for k,v in pairs(self.InteractionZones) do
         debugoverlay.Sphere(self:LocalToWorld(v.Pos),v.Radius,15,Color(255,185,0),true)
     end
-end	
+end		
 		
 	 self.InteractionZones = {	
         {
@@ -550,9 +527,10 @@ end
         },
         {
             ID = "RearDoor",
-            Pos = Vector(-310, -13, 7),ang = Angle(0,90,90), Radius = 31
+            Pos = Vector(-310, -13, 7),Radius = 31
         },
-	} 
+	}
+
 --------------------------------------------------------------------------------
 -- Keyboard input
 --------------------------------------------------------------------------------
@@ -667,7 +645,6 @@ function Pricep740:HandleKeyboardInput(ply)
         end
     end
 end	
-end
 
 function Pricep740:CreateJointSound(sndnum)
     local jID = self.SpeedSign>0 and 1 or #self.JointPositions
@@ -731,7 +708,8 @@ end
 	local lightsActive1 = power and self.SFV20.Value > 0 
     local lightsActive2 = power and self.BUV.MainLights 
 	local mul = 0
-    local Ip = 6.9
+    local LampCount = 40	
+    local Ip = 7 or 6.9 
     local Im = 1
 	for i = 1,40 do
        if (lightsActive2 or (lightsActive1 and math.ceil((i+Ip-Im)%Ip)==1)) then
@@ -746,6 +724,16 @@ end
             self:SetPackedBool("lightsActive"..i,false)
         end
     end		
+	
+    --свет в салоне
+    local passlight = power and (self.BUV.MainLights and 1 or self.SFV20.Value > 0.5 and 0.4) or 0		
+	
+	self:SetLightPower(15,passlight > 0, passlight and mul/40)
+	self:SetLightPower(16,passlight > 0.5, passlight and mul/40)
+	self:SetLightPower(17,passlight > 0, passlight and mul/40)
+	
+	self:SetLightPower(15.1,passlight > 0, passlight and mul/40)
+	self:SetLightPower(16.1,passlight > 0.5, passlight and mul/40)	
 		
     -- получение всяких значений
     self:SetPackedRatio("Speed", self.Speed)
@@ -771,15 +759,6 @@ end
     self:SetPackedBool("AnnPlay",self.Panel.AnnouncerPlaying > 0)
 	
     self:SetPackedBool("FrontDoor",self.FrontDoor)
-    --свет в салоне
-    local passlight = power and (self.BUV.MainLights and 1 or self.SFV20.Value > 0.5 and 0.4) or 0
-	
-	self:SetLightPower(15,passlight > 0, passlight and mul/40)
-	self:SetLightPower(16,passlight > 0.5, passlight and mul/40)
-	self:SetLightPower(17,passlight > 0, passlight and mul/40)
-	
-	self:SetLightPower(15.1,passlight > 0, passlight and mul/40)
-	self:SetLightPower(16.1,passlight > 0.5, passlight and mul/40)		
 	
 	Pricep740.Lights = {
 		[18] = { "dynamiclight",    Vector( 180, -15, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
@@ -787,9 +766,9 @@ end
         [20] = { "dynamiclight",    Vector( -290, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
     }		
 	
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(18,passlight > 0, passlight)
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(19,passlight > 0.5, passlight)
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(20,passlight > 0, passlight)
+	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(18,passlight > 0, passlight and mul/40)
+	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(19,passlight > 0.5, passlight and mul/40)
+    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(20,passlight > 0, passlight and mul/40)
 	
     self:SetPackedRatio("SalonLighting",passlight)
     --local mul = self.SF45.Value > 0.5 and self.BUV.MainLights and 1 or self.SF46.Value > 0.5 and 0.5 or 0

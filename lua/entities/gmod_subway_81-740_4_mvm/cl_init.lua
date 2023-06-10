@@ -482,6 +482,12 @@ ENT.ClientProps["lamps_salon_on_fr9"] = {
     hide = 1,
     color = Color(245,238,223),		
 }
+ENT.ClientProps["Wiper_760"] = {
+    model = "models/metrostroi_train/81-740/body/81-740_wiper.mdl",
+    pos = Vector(176.8,-10,0),
+    ang = Angle(0,0,0),
+    hide = 2,		
+}
 
 ENT.ButtonMap["ALSPANELLAMPS"] = { -- дополнительные лампы АЛС 
 	pos = Vector(812-144,17.2,-0.01), --446 -- 14 -- -0,5
@@ -1372,7 +1378,7 @@ ENT.ClientProps["AntennaProp"] = {
     model = "models/metrostroi_train/81-740/body/antenna/antenna.mdl",
     pos = Vector(234.25,21.3,-124.5),
     ang = Angle(-6,0,0),
-    hide = 0.8,
+    hide = 2,
 }
 
 ---Segments
@@ -1394,7 +1400,7 @@ ENT.ClientProps["speed2"] = {
 for i=1,5 do
     ENT.ClientProps["speeddop"..i] = {
         model = "models/metrostroi_train/81-720/segments/speed_red.mdl",
-        pos = Vector(205.3, 1.305*(i-1)+3, 102.55),
+        pos = Vector(205.3, 1.305*(i-1)+3, 102.58),
         ang = Angle(10,0,0.2),
         skin = 0,
         color = Color(255,55,55),
@@ -1403,7 +1409,7 @@ for i=1,5 do
     }
     ENT.ClientProps["speedfact"..i] = {
         model = "models/metrostroi_train/81-720/segments/speed_green.mdl",
-        pos = Vector(344.58-144, -1.305*(i-1)+2.95, 103.69),
+        pos = Vector(344.58-144, -1.305*(i-1)+2.95, 103.72),
         ang = Angle(10,0,-0.2),
         skin = 0,
         color = Color(90,255,80),
@@ -1411,7 +1417,7 @@ for i=1,5 do
     }
     ENT.ClientProps["speedrek"..i] = {
         model = "models/metrostroi_train/81-720/segments/speed_yellow.mdl",
-        pos = Vector(344.420-144, 1.32*(i-1)+2.75, 103.44),
+        pos = Vector(344.420-144, 1.32*(i-1)+2.75, 103.47),
         ang = Angle(10,0,0.3),
         skin = 0,
         color = Color(255,255,60),
@@ -1776,13 +1782,6 @@ ENT.ButtonMap["Antenna"] = {
     }
 }
 
---Задняя часть
---if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end --выдача родителя
---cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov")) --подучение родителя
---cl_ent:SetLocalPos(ent.ClientProps["pron_test"].pos) --позиция (настраивается через pos)
---cl_ent:SetLocalAngles(ent.ClientProps["pron_test"].ang) --наклон (настраивается через Angle)
---Огромное спасибо Hell за этот скрипт.
-
 --[[for i=1,32 do
 ENT.ClientProps["led_l_f_rear"..i] = {
         model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
@@ -2097,28 +2096,6 @@ local male_sequences = {2,3,4,6,10}
 	end		
 	
 end	
---[[function ENT:UpdateWagonNumber()
-for k=0,3 do
-        --if i< count then			 
-			if self.WagonNumber then		
-            local rightNum = self.ClientEnts["TrainNumberR"..k]		
-	        local num = math.floor(self.WagonNumber%(10^(k+1))/10^k)
-            if IsValid(rightNum) then
-				rightNum:SetPos(self:LocalToWorld(Vector(705-k*6.6+4*6.6/2-144, -63.9, 14)))
-                rightNum:SetSkin(num)
-            end											
-			self.HeadLightBroken1 = self:GetNW2Bool("HeadLightBroken1",false)
-			self.HeadLightBroken2 = self:GetNW2Bool("HeadLightBroken2",false)
-			self.HeadLightBroken3 = self:GetNW2Bool("HeadLightBroken3",false)
-			self.HeadLightBroken4 = self:GetNW2Bool("HeadLightBroken4",false)
-			
-			self.RedLightBroken1 = self:GetNW2Bool("RedLightBroken1",false)
-			self.RedLightBroken2 = self:GetNW2Bool("RedLightBroken2",false)
-			self.RedLightBroken3 = self:GetNW2Bool("RedLightBroken3",false)
-			self.RedLightBroken4 = self:GetNW2Bool("RedLightBroken4",false)			
-            end   		
-		end		
-	end]]	
 	
 local Cpos = {
     0,0.24,0.5,0.55,0.6,1
@@ -2953,7 +2930,11 @@ function self:OnRemove(nfinal)
         SafeRemoveEntity(v)
     end	
     if self.GUILocker then self:BlockInput(false) end
+	if Metrostroi.Version >= 1537278077 then 
+    self.Sounds = {loop = {}, isloop = {}}	
+	else
     self.Sounds = {loop = {}}
+	end
 	self.PassengerEnts = {}	
 	self.PassengerEntsRear = {}
 end
@@ -3127,11 +3108,13 @@ end
     self:Animate("gv_wrench",self.LastGVValue and 1 or 0,0.5,1,128,1,false)
     self:ShowHideSmooth("gv_wrench",    CurTime() < self.ResetTime and 1 or 0.1)
 	
+	self.HeadTrain = self:GetNW2Entity("HeadTrain")	
+    local train = self.HeadTrain		
+	
 	local dT = self.DeltaTime
 	
     local dPdT = self:GetPackedRatio("BrakeCylinderPressure_dPdT")
     self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-self:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)
-    --print(dPdT)
     self:SetSoundState("release",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)	
 
     self:Animate("KRO", self:GetPackedRatio("KRO",0), 0.525, 1,  4,false)
@@ -3222,6 +3205,16 @@ end
 
     self:ShowHideSmooth("lamp_f",self:Animate("lamp_forw",self:GetPackedBool("BIForward") and 1 or 0,0,1,5,false))
     self:ShowHideSmooth("lamp_b",self:Animate("lamp_back",self:GetPackedBool("BIBack") and 1 or 0,0,1,5,false))
+	
+	if self:GetPackedBool("Wiper") and self.Anims["Wiper_760"] then
+		local anim = self.Anims["Wiper_760"]	
+		if anim == 0 then
+			self.WiperDir = true
+		elseif anim == 1 then
+			self.WiperDir = false
+		end
+	self:Animate("Wiper_760",self.WiperDir and 1 or 0,0,1,0.32,false)
+	end
 
     local accel = self:GetPackedRatio("BIAccel",0)
     local speed = self:GetNW2Int("BISpeed",0)
