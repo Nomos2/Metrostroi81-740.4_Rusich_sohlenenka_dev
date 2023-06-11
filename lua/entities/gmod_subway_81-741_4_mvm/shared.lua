@@ -65,8 +65,8 @@ function ENT:InitializeSounds()
     self.SoundPositions["async4"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
     self.SoundNames["async5"]   = {"subway_trains/rusich/inverter/inverter5.wav",loop = true}
     self.SoundPositions["async5"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos	
-    self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true}
-    self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
+    --self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true} --5 инвертер переименован в звук рекуперации.
+    --self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
 	
     self.SoundNames["bbe_v1"]   = {"subway_trains/rusich/bbes/bbe.wav",loop = true}
     self.SoundPositions["bbe_v1"] = {800,1e9,Vector(400-144,0,-40),0.55} --FIXME: Pos	

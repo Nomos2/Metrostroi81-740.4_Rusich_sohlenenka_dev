@@ -70,7 +70,6 @@ Spawner.740.AsyncSound3    = Тип 2
 Spawner.740.AsyncSound4    = Тип 3
 Spawner.740.AsyncSound5    = Тип 4
 Spawner.740.AsyncSound6    = Тип 5
-Spawner.740.AsyncSound7    = Тип 6
 
 Spawner.740.RingSound    = Тип звука звонка
 Spawner.740.RingSound.Random   = Случайно
@@ -563,7 +562,6 @@ Entities.gmod_subway_81-740_4_mvm.Spawner.AsyncSound.3            = @[Spawner.74
 Entities.gmod_subway_81-740_4_mvm.Spawner.AsyncSound.4         	  = @[Spawner.740.AsyncSound4]
 Entities.gmod_subway_81-740_4_mvm.Spawner.AsyncSound.5            = @[Spawner.740.AsyncSound5]
 Entities.gmod_subway_81-740_4_mvm.Spawner.AsyncSound.6            = @[Spawner.740.AsyncSound6]
-Entities.gmod_subway_81-740_4_mvm.Spawner.AsyncSound.7            = @[Spawner.740.AsyncSound7]
 
 Entities.gmod_subway_81-740_4_mvm.Spawner.RingSound.Name 		  = @[Spawner.740.RingSound] 
 Entities.gmod_subway_81-740_4_mvm.Spawner.RingSound.1 		  	  = @[Spawner.740.RingSound.Random] 

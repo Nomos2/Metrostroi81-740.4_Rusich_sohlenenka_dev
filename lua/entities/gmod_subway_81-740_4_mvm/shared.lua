@@ -96,8 +96,8 @@ end
     self.SoundPositions["async4"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
     self.SoundNames["async5"]   = {"subway_trains/rusich/inverter/inverter5.wav",loop = true}
     self.SoundPositions["async5"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
-    self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true}
-    self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
+    --self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true} --5 инвертер переименован в звук рекуперации.
+    --self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
 
     self.SoundNames["bbe_v1"]   = {"subway_trains/rusich/bbes/bbe.wav",loop = true}
     self.SoundPositions["bbe_v1"] = {800,1e9,Vector(400-144,0,-40),0.55} --FIXME: Pos	
@@ -500,7 +500,7 @@ for k,v in pairs(Metrostroi.AnnouncementsASNP or {}) do Announcer[k] = v.name or
 ENT.Spawner = {
 	model = {
 	"models/metrostroi_train/81-740/body/81-740_4_front.mdl",
-	{"models/metrostroi_train/81-740/salon/salon.mdl",pos = Vector(-145,0,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/salon/salon.mdl",pos = Vector(0,0,0), ang=Angle(0,0,0)},
 	{"models/metrostroi_train/81-740/salon/handrails/handrails.mdl",pos = Vector(370-150,-5,0), ang=Angle(0,0,0)},
 	{"models/metrostroi_train/81-740/cabine/Pult/pult.mdl",pos = Vector(465.4-144, 6, 0), ang=Angle(0,0,0)},	
 	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(852-144,0.1,0),ang = Angle(0,-180,0)},
@@ -548,7 +548,7 @@ ENT.Spawner = {
     WagNumTable = {1,2,3,4,5},	
 	
 	{"Announcer","Spawner.740.Announcer","List",Announcer},		
-	{"AsyncSound","Spawner.740.AsyncSound","List",{"Spawner.740.AsyncSound1","Spawner.740.AsyncSound2","Spawner.740.AsyncSound3","Spawner.740.AsyncSound4","Spawner.740.AsyncSound5","Spawner.740.AsyncSound6","Spawner.740.AsyncSound.Random"}},	
+	{"AsyncSound","Spawner.740.AsyncSound","List",{"Spawner.740.AsyncSound1","Spawner.740.AsyncSound2","Spawner.740.AsyncSound3","Spawner.740.AsyncSound4","Spawner.740.AsyncSound5","Spawner.740.AsyncSound.Random"}},	
 	{"RingSound","Spawner.740.RingSound","List",{"Spawner.740.RingSound1","Spawner.740.RingSound2","Spawner.740.RingSound3","Spawner.740.RingSound4","Spawner.740.RingSound.Random"}},	
 	{"ZavodTable","Spawner.740.ZavodTable","List",{"Spawner.740.ZavodTable.Random","Spawner.740.ZavodTable1","Spawner.740.ZavodTable2","Spawner.740.ZavodTable3"}}, 
 	{"BBESound","Spawner.740.BBESound","List",{"Spawner.740.BBESound.Random","Spawner.740.BBESound1","Spawner.740.BBESound2","Spawner.740.BBESound3"}}, 	
@@ -574,7 +574,6 @@ ENT.Spawner = {
                 ent.PassScheme:TriggerInput("Set",val==1 and 1 or 0)
 				--ent.BUKP.State = 0	
 				ent.Ticker:TriggerInput("Set",val==1 and 1 or 0)
-				--ent.R_ASNPOn:TriggerInput("Set",val<=2 and 1)
                 if val==1 then
 					timer.Simple(1,function()
                         if not IsValid(ent) then return end
@@ -594,8 +593,7 @@ ENT.Spawner = {
                 ent.SF13:TriggerInput("Set",val<=2 and 1 or 0)
                 ent.SF15:TriggerInput("Set",val<=2 and 1 or 0)
 			
-                _LastSpawner=CurTime()
-				local Pricep740 = ent:GetNW2Entity("gmod_pricep_kuzov")					
+                _LastSpawner=CurTime()				
                 ent.CabinDoorLeft = val==4 and first
                 ent.CabinDoorRight = val==4 and first
                 ent.RearDoor = val==4

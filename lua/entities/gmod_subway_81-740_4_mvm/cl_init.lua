@@ -1640,7 +1640,7 @@ ENT.ClientProps["bucik_old"] = {
 }
 ENT.ClientProps["salon"] = {
 	model = "models/metrostroi_train/81-740/salon/salon.mdl",
-	pos = Vector(-144.8,0,0),
+	pos = Vector(0,0,0),
 	ang = Angle(0,0,0),
 	hide = 2,
 }

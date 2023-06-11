@@ -208,7 +208,7 @@ function ENT:TrainSpawnerUpdate()
 
 	local AsyncSound = self:GetNW2Int("AsyncSound")	
        if AsyncSound == 1 then
-            AsyncSound = math.ceil(math.random()*5+0.5)
+            AsyncSound = math.ceil(math.random()*4+0.5)
           else AsyncSound = AsyncSound-1 end	
 	self:SetNW2Int("AsyncSound",AsyncSound)	
 	--self:SetNW2Int("AsyncSound",math.random(1, 2))	
@@ -778,11 +778,11 @@ end
     --мощность двигателей и тормозов    
    if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
         local A = 2*self.Engines.BogeyMoment
-        self.FrontBogey.MotorForce = (24000+6500*(A < 0 and 1 or 0))--*add--35300+10000*(A < 0 and 1 or 0)
+        self.FrontBogey.MotorForce = (25000+6500*(A < 0 and 1 or 0))--*add--35300+10000*(A < 0 and 1 or 0)
         self.FrontBogey.Reversed = self.KMR2.Value > 0.5
-        self.MiddleBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
+        self.MiddleBogey.MotorForce  = (25000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
         self.MiddleBogey.Reversed = self.KMR1.Value > 0.5
-		self.RearBogey.MotorForce  = (24000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
+		self.RearBogey.MotorForce  = (25000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
         self.RearBogey.Reversed = self.KMR1.Value > 0.5		
 		self.AsyncInverter:TriggerInput("Speed", self.Speed)	
 

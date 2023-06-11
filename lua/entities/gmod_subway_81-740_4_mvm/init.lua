@@ -397,7 +397,7 @@ function ENT:TrainSpawnerUpdate()
 
 	local AsyncSound = self:GetNW2Int("AsyncSound")	
        if AsyncSound == 1 then
-            AsyncSound = math.ceil(math.random()*5+0.5)
+            AsyncSound = math.ceil(math.random()*4+0.5)
           else AsyncSound = AsyncSound-1 end	
 	self:SetNW2Int("AsyncSound",AsyncSound)	
 	
