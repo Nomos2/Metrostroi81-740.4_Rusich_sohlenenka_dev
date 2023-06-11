@@ -1599,7 +1599,7 @@ Pricep740.ButtonMap["RearDoor"] = {
 	}	
 }
 Pricep740.ButtonMap["Tickers_rear"] = {
-		pos = Vector(287,27,66.3), --446 -- 14 -- -0,5
+		pos = Vector(286.9,27,66.3), --446 -- 14 -- -0,5
 		ang = Angle(0,-90,90),
 		width = 1024,
 		height = 59,

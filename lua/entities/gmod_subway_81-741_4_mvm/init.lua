@@ -194,7 +194,7 @@ function ENT:UpdateLampsColors()
 		end
 		self:SetNW2Vector("Lamp7404"..i,col)
 		self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7
-		--PrintTable(self.Lamps.broken)
+		--PrintTable(self.Lamps.broken)	
 	end
 end
 
