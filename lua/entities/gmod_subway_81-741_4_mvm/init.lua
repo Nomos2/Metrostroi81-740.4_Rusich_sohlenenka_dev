@@ -35,7 +35,7 @@ function ENT:Initialize()
     self:DrawShadow(true)	
 
     -- Create seat entities
-	self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
+	self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-37),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
 
     -- Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
@@ -52,7 +52,7 @@ function ENT:Initialize()
 		self.RearBogey:SetNWInt("MotorSoundType",2)		
 	    self.RearBogey.DisableContacts = true		
 --------------------------------------------------------------------------------
-        self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")
+        self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")		
 --------------------------------------------------------------------------------
         self.RearCouple  = self:CreateCouple(Vector(-611,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
@@ -152,6 +152,8 @@ end)
         if math.random() > rand then self.Lamps.broken[i] = math.random() > 0.7 end
     end	
 	
+    self:UpdateLampsColors()		
+	
 end
 
 function ENT:UpdateLampsColors()
@@ -229,7 +231,7 @@ function ENT:TrainSpawnerUpdate()
 	--self:SetNW2Int("tablo_color", ALS)
 	--print(self:GetNW2String("Texture"))
 	
-    self:UpdateLampsColors()
+    self:UpdateLampsColors()		
 	
 end	
 
@@ -326,7 +328,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	Pricep740:SetOwner(self:GetOwner())	
 	Pricep740:DrawShadow(false)		
 	
-    if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end		
+    if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end				
 	
 	self:SetNW2Entity("gmod_pricep_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)
@@ -491,7 +493,7 @@ end
         1, --zfric
         0, --rotonly
         1 --nocollide
-    ) 	 
+    ) 	
 
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)

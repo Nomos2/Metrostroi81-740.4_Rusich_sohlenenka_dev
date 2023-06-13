@@ -2,7 +2,6 @@
 --PRIZMAA (Пустая подкраdoolya)
 --NICIX (Pussy Podkradoolya)
 --Mishanja_Games (! pidkradulka)
---✙enoczyk1✙ (Кошачие подкрадули)
 --𝓥𝓁𝒶𝒹𝒾𝓂𝒾𝓇 𝓛𝒾𝓉𝓋𝒾𝓃𝑜𝓋 (Литиевая подкрадуля)
 -- _Праздник горячей еды_(Питерская Подкрадуля-тян)
 --Nom(Подкрадулеходы Drive)
@@ -29,9 +28,9 @@ return
 #81-740_4_mvm
 
 [ru]
-Entities.gmod_subway_81-740_4_mvm.Name = 81-740.4 (Русич beta)
+Entities.gmod_subway_81-740_4_mvm.Name = 81-740.4 (Русич головной beta)
 Entities.gmod_subway_81-741_4_mvm.Name = 81-741.4 (Русич промежуток beta)
-self.Train.SubwayTrain.Name        = 81-740.4 (Русич beta)
+self.Train.SubwayTrain.Name        = 81-740.4 (Русич головной beta)
 
 #Cameras
 Train.740.CameraCond    = Управление кондиционером, ИГЛА
@@ -216,7 +215,6 @@ Common.740.Ring             	= Передача управления (звоно
 Common.740.EnableBV   			= Включение БВ
 Common.740.PassScheme       	= Включение наддверного табло в салоне
 Common.740.DisableBV 			= Отключение БВ
-Common.740.Ticker				= Включение бегущей строки в салоне
 Common.740.R_Line 				= Включение микрофона машиниста
 Common.740.R_Emer				= Включение экстренной связи
 Common.740.Wiper 				= Включение стеклоочистителя
@@ -375,7 +373,6 @@ Entities.gmod_subway_81-740_4_mvm.Buttons.BackDown.ALSFreqBlock-    	  = @[Commo
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.!DoorsClosed                = @[Common.740.LSD]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.StandToggle                 = @[Common.740.Stand]
-Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.TickerToggle                = @[Common.740.Ticker]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHToggle                   = @[Common.740.KAH]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHkToggle                  = @[Common.740.KAHK]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.ALSToggle                   = @[Common.740.ALS]

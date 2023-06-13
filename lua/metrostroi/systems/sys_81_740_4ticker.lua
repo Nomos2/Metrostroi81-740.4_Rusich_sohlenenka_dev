@@ -25,7 +25,6 @@ end
 
 function TRAIN_SYSTEM:TriggerInput(name,value)
 end
-
 if CLIENT then
     function TRAIN_SYSTEM:ClientInitialize()
     end
@@ -150,9 +149,9 @@ function TRAIN_SYSTEM:CANReceive(source,sourceid,target,targetid,textdata,numdat
 end
 function TRAIN_SYSTEM:Think()
     local Train = self.Train
-    local Power = Train.Panel.TickerPower > 0
-    local Work = Train.Panel.TickerWork > 0 and Metrostroi.TickerAdverts
-    if Power then
+    local Power = Train.Panel.TickerPower>0
+    local Work = Train.Panel.TickerWork>0 and Metrostroi.TickerAdverts
+    if Power and (Work or self.Advert ~= -1) then
         self.AdvertSymbol = self.AdvertSymbol - 90*Train.DeltaTime
         if ((self.AdvertSymbol < -utf8.len(self.CurrentAdvert)*10-20) or self.ShowStation == true) then
             self.AdvertSymbol = 40*(7+math.random(0,3))--40*7

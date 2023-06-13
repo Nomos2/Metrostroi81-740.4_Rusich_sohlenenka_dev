@@ -91,7 +91,7 @@ ENT.ButtonMap["PUU"] = {
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		*/
-        {ID = "PassSchemeToggle",x=147.5+37.83*7.5-8, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "PassSchemeToggle",x=151.5+37.83*7.5-8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl",z=1.85,
            lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="PassSchemeLamp",anim=true},
             var="PassScheme",speed=8, vmin=0, vmax=0.7,
@@ -105,21 +105,21 @@ ENT.ButtonMap["PUU"] = {
         }},
 		*/
 		
-        {ID = "EnableBVSet",x=90+37.83*8, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "EnableBVSet",x=95+37.83*8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=1.85,
             var="EnableBV",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
-        {ID = "DisableBVSet",x=148+37.83*8, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "DisableBVSet",x=156+37.83*8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,
             var="DisableBV",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-		{ID = "TickerToggle",x=576.63-100, y=30.5, radius=15, tooltip = "",model = {
+		{ID = "notused1123",x=490.63, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_yellow.mdl",z=1.85,
-            lamp = {model = "models/metrostroi_train/81-722/lamp_yellow.mdl",var="TickerLamp", z=0.1, anim=true},
-            var="Ticker",speed=8, vmin=0, vmax=0.7,
+            --lamp = {model = "models/metrostroi_train/81-722/lamp_yellow.mdl",var="TickerLamp", z=0.1, anim=true},
+            var="notused1123",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "R_Program2Set",x=579.63+36.5*0, y=30.5, radius=15, tooltip = "",model = {

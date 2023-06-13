@@ -14,9 +14,9 @@ return
 #81-740_4_mvm
 
 [en]
-Entities.gmod_subway_81-740_4_mvm.Name = 81-740.4 (Rusich beta)
+Entities.gmod_subway_81-740_4_mvm.Name = 81-740.4 (Rusich head beta)
 Entities.gmod_subway_81-741_4_mvm.Name = 81-741.4 (Middle Rusich beta)
-self.Train.SubwayTrain.Name        = 81-740.4 (Rusich beta)
+self.Train.SubwayTrain.Name        = 81-740.4 (Rusich head beta)
 
 #Cameras
 Train.740.CameraCond    = Air conditioner, IGLA #
@@ -165,7 +165,7 @@ Common.740.BBER             = Backup power-up of the BBE
 Common.740.BBE              = Enabling BBE
 Common.740.CabLightStrength = Cabin lighting brightness
 Common.740.AppLights        = Hardware compartment lighting
-Common.740.BARSBlock        = Blocking faulty snow leopards
+Common.740.BARSBlock        = Blocking faulty BARS
 Common.740.AppVent          = Ventilation of the hardware compartment
 Common.740.PassLights		= Interior lighting
 Common.740.CabLights		= Cabin lighting
@@ -201,7 +201,6 @@ Common.740.Ring             = Transfer of control (call)
 Common.740.EnableBV   		= Enabling BV
 Common.740.PassScheme       = Turning on the door display in the passenger compartment
 Common.740.DisableBV 		= Disabling the BV
-Common.740.Ticker			= Enabling the ticker in the passenger compartment
 Common.740.R_Line 			= Turning on the driver's microphone
 Common.740.R_Emer			= Enabling emergency communication
 Common.740.Wiper 			= Turning on the windscreen wiper
@@ -360,7 +359,6 @@ Entities.gmod_subway_81-740_4_mvm.Buttons.BackDown.ALSFreqBlock-    	  = @[Commo
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.!DoorsClosed                = @[Common.740.LSD]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.StandToggle                 = @[Common.740.Stand]
-Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.TickerToggle                = @[Common.740.Ticker]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHToggle                   = @[Common.740.KAH]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHkToggle                  = @[Common.740.KAHK]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.ALSToggle                   = @[Common.740.ALS]

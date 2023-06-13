@@ -4,7 +4,7 @@ or Map:find("gm_metro_nsk_line_2_v6")
 or Map:find("gm_metro_kalinin_v2")
 or Map:find("gm_metro_krl_v1")
 or Map:find("gm_dnipro")
-or Map:find("gm_bolshya_kolsewya_line") --таккар
+or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
 or Map:find("gm_metronvl")) then
 	return
@@ -14,9 +14,9 @@ return
 #81-740_4_mvm
 
 [ru]
-Entities.gmod_subway_81-740_4_mvm.Name = 81-740.4 (Русич beta)
+Entities.gmod_subway_81-740_4_mvm.Name = 81-740.4 (Русич глава beta)
 Entities.gmod_subway_81-741_4_mvm.Name = 81-741.4 (Русич празнина beta)
-self.Train.SubwayTrain.Name        = 81-740.4 (Русич beta)
+self.Train.SubwayTrain.Name        = 81-740.4 (Русич глава beta)
 
 #Cameras
 Train.740.CameraCond    = Управление на климатике, ИГЛА
@@ -201,7 +201,6 @@ Common.740.Ring             	= Прехвърляне на контрол (об�
 Common.740.EnableBV   			= Включване на БВ
 Common.740.PassScheme       	= Включване на таблото за врати в кабината
 Common.740.DisableBV 			= Изключване на БВ
-Common.740.Ticker				= Активиране на бягащата линия в кабината
 Common.740.R_Line 				= Включване на микрофона на машиниста
 Common.740.R_Emer				= Активиране на аварийна комуникация
 Common.740.Wiper 				= Включване на чистачката
@@ -360,7 +359,6 @@ Entities.gmod_subway_81-740_4_mvm.Buttons.BackDown.ALSFreqBlock-    	  = @[Commo
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.!DoorsClosed                = @[Common.740.LSD]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.StandToggle                 = @[Common.740.Stand]
-Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.TickerToggle                = @[Common.740.Ticker]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHToggle                   = @[Common.740.KAH]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.KAHkToggle                  = @[Common.740.KAHK]
 Entities.gmod_subway_81-740_4_mvm.Buttons.PUU.ALSToggle                   = @[Common.740.ALS]

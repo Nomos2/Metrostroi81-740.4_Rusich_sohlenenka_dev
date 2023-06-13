@@ -148,7 +148,6 @@ function TRAIN_SYSTEM:Initialize()
     self.TargetController = 0
 
     self.Headlights1 = 0
-	self.TPT = 0
     self.Headlights2 = 0
     self.RedLights = 0
     self.DoorLeft = 0
@@ -167,7 +166,8 @@ function TRAIN_SYSTEM:Initialize()
     self.CabLights = 0
     self.AnnouncerPlaying = 0
 	self.Wiper1 = 0	
-
+	self.TPT = 0
+	
     self.TickerPower = 0
     self.PassSchemePower = 0
     self.TickerWork = 0

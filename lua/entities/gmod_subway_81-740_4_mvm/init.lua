@@ -342,6 +342,8 @@ end
 	
 	self.HeadLightBroken = {}
 	self.RedLightBroken = {}
+	
+    self:UpdateLampsColors()	
 end
 --если на карте нету сигналки включить ВП
 function ENT:NonSupportTrigger()
@@ -417,14 +419,15 @@ function ENT:TrainSpawnerUpdate()
        if BBEs == 1 then
             BBEs = math.ceil(math.random()*2+0.5)
           else BBEs = BBEs-1 end	
-	self:SetNW2Int("BBESound",BBEs)		
-	
-    self:UpdateLampsColors()	
+	self:SetNW2Int("BBESound",BBEs)			
 		
     --рандомизация цвета табло
 	--local ALS = math.random(1, 3)
 	--self:SetNW2Int("tablo_color", ALS)
 	--print(self:GetNW2String("Texture"))	
+	
+    self:UpdateLampsColors()		
+	
 end
 
 function ENT:UpdateLampsColors()

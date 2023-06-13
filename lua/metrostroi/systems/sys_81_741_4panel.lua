@@ -46,7 +46,7 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("SFV33","Relay","Switch",{normally_closed = true,bass=true})
 
     self.AnnouncerPlaying = 0
-
+	
     self.TickerPower = 0
     self.PassSchemePower = 0
     self.TickerWork = 0
@@ -60,7 +60,7 @@ function TRAIN_SYSTEM:Inputs()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return { "AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PCBKPower", }
+    return { "AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PCBKPower"}
 end
 function TRAIN_SYSTEM:TriggerInput(name,value)
 end
