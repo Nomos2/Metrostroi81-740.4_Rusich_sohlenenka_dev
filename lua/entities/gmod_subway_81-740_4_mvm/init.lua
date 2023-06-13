@@ -327,7 +327,7 @@ end
         BARSBlock = true,
         UAVA = true,
         Init = true,
-        ALSFreqBlock = true,		
+        --ALSFreqBlock = true,		
 		R_ASNPOn = true,		
 		--ALSFreqBlock = ALSFreqPlomb,
     }
@@ -347,7 +347,7 @@ end
 end
 --если на карте нету сигналки включить ВП
 function ENT:NonSupportTrigger()
-	self.ALSFreqBlock:TriggerInput("Set",1)
+	--self.ALSFreqBlock:TriggerInput("Set",1)
 	--self.Plombs.ALSFreqBlock = nil
 end
 function ENT:TriggerLightSensor(coil,plate)
@@ -849,14 +849,7 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-	self:SetPackedRatio("ALSFreqBlock",self.ALSFreqBlock.Value/3 or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
+	self:SetPackedRatio("ALSFreqBlock",self.ALSFreqBlock.Value/3) 
     self:SetPackedBool("BBEWork",power and self.BUV.BBE > 0 or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 

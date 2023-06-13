@@ -1087,17 +1087,17 @@ ENT.ButtonMap["BackDown"] = {
         {ID = "!ALSFreqBlock",x=334, y=294, radius=0,tooltip = "", model = {
             model = "models/metrostroi_train/81-720/rc_rotator1.mdl",z=4, ang=180,scale = 0.5,
             getfunc = function(ent) return ent:GetPackedRatio("ALSFreqBlock") end,var="ALSFreqBlock",
-			plomb = {model = "models/metrostroi_train/81/plomb_b.mdl",ang=-90,x=0,y=16,z=-4.8,var="ALSFreqBlockPl", ID="ALSFreqBlockPl",},
+			--plomb = {model = "models/metrostroi_train/81/plomb_b.mdl",ang=-90,x=0,y=16,z=-4.8,var="ALSFreqBlockPl", ID="ALSFreqBlockPl",},
             speed=6, min=0.9,max=0.6,
             sndvol = 1, snd = function(_,val) return val==3 and "switch_batt_on" or val == 0 and "switch_batt_off" or "switch_batt" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
 			vmin=0.9, vmax=0
         }},
 		{ID = "ALSFreqBlock-",x=344-25,y=302-20,w=15,h=22,tooltip="",model={
-			plomb = {var="ALSFreqBlockPl", ID="ALSFreqBlockPl", }
+			--plomb = {var="ALSFreqBlockPl", ID="ALSFreqBlockPl", }
         }},
         {ID = "ALSFreqBlock+",x=344-10,y=302-20,w=15,h=22,tooltip="", model={
-			plomb = {var="ALSFreqBlockPl", ID="ALSFreqBlockPl", }
+			--plomb = {var="ALSFreqBlockPl", ID="ALSFreqBlockPl", }
         }},
     }
 }
@@ -3166,12 +3166,6 @@ end
 
 	local net = LocalPlayer():GetName()
 
-	self:ShowHide("!ALSFreqBlock_pl",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")
-	and not net:find("Dl3ves15"))
-	self:ShowHide("ALSFreqBlock-",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
-	net:find("Dl3ves15"))
-	self:ShowHide("ALSFreqBlock+",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
-	net:find("Dl3ves15"))
 	self:ShowHide("!BARSBlock_pl",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
 	net:find("Dl3ves15"))
 	self:ShowHide("BARSBlock-",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 

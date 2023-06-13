@@ -433,9 +433,9 @@ function ENT:InitializeSystems()
     self:LoadSystem("Panel","81_740_4Panel")
 
     self:LoadSystem("Announcer","81_71_Announcer", "AnnouncementsASNP")
-    self:LoadSystem("ASNP","81_71_ASNP")
+    self:LoadSystem("ASNP","81_74_ASNP")
     self:LoadSystem("RouteInf","81_740_4router")
-    self:LoadSystem("ASNP_VV","81_71_ASNP_VV")
+    self:LoadSystem("ASNP_VV","81_74_ASNP_VV")
 
     self:LoadSystem("Tickers","81_740_4Ticker")
     --self:LoadSystem("Tickers","81_760_Ticker")
