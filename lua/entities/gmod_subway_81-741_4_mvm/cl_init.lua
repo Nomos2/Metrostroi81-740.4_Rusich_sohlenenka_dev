@@ -2050,10 +2050,26 @@ end
         self.VentState[i] = (self.VentState[i] + 10*((self.VentVol[i]/2)^3)*dT)%1
         local vol1 = math.max(0,self.VentVol[i]-1)
         local vol2 = math.max(0,(self.VentVol[i-1] or self.VentVol[i+1])-1)
+		
+		local VentSound = self:GetNW2Int("VentSound",1)	
+		if VentSound==1 then
         self:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end
+		if VentSound==2 then
+        self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end		
+		
+		if VentSound==1 then		
         if IsValid(self.ClientEnts["vent"..i]) then
             self.ClientEnts["vent"..i]:SetPoseParameter("position",self.VentState[i])
-        end
+			end
+		end		
+		
+		if VentSound==2 then	
+		if IsValid(self.ClientEnts["vent1"..i]) then
+            self.ClientEnts["vent1"..i]:SetPoseParameter("position",self.VentState[i])
+			end	
+		end		
     end
 	
     local state = self:GetPackedBool("CompressorWork")
@@ -2100,7 +2116,7 @@ end
     local state = self:GetPackedRatio("RNState")
     self.TISUVol = math.Clamp(self.TISUVol+(state-self.TISUVol)*dT*8,0,1)
 	
-	local AsyncSound = self:GetNW2Int("AsyncSound")
+	local AsyncSound = self:GetNW2Int("AsyncSound",1)
 	if AsyncSound==1 then		
     self:SetSoundState("async1", self.TISUVol/1.5, 1)
 	end
@@ -2120,7 +2136,7 @@ end
     self:SetSoundState("async6", self.TISUVol/1.5, 1)
 	end	
 	
-	local BBEs = self:GetNW2Int("BBESound")	
+	local BBEs = self:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		
     self:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end

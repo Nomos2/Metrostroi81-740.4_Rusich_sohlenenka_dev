@@ -76,8 +76,10 @@ function ENT:InitializeSounds()
     self.SoundPositions["bbe_v3"] = {800,1e9,Vector(400-144,0,-40),0.55} --FIXME: Pos
 	
     for i=1,7 do
-        self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent_loop.wav"}
+        self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop.wav"}
         self.SoundPositions["vent"..i] = {100,1e9,Vector(-113+(i-1)*117,0,30),0.2}
+	    self.SoundNames["vent1"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop_1.wav"}
+        self.SoundPositions["vent1"..i] = {100,1e9,Vector(-113+(i-1)*117,0,30),0.2}	
     end
 
     self.SoundNames["compressor"] = {loop=2,"subway_trains/rusich/compressor/compressor740_start.wav","subway_trains/rusich/compressor/compressor740_loop.wav","subway_trains/rusich/compressor/compressor740_stop.wav"}

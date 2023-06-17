@@ -419,7 +419,13 @@ function ENT:TrainSpawnerUpdate()
        if BBEs == 1 then
             BBEs = math.ceil(math.random()*2+0.5)
           else BBEs = BBEs-1 end	
-	self:SetNW2Int("BBESound",BBEs)			
+	self:SetNW2Int("BBESound",BBEs)		
+
+	local VentSound = self:GetNW2Int("VentSound")	
+       if VentSound == 1 then
+            VentSound = math.ceil(math.random()*1+0.5)
+          else VentSound = VentSound-1 end	
+	self:SetNW2Int("VentSound",VentSound)	
 		
     --рандомизация цвета табло
 	--local ALS = math.random(1, 3)

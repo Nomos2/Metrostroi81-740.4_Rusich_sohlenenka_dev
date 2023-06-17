@@ -3535,10 +3535,26 @@ end
         self.VentState[i] = (self.VentState[i] + 10*((self.VentVol[i]/2)^3)*dT)%1
         local vol1 = math.max(0,self.VentVol[i]-1)
         local vol2 = math.max(0,(self.VentVol[i-1] or self.VentVol[i+1])-1)
+		
+		local VentSound = self:GetNW2Int("VentSound",1)	
+		if VentSound==1 then
         self:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end
+		if VentSound==2 then
+        self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end		
+		
+		if VentSound==1 then		
         if IsValid(self.ClientEnts["vent"..i]) then
             self.ClientEnts["vent"..i]:SetPoseParameter("position",self.VentState[i])
-        end
+			end
+		end		
+		
+		if VentSound==2 then	
+		if IsValid(self.ClientEnts["vent1"..i]) then
+            self.ClientEnts["vent1"..i]:SetPoseParameter("position",self.VentState[i])
+			end	
+		end		
     end
     --local rol10 = math.Clamp(speed/5,0,1)*(1-math.Clamp((speed-50)/8,0,1))
     --local rol70 = math.Clamp((speed-50)/8,0,1)
