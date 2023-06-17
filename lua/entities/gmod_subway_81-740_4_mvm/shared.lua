@@ -538,13 +538,15 @@ ENT.Spawner = {
 	end,
     WagNumTable = {1,2,3,4,5},	
 	
-	{"Announcer","Spawner.740.Announcer","List",Announcer},		
+	{"Announcer","Spawner.740.Announcer","List",Announcer},	
+	{},
 	{"AsyncSound","Spawner.740.AsyncSound","List",{"Spawner.740.AsyncSound1","Spawner.740.AsyncSound2","Spawner.740.AsyncSound3","Spawner.740.AsyncSound4","Spawner.740.AsyncSound5","Spawner.740.AsyncSound.Random"}},	
 	{"RingSound","Spawner.740.RingSound","List",{"Spawner.740.RingSound1","Spawner.740.RingSound2","Spawner.740.RingSound3","Spawner.740.RingSound4","Spawner.740.RingSound.Random"}},	
 	{"ZavodTable","Spawner.740.ZavodTable","List",{"Spawner.740.ZavodTable.Random","Spawner.740.ZavodTable1","Spawner.740.ZavodTable2","Spawner.740.ZavodTable3"}}, 
 	{"BBESound","Spawner.740.BBESound","List",{"Spawner.740.BBESound.Random","Spawner.740.BBESound1","Spawner.740.BBESound2","Spawner.740.BBESound3"}}, 	
 	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType.Random","Spawner.740.MotorType1","Spawner.740.MotorType2","Spawner.740.MotorType3","Spawner.740.MotorType4","Spawner.740.MotorType5"}},	
 	{"VentSound","Spawner.740.VentSound","List",{"Spawner.740.VentSound.Random","Spawner.740.VentSound1","Spawner.740.VentSound2"}}, 	
+	{},
 	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, nil,function(ent,val,rot,i,wagnum,rclk)	
         if rclk then return end
         if ent._SpawnerStarted~=val then
