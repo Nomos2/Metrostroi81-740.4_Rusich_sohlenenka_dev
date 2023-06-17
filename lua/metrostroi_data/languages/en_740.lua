@@ -522,9 +522,6 @@ Entities.gmod_subway_81-741_4_mvm.Buttons.PVZ.SFV33Toggle         = @[Common.740
 Entities.gmod_subway_81-741_4_mvm.Buttons.FrontDoor.FrontDoor       = @[Common.740.FrontDoor]
 Entities.gmod_subway_81-741_4_mvm.Buttons.FrontPneumatic.FrontBrakeLineIsolationToggle    = @[Common.741.FrontBrakeLineIsolationToggle]
 Entities.gmod_subway_81-741_4_mvm.Buttons.FrontPneumatic.FrontTrainLineIsolationToggle    = @[Common.741.FrontTrainLineIsolationToggle]
-Entities.gmod_subway_81-741_4_mvm.Buttons.RearPneumatic.RearTrainLineIsolationToggle      = @[Common.741.RearTrainLineIsolationToggle]
-Entities.gmod_subway_81-741_4_mvm.Buttons.RearPneumatic.RearBrakeLineIsolationToggle      = @[Common.741.RearBrakeLineIsolationToggle]
-
 #Spawner:
 Entities.gmod_subway_81-740_4_mvm.Spawner.Announcer.Name          = @[Common.Spawner.Announcer]
 
