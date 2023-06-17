@@ -63,6 +63,11 @@ Spawner.740.RingSound3    = Type 2
 Spawner.740.RingSound4    = Type 3
 Spawner.740.RingSound5    = Type 4
 
+Spawner.740.VentSound    = Air conditioner noise sound type
+Spawner.740.VentSound.Random   = Random
+Spawner.740.VentSound2    = Type 1
+Spawner.740.VentSound3    = Type 2 
+
 Common.740.CabinDoorLeft2 	= Left door to the driver's cab
 Common.740.CabinDoorRight2	= Right door to the driver's cab
 
@@ -542,6 +547,11 @@ Entities.gmod_subway_81-740_4_mvm.Spawner.BBESound.1 		  	  = @[Spawner.740.BBES
 Entities.gmod_subway_81-740_4_mvm.Spawner.BBESound.2         	  = @[Spawner.740.BBESound2]
 Entities.gmod_subway_81-740_4_mvm.Spawner.BBESound.3           	  = @[Spawner.740.BBESound3]
 Entities.gmod_subway_81-740_4_mvm.Spawner.BBESound.4         	  = @[Spawner.740.BBESound4]
+
+Entities.gmod_subway_81-740_4_mvm.Spawner.VentSound.Name 		  = @[Spawner.740.VentSound] 
+Entities.gmod_subway_81-740_4_mvm.Spawner.VentSound.1 		  	  = @[Spawner.740.VentSound.Random] 
+Entities.gmod_subway_81-740_4_mvm.Spawner.VentSound.2         	  = @[Spawner.740.VentSound2]
+Entities.gmod_subway_81-740_4_mvm.Spawner.VentSound.3             = @[Spawner.740.VentSound3]
 
 Entities.gmod_subway_81-740_4_mvm.Spawner.AsyncSound.Name 		  = @[Spawner.740.AsyncSound] 
 Entities.gmod_subway_81-740_4_mvm.Spawner.AsyncSound.1 		  	  = @[Spawner.740.AsyncSound.Random] 
