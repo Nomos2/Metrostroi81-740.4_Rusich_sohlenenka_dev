@@ -131,39 +131,32 @@ function ENT:InitializeSounds()
     self.SoundNames["pak_on"] = "subway_trains/717/switches/rc_on.mp3"
     self.SoundNames["pak_off"] = "subway_trains/717/switches/rc_off.mp3"
 	
-    self.SoundNames["door_cab_open"] = {"subway_trains/rusich/door/door_torec_open.mp3","subway_trains/rusich/door/door_torec_open2.mp3"}
-    self.SoundNames["door_cab_close"] = {"subway_trains/rusich/door/door_torec_close.mp3","subway_trains/rusich/door/door_torec_close2.mp3"}	
+    self.SoundNames["door_cab_open"] = 	"subway_trains/rusich/door/torec/door_torec_open_end.wav"
+    self.SoundNames["door_cab_close"] = "subway_trains/rusich/door/torec/door_close_1.mp3"	
 
 	local loop = math.random (1,2)
-	local start = math.random (1,4)		
-	local closed = math.random (3,5)		
+	local start = math.random (1,5)		
+	local closed = math.random (3,5)	
+	local open = math.random (1,3)		
     for i=0,2 do
         for k=0,1 do
             self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop_"..loop..".wav",loop=true}
             self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPosition(i,k),1}
             self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start_"..start..".wav"}
             self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPosition(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open1.wav"}
+            self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open_end"..open..".wav"}
             self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPosition(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPosition(i,k),0.5}
-            self.SoundNames["door"..i.."x"..k.."c2"] = {"subway_trains/rusich/doors/door_close2.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c2"] = {200,1e9,GetDoorPosition(i,k),0.5}
-            self.SoundNames["door"..i.."x"..k.."c3"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
-            self.SoundPositions["door"..i.."x"..k.."c3"] = {200,1e9,GetDoorPosition(i,k),0.5}
+            self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPosition(i,k),0.5}	
 			
             self.SoundNames["door"..i.."x"..k.."r"] = {"subway_trains/rusich/doors/door_loop_"..loop..".wav",loop=true}
             self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPositionRear(i,k),1}
             self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start_"..start..".wav"}
             self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPositionRear(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open1.wav"}
+            self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open_end"..open..".wav"}
             self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPositionRear(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close1.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPositionRear(i,k),0.5}
-            self.SoundNames["door"..i.."x"..k.."c2"] = {"subway_trains/rusich/doors/door_close2.wav"}
-            self.SoundPositions["door"..i.."x"..k.."c2"] = {200,1e9,GetDoorPositionRear(i,k),0.5}
-            self.SoundNames["door"..i.."x"..k.."c3"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
-            self.SoundPositions["door"..i.."x"..k.."c3"] = {200,1e9,GetDoorPositionRear(i,k),0.5}		
+            self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPositionRear(i,k),0.5}		
         end
     end
 

@@ -813,7 +813,8 @@ function ENT:Think()
     end
 
 	local drv = self:GetDriver()		
-    self:SetPackedRatio("Speed", self.Speed or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetPackedRatio("Speed", self.Speed 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -821,7 +822,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-    self:SetNW2Int("Wrench",self.WrenchMode	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetNW2Int("Wrench",self.WrenchMode	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -841,7 +843,8 @@ function ENT:Think()
     self:SetPackedRatio("VentCondMode",self.VentCondMode.Value/3)
     self:SetPackedRatio("VentStrengthMode",self.VentStrengthMode.Value/3)
     --self:SetPackedRatio("VentHeatMode",self.VentHeatMode.Value/2)
-    self:SetPackedRatio("BARSBlock",self.BARSBlock.Value/3 or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetPackedRatio("BARSBlock",self.BARSBlock.Value/3 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -850,7 +853,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
 	self:SetPackedRatio("ALSFreqBlock",self.ALSFreqBlock.Value/3) 
-    self:SetPackedBool("BBEWork",power and self.BUV.BBE > 0 or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetPackedBool("BBEWork",power and self.BUV.BBE > 0 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -859,7 +863,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
     --self:SetPackedBool("WorkBeep",power)
-	self:SetPackedBool("BUKPRing",power and self.BUKP.State == 5 and self.BUKP.ProstRinging or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	self:SetPackedBool("BUKPRing",power and self.BUKP.State == 5 and self.BUKP.ProstRinging 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -867,7 +872,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-	self:SetPackedBool("CAMSRing",power and self.CAMS.State == 0 and self.CAMS.ButtonRing 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	self:SetPackedBool("CAMSRing",power and self.CAMS.State == 0 and self.CAMS.ButtonRing 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -881,7 +887,15 @@ function ENT:Think()
     self:SetPackedBool("Headlights2Enabled",self.Panel.Headlights2 > 0)
     local headlights = self.Panel.Headlights1*0.5+self.Panel.Headlights2*0.5	
     local redlights = self.Panel.RedLights>0
-    self:SetPackedBool("RedLights",redlights)
+    self:SetPackedBool("RedLights",redlights 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429")
 		
     self:SetLightPower(1,not self.HeadLightBroken[3] and self.Panel.Headlights2> 0,1)
     self:SetLightPower(2,not self.HeadLightBroken[1] and self.Panel.Headlights1> 0,1)
@@ -898,8 +912,24 @@ function ENT:Think()
 	--self:SetLightPower(22,cablights)
     local cablight = self.Panel.CabLights
     self:SetLightPower(10,cablight > 0 ,cablight)
-    self:SetPackedBool("CabinEnabledEmer", cablight > 0)
-    self:SetPackedBool("CabinEnabledFull", cablight > 0.5)
+    self:SetPackedBool("CabinEnabledEmer", cablight > 0 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429")
+    self:SetPackedBool("CabinEnabledFull", cablight > 0.5 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429")
     local passlight = power and (self.BUV.MainLights and 1 or self.SFV20.Value > 0.5 and 0.4) or 0
 	
 	self:SetLightPower(11,passlight > 0, passlight and mul/40)
@@ -918,7 +948,8 @@ function ENT:Think()
         [16.1] = { "dynamiclight",    Vector( -310, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 } 	
     }	
 	
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(14,passlight > 0, passlight	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(14,passlight > 0, passlight	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -926,7 +957,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(15,passlight > 0.5, passlight	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(15,passlight > 0.5, passlight	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -934,24 +966,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(16,passlight > 0, passlight	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-	
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(14.1,passlight > 0, passlight 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(16.1,passlight > 0, passlight	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(16,passlight > 0, passlight	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -960,7 +976,27 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
 	
-    self:SetPackedRatio("SalonLighting",passlight 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(14.1,passlight > 0, passlight 	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
+    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(16.1,passlight > 0, passlight	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
+	
+    self:SetPackedRatio("SalonLighting",passlight
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -969,7 +1005,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
 	--print(passlight)
-    self:SetPackedRatio("TrainLine", self.Pneumatic.BrakeLinePressure/16.0	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetPackedRatio("TrainLine", self.Pneumatic.BrakeLinePressure/16.0	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -977,7 +1014,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-    self:SetPackedRatio("BrakeLine", self.Pneumatic.TrainLinePressure/16.0 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+    self:SetPackedRatio("BrakeLine", self.Pneumatic.TrainLinePressure/16.0 	
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -985,7 +1023,8 @@ function ENT:Think()
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-	self:SetPackedRatio("BrakeCylinder", math.min(3.3,self.Pneumatic.BrakeCylinderPressure)/6.0 or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
+	self:SetPackedRatio("BrakeCylinder", math.min(3.3,self.Pneumatic.BrakeCylinderPressure)/6.0 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
@@ -996,17 +1035,10 @@ function ENT:Think()
 	self:SetNW2Int("RouteNumber",self.ASNP.RouteNumber)
 	--self.RouteNumber = self.ASNP.RouteNumber
 	--print(self.RouteNumber)
-    self:SetPackedRatio("BIAccel",0 or power and self.BARS.BIAccel or 0 	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:696639901" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:502331857" 	
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:512167886" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:198620581" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:193627628" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:203037750" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:197691048" 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:1:40634429") 
-	
+    self:SetPackedRatio("BIAccel",0 or power and self.BARS.BIAccel or 0) 
     self:SetNW2Int("BISpeed",power and self.Speed or -1)--CurTime()%5*20
-    self:SetNW2Bool("BISpeedLimitBlink",power and self.BARS.BINoFreq > 0)
+    self:SetNW2Bool("BISpeedLimitBlink",power and self.BARS.BINoFreq > 0 
+	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:193084724")
     self:SetNW2Int("BISpeedLimit",power and self.BARS.SpeedLimit or 100)
     self:SetNW2Int("BISpeedLimitNext",power and self.BARS.NextLimit or 100)
     self:SetNW2Bool("BIForward",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.Speed > -0.2)

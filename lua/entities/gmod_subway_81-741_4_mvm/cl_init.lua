@@ -81,7 +81,8 @@ ENT.ButtonMap["Battery"] = {
         {ID = "BatteryToggle",x=0, y=0, w=30,h=30   , tooltip = "", model = {
             model = "models/metrostroi_train/81-717/battery_enabler.mdl",
             var="Battery",speed=0.5,vmin=1,vmax=0.8,
-            sndvol = 0.8, snd = function(val) return val and "pak_on" or "pak_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
+            sndvol = 0.8, snd = function(val) return val and "pak_on" or "pak_off" end,
+			sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
     }
 }
@@ -95,7 +96,7 @@ ENT.ButtonMap["FrontDoor"] = {
     buttons = {
         {ID = "FrontDoor",x=0,y=0,w=642,h=2000, tooltip="", model = {
             var="FrontDoor",sndid="door_cab_f",
-            sndvol = 1, snd = function(val) return val and "door_cab_open" or "door_cab_close" end,
+            sndvol = 1, snd = function(val) return val and "door_cab_open" or "door_cab_close" end,	 
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,180,0),
         }},
     }
@@ -515,22 +516,6 @@ ENT.ClientProps["Naddver_off_left"] = {
 	scale = 1,
 	hide = 2, 	
 }
---Задняя часть
-ENT.ButtonMap["RearPneumatic"] = {
-    pos = Vector(-661,35,-43),
-    ang = Angle(180,90,270),
-    width = 700,
-    height = 100,
-    scale = 0.1,
-    hideseat=0.2,
-    hide=true,
-    screenHide = true,
-
-    buttons = {
-        {ID = "RearTrainLineIsolationToggle",x=400, y=0, w=300, h=100, tooltip=""},
-        {ID = "RearBrakeLineIsolationToggle",x=000, y=0, w=300, h=100, tooltip=""},
-    }
-}
 --Задняя часть наддверок
 --[[for i=1,29 do
 ENT.ClientProps["led_l_f2_rear"..i] = {
@@ -700,7 +685,7 @@ end]]
 --------------------------------------------------------------------------------
 local function GetDoorPosition(b,k,j)
 	if j == 0 
-	then return Vector(591.9 - 35.0*k     - 232.1*b,-67.5*(1-2*k),4)
+	then return Vector(591.9 - 35.15*k     - 232.1*b,-67.5*(1-2*k),4)
 	else return Vector(592 - 35.0*(1-k) - 232.1*b,-66*(1-2*k),4)
 	end
 end
@@ -1521,6 +1506,35 @@ Pricep740.ClientProps["door_cab_b"] = {
 	scale = 1,
 	hide = 2,
 }
+Pricep740.ButtonMap["RearPneumatic"] = {
+    pos = Vector(-206-131,45,-46),
+    ang = Angle(180,90,270),
+    width = 900,
+    height = 100,
+    scale = 0.1,
+    hideseat=0.2,
+    hide=true,
+	screenHide = true,
+	
+    buttons = {
+		{ID = "RearTrainLineIsolationToggle",x=500, y=0, w=400, h=100, tooltip=Metrostroi.GetPhrase ("Common.740.RearTrainLineIsolationToggle")},
+		{ID = "RearBrakeLineIsolationToggle",x=0, y=0, w=400, h=100, tooltip=Metrostroi.GetPhrase ("Common.740.RearBrakeLineIsolationToggle")},
+    }
+}	
+Pricep740.ButtonMap["RearDoor"] = {
+    pos = Vector(-332,-15,55), ---334.8,14.5,9
+    ang = Angle(0,90,90),
+    width = 642,
+    height = 2000,
+    scale = 0.1/2, 	
+    buttons = {
+        {ID = "RearDoor",x=0,y=0,w=642,h=2000, tooltip=Metrostroi.GetPhrase("Common.741.RearDoor"), model = {
+            var="RearDoor",sndid="door_cab_t",
+            sndvol = 1, snd = function(val) return val and "door_cab_open" or "door_cab_close" end,	 
+            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
+        }},   
+	}	
+}
 for m=0,3 do	
 Pricep740.ClientProps["TrainNumberL"..m] = {
         model = "models/metrostroi_train/common/bort_numbers.mdl",
@@ -1575,20 +1589,6 @@ for b=0,2 do
 			scale = 1.001,					 
 			hide = 2,   
 }
-Pricep740.ButtonMap["RearDoor"] = {
-    pos = Vector(-332,-15,55), ---334.8,14.5,9
-    ang = Angle(0,90,90),
-    width = 642,
-    height = 2000,
-    scale = 0.1/2, 	
-    buttons = {
-        {ID = "RearDoor",x=0,y=0,w=642,h=2000, tooltip=Metrostroi.GetPhrase("Common.741.RearDoor"), model = {
-            var="RearDoor",sndid="door_cab_t",
-            sndvol = 1, snd = function(val) return val and "cab_door_open" or "cab_door_close" end,
-            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
-        }},   
-	}	
-}
 Pricep740.ButtonMap["Tickers_rear"] = {
 		pos = Vector(286.9,27,66.3), --446 -- 14 -- -0,5
 		ang = Angle(0,-90,90),
@@ -1598,21 +1598,6 @@ Pricep740.ButtonMap["Tickers_rear"] = {
 		hide=true,
 		hideseat=1,		
 }
-Pricep740.ButtonMap["RearPneumatic"] = {
-    pos = Vector(-206-131,45,-46),
-    ang = Angle(180,90,270),
-    width = 900,
-    height = 100,
-    scale = 0.1,
-    hideseat=0.2,
-    hide=true,
-	screenHide = true,
-	
-    buttons = {
-		{ID = "RearTrainLineIsolationToggle",x=500, y=0, w=400, h=100, tooltip=Metrostroi.GetPhrase ("Common.740.RearTrainLineIsolationToggle")},
-		{ID = "RearBrakeLineIsolationToggle",x=0, y=0, w=400, h=100, tooltip=Metrostroi.GetPhrase ("Common.740.RearBrakeLineIsolationToggle")},
-    }
-}	
 end 
 end
 end
@@ -2005,11 +1990,10 @@ end
                 if doorstate and state < 1 or not doorstate and state > 0 then
 					if doorstate then self:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))
                 else
-                    if state > 0 then
+					if state > 0 then
                         self:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))
                     else
-                        local sound = math.random(1,3)
-                        self:PlayOnce(sid.."c"..sound,"",1,math.Rand(0.9,1.3))
+                        self:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))
                     end
                 end
                 self.DoorStates[id] = (state ~= 1 and state ~= 0)
@@ -2032,20 +2016,20 @@ end
 	end
 	
     local door_f = self:GetPackedBool("FrontDoor")
-    local door_t = Pricep740:GetPackedBool("RearDoor")	
     local door_cab_f = self:Animate("door_cab_f",door_f and 0.99 or -0.05, 0, 0.5, 4.5, 0.55)
-    local door_cab_b = Pricep740:Animate("door_cab_b",door_t and 0.99 or -0.05, 0, 0.55, 4.5, 0.55)	
-
-    local door1s = (door_cab_f > 0 or door_f)
+	local door1s = (door_cab_f > 0 or door_f)
     if self.Door1 ~= door1s then
         self.Door1 = door1s
         self:PlayOnce("FrontDoor","bass",door1s and 1 or 0)
     end
-    local door2s = (door_cab_b > 0 or door_t)
-    if Pricep740.Door2 ~= door2s then
-        Pricep740.Door2 = door2s
-        Pricep740:PlayOnce("RearDoor","bass",door2s and 1 or 0)
-    end	
+	
+	local door_cab_t = Pricep740:GetPackedBool("RearDoor")	
+	local door_cab_b = Pricep740:Animate("door_cab_b",door_cab_t and 0.99 or -0.05, 0, 0.5, 4.5, 0.35) 	
+	local door4s = (door_cab_b > 0 or door_cab_t)
+    if self.Door2 ~= door4s then
+        self.Door2 = door4s
+        self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
+    end		
 
     local speed = self:GetPackedRatio("Speed", 0)
 

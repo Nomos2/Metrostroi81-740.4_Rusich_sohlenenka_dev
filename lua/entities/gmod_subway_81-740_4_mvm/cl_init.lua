@@ -692,32 +692,32 @@ ENT.ButtonMap["CAMSButtons"] = {
     buttons = {
         {ID = "CAMS7Set",x=39, y=26, w=20,h=20, tooltip = "",model = {
             model = "models/metrostroi_train/81-740/cabine/pult/buttons/button_lmini.mdl",skin=3,z=0.7,
-			var="CAMS7",speed=10, vmin=0, vmax=0.7,
+			var="CAMS7",speed=10, vmin=0, vmax=0.5,
 			sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "CAMS9Set",x=9, y=41, w=20,h=20, tooltip = "",model = { 
             model = "models/metrostroi_train/81-740/cabine/pult/buttons/button_lmini.mdl",skin=3,z=0.9,
-			var="CAMS9",speed=10, vmin=0, vmax=0.7,
+			var="CAMS9",speed=10, vmin=0, vmax=0.5,
 			sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "CAMS5Set",x=9, y=68, w=20,h=20, tooltip = "",model = { 
             model = "models/metrostroi_train/81-740/cabine/pult/buttons/button_lmini.mdl",skin=3,z=0.7,
-			var="CAMS5",speed=10, vmin=0, vmax=0.7,
+			var="CAMS5",speed=10, vmin=0, vmax=0.5,
 			sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "CAMS10Set",x=70, y=41, w=20,h=20, tooltip = "",model = { 
             model = "models/metrostroi_train/81-740/cabine/pult/buttons/button_lmini.mdl",skin=3,z=0.7,
-			var="CAMS10",speed=10, vmin=0, vmax=0.7,
+			var="CAMS10",speed=10, vmin=0, vmax=0.5,
 			sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "CAMS6Set",x=70, y=68, w=20,h=20, tooltip = "",model = {
             model = "models/metrostroi_train/81-740/cabine/pult/buttons/button_lmini.mdl",skin=3,z=0.7,
-			var="CAMS6",speed=10, vmin=0, vmax=0.7,
+			var="CAMS6",speed=10, vmin=0, vmax=0.5,
 			sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "CAMS8Set",x=39, y=86, w=20,h=20, tooltip = "",model = {
             model = "models/metrostroi_train/81-740/cabine/pult/buttons/button_lmini.mdl",skin=3,z=0.7,
-			var="CAMS8",speed=10, vmin=0, vmax=0.7,
+			var="CAMS8",speed=10, vmin=0, vmax=0.5,
 			sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
     }
@@ -3166,32 +3166,34 @@ end
 
 	local net = LocalPlayer():GetName()
 
-	self:ShowHide("!BARSBlock_pl",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
+	self:ShowHide("!BARSBlock_pl",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
 	net:find("Dl3ves15"))
-	self:ShowHide("BARSBlock-",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
+	self:ShowHide("BARSBlock-",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
 	net:find("Dl3ves15"))
-	self:ShowHide("BARSBlock+",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
+	self:ShowHide("BARSBlock+",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
 	net:find("Dl3ves15"))
-	self:ShowHide("Gerb_msk",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net:
+	self:ShowHide("Gerb_msk",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net:
 	find("Dl3ves15"))	
-	self:ShowHide("Gerb_msk_right",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")and not 
+	self:ShowHide("Gerb_msk_right",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")and not 
 	net:find("Dl3ves15"))	
-	self:ShowHide("Naddver_off",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
+	self:ShowHide("Naddver_off",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
 	net:find("Dl3ves15"))
-	self:ShowHide("ASNP_test",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
+	self:ShowHide("ASNP_test",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
 	:find("Dl3ves15"))	
+	self:ShowHide("Wiper_760",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
+	:find("Dl3ves15"))		
 	
-	self:HidePanel("ASNPScreen",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("ASNP",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
-	self:HidePanel("IGLA_C",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("IGLAButtons_C",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
-	self:HidePanel("Vityaz",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("VityazButtons",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("CAMS",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
+	self:HidePanel("ASNPScreen",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
+	self:HidePanel("ASNP",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
+	self:HidePanel("IGLA_C",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
+	self:HidePanel("IGLAButtons_C",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
+	self:HidePanel("Vityaz",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
+	self:HidePanel("VityazButtons",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
+	self:HidePanel("CAMS",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
 	
-	Pricep740:HidePanel("Tickers_rear",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))		
-	Pricep740:ShowHide("Naddver_off_740",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")
-	and not net:find("Dl3ves15"))	
+	Pricep740:HidePanel("Tickers_rear",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
+	Pricep740:ShowHide("Naddver_off_740",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") 
+	and not net:find("jack.sever1") and not net:find("Dl3ves15"))	
 	
 	local cab_lamp = self:Animate("cab_lamp",self:GetPackedBool("CabinEnabledFull") and 1 or self:GetPackedBool("CabinEnabledEmer") and 0.5 or 0,0,1,5,false)
     self:ShowHideSmooth("cab_emer",cab_lamp)
@@ -3393,11 +3395,10 @@ end
                 if doorstate and state < 1 or not doorstate and state > 0 then
 					if doorstate then self:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))
                 else
-                    if state > 0 then
+					if state > 0 then
                         self:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))
                     else
-                        local sound = math.random(1,3)
-                        self:PlayOnce(sid.."c"..sound,"",1,math.Rand(0.9,1.3))
+                        self:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))
                     end
                 end
                 self.DoorStates[id] = (state ~= 1 and state ~= 0)
@@ -3496,7 +3497,7 @@ end
     self.EmergencyValveRamp = math.Clamp(self.EmergencyValveRamp + (emergencyValve-self.EmergencyValveRamp)*dT*16,0,1)
     self:SetSoundState("emer_brake",self.EmergencyValveRamp,1.0)
 
-	local RingSound = self:GetNW2Int("RingSound")
+	local RingSound = self:GetNW2Int("RingSound",1)
 	
     local state = self:GetPackedBool("RingEnabled")
 	if RingSound==1 then		
@@ -3594,7 +3595,7 @@ end
     local state = self:GetPackedRatio("RNState")
     self.TISUVol = math.Clamp(self.TISUVol+(state-self.TISUVol)*dT*8,0,1)
 	
-	local AsyncSound = self:GetNW2Int("AsyncSound")
+	local AsyncSound = self:GetNW2Int("AsyncSound",1)
 	if AsyncSound==1 then		
     self:SetSoundState("async1", self.TISUVol/1.5, 1)
 	end
@@ -3614,7 +3615,7 @@ end
     self:SetSoundState("async6", self.TISUVol/1.5, 1)
 	end		
 	
-	local BBEs = self:GetNW2Int("BBESound")	
+	local BBEs = self:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		
     self:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end
