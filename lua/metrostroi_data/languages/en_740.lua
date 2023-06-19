@@ -1,8 +1,8 @@
-local Map = game.GetMap() 
-if (Map:find("gm_metro_minsk_1984") 
-or Map:find("gm_metro_nsk_line_2_v6")
-or Map:find("gm_metro_kalinin_v2")
-or Map:find("gm_metro_krl_v1")
+local Map = game.GetMap():lower() or ""
+if(Map:find("gm_metro_minsk_1984") 
+or Map:find("gm_metro_nsk_line_2")
+or Map:find("gm_metro_kalinin")
+or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
@@ -468,8 +468,6 @@ Entities.gmod_subway_81-740_4_mvm.Buttons.FrontPneumatic.FrontTrainLineIsolation
 
 Entities.gmod_subway_81-741_4_mvm.Buttons.FrontPneumatic.FrontBrakeLineIsolationToggle    = @[Common.741.FrontBrakeLineIsolationToggle]
 Entities.gmod_subway_81-741_4_mvm.Buttons.FrontPneumatic.FrontTrainLineIsolationToggle    = @[Common.741.FrontTrainLineIsolationToggle]
-Entities.gmod_subway_81-741_4_mvm.Buttons.RearPneumatic.RearBrakeLineIsolationToggle      = @[Common.741.RearBrakeLineIsolationToggle]
-Entities.gmod_subway_81-741_4_mvm.Buttons.RearPneumatic.RearTrainLineIsolationToggle      = @[Common.741.RearTrainLineIsolationToggle]
 
 Entities.gmod_subway_81-740_4_mvm.Buttons.CabinDoorR.CabinDoorRight       = @[Common.740.CabinDoorRight]
 Entities.gmod_subway_81-740_4_mvm.Buttons.CabinDoorL.CabinDoorLeft        = @[Common.740.CabinDoorLeft]

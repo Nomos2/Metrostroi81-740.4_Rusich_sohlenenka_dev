@@ -1,8 +1,8 @@
-local Map = game.GetMap() 
-if (Map:find("gm_metro_minsk_1984") 
-or Map:find("gm_metro_nsk_line_2_v6")
-or Map:find("gm_metro_kalinin_v2")
-or Map:find("gm_metro_krl_v1")
+local Map = game.GetMap():lower() or ""
+if(Map:find("gm_metro_minsk_1984") 
+or Map:find("gm_metro_nsk_line_2")
+or Map:find("gm_metro_kalinin")
+or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
@@ -31,11 +31,11 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))	
 
-    self.NormalMass = 20000
+    --self.NormalMass = 20000
     self:DrawShadow(true)	
 
     -- Create seat entities
-	self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-37),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
+	self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
 
     -- Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
@@ -392,30 +392,33 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	)	
 	      
 	if 
-	Map:find("gm_metro_pink_line_redux_v1") or
-	Map:find("gm_jar_pll_redux_v1") or
-	Map:find("gm_metro_crossline_r199h") or	
-	Map:find("gm_metro_crossline_n4a") or	
-	Map:find("gm_metro_crossline_c4") or		
-	Map:find("gm_metro_crossline_m12") or	
-	Map:find("gm_metro_crossline_n3") or
-	Map:find("gm_metro_mosldl_v1") or	
-	Map:find("gm_metro_mosldl_v1m") or	
-	Map:find("gm_smr_1987") or			
-	Map:find("gm_jar_pll_redux_v1_fs") then
-        constraint.Axis(
+	Map:find("gm_metro_pink_line_redux") or
+	Map:find("gm_jar_pll_redux") or
+	Map:find("gm_metro_crossline") or	
+	Map:find("gm_metro_mosldl") or	
+	Map:find("gm_smr_1987") then
+        constraint.AdvBallsocket(
+		Pricep740,	
 		self.MiddleBogey,
-		Pricep740,
-		0,
-		0,
-        Vector(0,0,0),
-		Vector(0,0,0),
-        0,
-		0,
-		0,
-		1,
-		Vector(0,0,1),
-		false)
+		0, --bone
+		0, --bone		
+		Vector(310,0.0),
+		Vector(-310,0,0),		
+		0, --forcelimit
+		0, --torquelimit
+		0, --xmin
+		0, --ymin
+		-180, --zmin
+		0, --xmax
+		0, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1,--nocollide
+		false
+	)
 	else
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
@@ -438,7 +441,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		0.1, --yfric
 		0, --zfric
 		0, --rotonly
-		1--nocollide
+		1,--nocollide
+		false
 	)
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
@@ -461,7 +465,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		0.1, --yfric
 		0, --zfric
 		0, --rotonly
-		1--nocollide
+		1,--nocollide
+		false
 	)
 end	
         constraint.Axis(
