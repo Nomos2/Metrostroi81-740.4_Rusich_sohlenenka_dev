@@ -1,6 +1,6 @@
 local Map = game.GetMap():lower() or ""
-if(Map:find("gm_metro_minsk_1984") 
-or Map:find("gm_metro_nsk_line_2")
+if(Map:find("gm_metro_minsk") 
+or Map:find("gm_metro_nsk_line")
 or Map:find("gm_metro_kalinin")
 or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
@@ -1393,7 +1393,7 @@ if Metrostroi.Version >= 1537278077 then
 end	
 
 --Генерация пропов для задней секции.
-local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 if IsValid(Pricep740) then
 if not Pricep740.ButtonMap then
 Pricep740.ButtonMap = {}
@@ -1770,10 +1770,10 @@ end
             while #self.PassengerEntsRearCustom < self:GetNW2Float("PassengerCount") do
                 local min,max = self:GetStandingAreaRear()
                 local pos = min + Vector((max.x-min.x)*math.random(),(max.y-min.y)*math.random(),(max.z-min.z)*math.random())
-                ent:SetLocalPos(gmod_pricep_kuzov:LocalToWorld(pos))--ent:SetLocalPos(self:LocalToWorld(pos)) 
+                ent:SetLocalPos(gmod_subway_kuzov:LocalToWorld(pos))--ent:SetLocalPos(self:LocalToWorld(pos)) 
 				ent:ResetSequence(table.Random(model:find("female",1,true) and female_sequences or male_sequences))				
-                ent:SetAngles(gmod_pricep_kuzov:GetAngles()+Angle(0,180,0))
-                ent:SetParent(gmod_pricep_kuzov)				
+                ent:SetAngles(gmod_subway_kuzov:GetAngles()+Angle(0,180,0))
+                ent:SetParent(gmod_subway_kuzov)				
                 table.insert(self.PassengerPositionsCustom,pos)
                 table.insert(self.PassengerEntsRearCustom,ent)
 				end
@@ -2166,7 +2166,7 @@ function ENT:DrawPost(special)
         surface.SetDrawColor(255,255,255)
         surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
     end)
-    local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+    local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 	if Pricep740.ButtonMap then	
 	self.RTMaterial:SetTexture("$basetexture", self.Tickers)		
     Pricep740:DrawOnPanel("Tickers_rear",function(...)

@@ -1,6 +1,6 @@
 local Map = game.GetMap():lower() or ""
-if(Map:find("gm_metro_minsk_1984") 
-or Map:find("gm_metro_nsk_line_2")
+if(Map:find("gm_metro_minsk") 
+or Map:find("gm_metro_nsk_line")
 or Map:find("gm_metro_kalinin")
 or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
@@ -313,19 +313,19 @@ function ENT:SpawnFunction(ply, tr,className,rotate)
 	return ent
 end	
 
-function CanConstrain( gmod_pricep_kuzov, self )
+function CanConstrain( gmod_subway_kuzov, self )
 
-	if ( !gmod_pricep_kuzov ) then return false end
+	if ( !gmod_subway_kuzov ) then return false end
 	if ( !isnumber( self ) ) then return false end
-	if ( !gmod_pricep_kuzov:IsWorld() && !gmod_pricep_kuzov:IsValid() ) then return false end
-	if ( !IsValid( gmod_pricep_kuzov:GetPhysicsObjectNum( self ) ) ) then return false end
+	if ( !gmod_subway_kuzov:IsWorld() && !gmod_subway_kuzov:IsValid() ) then return false end
+	if ( !IsValid( gmod_subway_kuzov:GetPhysicsObjectNum( self ) ) ) then return false end
 
 	return true
 
 end
 
 function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
-	local Pricep740 = ents.Create("gmod_pricep_kuzov")--ents.Create("base_entity")
+	local Pricep740 = ents.Create("gmod_subway_kuzov")--ents.Create("base_entity")
 	Pricep740:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl")		
     if not IsValid(Pricep740) or not IsValid(self) then return end	
 	Pricep740:SetPos(self:LocalToWorld(pos))
@@ -336,7 +336,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	
     if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end				
 	
-	self:SetNW2Entity("gmod_pricep_kuzov",Pricep740)
+	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)
     table.insert(Pricep740.TrainEntities,self)		
 	
@@ -681,7 +681,7 @@ function ENT:Think()
     local train = self.HeadTrain	
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62 --Батарея
-    local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+    local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     if not IsValid(Pricep740) then return end	
 	Pricep740.SyncTable = {	"RearBrakeLineIsolation","RearTrainLineIsolation"}		
     --print(self,self.BPTI.T,self.BPTI.State)
@@ -779,9 +779,9 @@ end
         [20] = { "dynamiclight",    Vector( -290, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
     }		
 	
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(18,passlight > 0, passlight and mul/40)
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(19,passlight > 0.5, passlight and mul/40)
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(20,passlight > 0, passlight and mul/40)
+	self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(18,passlight > 0, passlight and mul/40)
+	self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(19,passlight > 0.5, passlight and mul/40)
+    self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(20,passlight > 0, passlight and mul/40)
 	
     self:SetPackedRatio("SalonLighting",passlight)
     --local mul = self.SF45.Value > 0.5 and self.BUV.MainLights and 1 or self.SF46.Value > 0.5 and 0.5 or 0

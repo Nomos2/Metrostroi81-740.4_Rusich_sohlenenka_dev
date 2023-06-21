@@ -1,6 +1,6 @@
 ﻿local Map = game.GetMap():lower() or ""
-if(Map:find("gm_metro_minsk_1984") 
-or Map:find("gm_metro_nsk_line_2")
+if(Map:find("gm_metro_minsk") 
+or Map:find("gm_metro_nsk_line")
 or Map:find("gm_metro_kalinin")
 or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
@@ -1791,8 +1791,8 @@ ENT.ClientProps["led_l_f_rear"..i] = {
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_f_rear"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f_rear"..i].ang)
     end,      
@@ -1805,8 +1805,8 @@ ENT.ClientProps["led_l_f_rear_ob"..i] = {
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_f_rear"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f_rear"..i].ang)
     end,      
@@ -1819,8 +1819,8 @@ ENT.ClientProps["led_l_f2_rear"..i] = { --3 дверь задняя секция
         skin=6,
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_f2_rear"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f2_rear"..i	].ang)
     end,      
@@ -1832,8 +1832,8 @@ ENT.ClientProps["led_l_f2_rear_ob"..i] = {
         skin=6,
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_f2_rear"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f2_rear"..i	].ang)
     end,      
@@ -1846,8 +1846,8 @@ ENT.ClientProps["led_l_zad1_l"..i] = { --1 дверь задняя секция
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad1_l"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad1_l"..i	].ang)
     end,      
@@ -1860,8 +1860,8 @@ ENT.ClientProps["led_l_zad1_l_ob"..i] = {
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad1_l"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad1_l"..i	].ang)
     end,      
@@ -1874,8 +1874,8 @@ ENT.ClientProps["led_l_zad3_l"..i] = { --3 дверь задняя секция 
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad3_l"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad3_l"..i	].ang)
     end,      
@@ -1888,8 +1888,8 @@ ENT.ClientProps["led_l_zad3_l_ob"..i] = {
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad3_l"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad3_l"..i	].ang)
     end,      
@@ -1905,8 +1905,8 @@ ENT.ClientProps["led_l_zad2_l"..i] = { --2 дверь лево задняя се
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad2_l"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad2_l"..i	].ang)
     end,      
@@ -1919,8 +1919,8 @@ ENT.ClientProps["led_l_zad2_l_ob"..i] = {
 		scale = 1.01,		
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad2_l_ob"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad2_l_ob"..i	].ang)
     end,      
@@ -1935,8 +1935,8 @@ ENT.ClientProps["led_l_f1_rear"..i] = { --2 дверь право задняя �
         skin=6,
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_f1_rear"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f1_rear"..i	].ang)
     end,      
@@ -1948,8 +1948,8 @@ ENT.ClientProps["led_l_f1_rear_ob"..i] = {
         skin=6,
         hide = 0.49,
 		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_pricep_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_pricep_kuzov"))
+        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
+			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
 			cl_ent:SetLocalPos(ent.ClientProps["led_l_f1_rear_ob"..i].pos)
 			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f1_rear_ob"..i	].ang)
     end,      
@@ -2051,7 +2051,7 @@ function ENT:Initialize()
 	self.RearBogey = self:GetNW2Entity("RearBogey")
 	self.MiddleBogey = self:GetNW2Entity("MiddleBogey")
 	self.RearCouple = self:GetNW2Entity("RearCouple")
-	Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")	
+	Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")	
 	
 	self.PassengerEnts = {}
 	
@@ -2681,7 +2681,7 @@ if Metrostroi.Version >= 1537278077 then
 end	
 
 --Генерация пропов для задней секции.
-local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 if IsValid(Pricep740) then
 if not Pricep740.ButtonMap then
 Pricep740.ButtonMap = {}
@@ -3708,7 +3708,7 @@ function ENT:DrawPost(special)
         surface.SetDrawColor(255,255,255)
         surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
     end)		
-    local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+    local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 	if Pricep740.ButtonMap then	
 	self.RTMaterial:SetTexture("$basetexture", self.Tickers)		
     Pricep740:DrawOnPanel("Tickers_rear",function(...)

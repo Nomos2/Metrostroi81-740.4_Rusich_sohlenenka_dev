@@ -1,6 +1,6 @@
 local Map = game.GetMap():lower() or ""
-if(Map:find("gm_metro_minsk_1984") 
-or Map:find("gm_metro_nsk_line_2")
+if(Map:find("gm_metro_minsk") 
+or Map:find("gm_metro_nsk_line")
 or Map:find("gm_metro_kalinin")
 or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
@@ -496,7 +496,7 @@ function CanConstrain( Pricep740, self )
 end 
 	
 function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
-	local Pricep740 = ents.Create("gmod_pricep_kuzov")--ents.Create("base_entity") gmod_pricep_kuzov
+	local Pricep740 = ents.Create("gmod_subway_kuzov")--ents.Create("base_entity") gmod_subway_kuzov
 	Pricep740:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear.mdl")		
     if not IsValid(Pricep740) or not IsValid(self) then return end
 	Pricep740:SetPos(self:LocalToWorld(pos))
@@ -507,7 +507,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 			
 	 if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
 	
-	self:SetNW2Entity("gmod_pricep_kuzov",Pricep740)
+	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)
     table.insert(Pricep740.TrainEntities,self)				
 	
@@ -772,7 +772,7 @@ end
 function ENT:Think()
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62
-    local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")	
+    local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")	
     if not IsValid(Pricep740) then return end	
     --print(self,self.BPTI.T,self.BPTI.State)		
 	
@@ -933,12 +933,12 @@ function ENT:Think()
         [16.1] = { "dynamiclight",    Vector( -310, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 } 	
     }	
 	
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(14,passlight > 0, passlight) 
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(15,passlight > 0.5, passlight) 
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(16,passlight > 0, passlight) 
+	self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(14,passlight > 0, passlight) 
+    self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(15,passlight > 0.5, passlight) 
+    self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(16,passlight > 0, passlight) 
 	
-	self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(14.1,passlight > 0, passlight) 
-    self:GetNW2Entity("gmod_pricep_kuzov"):SetLightPower(16.1,passlight > 0, passlight) 
+	self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(14.1,passlight > 0, passlight) 
+    self:GetNW2Entity("gmod_subway_kuzov"):SetLightPower(16.1,passlight > 0, passlight) 
 	
     self:SetPackedRatio("SalonLighting",passlight) 
 	--print(passlight)

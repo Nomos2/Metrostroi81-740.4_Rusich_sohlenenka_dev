@@ -1,6 +1,6 @@
 local Map = game.GetMap():lower() or ""
-if(Map:find("gm_metro_minsk_1984") 
-or Map:find("gm_metro_nsk_line_2")
+if(Map:find("gm_metro_minsk") 
+or Map:find("gm_metro_nsk_line")
 or Map:find("gm_metro_kalinin")
 or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
@@ -62,7 +62,7 @@ local yventpos = {
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)	
 
-local Pricep740 = self:GetNW2Entity("gmod_pricep_kuzov")
+local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 function Pricep740:InitializeSounds()
     Pricep740.BaseClass.InitializeSounds(Pricep740)	
 if IsValid(Pricep740) then
