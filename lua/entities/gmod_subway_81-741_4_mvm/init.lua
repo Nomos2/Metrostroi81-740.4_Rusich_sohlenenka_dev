@@ -44,20 +44,20 @@ function ENT:Initialize()
  -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75.4),Angle(0,180,0),true,"740PER")
 		self.FrontBogey.PneumaticPow = 0.7			
---------------------------------------------------------------------------------
-        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),true,"740NOTR") --110 0 -80  
+        self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)	
-		
 		self.FrontBogey:SetNWInt("MotorSoundType",2)
 		self.RearBogey:SetNWInt("MotorSoundType",2)		
-	    self.RearBogey.DisableContacts = true		
---------------------------------------------------------------------------------
+	    self.RearBogey.DisableContacts = true	
+		self.RearBogey.PneumaticPow = 0.7			
         self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")		
---------------------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-611,0,-60),Angle(0,-180,0),false,"740")
+        self.RearCouple = self:CreateCouple(Vector(-611,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 		self.RearCouple:GetPhysicsObject():SetMass(5000)
+		
+	self:SetNW2Entity("FrontBogey",self.FrontBogey)
+	self:SetNW2Entity("RearBogey",self.RearBogey)		
 		
 	self.Timer = CurTime()	
 	self.Timer2 = CurTime()		
@@ -71,15 +71,9 @@ timer.Simple(0, function()
 		self.MiddleBogey:SetNWInt("Async",true)
 		self.MiddleBogey:SetNWBool("DisableEngines",true)			
 		self.MiddleBogey.DisableSound = 1				
-        self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)
-		table.insert(self.TrainEntities,self.MiddleBogey)	
 		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
 		self.Rear1 = self:CreatePricep(Vector(-326.1,0,0),true)		--вагон			
 end)
-	self:SetNW2Entity("FrontBogey",self.FrontBogey)
-	self:SetNW2Entity("RearBogey",self.RearBogey)
-	self:SetNW2Entity("FrontCouple",self.FrontCouple)
-	self:SetNW2Entity("RearCouple",self.RearCouple)
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
@@ -324,30 +318,6 @@ function CanConstrain( gmod_subway_kuzov, self )
 
 end
 
-function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
-	local Pricep740 = ents.Create("gmod_subway_kuzov")--ents.Create("base_entity")
-	Pricep740:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl")		
-    if not IsValid(Pricep740) or not IsValid(self) then return end	
-	Pricep740:SetPos(self:LocalToWorld(pos))
-	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
-	Pricep740:Spawn()
-	Pricep740:SetOwner(self:GetOwner())	
-	Pricep740:DrawShadow(false)		
-	
-    if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end				
-	
-	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
-	table.insert(self.TrainEntities,Pricep740)
-    table.insert(Pricep740.TrainEntities,self)		
-	
-	--Метод mirror 
-	self.Train2 = self	
-	self.Train2.HeadTrain = Pricep740
-
-	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
-
     --[[local seat = ents.Create("prop_vehicle_prisoner_pod")
     seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
     seat:SetPos(self:LocalToWorld(Vector(-642,-30.2,-25)))
@@ -376,10 +346,36 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 
     if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
     seat_1:SetParent(Pricep740)]]	
+
+function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
+	local Pricep740 = ents.Create("gmod_subway_kuzov")--ents.Create("base_entity")
+	Pricep740:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl")		
+    if not IsValid(Pricep740) or not IsValid(self) then return end	
+	Pricep740:SetPos(self:LocalToWorld(pos))
+	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
+	Pricep740:Spawn()
+	Pricep740:SetOwner(self:GetOwner())	
+	Pricep740:DrawShadow(false)		
+	
+    if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end				
+	
+	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
+	table.insert(self.TrainEntities,Pricep740)
+    table.insert(Pricep740.TrainEntities,self)		
+	
+	--Метод mirror 
+	self.Train2 = self	
+	self.Train2.HeadTrain = Pricep740
+
+	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
+	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
+	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
+    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)	
+    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)		
 	
 	constraint.Axis(
+		self,	
 		self.MiddleBogey,
-		self,
 		0,
 		0,
         Vector(0,0,0),

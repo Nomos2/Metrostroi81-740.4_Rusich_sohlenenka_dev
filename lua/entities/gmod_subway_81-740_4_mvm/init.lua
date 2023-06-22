@@ -79,43 +79,36 @@ function ENT:Initialize()
     -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740PER")	
 		self.FrontBogey.PneumaticPow = 0.7		
---------------------------------------------------------------------------------
-        self.RearBogey  = self:CreateBogey(Vector(-532,0,-74.5),Angle(0,0,0),true,"740NOTR") --110 0 -80 
+        self.RearBogey  = self:CreateBogey(Vector(-532,0,-74.5),Angle(0,0,0),false,"740NOTR") --110 0 -80 
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)			
-		
 		self.FrontBogey:SetNWInt("MotorSoundType",2)
 		self.RearBogey:SetNWInt("MotorSoundType",2)
         self.RearBogey.DisableContacts = true	
 		self.RearBogey.PneumaticPow = 0.7		
---------------------------------------------------------------------------------
         self.FrontCouple = self:CreateCouple(Vector(636,0,-60),Angle(0,0,0),true,"717")
--------------------------------------------------------------------
-        self.RearCouple  = self:CreateCouple(Vector(-625,0,-60),Angle(0,-180,0),false,"740") --627
-		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
+        self.RearCouple = self:CreateCouple(Vector(-625,0,-60),Angle(0,-180,0),false,"740") 
+		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") 
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
-		self.RearCouple:GetPhysicsObject():SetMass(5000)		
+		self.RearCouple:GetPhysicsObject():SetMass(5000)
+
+	self:SetNW2Entity("FrontBogey",self.FrontBogey)
+	self:SetNW2Entity("RearBogey",self.RearBogey)		
 
 	self.Timer = CurTime()	
 	self.Timer2 = CurTime()		
 	
 timer.Simple(0, function()
-		local rand = math.random()*0.05
+		local rand = math.random()*0
 		self.MiddleBogey = self:CreateBogey(Vector(-15,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
-		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand) 		
+		self.MiddleBogey:SetNWFloat("SqualPitch",1.45) 		
 		self.MiddleBogey:SetNWInt("MotorSoundType",2)
 		self.MiddleBogey:SetNWInt("Async",true)
 		self.MiddleBogey:SetNWBool("DisableEngines",true)			
 		self.MiddleBogey.DisableSound = 1				
-        self.MiddleBogey:SetNW2Entity("TrainEntity", self.HeadTrain)
-		table.insert(self.TrainEntities,self.MiddleBogey)	
-		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
-		self.Rear1 = self:CreatePricep(Vector(-340,0,0),true) --вагон	
-end)
-	self:SetNW2Entity("FrontBogey",self.FrontBogey)
-	self:SetNW2Entity("RearBogey",self.RearBogey)
-	self:SetNW2Entity("FrontCouple",self.FrontCouple)
-	self:SetNW2Entity("RearCouple",self.RearCouple)      	
+		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)			
+		self.Rear1 = self:CreatePricep(Vector(-340,0,0)) --вагон	
+end)     	
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
@@ -487,13 +480,7 @@ function ENT:RerailChange(ent, bool)
     end
 end
 	
-function CanConstrain( Pricep740, self )
-	if ( !Pricep740 ) then return false end
-	if ( !isnumber( self ) ) then return false end
-	if ( !Pricep740:IsWorld() && !Pricep740:IsValid() ) then return false end
-	if ( !IsValid( Pricep740:GetPhysicsObjectNum( self ) ) ) then return false end
-	return true
-end 
+ 
 	
 function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
 	local Pricep740 = ents.Create("gmod_subway_kuzov")--ents.Create("base_entity") gmod_subway_kuzov
@@ -503,25 +490,36 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
-	Pricep740:DrawShadow(false)		
+	Pricep740:DrawShadow(false)	
+	Pricep740:GetPhysicsObject():EnableMotion(true)		
 			
 	 if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
 	
 	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
-	table.insert(self.TrainEntities,Pricep740)
-    table.insert(Pricep740.TrainEntities,self)				
+	table.insert(self.TrainEntities,Pricep740)      
+    table.insert(Pricep740.TrainEntities,self)
 	
+function CanConstrain( Pricep740, self )
+	if ( !Pricep740 ) then return false end
+	if ( !isnumber( self ) ) then return false end
+	if ( !Pricep740:IsWorld() && !Pricep740:IsValid() ) then return false end
+	if ( !IsValid( Pricep740:GetPhysicsObjectNum( self ) ) ) then return false end
+	return true
+end	
+		
 	--Метод mirror 
 	self.Train2 = self	
 	self.Train2.HeadTrain = Pricep740	
 
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-	constraint.RemoveConstraints(self.MiddleBogey, "Axis")		
+	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
+    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)	
+    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)		
 	
 	constraint.Axis(
+		self,	
 		self.MiddleBogey,
-		self,
 		0,
 		0,
         Vector(0,0,0),
@@ -585,8 +583,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		0, --rotonly
 		1--nocollide
 	)	
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)				
 	constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,

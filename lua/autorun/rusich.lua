@@ -5,6 +5,16 @@ if Metrostroi.Version >= 1623941696 then
 
 	if SERVER then		
 		timer.Simple(1,function()
+		
+		local models = {
+		["models/metrostroi_train/81-740/body/81-740_4_front.mdl"] = true,
+		["models/metrostroi_train/81-740/body/81-740_4_rear.mdl"] = true,
+
+		["models/metrostroi_train/81-740/bogey/metro_bogey_740"] = true,	
+		["models/metrostroi_train/81-740/bogey/metro_bogey_garm.mdl"] = true,
+		["models/metrostroi_train/81-740/bogey/metro_bogey_notr.mdl"] = true,
+		
+	}		
 			-- регистрируем тележки
 			local tbl = scripted_ents.Get("gmod_train_bogey")
 			if tbl then	

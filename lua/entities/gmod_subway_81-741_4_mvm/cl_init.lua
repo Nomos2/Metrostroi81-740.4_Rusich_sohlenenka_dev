@@ -811,7 +811,6 @@ for m=0,3 do
     }
 end	
 
-if Metrostroi.Version >= 1537278077 then
 function ENT:ReInitBogeySounds(bogey)
 	if not IsValid(bogey) then return end
 	
@@ -1333,62 +1332,83 @@ if self:GetNW2Int("MotorType")==5 then
 
 end
 end
-end
 
 function ENT:Think()
     self.BaseClass.Think(self)
 	
-if Metrostroi.Version >= 1537278077 then	
 	local refresh = false--true		
 	if self:GetNW2Int("MotorType")==1 then		
 		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end	
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
 	end		
 	end
+	
 	if self:GetNW2Int("MotorType")==2 then		
 		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
 	end	
 	end
+	
 	if self:GetNW2Int("MotorType")==3 then		
 		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav"  
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 0.4) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 0.4) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
 	end		
 	end
+	
 	if self:GetNW2Int("MotorType")==4 then		
 	if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
-	end
+	end	
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
 	end	
 	end
+	
 	if self:GetNW2Int("MotorType")==5 then		
 	if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
-	end
+	end		
+	if IsValid(self.MiddleBogey) and self.MiddleBogey.SoundNames and (self.MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
+	or self.MiddleBogey.EngineSNDConfig and self.MiddleBogey.EngineSNDConfig[1] and self.MiddleBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
+		self:ReInitBogeySounds(self.MiddleBogey)
+	end		
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
-	end	
 	end	
 end	
 
