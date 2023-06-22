@@ -373,9 +373,9 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
     constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)	
     constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)		
 	
-	constraint.Axis(
-		self,	
+		constraint.Axis(
 		self.MiddleBogey,
+		self,
 		0,
 		0,
         Vector(0,0,0),
@@ -386,7 +386,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		1,
 		Vector(0,0,1)
 	)	
-	      
+	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
 	Map:find("gm_jar_pll_redux") or
@@ -415,6 +415,60 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		1,--nocollide
 		false
 	)
+	else	
+	
+	local Map = game.GetMap():lower() or ""        
+	if 
+	Map:find("gm_mustox_neocrimson_line") or
+	Map:find("gm_mus_neoorange") or
+	Map:find("gm_metro_nekrasovskaya_line") or
+	Map:find("gm_metro_chapaevskaya_line")	then
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
+		0, --bone
+		0, --bone		
+		Vector(0,-1,25),
+		Vector(0,0,0),		
+		0, --forcelimit
+		0, --torquelimit
+		-3, --xmin
+		-3, --ymin
+		-180, --zmin
+		3, --xmax
+		3, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)		
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
+		0, --bone
+		0, --bone		
+		Vector(0,1,-15),
+		Vector(0,0,0),	
+		0, --forcelimit
+		0, --torquelimit
+		-3, --xmin
+		-3, --ymin
+		-180, --zmin
+		3, --xmax
+		3, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)
 	else
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
@@ -423,7 +477,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,0.5,35),
+		Vector(315,-1,25),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -437,9 +491,8 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		0.1, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
-		false
-	)
+		1--nocollide
+	)	
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
 	constraint.AdvBallsocket(
@@ -447,7 +500,7 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,0.5,-5),
+		Vector(315,1,-15),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
@@ -461,10 +514,10 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 		0.1, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
-		false
+		1--nocollide
 	)
 end	
+end
         constraint.Axis(
 		self.RearBogey,		
 		Pricep740,
@@ -500,7 +553,7 @@ end
         1, --zfric
         0, --rotonly
         1 --nocollide
-    ) 	
+    ) 
 
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
