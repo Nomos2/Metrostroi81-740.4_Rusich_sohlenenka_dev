@@ -241,6 +241,7 @@ function TRAIN_SYSTEM:Think(dT,iter)
         Panel.KAH = P*Train.KAH.Value
         Panel.ALS = P*Train.ALS.Value
 		Panel.TPT = P*Train.TPT.Value
+		Panel.Wiper = P*Train.Wiper.Value		
         --Panel.AccelRate = P*Train.AccelRate.Value
         Panel.EqLights = P*Train.SF15.Value*Train.AppLights1.Value		
         Panel.CabLights = P*Train.SF15.Value*Train.CabLight.Value*(0.5+Train.CabLightStrength.Value*0.5)

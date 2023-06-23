@@ -172,6 +172,7 @@ ENT.ButtonMap["PUU"] = {
         }},
         {ID = "WiperToggle",x=579.63+35.75*1.8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_blue.mdl",z=1.85,
+            lamp = {model = "models/metrostroi_train/81-722/lamp_blue.mdl",var="WiperLamp", anim=true,z=0},			
             var="Wiper",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
@@ -183,10 +184,10 @@ ENT.ButtonMap["PUU"] = {
         }},
 		--models/metrostroi_train/81-720/rc_rotator1.mdl
 
-        {ID = "!VDop",x=269, y=69, w=107, h=6, tooltip = "Допустимая скорость"},
-        {ID = "!VFact",x=269, y=76+9, w=107, h=6, tooltip = "Фактическая скорость"},
-        {ID = "!VPred",x=269, y=76+17, w=107, h=6, tooltip = "Предупредительная скорость"},
-		{ID = "!VDop2",x=381, y=65, w=26, h=28, tooltip = "Допустимая скорость"},
+        {ID = "!VDop",x=269, y=69, w=107, h=6, tooltip = ""},
+        {ID = "!VFact",x=269, y=76+9, w=107, h=6, tooltip = ""},
+        {ID = "!VPred",x=269, y=76+17, w=107, h=6, tooltip = ""},
+		{ID = "!VDop2",x=381, y=65, w=26, h=28, tooltip = ""},
     }
 }
 
@@ -482,7 +483,7 @@ ENT.ClientProps["lamps_salon_on_fr9"] = {
     hide = 1,
     color = Color(245,238,223),		
 }
-ENT.ClientProps["Wiper_760"] = {
+ENT.ClientProps["wiper"] = { --дворник от 760
     model = "models/metrostroi_train/81-740/body/81-740_wiper.mdl",
     pos = Vector(176.8,-10,0),
     ang = Angle(0,0,0),
@@ -2769,7 +2770,7 @@ Pricep740.ClientProps["lamps_salon_on_rear_avar2"] = {
 }
 
 for i = 1,11 do
-Pricep740.ClientProps["lamps_salon_on_rear"..i] = {
+Pricep740.ClientProps["lamps_salon_on_rear"..i-1] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
     pos = Vector(341.5-54*i+1,0.29,-74.88),
     ang = Angle(0,180,0),
@@ -3183,7 +3184,7 @@ for i = 1,11 do
     local colV = self:GetNW2Vector("Lamp7404"..i)
     local col = Color(colV.x,colV.y,colV.z)			
 	--Задняя часть		
-	Pricep740:ShowHideSmooth("lamps_salon_on_rear"..i,Pricep740:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
+	Pricep740:ShowHideSmooth("lamps_salon_on_rear"..i-1,Pricep740:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
     Pricep740:ShowHideSmooth("lamps_salon_on_rear1"..i,Pricep740:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
 end
 
@@ -3203,7 +3204,7 @@ end
 	net:find("Dl3ves15"))
 	self:ShowHide("ASNP_test",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
 	:find("Dl3ves15"))	
-	self:ShowHide("Wiper_760",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
+	self:ShowHide("wiper",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
 	:find("Dl3ves15"))		
 	
 	self:HidePanel("ASNPScreen",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
@@ -3224,16 +3225,6 @@ end
 
     self:ShowHideSmooth("lamp_f",self:Animate("lamp_forw",self:GetPackedBool("BIForward") and 1 or 0,0,1,5,false))
     self:ShowHideSmooth("lamp_b",self:Animate("lamp_back",self:GetPackedBool("BIBack") and 1 or 0,0,1,5,false))
-	
-	if self:GetPackedBool("Wiper") and self.Anims["Wiper_760"] then
-		local anim = self.Anims["Wiper_760"]	
-		if anim == 0 then
-			self.WiperDir = true
-		elseif anim == 1 then
-			self.WiperDir = false
-		end
-	self:Animate("Wiper_760",self.WiperDir and 1 or 0,0,1,0.32,false)
-	end
 
     local accel = self:GetPackedRatio("BIAccel",0)
     local speed = self:GetNW2Int("BISpeed",0)
@@ -3404,6 +3395,16 @@ end
             self.GlowingLights[1]:SetFarZ(5144)
         end
 	end
+	
+	if self:GetPackedBool("wiper") then
+		local anim = self.Anims["wiper"].value		
+		if anim == 0 then
+			self.WiperDir = true
+		elseif anim == 1 then
+			self.WiperDir = false
+		end
+	end
+		self:Animate("wiper",self.WiperDir and 1 or 0,0,1,0.32,false)
 	--Анимация дверей.
 	if not self.DoorStates then self.DoorStates = {} end
     if not self.DoorLoopStates then self.DoorLoopStates = {} end

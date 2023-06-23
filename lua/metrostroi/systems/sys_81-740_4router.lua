@@ -60,7 +60,7 @@ if CLIENT then	local function createFont(name,font,size,weight,blur,scanlines
 				draw.Text({
 					text = drawnrn,
 					font = "Metrostroi_740_router", -- "Metrostroi_740_routerBold"
-					pos = { 70, 53 },
+					pos = { 50, 45 },
 					xalign = TEXT_ALIGN_CENTER,
 					yalign = TEXT_ALIGN_CENTER,
 					color = color})				draw.Text({					text = text,					font = "Metrostroi_740_router",					pos = { 420, 45 },					xalign = TEXT_ALIGN_CENTER,					yalign = TEXT_ALIGN_CENTER,					color = color})			else				draw.Text({

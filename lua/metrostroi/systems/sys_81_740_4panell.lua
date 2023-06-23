@@ -165,7 +165,7 @@ function TRAIN_SYSTEM:Initialize()
     self.EqLights = 0
     self.CabLights = 0
     self.AnnouncerPlaying = 0
-	self.Wiper1 = 0	
+	self.Wiper = 0	
 	self.TPT = 0
 	
     self.TickerPower = 0
@@ -183,7 +183,7 @@ function TRAIN_SYSTEM:Inputs()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return { "Controller","Headlights1","Headlights2","RedLights","DoorLeft","DoorRight","EmerBrakeWork","Ticker","Wiper1","TPT","KAH","ALS","PassScheme","R_Announcer","R_Line","AccelRate","DoorClose","DoorBlock","EqLights","CabLights","AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PassSchemeControl","CBKIPower","PCBKPower", }
+    return { "Controller","Headlights1","Headlights2","RedLights","DoorLeft","DoorRight","EmerBrakeWork","Ticker","Wiper","TPT","KAH","ALS","PassScheme","R_Announcer","R_Line","AccelRate","DoorClose","DoorBlock","EqLights","CabLights","AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PassSchemeControl","CBKIPower","PCBKPower", }
 end
 --if not TURBOSTROI then return end
 function TRAIN_SYSTEM:TriggerInput(name,value)
