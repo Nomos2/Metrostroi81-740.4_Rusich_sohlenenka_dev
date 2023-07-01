@@ -62,16 +62,7 @@ function ENT:Initialize()
 	self.Timer = CurTime()	
 	self.Timer2 = CurTime()		
 	
-timer.Simple(0, function()
-		local rand = math.random()*0.05
-		self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74.5),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
-		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
-		self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand) 		
-		self.MiddleBogey:SetNWInt("MotorSoundType",2)
-		self.MiddleBogey:SetNWInt("Async",true)
-		self.MiddleBogey:SetNWBool("DisableEngines",true)			
-		self.MiddleBogey.DisableSound = 1				
-		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
+timer.Simple(0, function()	
 		self.Rear1 = self:CreatePricep(Vector(-326.1,0,0),true)		--вагон			
 end)
 	
@@ -361,7 +352,17 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	
 	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)
-    table.insert(Pricep740.TrainEntities,self)		
+    table.insert(Pricep740.TrainEntities,self)	
+
+	local rand = math.random()*0.05
+	self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74.5),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
+	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
+	self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand) 		
+	self.MiddleBogey:SetNWInt("MotorSoundType",2)
+	self.MiddleBogey:SetNWInt("Async",true)
+	self.MiddleBogey:SetNWBool("DisableEngines",true)			
+	self.MiddleBogey.DisableSound = 1				
+	self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
 	
 	--Метод mirror 
 	self.Train2 = self	

@@ -521,7 +521,7 @@ ENT.Spawner = {
 	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(283,2,-74.6),ang = Angle(0,0,0)},
 	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(-273,1,-74.6),ang = Angle(0,-180,0)},		
 	},
-	interim = "gmod_subway_81-741_4_mvm", 
+	interim = "gmod_subway_81-741_4", 
 	postfunc = function(trains,WagNum)
 		for i=1,#trains do
 			local ent = trains[i]

@@ -89,26 +89,14 @@ function ENT:Initialize()
         self.RearCouple = self:CreateCouple(Vector(-625,0,-60),Angle(0,-180,0),false,"740") 
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") 
 		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
-		self.RearCouple:GetPhysicsObject():SetMass(5000)
-
-	self:SetNW2Entity("FrontBogey",self.FrontBogey)
-	self:SetNW2Entity("RearBogey",self.RearBogey)		
+		self.RearCouple:GetPhysicsObject():SetMass(5000)	
 
 	self.Timer = CurTime()	
-	self.Timer2 = CurTime()		
-	
-timer.Simple(0, function()
-		local rand = math.random()*0
-		self.MiddleBogey = self:CreateBogey(Vector(-15,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
-		self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
-		self.MiddleBogey:SetNWFloat("SqualPitch",1.45) 		
-		self.MiddleBogey:SetNWInt("MotorSoundType",2)
-		self.MiddleBogey:SetNWInt("Async",true)
-		self.MiddleBogey:SetNWBool("DisableEngines",true)			
-		self.MiddleBogey.DisableSound = 1				
-		self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)			
+	self.Timer2 = CurTime()	
+		
+timer.Simple(0, function()			
 		self.Rear1 = self:CreatePricep(Vector(-340,0,0)) --вагон	
-end)     	
+end)  	    	
 	
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
@@ -116,6 +104,9 @@ end)
     local rand = math.random()*0.05
     self.FrontBogey:SetNWFloat("SqualPitch",1.45+rand)
     self.RearBogey:SetNWFloat("SqualPitch",1.45+rand)
+	
+	self:SetNW2Entity("FrontBogey",self.FrontBogey)
+	self:SetNW2Entity("RearBogey",self.RearBogey)		
 
 --[[local Bogey = self:GetNW2Entity("gmod_train_bogey")	 Не работает.
 if not IsValid(Bogey) then return end	
@@ -491,13 +482,24 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
 	Pricep740:DrawShadow(false)	
-	Pricep740:GetPhysicsObject():EnableMotion(true)		
+	Pricep740:GetPhysicsObject():EnableMotion(true)			
 			
 	 if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
 	
 	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
 	table.insert(self.TrainEntities,Pricep740)      
-    table.insert(Pricep740.TrainEntities,self)
+    table.insert(Pricep740.TrainEntities,self)	
+	
+	local rand = math.random()*0.05
+	self.MiddleBogey = self:CreateBogey(Vector(-15,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
+	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
+	self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
+    local rand = math.random()*0.05
+    self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
+	self.MiddleBogey:SetNWInt("MotorSoundType",2)
+	self.MiddleBogey:SetNWInt("Async",true)
+	self.MiddleBogey:SetNWBool("DisableEngines",true)			
+	self.MiddleBogey.DisableSound = 1	
 	
 function CanConstrain( Pricep740, self )
 	if ( !Pricep740 ) then return false end
@@ -509,17 +511,16 @@ end
 		
 	--Метод mirror 
 	self.Train2 = self	
-	self.Train2.HeadTrain = Pricep740	
+	self.Train2.HeadTrain = Pricep740					
 
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
 	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
-    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)	
-    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)		
+    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)			
 	
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-	constraint.RemoveConstraints(self.MiddleBogey, "Axis")		
+	constraint.RemoveConstraints(self.MiddleBogey, "Axis")				
 	
 	constraint.Axis(
 		self.MiddleBogey,
@@ -1005,8 +1006,7 @@ function ENT:Think()
 	self:SetNW2Int("RouteNumber",self.ASNP.RouteNumber)
     self:SetPackedRatio("BIAccel",0 or power and self.BARS.BIAccel or 0) 
     self:SetNW2Int("BISpeed",power and self.Speed or -1)--CurTime()%5*20
-    self:SetNW2Bool("BISpeedLimitBlink",power and self.BARS.BINoFreq > 0 
-	or IsValid(drv) and drv:SteamID() == "STEAM_0:0:193084724")
+    self:SetNW2Bool("BISpeedLimitBlink",power and self.BARS.BINoFreq > 0)
     self:SetNW2Int("BISpeedLimit",power and self.BARS.SpeedLimit or 100)
     self:SetNW2Int("BISpeedLimitNext",power and self.BARS.NextLimit or 100)
     self:SetNW2Bool("BIForward",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.Speed > -0.2)
@@ -1154,7 +1154,7 @@ function ENT:Think()
         self.MiddleBogey.BrakeCylinderPressure = self.Pneumatic.MiddleBogeyBrakeCylinderPressure
         self.MiddleBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.MiddleBogeyBrakeCylinderPressure_dPdT
         self.MiddleBogey.ParkingBrakePressure = math.max(0,(3-self.Pneumatic.ParkingBrakePressure)/3)         		
-        self.MiddleBogey.DisableContacts = self.BUV.Pant		
+        self.MiddleBogey.DisableContacts = self.BUV.Pant			
 		self.RearBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000
         self.RearBogey.BrakeCylinderPressure = self.Pneumatic.BrakeCylinderPressure
         self.RearBogey.BrakeCylinderPressure_dPdT = -self.Pneumatic.BrakeCylinderPressure_dPdT
