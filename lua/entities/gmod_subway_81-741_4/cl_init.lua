@@ -711,14 +711,13 @@ end
 
 
 local yventpos = {
-    -414.5+0*117,
-    -414.5+1*117+6.2,
-    414.5+2*117+5,
-    414.5+3*117+2,
-    414.5+4*117+0.5,
-    -414.5+5*117-2.3,
-    -414.5+6*117-2.3,
-    -414.5+7*117+4,
+    414.5+0*117-144,
+	---414.5+1*117+6.2-144,
+	414.5+2*117+5-144,
+	--414.5+3*117+2-144,
+	414.5+4*117+0.5-144,
+	---414.5+5*117-2.3-144,
+	---414.5+6*117-144,
 }
 
 function ENT:Initialize()
@@ -748,8 +747,6 @@ function ENT:Initialize()
 	
 	self.FrontBogey = self:GetNW2Entity("FrontBogey")	
 	self.RearBogey = self:GetNW2Entity("RearBogey")
-	self.MiddleBogey = self:GetNW2Entity("MiddleBogey")
-	self.RearCouple = self:GetNW2Entity("RearCouple")
 	
 	self.PassengerEnts = {}
     self.PassengerPositions = {}
@@ -1343,9 +1340,9 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
 	end
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
@@ -1358,10 +1355,10 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
-	end	
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
+	end
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
@@ -1373,10 +1370,10 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 0.4) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 0.4) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
-	end	
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 0.4 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
+	end
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 0.4) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
@@ -1388,10 +1385,10 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end	
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
-	end		
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
+	end	
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
@@ -1403,20 +1400,20 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end		
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
 	end	
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
 	end	
-end		
+end	
 
 --Генерация пропов для задней секции.
 local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 if IsValid(Pricep740) then
-if not Pricep740.ButtonMap then
+if not Pricep740.ClientSounds then
 Pricep740.ButtonMap = {}
 Pricep740.ClientProps = {}
 Pricep740.ClientSounds = {}
@@ -1817,14 +1814,17 @@ end
     self:SetSoundState("parking_brake",self.ParkingBrake,1.4)
 	
     self.FrontLeak = math.Clamp(self.FrontLeak + 10*(-self:GetPackedRatio("FrontLeak")-self.FrontLeak)*dT,0,1)
-    self.RearLeak = math.Clamp(self.RearLeak + 10*(-self:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)
     self:SetSoundState("front_isolation",self.FrontLeak,0.9+0.2*self.FrontLeak)
-    self:SetSoundState("rear_isolation",self.RearLeak,0.9+0.2*self.RearLeak)	
+	
+    Pricep740.RearLeak = math.Clamp(self.RearLeak + 10*(-self:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)	
+    Pricep740:SetSoundState("rear_isolation",Pricep740.RearLeak,0.9+0.2*Pricep740.RearLeak)
 
     local dPdT = self:GetPackedRatio("BrakeCylinderPressure_dPdT")
     self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-self:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)
     --print(dPdT)
-    self:SetSoundState("release",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)
+    self:SetSoundState("release_front",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)	
+    self:SetSoundState("release_middle",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)
+    Pricep740:SetSoundState("release_rear",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)
 
 for avar = 1,2 do	
     -----------------------Задняя часть	
@@ -1886,117 +1886,7 @@ end
     self:ShowHide("Zavod_table_front",ZavodTable==1)	
     Pricep740:ShowHide("Zavod_table_sochl",ZavodTable==2)
     Pricep740:ShowHide("Zavod_table_sochl_torec",ZavodTable==3)		
-	
-	-- наддверки и попытка в рандомизацию поломанных сегментов. ОЧЕНЬ СИЛЬНО ЛАГАЕТ
-    --[[local scurr = self:GetNW2Int("PassSchemesLED")
-    local snext = self:GetNW2Int("PassSchemesLEDN")
-    local led_back = self:GetPackedBool("PassSchemesLEDO",false)
-    local ledwork = scurr~=0 or snext~=0
-	
-	for i=1,29 do	
-        self:ShowHide("led_l_f2_rear"..i,not led_back and ledwork)
-		self:ShowHide("led_l_f4_new"..i,not led_back and ledwork)
 
-		self:ShowHide("led_l_f2_rear_ob"..i,led_back and ledwork)		
-		self:ShowHide("led_l_f4_new_ob"..i,led_back and ledwork)			
-	end
-	for i=1,31 do
-	    self:ShowHide("led_l_r1_rear"..i,not led_back and ledwork)
-	    self:ShowHide("led_l_f1_new"..i,not led_back and ledwork)
-
-	    self:ShowHide("led_l_f1_new_ob"..i,led_back and ledwork)
-	    self:ShowHide("led_l_r1_rear_ob"..i,led_back and ledwork)				
-	end	
-    for i=1,32 do
-	    self:ShowHide("led_l_f_new"..i,not led_back and ledwork)	
-	    self:ShowHide("led_l_f3_new"..i,not led_back and ledwork)
-	    self:ShowHide("led_l_f5_new"..i,not led_back and ledwork)
-
-	    self:ShowHide("led_l_f_new_ob"..i,led_back and ledwork)	
-	    self:ShowHide("led_l_f3_new_ob"..i,led_back and ledwork)
-	    self:ShowHide("led_l_f5_new_ob"..i,led_back and ledwork)
-        self:ShowHide("led_l_f1_rear_ob"..i,led_back and ledwork)
-        self:ShowHide("led_l_r2_rear_ob"..i,led_back and ledwork)		
-        self:ShowHide("led_l_f3_rear_ob"..i,led_back and ledwork)	
-        self:ShowHide("led_l_r4_rear_ob"..i,led_back and ledwork)		
-		
-        self:ShowHide("led_l_f1_rear"..i,not led_back and ledwork)	
-	    self:ShowHide("led_l_r2_rear"..i,not led_back and ledwork)		
-	    self:ShowHide("led_l_f3_rear"..i,not led_back and ledwork)		
-	    self:ShowHide("led_l_r4_rear"..i,not led_back and ledwork)	
-	    self:ShowHide("led_l_f2_new"..i,not led_back and ledwork)
-
-	    self:ShowHide("led_l_f2_new_ob"..i,led_back and ledwork)		
-	end	
-	
-    local led = scurr
-    if snext ~= 0 and CurTime()%.9 > .30 then led = led + snext end
-    if scurr < 0 then led = math.floor(CurTime()%9*6.2) end
-    if led_back then
-        if ledwork then
-		
-			for i=1,29 do
-                if IsValid(self.ClientEnts["led_l_f4_new_ob"..i]) then self.ClientEnts["led_l_f4_new_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end	
-                if IsValid(self.ClientEnts["led_l_f2_rear_ob"..i]) then self.ClientEnts["led_l_f2_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end					
-				end  		
-		
-            for i=1,31 do
-                if IsValid(self.ClientEnts["led_l_f1_new_ob"..i]) then self.ClientEnts["led_l_f1_new_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))
-				if IsValid(self.ClientEnts["led_l_r1_rear_ob"..i]) then self.ClientEnts["led_l_r1_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end				
-				end	
-			end	
-			
-            for i=1,32 do
-            if IsValid(self.ClientEnts["led_l_f_new_ob"..i]) then self.ClientEnts["led_l_f_new_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))	
-            if IsValid(self.ClientEnts["led_l_f2_new_ob"..i]) then self.ClientEnts["led_l_f2_new_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))
-            if IsValid(self.ClientEnts["led_l_f3_new_ob"..i]) then self.ClientEnts["led_l_f3_new_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))
-            if IsValid(self.ClientEnts["led_l_f5_new_ob"..i]) then self.ClientEnts["led_l_f5_new_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))	
-			
-			if IsValid(self.ClientEnts["led_l_f1_rear_ob"..i]) then self.ClientEnts["led_l_f1_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end
-			if IsValid(self.ClientEnts["led_l_r2_rear_ob"..i]) then self.ClientEnts["led_l_r2_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end
-			if IsValid(self.ClientEnts["led_l_f3_rear_ob"..i]) then self.ClientEnts["led_l_f3_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end	
-			if IsValid(self.ClientEnts["led_l_r4_rear_ob"..i]) then self.ClientEnts["led_l_r4_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end							
-				end				
-				end	
-				end				
-				end
-				end			
-		
-        end
-    else
-        if ledwork then
-            for i=1,31 do
-                if IsValid(self.ClientEnts["led_l_r1_rear"..i]) then self.ClientEnts["led_l_r1_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end
-                if IsValid(self.ClientEnts["led_l_f1_new"..i]) then self.ClientEnts["led_l_f1_new"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end				
-				
-            for i=1,32 do
-                if IsValid(self.ClientEnts["led_l_f1_rear"..i]) then self.ClientEnts["led_l_f1_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))	
-                if IsValid(self.ClientEnts["led_l_r2_rear"..i]) then self.ClientEnts["led_l_r2_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))				
-                if IsValid(self.ClientEnts["led_l_f3_rear"..i]) then self.ClientEnts["led_l_f3_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))	
-                if IsValid(self.ClientEnts["led_l_r4_rear"..i]) then self.ClientEnts["led_l_r4_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))	
-				
-                if IsValid(self.ClientEnts["led_l_f_new"..i]) then self.ClientEnts["led_l_f_new"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))	
-                if IsValid(self.ClientEnts["led_l_f2_new"..i]) then self.ClientEnts["led_l_f2_new"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))
-                if IsValid(self.ClientEnts["led_l_f3_new"..i]) then self.ClientEnts["led_l_f3_new"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))
-                if IsValid(self.ClientEnts["led_l_f5_new"..i]) then self.ClientEnts["led_l_f5_new"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1))
-				end				
-				end	
-				end				
-				end
-				end
-				end
-				end 
-				end 
-				end	
-				end				
-			
-	            for i=1,29 do
-                if IsValid(self.ClientEnts["led_l_f2_rear"..i]) then self.ClientEnts["led_l_f2_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end
-                if IsValid(self.ClientEnts["led_l_f4_new"..i]) then self.ClientEnts["led_l_f4_new"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,1)) end	
-				end
-				end 
-	end]]
-	
 	--Анимация дверей.
 	if not self.DoorStates then self.DoorStates = {} end
     if not self.DoorLoopStates then self.DoorLoopStates = {} end
@@ -2010,11 +1900,14 @@ end
             if (state ~= 1 and state ~= 0) ~= self.DoorStates[id] then
                 if doorstate and state < 1 or not doorstate and state > 0 then
 					if doorstate then self:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))
+					if doorstate then Pricep740:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))						
                 else
 					if state > 0 then
                         self:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))
+                        Pricep740:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))						
                     else
                         self:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))
+                        Pricep740:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))							
                     end
                 end
                 self.DoorStates[id] = (state ~= 1 and state ~= 0)
@@ -2025,6 +1918,7 @@ end
                 self.DoorLoopStates[id] = math.Clamp((self.DoorLoopStates[id] or 0) - 6*self.DeltaTime,0,1)
             end
             self:SetSoundState(sid.."r",self.DoorLoopStates[id],0.9+self.DoorLoopStates[id]*0.1)
+	        Pricep740:SetSoundState(sid.."r",self.DoorLoopStates[id],0.9+self.DoorLoopStates[id]*0.1)					
             local n_l = "door"..b.."x"..k.."a"
             local n_r = "door"..b.."x"..k.."b"
 			local n_l1 = "door"..b.."x1"..k.."a1"
@@ -2035,6 +1929,45 @@ end
 			Pricep740:Animate(n_l1,state,0,1,15,1)--0.8 + (-0.2+0.4*math.random()),0)
         end
 	end
+	
+	for i = 1,10 do
+		local id1 = Format("b1tunnel_%d",i)
+		local id2 = Format("b2tunnel_%d",i)
+		local id3 = Format("b3tunnel_%d",i)		
+		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
+		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
+		
+		self.SoundNames[id2.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id2.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1}
+		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
+		
+		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1}
+		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
+	end
+	for i = 1,14 do
+		local id1 = Format("b1street_%d",i)
+		local id2 = Format("b2street_%d",i)
+		local id3 = Format("b3street_%d",i)		
+		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
+		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
+		
+		self.SoundNames[id2.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id2.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1.5}
+		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
+		
+		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1.5}
+		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
+	end	
 	
     local door_f = self:GetPackedBool("FrontDoor")
     local door_cab_f = self:Animate("door_cab_f",door_f and 0.99 or -0.05, 0, 0.5, 4.5, 0.55)
@@ -2056,12 +1989,12 @@ end
 
     local ventSpeedAdd = math.Clamp(speed/30,0,1)
 
-    local v2state = self:GetPackedBool("Vent2Work")
-    for i=1,8 do
+    local vstate = self:GetPackedBool("Vent2Work")
+    for i=1,4 do
         local rand = self.VentRand[i]
         local vol = self.VentVol[i]
         local even = i%2 == 0
-        local work = (even and v1state or not even and v2state)
+        local work = (even and v1state or not even and vstate)
         local target = math.min(1,(work and 1 or 0)+ventSpeedAdd*rand*0.4)*2
         if self.VentVol[i] < target then
             self.VentVol[i] = math.min(target,vol + dT/1.5*rand)
@@ -2076,25 +2009,19 @@ end
 		if VentSound==1 then
         self:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
 		end
+		if VentSound==1 then
+        Pricep740:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end		
 		if VentSound==2 then
         self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
 		end		
-		
-		if VentSound==1 then		
-        if IsValid(self.ClientEnts["vent"..i]) then
-            self.ClientEnts["vent"..i]:SetPoseParameter("position",self.VentState[i])
-			end
-		end		
-		
-		if VentSound==2 then	
-		if IsValid(self.ClientEnts["vent1"..i]) then
-            self.ClientEnts["vent1"..i]:SetPoseParameter("position",self.VentState[i])
-			end	
-		end		
+		if VentSound==2 then
+        Pricep740:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end			
     end
 	
     local state = self:GetPackedBool("CompressorWork")
-    self:SetSoundState("compressor",state and 1.0 or 0,1)	
+    Pricep740:SetSoundState("compressor",state and 1.0 or 0,1)	
 	
     --local rol10 = math.Clamp(speed/5,0,1)*(1-math.Clamp((speed-50)/8,0,1))
     --local rol70 = math.Clamp((speed-50)/8,0,1)
@@ -2116,6 +2043,12 @@ end
     self:SetSoundState("rolling_30",rollingi*rol30,rol30p)
     self:SetSoundState("rolling_55",rollingi*rol55,rol55p)
     self:SetSoundState("rolling_75",rollingi*rol75,rol75p)
+	
+    Pricep740:SetSoundState("rolling_5_tst",rollingi*rol5,rol5p)	
+    Pricep740:SetSoundState("rolling_10_tst",rollingi*rol10,rol10p)
+    Pricep740:SetSoundState("rolling_30_tst",rollingi*rol30,rol30p)
+    Pricep740:SetSoundState("rolling_55_tst",rollingi*rol55,rol55p)
+    Pricep740:SetSoundState("rolling_75_tst",rollingi*rol75,rol75p)		
 
     local rol10 = math.Clamp(speed/15,0,1)*(1-math.Clamp((speed-18)/35,0,1))
     local rol10p = Lerp((speed-15)/14,0.6,0.78)
@@ -2133,6 +2066,10 @@ end
     self:SetSoundState("rolling_low_740"    ,rol10*rollings,rol10p) --15
     self:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
     self:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70	
+	
+    Pricep740:SetSoundState("rolling_low_740"    ,rol10*rollings,rol10p) --15
+    Pricep740:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
+    Pricep740:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70		
 
     local state = self:GetPackedRatio("RNState")
     self.TISUVol = math.Clamp(self.TISUVol+(state-self.TISUVol)*dT*8,0,1)
@@ -2159,13 +2096,13 @@ end
 	
 	local BBEs = self:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		
-    self:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
+    Pricep740:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end
 	if BBEs==2 then		
-    self:SetSoundState("bbe_v2", self:GetPackedBool("BBEWork") and 1 or 0, 1)
+    Pricep740:SetSoundState("bbe_v2", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end	
 	if BBEs==3 then		
-    self:SetSoundState("bbe_v3", self:GetPackedBool("BBEWork") and 1 or 0, 1)
+    Pricep740:SetSoundState("bbe_v3", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end			
 
     local work = self:GetPackedBool("AnnPlay")

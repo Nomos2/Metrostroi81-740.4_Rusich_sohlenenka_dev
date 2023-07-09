@@ -1701,74 +1701,6 @@ ENT.ClientProps["Naddver_off"] = {
 	scale = 1,	
 	nohide = true,
 }
---[[for i=1,31 do
-    ENT.ClientProps["led_l_f"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+289.25-144, -11.5, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-		hide = 0.49,
-    }
-    ENT.ClientProps["led_l_f_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+289.25-144, -11.5, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-    }	
-end
-for i=1,29 do
-ENT.ClientProps["led_l_r"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.45+626.1-144, -11.5, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-        hide = 2,
-		scale = 1.01,			
-    }		
-    ENT.ClientProps["led_right_f"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.44+631.6-144, -86.1, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 2,
-    }
-    ENT.ClientProps["led_right1_f"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.442+299.2-144, -86.1, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 2,
-    }
-    ENT.ClientProps["led_right1_f_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.442+299.2-144, -86.1, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 2,	
-	}
-    ENT.ClientProps["led_right_f_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.44+631.6-144, -86.1, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 2,
-    }	
-	ENT.ClientProps["led_l_r_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.45+626.1-144, -11.5, 13.5),
-        ang = Angle(0,0,0),
-        skin=6,
-        hide = 1.5,
-		scale = 1.01,			
-    }		
-end]]
 
 ENT.ButtonMap["Antenna"] = {
     pos = Vector(835-146,-7.5,-19.5),
@@ -1783,191 +1715,18 @@ ENT.ButtonMap["Antenna"] = {
     }
 }
 
---[[for i=1,32 do
-ENT.ClientProps["led_l_f_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+402.2-144, 11.7, 12.6),
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f_rear"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_f_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+402.2-144, 11.7, 12.6),
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f_rear"..i].ang)
-    end,      
-}
-
-ENT.ClientProps["led_l_f2_rear"..i] = { --3 дверь задняя секция право
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425-62.2-144, 11.18, 13),
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f2_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f2_rear"..i	].ang)
-    end,      
-}
-ENT.ClientProps["led_l_f2_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425-62.2-144, 11.18, 13),
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f2_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f2_rear"..i	].ang)
-    end,      
-}
-ENT.ClientProps["led_l_zad1_l"..i] = { --1 дверь задняя секция
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+351-144, -11.9, 12.6),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad1_l"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad1_l"..i	].ang)
-    end,      
-}
-ENT.ClientProps["led_l_zad1_l_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+351-144, -11.9, 12.6),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad1_l"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad1_l"..i	].ang)
-    end,      
-}
-ENT.ClientProps["led_l_zad3_l"..i] = { --3 дверь задняя секция лево
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.428-113.11-144, -11.78, 12.6),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad3_l"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad3_l"..i	].ang)
-    end,      
-}
-ENT.ClientProps["led_l_zad3_l_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.428-113.11-144, -11.78, 12.6),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad3_l"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad3_l"..i	].ang)
-    end,      
-}
-end
-
-for i=1,31 do
-ENT.ClientProps["led_l_zad2_l"..i] = { --2 дверь лево задняя секция
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.435+118.2-144, -11.78, 12.6),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad2_l"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad2_l"..i	].ang)
-    end,      
-} 
-ENT.ClientProps["led_l_zad2_l_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.435+118.2-144, -11.78, 12.6),
-        ang = Angle(0,0,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_zad2_l_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_zad2_l_ob"..i	].ang)
-    end,      
-} 
-end
-
-for i=1,29 do
-ENT.ClientProps["led_l_f1_rear"..i] = { --2 дверь право задняя секция
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.44+171.55-144, 11.18, 13),
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f1_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f1_rear"..i	].ang)
-    end,      
-}
-ENT.ClientProps["led_l_f1_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.44+171.55-144, 11.18, 13),
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-        if cl_ent:GetParent() == ent:GetNW2Entity("gmod_subway_kuzov") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("gmod_subway_kuzov"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f1_rear_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f1_rear_ob"..i	].ang)
-    end,      
-}
-end]]
 local yventpos = {
-    -414.5+0*117-144,
-	-414.5+1*117+6.2-144,
+    414.5+0*117-144,
+	---414.5+1*117+6.2-144,
 	414.5+2*117+5-144,
-	414.5+3*117+2-144,
+	--414.5+3*117+2-144,
 	414.5+4*117+0.5-144,
-	-414.5+5*117-2.3-144,
-	-414.5+6*117-144,
+	---414.5+5*117-2.3-144,
+	---414.5+6*117-144,
 }
 
 ENT.ButtonMap["CAMS"] = {
-    pos = Vector(809.2-144.11,52.37,10.58),
+    pos = Vector(809.1	-144.11,52.37,10.58),
     ang = Angle(0,-57.7,90),
     width = 0,
     height = 0,
@@ -2630,9 +2389,9 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
 	end
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
@@ -2645,10 +2404,10 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
-	end	
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
+	end
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
@@ -2660,10 +2419,10 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 0.4) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 0.4) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
-	end	
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 0.4 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
+	end
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_720"] ~= "subway_trains/bogey/engines/720/speed_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 0.4) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
@@ -2675,10 +2434,10 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end	
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
-	end		
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
+	end	
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new_1/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
@@ -2690,9 +2449,9 @@ function ENT:Think()
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end		
-	if IsValid(self:GetNW2Entity("MiddleBogey")) and self:GetNW2Entity("MiddleBogey").SoundNames and (self:GetNW2Entity("MiddleBogey").SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
-	or self:GetNW2Entity("MiddleBogey").EngineSNDConfig and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1] and self:GetNW2Entity("MiddleBogey").EngineSNDConfig[1][5] ~= 1) or refresh then
-		self:ReInitBogeySounds(self:GetNW2Entity("MiddleBogey"))
+	if IsValid(MiddleBogey) and MiddleBogey.SoundNames and MiddleBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
+	or MiddleBogey.EngineSNDConfig and MiddleBogey.EngineSNDConfig[1] and MiddleBogey.EngineSNDConfig[1][5] ~= 1 or refresh then
+		self:ReInitBogeySounds(MiddleBogey)
 	end	
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_1/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
@@ -2703,7 +2462,7 @@ end
 --Генерация пропов для задней секции.
 local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 if IsValid(Pricep740) then
-if not Pricep740.ButtonMap then
+if not Pricep740.ClientSounds then
 Pricep740.ButtonMap = {}
 Pricep740.ClientProps = {}
 Pricep740.ClientSounds = {}
@@ -2748,8 +2507,8 @@ Pricep740.ClientProps["RearBrake"] = {
 	ang = Angle(0,90,0),
 	hide = 2,	
 }
-Pricep740.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve_740" end,1,1,50,1e3,Angle(-90,0,0)}}
-Pricep740.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve_740" end,1,1,50,1e3,Angle(-90,0,0)}}
+Pricep740.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+Pricep740.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 	
 Pricep740.ClientProps["krepezh1"] = {
     model = "models/metrostroi_train/81-740/body/krepezh.mdl",
@@ -2815,7 +2574,7 @@ Pricep740.ButtonMap["RearDoor"] = {
     buttons = {
         {ID = "RearDoor",x=0,y=0,w=642,h=2000, tooltip=Metrostroi.GetPhrase("Common.741.RearDoor"), model = {
             var="RearDoor",sndid="door_cab_t",
-            sndvol = 1, snd = function(val) return val and "cab_door_open" or "cab_door_close" end,
+            sndvol = 1, snd = function(val) print(val) return val and "cab_door_open" or "cab_door_close" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
         }},   
 	}	
@@ -2890,13 +2649,7 @@ for k=0,3 do
 			self.RedLightBroken3 = self:GetNW2Bool("RedLightBroken3",false)
 			self.RedLightBroken4 = self:GetNW2Bool("RedLightBroken4",false)			
             end   		
-		end	
-	if not IsValid(self.RearBogey) then
-		self.RearBogey = self:GetNW2Entity("RearBogey")		
-	end
-	if not IsValid(self.FrontBogey) then
-		self.FrontBogey = self:GetNW2Entity("FrontBogey")
-	end		
+		end		
 end	
 local function GetDoorPositionRear(n,G,j)
 	if j == 0 			--	x						--	y        --	z
@@ -3141,14 +2894,16 @@ end
 	
     local dPdT = self:GetPackedRatio("BrakeCylinderPressure_dPdT")
     self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-self:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)
-    self:SetSoundState("release",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)	
+    self:SetSoundState("release_front",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)	
+    self:SetSoundState("release_middle",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)
+    Pricep740:SetSoundState("release_rear",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)	
 
     self:Animate("KRO", self:GetPackedRatio("KRO",0), 0.525, 1,  4,false)
     self:Animate("KRR", self:GetPackedRatio("KRR",0), 0.525, 1,  4,false)
     self:Animate("km013", Cpos[self:GetPackedRatio("Cran")] or 0, 0, 0.7,  2,false)
     self:Animate("PB",  self:GetPackedBool("PB") and 1 or 0,0,0.2,  8,false)
 	
-    if IsValid(ENT) and IsValid(MiddleBogey) then
+    if IsValid(Pricep740) and IsValid(MiddleBogey) then
         --print(MiddleBogey:GetAngles())
 		--Fence:ManipulateBoneAngles(0,Fence:WorldToLocalAngles(Angle(MiddleBogey:GetAngles().y-90,-MiddleBogey:GetAngles().z,MiddleBogey:GetAngles().z)))
 		--Fence:ManipulateBonePosition(0,Vector(0,0,-68))		 
@@ -3254,110 +3009,45 @@ end
             if IsValid(self.ClientEnts["speedrek"..i]) then self.ClientEnts["speedrek"..i]:SetSkin(0) end
         end
     end
-	
-            --for i=1,29 do				
-                --if IsValid(self.ClientEnts["led_l_r"..i]) then self.ClientEnts["led_l_r"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                --if IsValid(self.ClientEnts["led_right_f_ob"..i]) then self.ClientEnts["led_right_f_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                --if IsValid(self.ClientEnts["led_right1_f_ob"..i]) then self.ClientEnts["led_right1_f_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                --if IsValid(self.ClientEnts["led_l_f1_rear_ob"..i]) then self.ClientEnts["led_l_f1_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 								
-				--end	
-	
-	-- наддверки и попытка в рандомизацию поломанных сегментов. ОЧЕНЬ СИЛЬНО ЛАГАЕТ 
-    --[[local scurr = self:GetNW2Int("PassSchemesLED")
-    local snext = self:GetNW2Int("PassSchemesLEDN")
-    local led_back = self:GetPackedBool("PassSchemesLEDO",false)
-    local ledwork = scurr~=0 or snext~=0
-	
-	for i=1,29 do	
-        self:ShowHide("led_l_r"..i,not led_back and ledwork)
-	    self:ShowHide("led_right_f"..i,not led_back and ledwork)	
-	    self:ShowHide("led_right1_f"..i,not led_back and ledwork)	
-	    self:ShowHide("led_l_f1_rear"..i,not led_back and ledwork)		
-
-        self:ShowHide("led_l_r_ob"..i,led_back and ledwork)
-	    self:ShowHide("led_right_f_ob"..i,led_back and ledwork)	
-	    self:ShowHide("led_right1_f_ob"..i,led_back and ledwork)	
-	    self:ShowHide("led_l_f1_rear_ob"..i,led_back and ledwork)				
+		
+	for i = 1,10 do
+		local id1 = Format("b1tunnel_%d",i)
+		local id2 = Format("b2tunnel_%d",i)
+		local id3 = Format("b3tunnel_%d",i)		
+		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
+		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
+		
+		self.SoundNames[id2.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id2.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1}
+		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
+		
+		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1}
+		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
 	end
-	for i=1,31 do
-	    self:ShowHide("led_l_f"..i,not led_back and ledwork)
-        self:ShowHide("led_l_zad2_l"..i,not led_back and ledwork)
+	for i = 1,14 do
+		local id1 = Format("b1street_%d",i)
+		local id2 = Format("b2street_%d",i)
+		local id3 = Format("b3street_%d",i)		
+		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
+		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
 		
-	    self:ShowHide("led_l_f_ob"..i,led_back and ledwork)
-        self:ShowHide("led_l_zad2_l_ob"..i,led_back and ledwork)		
-	end	
-    for i=1,32 do
-        self:ShowHide("led_l_f_rear"..i,not led_back and ledwork)
-        self:ShowHide("led_l_f2_rear"..i,not led_back and ledwork)
-        self:ShowHide("led_l_zad1_l"..i,not led_back and ledwork)	
-        self:ShowHide("led_l_zad3_l"..i,not led_back and ledwork)	
-
-        self:ShowHide("led_l_f_rear_ob"..i,led_back and ledwork)
-        self:ShowHide("led_l_f2_rear_ob"..i,led_back and ledwork)
-        self:ShowHide("led_l_zad1_l_ob"..i,led_back and ledwork)	
-        self:ShowHide("led_l_zad3_l_ob"..i,led_back and ledwork)		
-	end	
-	
-    local led = scurr
-    if snext ~= 0 and CurTime()%.9 > .30 then led = led + snext end
-    if scurr < 0 then led = math.floor(CurTime()%9*6.2) end
-    if led_back then
-        if ledwork then
+		self.SoundNames[id2.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id2.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1.5}
+		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
 		
-            for i=1,29 do				
-                if IsValid(self.ClientEnts["led_l_r_ob"..i]) then self.ClientEnts["led_l_r_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                if IsValid(self.ClientEnts["led_right_f_ob"..i]) then self.ClientEnts["led_right_f_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                if IsValid(self.ClientEnts["led_right1_f_ob"..i]) then self.ClientEnts["led_right1_f_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                if IsValid(self.ClientEnts["led_l_f1_rear_ob"..i]) then self.ClientEnts["led_l_f1_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 								
-				end		
-				end
-				end 
-				end	
-end				
-
-            for i=1,31 do
-                if IsValid(self.ClientEnts["led_l_f_ob"..i]) then self.ClientEnts["led_l_f_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2))
-                if IsValid(self.ClientEnts["led_l_zad2_l_ob"..i]) then self.ClientEnts["led_l_zad2_l_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2))	
-				end
-				end	
-			end 	
-				
-	            for i=1,32 do
-                if IsValid(self.ClientEnts["led_l_f_rear_ob"..i]) then self.ClientEnts["led_l_f_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end
-                if IsValid(self.ClientEnts["led_l_f2_rear_ob"..i]) then self.ClientEnts["led_l_f2_rear_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end	
-                if IsValid(self.ClientEnts["led_l_zad1_l_ob"..i]) then self.ClientEnts["led_l_zad1_l_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end		
-				if IsValid(self.ClientEnts["led_l_zad3_l_ob"..i]) then self.ClientEnts["led_l_zad3_l_ob"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end			
-				end					
-		end	
-    else
-        if ledwork then
-            for i=1,31 do
-                if IsValid(self.ClientEnts["led_l_f"..i]) then self.ClientEnts["led_l_f"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2))
-                if IsValid(self.ClientEnts["led_l_zad2_l"..i]) then self.ClientEnts["led_l_zad2_l"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2))								
-				end
-				end
-			
-	            for i=1,32 do
-                if IsValid(self.ClientEnts["led_l_f_rear"..i]) then self.ClientEnts["led_l_f_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end
-                if IsValid(self.ClientEnts["led_l_f2_rear"..i]) then self.ClientEnts["led_l_f2_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end	
-                if IsValid(self.ClientEnts["led_l_zad1_l"..i]) then self.ClientEnts["led_l_zad1_l"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end		
-				if IsValid(self.ClientEnts["led_l_zad3_l"..i]) then self.ClientEnts["led_l_zad3_l"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) end			
-				end
-				end		
-				end
-				end
-				
-            for i=1,29 do				
-                if IsValid(self.ClientEnts["led_l_r"..i]) then self.ClientEnts["led_l_r"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                if IsValid(self.ClientEnts["led_right_f"..i]) then self.ClientEnts["led_right_f"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                if IsValid(self.ClientEnts["led_right1_f"..i]) then self.ClientEnts["led_right1_f"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 
-                if IsValid(self.ClientEnts["led_l_f1_rear"..i]) then self.ClientEnts["led_l_f1_rear"..i]:SetSkin(math.Clamp(led-((i-1)*1),0,2)) 								
-				end		
-				end
-				end
-				end
-			end 
-	]]
+		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1.5}
+		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
+	end
 			
 	local bool2num ={ [true]=1, [false]=0 }
 	local negbool2num ={ [true]=0, [false]=1 }
@@ -3384,9 +3074,6 @@ end
     local headlights = HL1*0.1+HL2*0.1+HL3*0.1+HL4*0.1+HLs1*0.2+HLs2*0.4
 	--print(headlights)
     self:SetLightPower(1,headlights>0,headlights)
-    --self:SetLightPower(1.2,headlights>0 and not self.HeadLightBroken2,headlights)	
-	--self:SetLightPower(1.3,headlights>0 and not self.HeadLightBroken3,headlights)
-	--self:SetLightPower(1.4,headlights>0 and not self.HeadLightBroken4,headlights)	
     self:SetLightPower(2,RL>0,RL)
 	--print(self:GetPackedRatio("Headlights"))
     if IsValid(self.GlowingLights[1]) then
@@ -3406,7 +3093,8 @@ end
 			self.WiperDir = false
 		end
 	end
-		self:Animate("wiper",self.WiperDir and 1 or 0,0,1,0.32,false)
+	self:Animate("wiper",self.WiperDir and 1 or 0,0,1,0.32,false)
+	
 	--Анимация дверей.
 	if not self.DoorStates then self.DoorStates = {} end
     if not self.DoorLoopStates then self.DoorLoopStates = {} end
@@ -3420,11 +3108,14 @@ end
             if (state ~= 1 and state ~= 0) ~= self.DoorStates[id] then
                 if doorstate and state < 1 or not doorstate and state > 0 then
 					if doorstate then self:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))
+					if doorstate then Pricep740:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))					
                 else
 					if state > 0 then
                         self:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))
+                        Pricep740:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))
                     else
                         self:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))
+                        Pricep740:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))						
                     end
                 end
                 self.DoorStates[id] = (state ~= 1 and state ~= 0)
@@ -3435,6 +3126,7 @@ end
                 self.DoorLoopStates[id] = math.Clamp((self.DoorLoopStates[id] or 0) - 6*self.DeltaTime,0,1)
             end
             self:SetSoundState(sid.."r",self.DoorLoopStates[id],0.9+self.DoorLoopStates[id]*0.1)
+	        Pricep740:SetSoundState(sid.."r",self.DoorLoopStates[id],0.9+self.DoorLoopStates[id]*0.1)		
             local n_l = "door"..n.."x"..G.."a"
             local n_r = "door"..n.."x"..G.."b"
 			local n_l1 = "door"..n.."x"..G.."a1"
@@ -3450,6 +3142,7 @@ end
     local door_m = self:GetPackedBool("PassengerDoor")
     local door_l = self:GetPackedBool("CabinDoorLeft")
     local door_r = self:GetPackedBool("CabinDoorRight")
+	local door4s = Pricep740:GetPackedBool("RearDoor")
     --local door_o = self:GetPackedBool("OtsekDoor") or self.CurrentCamera == 7
 	
     local door_cab_m = self:Animate("door_cab_m",door_m and 1 or -0.05,0,0.235, 8, 0.05)
@@ -3480,9 +3173,9 @@ end
 	
 	local door_cab_t = Pricep740:Animate("door_cab_t",Pricep740:GetPackedBool("RearDoor") and 0.99 or -0.05, 0, 0.55, 4.5, 0.55) 	
 	local door4s = (door_cab_t > 0 or Pricep740:GetPackedBool("RearDoor"))
-    if self.Door4 ~= door4s then
-        self.Door4 = door4s
-        self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
+    if Pricep740.Door4 ~= door4s then
+        Pricep740.Door4 = door4s
+        Pricep740:PlayOnce("RearDoor","bass",door4s and 1 or 0)
     end			
     --[[local door5s = (door_cab_o > 0 or door_o)
     if self.Door5 ~= door5s then
@@ -3504,9 +3197,11 @@ end
     self:SetSoundState("parking_brake",self.ParkingBrake,1.4)
 
     self.FrontLeak = math.Clamp(self.FrontLeak + 10*(-self:GetPackedRatio("FrontLeak")-self.FrontLeak)*dT,0,1)
-    Pricep740.RearLeak = math.Clamp(self.RearLeak + 10*(-self:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)
     self:SetSoundState("front_isolation",self.FrontLeak,0.9+0.2*self.FrontLeak)
-    Pricep740:SetSoundState("rear_isolation",self.RearLeak,0.9+0.2*Pricep740.RearLeak)
+	
+    Pricep740.RearLeak = math.Clamp(self.RearLeak + 10*(-self:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)	
+    Pricep740:SetSoundState("rear_isolation",Pricep740.RearLeak,0.9+0.2*Pricep740.RearLeak)
+	
 
     local ramp = self:GetPackedRatio("Crane_dPdT",0)
     if ramp > 0 then
@@ -3540,14 +3235,14 @@ end
 	end	
 	
     local state = self:GetPackedBool("CompressorWork")
-    self:SetSoundState("compressor",state and 1.0 or 0,1)
+    Pricep740:SetSoundState("compressor",state and 1.0 or 0,1)
 
     local speed = self:GetPackedRatio("Speed", 0)
 
     local ventSpeedAdd = math.Clamp(speed/30,0,1)
 
     local vstate = self:GetPackedBool("Vent2Work")
-    for i=1,7 do
+    for i=1,4 do
         local rand = self.VentRand[i]
         local vol = self.VentVol[i]
         local even = i%2 == 0
@@ -3566,21 +3261,15 @@ end
 		if VentSound==1 then
         self:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
 		end
+		if VentSound==1 then
+        Pricep740:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end		
 		if VentSound==2 then
         self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
 		end		
-		
-		if VentSound==1 then		
-        if IsValid(self.ClientEnts["vent"..i]) then
-            self.ClientEnts["vent"..i]:SetPoseParameter("position",self.VentState[i])
-			end
-		end		
-		
-		if VentSound==2 then	
-		if IsValid(self.ClientEnts["vent1"..i]) then
-            self.ClientEnts["vent1"..i]:SetPoseParameter("position",self.VentState[i])
-			end	
-		end		
+		if VentSound==2 then
+        Pricep740:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
+		end			
     end
     --local rol10 = math.Clamp(speed/5,0,1)*(1-math.Clamp((speed-50)/8,0,1))
     --local rol70 = math.Clamp((speed-50)/8,0,1)
@@ -3622,9 +3311,9 @@ end
     --self:SetSoundState("rolling_medium1",0 or rol40*rollings,rol40p) --57
     self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70
 	
-    self:SetSoundState("rolling_low_740"    ,rol10*rollings,rol10p) --15
-    self:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
-    self:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70	
+    Pricep740:SetSoundState("rolling_low_740"    ,rol10*rollings,rol10p) --15
+    Pricep740:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
+    Pricep740:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70	
 	
     --local state = (RealTime()%4/3)^1.5
     --local strength = 1--self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-15)/15,0,1))
@@ -3659,20 +3348,26 @@ end
 	
 	local BBEs = self:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		
-    self:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
+    Pricep740:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end
 	if BBEs==2 then		
-    self:SetSoundState("bbe_v2", self:GetPackedBool("BBEWork") and 1 or 0, 1)
+    Pricep740:SetSoundState("bbe_v2", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end	
 	if BBEs==3 then		
-    self:SetSoundState("bbe_v3", self:GetPackedBool("BBEWork") and 1 or 0, 1)
+    Pricep740:SetSoundState("bbe_v3", self:GetPackedBool("BBEWork") and 1 or 0, 1)
 	end	
 
     local work = self:GetPackedBool("AnnPlay")
     for k,v in ipairs(self.AnnouncerPositions) do
         if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
             self.Sounds["announcer"..k]:SetVolume(work and (v[3] or 1)  or 0.7)
+    --for k,v in ipairs(Pricep740.AnnouncerPositions) do
+        --if Pricep740.Sounds["announcer"..k] and IsValid(Pricep740.Sounds["announcer"..k]) then
+            --Pricep740.Sounds["announcer"..k]:SetVolume(work and (v[3] or 1)  or 0.7)
+			--end
+			--end
         end
+
     end
 end
 

@@ -11,12 +11,12 @@ or Map:find("gm_metronvl")) then
 end
 
 include("shared.lua")
-
---[[ENT.ClientProps = {}
+--[[
+ENT.ClientProps = {}
 ENT.ButtonMap = {}
 ENT.AutoAnims = {}
 ENT.ClientSounds = {}
-ENT.ClientPropsInitialized = false
+ENT.ClientPropsInitialized = false	
 
 ENT.ClientProps["salonR"] = {
 	model = "models/metrostroi_train/81-740/salon/salon_rear.mdl",

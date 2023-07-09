@@ -53,8 +53,6 @@ function ENT:Initialize()
         self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")		
         self.RearCouple = self:CreateCouple(Vector(-611,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
-		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
-		self.RearCouple:GetPhysicsObject():SetMass(5000)
 		
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
 	self:SetNW2Entity("RearBogey",self.RearBogey)		
@@ -338,9 +336,8 @@ end
     if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
     seat_1:SetParent(Pricep740)]]	
 
-function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"	
-	local Pricep740 = ents.Create("gmod_subway_kuzov")--ents.Create("base_entity")
-	Pricep740:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl")		
+function ENT:CreatePricep(pos,ang)
+	local Pricep740 = ents.Create("gmod_subway_kuzov")
     if not IsValid(Pricep740) or not IsValid(self) then return end	
 	Pricep740:SetPos(self:LocalToWorld(pos))
 	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
@@ -362,31 +359,12 @@ function ENT:CreatePricep(pos,ang)		--"models/hunter/plates/plate.mdl"
 	self.MiddleBogey:SetNWInt("Async",true)
 	self.MiddleBogey:SetNWBool("DisableEngines",true)			
 	self.MiddleBogey.DisableSound = 1				
-	self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)		
-	
-	--Метод mirror 
-	self.Train2 = self	
-	self.Train2.HeadTrain = Pricep740
+	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
+	self.RearCouple:GetPhysicsObject():SetMass(5000)	
 
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-	constraint.RemoveConstraints(self.MiddleBogey, "Axis")	
-    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)	
     constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)		
-	
-		constraint.Axis(
-		self.MiddleBogey,
-		self,
-		0,
-		0,
-        Vector(0,0,0),
-		Vector(0,0,0),
-        0,
-		0,
-		0,
-		1,
-		Vector(0,0,1)
-	)	
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
@@ -594,6 +572,10 @@ end
         },
 	}
 
+	--Метод mirror 				
+	Pricep740.HeadTrain = self 
+    Pricep740:SetNW2Entity("HeadTrain", self)	
+	
 --------------------------------------------------------------------------------
 -- Keyboard input
 --------------------------------------------------------------------------------

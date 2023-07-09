@@ -14,6 +14,8 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
+ENT.SyncTable = {    "RearBrakeLineIsolation","RearTrainLineIsolation"}
+ 
 function ENT:Initialize()
     self:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear.mdl")
     self:SetPos(self:GetPos() + Vector(0,0,0))
@@ -34,6 +36,20 @@ function ENT:Initialize()
         self:CPPISetOwner(self.Owner)
     end    
 	
+	self.InteractionZones = {	
+        {
+            ID = "RearBrakeLineIsolationToggle",
+            Pos = Vector(-206-131,-25,-46), Radius = 31
+        },
+        {
+            ID = "RearTrainLineIsolationToggle",
+            Pos = Vector(-206-131,25,-46), Radius = 31
+        },
+        {
+            ID = "RearDoor",
+            Pos = Vector(-310, -13, 7), Radius = 31
+        },
+	} 
 
     -- Get default train mass
     if IsValid(self:GetPhysicsObject()) then
