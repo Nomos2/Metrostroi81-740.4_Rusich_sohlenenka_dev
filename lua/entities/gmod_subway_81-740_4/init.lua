@@ -377,12 +377,6 @@ function ENT:TrainSpawnerUpdate()
             MotorType = math.ceil(math.random()*4+0.5)
           else MotorType = MotorType-1 end	
 	self:SetNW2Int("MotorType",MotorType)	
-
-	local AsyncSound = self:GetNW2Int("AsyncSound")	
-       if AsyncSound == 1 then
-            AsyncSound = math.ceil(math.random()*4+0.5)
-          else AsyncSound = AsyncSound-1 end	
-	self:SetNW2Int("AsyncSound",AsyncSound)	
 	
 	local RingSound = self:GetNW2Int("RingSound")	
        if RingSound == 1 then
@@ -688,14 +682,7 @@ function Pricep740:TrainSpawnerUpdate()
             MotorType = math.ceil(math.random()*4+0.5)
           else MotorType = MotorType-1 end	
 	self:SetNW2Int("MotorType",MotorType)	
-	--self:SetNW2Int("MotorType",math.random(1, 2))	
-
-	local AsyncSound = self:GetNW2Int("AsyncSound")	
-       if AsyncSound == 1 then
-            AsyncSound = math.ceil(math.random()*5+0.5)
-          else AsyncSound = AsyncSound-1 end	
-	self:SetNW2Int("AsyncSound",AsyncSound)	
-	--self:SetNW2Int("AsyncSound",math.random(1, 2))	
+	--self:SetNW2Int("MotorType",math.random(1, 2))		
 
 	local ZavodTable = self:GetNW2Int("ZavodTable")	
        if ZavodTable == 1 then
@@ -818,15 +805,20 @@ function ENT:Think()
     else
         self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and self.Electric.RNState+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
     end--]]
-    if self.BPTI.State < 0 then
-        self:SetPackedRatio("RNState", ((self.BPTI.RNState)-0.5)*math.Clamp((math.abs(self.Electric.Itotal/2)-30-self.Speed*1)/35,0,1)) --снижение скорости
+    --if self.BPTI.State < 0 then
+        --self:SetPackedRatio("RNState", ((self.BPTI.RNState)-0.5)*math.Clamp((math.abs(self.Electric.Itotal/2)-30-self.Speed*1)/35,0,1)) --снижение скорости
         --self:SetNW2Int("RNFreq", 13)
-    else--if self.BPTI.State > 0 then
-        self:SetPackedRatio("RNState", (0.95-self.BPTI.RNState)*math.Clamp((math.abs(self.Electric.Itotal/2)-36-self.Speed*1)/35,0,5))
+    --else--if self.BPTI.State > 0 then
+        --self:SetPackedRatio("RNState", (0.95-self.BPTI.RNState)*math.Clamp((math.abs(self.Electric.Itotal/2)-36-self.Speed*1)/35,0,5))
         --self:SetNW2Int("RNFreq", ((self.BPTI.FreqState or 0)-1/3)/(2/3)*12)
     --[[ else
         self:SetPackedRatio("RNState", 0)--]]
-    end
+    --end
+	
+    local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
+    self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
+    self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
+    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	
 	
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do
@@ -861,11 +853,6 @@ function ENT:Think()
     self:SetPackedRatio("Controller",self.Panel.Controller) 
     self:SetPackedRatio("KRO",(self.KV.KROPosition+1)/2) 
     self:SetPackedRatio("KRR",(self.KV.KRRPosition+1)/2) 
-	
-    local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))
-    self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
-    self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State*math.abs(self.AsyncInverter.Current)/200,0,1))
-    --self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopper/100 or 0,0,1))	
 	
     self:SetPackedRatio("VentCondMode",self.VentCondMode.Value/3)
     self:SetPackedRatio("VentStrengthMode",self.VentStrengthMode.Value/3)
@@ -967,8 +954,11 @@ function ENT:Think()
 
     self:SetPackedRatio("LV",self.Electric.Battery80V/150) 
     self:SetPackedRatio("HV",self.Electric.Main750V/1000) 
-    self:SetPackedRatio("I13",(self.Electric.I13+500)/1000) 
-    self:SetPackedRatio("I24",(self.Electric.I24+500)/1000) 
+	self:SetPackedRatio("I",(self.BUV.I+500)/1000)
+    --self:SetPackedRatio("I13",(self.Electric.I13+500)/1000)
+    --self:SetPackedRatio("I24",(self.Electric.I24+500)/1000)
+    self:SetPackedRatio("I13",(self.AsyncInverter.Current+500)/1000)
+    self:SetPackedRatio("I24",(self.AsyncInverter.Current+500)/1000)
     self:SetPackedBool("PassengerDoor",self.PassengerDoor) 
     self:SetPackedBool("CabinDoorLeft",self.CabinDoorLeft) 
     self:SetPackedBool("CabinDoorRight",self.CabinDoorRight) 
@@ -988,26 +978,32 @@ function ENT:Think()
     self:SetPackedRatio("TL", self.Pneumatic.TrainLinePressure/16.0) 
     self:SetPackedRatio("BC", math.max(math.min(3.2,self.Pneumatic.BrakeCylinderPressure),math.min(3.2,self.Pneumatic.MiddleBogeyBrakeCylinderPressure))/6.0) 
 	
-    self.Engines:TriggerInput("Speed",self.Speed) 
     self.AsyncInverter:TriggerInput("Speed", self.Speed)
 	
    if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
 
-        local A = 2*self.Engines.BogeyMoment
-        self.FrontBogey.MotorForce = (25000+6500*(A < 0 and 1 or 0))--*add--35300+10000*(A < 0 and 1 or 0)
-        self.FrontBogey.Reversed = self.KMR2.Value > 0.5
-        self.MiddleBogey.MotorForce  = (25000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
-        self.MiddleBogey.Reversed = self.KMR1.Value > 0.5
-		self.RearBogey.MotorForce  = (25000+6500*(A < 0 and 1 or 0))--*add--+5000--35300
-        self.RearBogey.Reversed = self.KMR1.Value > 0.5		
+        local A = self.AsyncInverter.Torque
+		--print(A)
+        local add = 1
+        if math.abs(self:GetAngles().pitch) > 4 then
+            add = math.min((math.abs(self:GetAngles().pitch)-4)/2,1)
+        end
+        self.FrontBogey.MotorForce = (40000+5000*(A < 0 and 1 or 0))*add --35300
+        self.FrontBogey.Reversed = (self.BUV.Reverser < 0.5)--<
+        --self.FrontBogey.Reversed = self.KMR2.Value > 0
+        --self.FrontBogey.DisableSound = 1
+        self.RearBogey.MotorForce  = (40000+5000*(A < 0 and 1 or 0))*add --35300
+        self.RearBogey.Reversed = (self.BUV.Reverser > 0.5)-->
+        --self.RearBogey.Reversed = self.KMR1.Value > 0
+        --self.RearBogey.DisableSound = 1
 
         -- These corrections are required to beat source engine friction at very low values of motor power
-        local P = math.max(0,0.04449 + 1.09879*math.abs(A) - 0.565729*A^2)
+        local P = math.max(0,0.04449 + 1.06879*math.abs(A) - 0.465729*A^2)
         if math.abs(A) > 0.4 then P = math.abs(A) end
         if math.abs(A) < 0.05 then P = 0 end
-        if self.Speed < 10 then P = P*(1.0 + 0.5*(10.0-self.Speed)/10.0) end
-        self.RearBogey.MotorPower  = P*0.65*((A > 0) and 1 or -1)
-        self.FrontBogey.MotorPower = P*0.65*((A > 0) and 1 or -1)
+        if self.Speed < 10 then P = P*(1.0 + 0.6*(10.0-self.Speed)/10.0) end
+        self.RearBogey.MotorPower  = P*0.5*((A > 0) and 1 or -1)
+        self.FrontBogey.MotorPower = P*0.5*((A > 0) and 1 or -1)
 
         -- Apply brakes
         self.FrontBogey.PneumaticBrakeForce = (50000.0--[[ +5000+10000--]] ) --20000

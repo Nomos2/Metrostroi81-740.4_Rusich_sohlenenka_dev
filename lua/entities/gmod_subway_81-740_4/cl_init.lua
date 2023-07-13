@@ -2944,37 +2944,6 @@ for i = 1,11 do
 	Pricep740:ShowHideSmooth("lamps_salon_on_rear"..i-1,Pricep740:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
     Pricep740:ShowHideSmooth("lamps_salon_on_rear1"..i,Pricep740:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
 end
-
-	local net = LocalPlayer():GetName()
-
-	self:ShowHide("!BARSBlock_pl",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
-	net:find("Dl3ves15"))
-	self:ShowHide("BARSBlock-",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
-	net:find("Dl3ves15"))
-	self:ShowHide("BARSBlock+",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
-	net:find("Dl3ves15"))
-	self:ShowHide("Gerb_msk",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net:
-	find("Dl3ves15"))	
-	self:ShowHide("Gerb_msk_right",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")and not 
-	net:find("Dl3ves15"))	
-	self:ShowHide("Naddver_off",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not 
-	net:find("Dl3ves15"))
-	self:ShowHide("ASNP_test",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
-	:find("Dl3ves15"))	
-	self:ShowHide("wiper",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1") and not net
-	:find("Dl3ves15"))		
-	
-	self:HidePanel("ASNPScreen",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("ASNP",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
-	self:HidePanel("IGLA_C",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("IGLAButtons_C",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
-	self:HidePanel("Vityaz",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("VityazButtons",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	self:HidePanel("CAMS",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))	
-	
-	Pricep740:HidePanel("Tickers_rear",net:find("VVKonnov") or net:find("Takkar") or net:find("George_pot") or net:find("charliefry_RUS") or net:find("poezdov") or net:find("JackSever") or net:find("jack.sever1") and not net:find("Dl3ves15"))
-	Pricep740:ShowHide("Naddver_off_740",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry_RUS") and not net:find("poezdov") and not net:find("JackSever") 
-	and not net:find("jack.sever1") and not net:find("Dl3ves15"))	
 	
 	local cab_lamp = self:Animate("cab_lamp",self:GetPackedBool("CabinEnabledFull") and 1 or self:GetPackedBool("CabinEnabledEmer") and 0.5 or 0,0,1,5,false)
     self:ShowHideSmooth("cab_emer",cab_lamp)
@@ -3323,6 +3292,15 @@ end
 	--self:SetSoundState("async1", tunstreet*math.Clamp((state)/0.26+0.2,0,1)*strength, 1)
     --self:SetSoundState("chopper", tunstreet*self:GetPackedRatio("chopper"), 1)  	
 	
+--[[	
+    --local state = (RealTime()%4/3)^1.5
+    --local strength = 1--self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-15)/15,0,1))
+    local state = self:GetPackedRatio("asynccurrent")--^1.5--RealTime()%2.5/2	
+    local strength = self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-23)/23,0,1))
+	--print(state/0.3+0.2)
+	--self:SetSoundState("async1", tunstreet*math.Clamp((state)/0.26+0.2,0,1)*strength, 1)
+    --self:SetSoundState("chopper", tunstreet*self:GetPackedRatio("chopper"), 1)  	
+	
     local state = self:GetPackedRatio("RNState")
     self.TISUVol = math.Clamp(self.TISUVol+(state-self.TISUVol)*dT*8,0,1)
 	
@@ -3345,6 +3323,13 @@ end
 	if AsyncSound==6 then		
     self:SetSoundState("async6", self.TISUVol/1.5, 1)
 	end		
+	]]
+	
+    local state = self:GetPackedRatio("asynccurrent")--^1.5--RealTime()%2.5/2	
+    local strength = self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-23)/23,0,1))*0.5
+		
+    self:SetSoundState("ONIX", tunstreet*math.Clamp((state)/0.26+0.2,0,1)*strength, 1)--+math.Clamp(state,0,1)*0.1)
+    self:SetSoundState("chopper", tunstreet*self:GetPackedRatio("chopper"), 1)
 	
 	local BBEs = self:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		

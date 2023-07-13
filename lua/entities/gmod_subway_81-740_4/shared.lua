@@ -98,6 +98,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
 	end
 
+--[[
     self.SoundNames["async1"]   = {"subway_trains/rusich/inverter/inverter1.wav",loop = true}
     self.SoundPositions["async1"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
     self.SoundNames["async2"]   = {"subway_trains/rusich/inverter/inverter2.wav",loop = true}
@@ -110,6 +111,14 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     self.SoundPositions["async5"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
     --self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true} --5 инвертер переименован в звук рекуперации.
     --self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
+]]
+
+--Для fixinit75: понятия не имею, но chopper_onix не работает почему-то, в скриптах все нормально, также я не нашел в интернете информацию по инвертору, где он расположен, а по текущим координатам (0,0,0) он еле слышен. И по громкости также есть  проблемы. Прошу, укажи, где я ошибся.
+
+    self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true}
+    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),1}	
+    self.SoundNames["ONIX"]   = {"subway_trains/rusich/inverter/inverter.wav", loop = true}
+    self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),1}	
 	
     for i=1,4 do
         self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop.wav"}
@@ -517,7 +526,6 @@ ENT.Spawner = {
 	
 	{"Announcer","Spawner.740.Announcer","List",Announcer},	
 	{},
-	{"AsyncSound","Spawner.740.AsyncSound","List",{"Spawner.740.AsyncSound1","Spawner.740.AsyncSound2","Spawner.740.AsyncSound3","Spawner.740.AsyncSound4","Spawner.740.AsyncSound5","Spawner.740.AsyncSound.Random"}},	
 	{"RingSound","Spawner.740.RingSound","List",{"Spawner.740.RingSound1","Spawner.740.RingSound2","Spawner.740.RingSound3","Spawner.740.RingSound4","Spawner.740.RingSound.Random"}},	
 	{"ZavodTable","Spawner.740.ZavodTable","List",{"Spawner.740.ZavodTable.Random","Spawner.740.ZavodTable1","Spawner.740.ZavodTable2","Spawner.740.ZavodTable3"}}, 
 	{"BBESound","Spawner.740.BBESound","List",{"Spawner.740.BBESound.Random","Spawner.740.BBESound1","Spawner.740.BBESound2","Spawner.740.BBESound3"}}, 	

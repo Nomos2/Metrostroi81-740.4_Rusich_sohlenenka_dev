@@ -1,7 +1,5 @@
 --Подкрадули:
---PRIZMAA (Пустая подкраdoolya)
 --NICIX (Pussy Podkradoolya)
---Mishanja_Games (! pidkradulka)
 --𝓥𝓁𝒶𝒹𝒾𝓂𝒾𝓇 𝓛𝒾𝓉𝓋𝒾𝓃𝑜𝓋 (Литиевая подкрадуля)
 -- _Праздник горячей еды_(Питерская Подкрадуля-тян)
 --Nom(Подкрадулеходы Drive)
@@ -61,14 +59,6 @@ Spawner.740.BBESound.Random   = Случайно
 Spawner.740.BBESound2    = Тип 1
 Spawner.740.BBESound3    = Тип 2 
 Spawner.740.BBESound4    = Тип 3
-
-Spawner.740.AsyncSound    = Тип звука инвертора
-Spawner.740.AsyncSound.Random   = Случайно
-Spawner.740.AsyncSound2    = Тип 1
-Spawner.740.AsyncSound3    = Тип 2
-Spawner.740.AsyncSound4    = Тип 3
-Spawner.740.AsyncSound5    = Тип 4
-Spawner.740.AsyncSound6    = Тип 5
 
 Spawner.740.RingSound    = Тип звука звонка
 Spawner.740.RingSound.Random   = Случайно
@@ -558,14 +548,6 @@ Entities.gmod_subway_81-740_4.Spawner.VentSound.Name 		  = @[Spawner.740.VentSou
 Entities.gmod_subway_81-740_4.Spawner.VentSound.1 		  	  = @[Spawner.740.VentSound.Random] 
 Entities.gmod_subway_81-740_4.Spawner.VentSound.2         	  = @[Spawner.740.VentSound2]
 Entities.gmod_subway_81-740_4.Spawner.VentSound.3             = @[Spawner.740.VentSound3]
-
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.Name 		  = @[Spawner.740.AsyncSound] 
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.1 		  	  = @[Spawner.740.AsyncSound.Random] 
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.2         	  = @[Spawner.740.AsyncSound2]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.3            = @[Spawner.740.AsyncSound3]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.4         	  = @[Spawner.740.AsyncSound4]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.5            = @[Spawner.740.AsyncSound5]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.6            = @[Spawner.740.AsyncSound6]
 
 Entities.gmod_subway_81-740_4.Spawner.RingSound.Name 		  = @[Spawner.740.RingSound] 
 Entities.gmod_subway_81-740_4.Spawner.RingSound.1 		  	  = @[Spawner.740.RingSound.Random] 

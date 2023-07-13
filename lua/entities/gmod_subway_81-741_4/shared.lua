@@ -12,6 +12,7 @@ end
 
 ENT.Type            = "anim"
 ENT.Base            = "gmod_subway_base"
+
 ENT.Author          = ""
 ENT.Contact         = ""
 ENT.Purpose         = ""
@@ -56,6 +57,7 @@ local yventpos = {
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)
 	local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
+--[[	
     self.SoundNames["async1"]   = {"subway_trains/rusich/inverter/inverter1.wav",loop = true}
     self.SoundPositions["async1"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
     self.SoundNames["async2"]   = {"subway_trains/rusich/inverter/inverter2.wav",loop = true}
@@ -68,6 +70,12 @@ function ENT:InitializeSounds()
     self.SoundPositions["async5"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos	
     --self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true} --5 инвертер переименован в звук рекуперации.
     --self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
+	]]
+	
+    self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true} --По поводу этого дела дал пояснение в голове состава.
+    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),1}	
+    self.SoundNames["ONIX"]   = {"subway_trains/rusich/inverter/inverter.wav", loop = true}
+    self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),1}	
 	
     for i=1,4 do
         self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop.wav"}

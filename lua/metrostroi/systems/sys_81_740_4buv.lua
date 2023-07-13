@@ -16,6 +16,20 @@ function TRAIN_SYSTEM:Initialize()
     self.States = {}
     self.Commands = {}
 
+    self.PowerTimer = CurTime()
+    self.PowerTbl = {
+        [1] = 0.0425,   --X1 150A
+        [2] = 0.1295,   --X2 200A
+        [3] = 0.2345,   --X3 260A
+        [4] = 0.3565,   --X4 330A
+        -------------------
+        [0] = 0,
+        -------------------
+        [-1] = -0.0185, --T1 -150A
+        [-2] = -0.2150, --T2 -260A
+        [-3] = -0.3044, --T3 -310A
+    }
+
     self.Slope = false
 
     self.BBE = 0
@@ -27,15 +41,32 @@ function TRAIN_SYSTEM:Initialize()
     self.Drive = 0
     self.DriveStrength = 0
     self.Disassembly = 0
+	
+	self.I = math.random(3,6)
+	self.I13 = 0
+	self.I24 = 0
+	self.IVO = -00.1
+	
     self.Vent2 = 0
+    self.DriveTimer = CurTime()
+
     self.CurTime = CurTime()
+    self.TimerMode = CurTime()
+	
 	self.FirstHalf = false
+	
+	self.Strength = 0
+	self.TargetStrength = 0
+	
+	self.SchemeSlope = false
+	self.Recurperation = 1
+	
 	self.TPT = 0
 	self.HPds = 0
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return {"Brake", "Drive", "DriveStrength", "Disassembly" ,"BBE","MK","Vent2","TPT"}
+    return {"Brake", "Drive", "DriveStrength", "Disassembly","Strength" ,"BBE","MK","Slope","Slope1","SchemeSlope","Vent2","TPT"}
 end
 
 function TRAIN_SYSTEM:Inputs()
@@ -149,7 +180,24 @@ function TRAIN_SYSTEM:Think()
         self:CState("DoorTorec", Train.RearDoor or Train.FrontDoor)
         self:CState("DoorBack", Train.PassengerDoor or Train.CabinDoorLeft or Train.CabinDoorRight)
         self:CState("EmPT",Train:ReadTrainWire(28) > 0)
-        self:CState("NoAssembly", Train.KMR1.Value == 0 and Train.KMR2.Value == 0 or Train.K2.Value == 0 and Train.K3.Value==0)
+        self:CState("NoAssembly",not (self.Scheme_E))--Train.KMR1.Value == 0 and Train.KMR2.Value == 0 or Train.K2.Value == 0 and Train.K3.Value==0)
+		local emer = Train:ReadTrainWire(45)+Train:ReadTrainWire(19)
+		local bv = Train.BV.Value
+		local strength,brake,drive = 0,0,0
+		if emer > 0 then
+			strength = Train:ReadTrainWire(45) > 0 and 4 or Train:ReadTrainWire(19) > 0 and 2 or 0
+			drive = strength*bv --*Train.Electric.BUTP
+		else
+			brake = self.Brake--*Train.Electric.BUTP
+			drive = self.Drive*bv--*Train.Electric.BUTP
+			strength = self.DriveStrength
+		end
+		self.Scheme = (Train.Speed < 0.4 and 0 or Train.Electric.Brake)+drive > 0
+		self:CState("Strength",self.Strength)
+		self:CState("Scheme", ((Train.Speed < 6.5 and 0 or brake)+drive > 0 and (drive > 0 and (Train.Pneumatic.BrakeCylinderPressure < 0.7 or self.Slope1 or Train:ReadTrainWire(19)+Train:ReadTrainWire(45) > 0) or brake > 0 and Train.Pneumatic.BrakeCylinderPressure < 1.7+Train.Pneumatic.WeightLoadRatio)) and SchemeWork > 0.5)
+		self.Scheme_E = (Train.Speed < 6.5 and 0 or brake)+drive > 0 and (drive > 0 and (Train.Pneumatic.BrakeCylinderPressure < 0.7 or self.Slope1 or Train:ReadTrainWire(19)+Train:ReadTrainWire(45) > 0) or brake > 0 and Train.Pneumatic.BrakeCylinderPressure < 1.7+Train.Pneumatic.WeightLoadRatio) and SchemeWork > 0.5
+        self:CState("ParkingBrakeEnabled", Train.Pneumatic.ParkingBrakePressure < 3)
+        self:CState("BEPPBroken", false)
 		--self:CState("Scheme", ((Train.Speed < 6.5 and 0 or brake)+drive > 0 and (drive > 0 and (Train.Pneumatic.BrakeCylinderPressure < 0.7 or self.Slope1 or Train:ReadTrainWire(19)+Train:ReadTrainWire(45) > 0) or brake > 0 and Train.Pneumatic.BrakeCylinderPressure < 1.7+Train.Pneumatic.WeightLoadRatio)) and SchemeWork > 0.5)
         self:CState("ParkingBrakeEnabled", Train.Pneumatic.ParkingBrakePressure < 3)
 		self:CState("MejWag", Train:ElectricConnected(Train.FrontTrain, false) and Train:ElectricConnected(Train.RearTrain, true))
@@ -161,7 +209,7 @@ function TRAIN_SYSTEM:Think()
 		self:CState("MPTEnabled", Train.Pneumatic.MiddleBogeyBrakeCylinderPressure > 0.2)
         self:CState("PTBad", false)
         self:CState("PTReady", Train.Pneumatic.AirDistributorPressure >= (2.6+Train.Pneumatic.WeightLoadRatio*0.6)-0.1)
-        self:CState("PTReplace", self.PTReplace and CurTime()-self.PTReplace > 1.5)
+        self:CState("PTReplace", self.PTReplace)-- and CurTime()-self.PTReplace > 1.5)
         self:CState("BTBReady", Train.Pneumatic.BTBReady)
         self:CState("TLPressure", math.Round(Train.Pneumatic.TrainLinePressure,1))
         self:CState("BLPressure", math.Round(Train.Pneumatic.BrakeLinePressure,1))
@@ -177,20 +225,21 @@ function TRAIN_SYSTEM:Think()
         self:CState("LVBad", Train.Electric.Battery80V < 62)
 		self:CState("LVValue", Train.Electric.Battery80V)
         self:CState("EnginesDone", self.EnginesDone and math.abs(Train.Speed) < 7.5)
-        --self:CState("EnginesBrakeBroke", (self:Get("Brake") or 0) > 0 and Train.BV.Value == 0 or Train.Electric.IT > 0 and Train.K3.Value == 0)
-        self:CState("EnginesBrakeBroke", (self:Get("Brake") or 0) > 0 and (Train.BV.Value == 0 or Train.K3.Value == 0))
+        self:CState("EnginesBrakeBroke", (self:Get("Brake") or 0) > 0 and Train.BV.Value == 0 or Train.Electric.Brake > 0)
         self:CState("PassLightEnabled", self.MainLights)
         self:CState("BVEnabled", Train.BV.Value > 0)
-        self:CState("DriveStrength", math.min(0,Train.Engines.BogeyMoment*2))
-        self:CState("BrakeStrength", math.max(0,Train.Engines.BogeyMoment*2))
-        self:CState("VagEqConsumption", 15)--15-25
-        self:CState("I13", math.Round(Train.Electric.I13,1))
-        self:CState("I24", math.Round(Train.Electric.I24,1))
+        self:CState("DriveStrength", math.min(0,Train.AsyncInverter.Torque))--(Train.AsyncInverter.Drive*Train.AsyncInverter.Torque)/3.6)
+        self:CState("BrakeStrength", math.max(0,Train.AsyncInverter.Torque))--(Train.AsyncInverter.Brake*Train.AsyncInverter.Torque)/3.6)
+        self:CState("VagEqConsumption", self.IVO)--15-25
+		self:CState("I", Train.AsyncInverter.Current)
+        self:CState("I13", Train.AsyncInverter.Current)
+        self:CState("I24", Train.AsyncInverter.Current)
         self:CState("HVVoltage", math.floor(Train.Electric.Main750V))
         self:CState("LVVoltage", math.floor(Train.Electric.Battery80V))
         self:CState("MKVoltage", math.Round(Train.Electric.BVKA_KM1*math.Rand(9,13),1))
         self:CState("Vent2Enabled", Train.Electric.Vent2>0)
         self:CState("HeatEnabled", false)
+		self:CState("AsyncInverter",true)
         self:CState("MKWork", Train.Pneumatic.Compressor)
         self:CState("BUVWork", true)
         self:CState("WagNOrientated", self.Orientation  == self.RevOrientation)
@@ -206,6 +255,7 @@ function TRAIN_SYSTEM:Think()
     if self.Reset and self.Reset ~= CurTime() then
         self.Reset = nil
     end
+	self.IVO = Train.Electric.Battery80V > 67 and self.BBE > 0 and self.I*10+math.Round(math.Rand(2,6),1) or -00.1	
     self.BBE = not self:Get("PVU8") and self:Get("BBE") and Train.SFV7.Value or 0
     if Train.Electric.Main750V < 650 or Train.Electric.Main750V > 975 then self.BBE = 0 end
     if self.BBE == 0 and self.MainLights and not self.MainLightsTimer then self.MainLightsTimer = CurTime() end
@@ -221,33 +271,49 @@ function TRAIN_SYSTEM:Think()
     if self:Get("Slope") then self.Slope = CurTime() end
     if not self:Get("Slope") and self.Slope and Train.Pneumatic.BrakeCylinderPressure < 0.5 then self.Slope = false end
 --]]
-	if self:Get("Slope") then self.Slope = CurTime() end
+	if self:Get("Slope") then self.Slope = CurTime() elseif Train:ReadTrainWire(5) > 0 and self.Slope then self.Slope = false end
+	if self.Slope and self.TargetStrength > 0 then
+		self.SchemeSlope = true
+	end
+	if self.SchemeSlope and self.TargetStrength <= 0 then
+		self.SchemeSlope = false
+	end	
+	if not self:Get("Slope") and self.Slope and (self:Get("SlopeSpeed") and self.TargetStrength > 0 and CurTime()-self.Slope > 2 or not self:Get("SlopeSpeed") and self.TargetStrength ~= 0) then self.Slope = false end --Train.Pneumatic.BrakeCylinderPressure < 1.5 then self.Slope = false end
+	if self.Slope then self.Slope1 = true end
+	if self.Slope1 and Train.Pneumatic.BrakeCylinderPressure < 0.1 then self.Slope1 = false end
+
 	if self:Get("TPTOn") then self.TPT = 1 else self.TPT = 0 end
 	if self:Get("HeatinPads") then self.HPds = 1 else self.HPds = 0 end
   --  print(self.HPds)
-	if not self:Get("Slope") and self.Slope and Train.Pneumatic.BrakeCylinderPressure < 0.5 then self.Slope = false end
+	--if not self:Get("Slope") and self.Slope and Train.Pneumatic.BrakeCylinderPressure < 0.5 then self.Slope = false end
     --self.Reverser = Train:ReadTrainWire(12)
-    local brake = self:Get("Brake") or 0
-    local strength = not self:Get("PVU9") and (self.Slope or brake>0 and Train.Pneumatic.BrakeCylinderPressure < 1.5 or brake==0 and Train.Pneumatic.BrakeCylinderPressure < 0.5) and self:Get("DriveStrength") or 0
-    local drive = math.min(1,(1-brake)*strength)
-    if strength == 0 then
-        brake=0
-        drive=0
-    end
-    if brake>0 and Train.BPTI.State~=-1 and math.abs(Train.Speed) < 10 then
-        self.Brake = 0
-    else
-        self.Brake = brake
-    end
-    self.Drive = drive
-    self.BlockTorec = not self:Get("PVU6") and self:Get("DoorTorec") and Train.SFV15.Value > 0
-    self.DriveStrength = strength
-    if brake == 0 then
-        self.EnginesDone = false
-    elseif Train.BPTI.State == -1 and (Train.BPTI.RNState == 1 and Train.Electric.I13>math.min(-130,-Train.Electric.ISet*0.75)) or Train.BPTI.State~=-1 and math.abs(Train.Speed) < 10  then
-        self.EnginesDone = true
-    end
-
+	self.Reverser = Train:ReadTrainWire(12)
+	local brake = self:Get("Brake") or 0
+	local strength = not self:Get("PVU9") and (self.Slope1 and true or brake>0 and Train.Pneumatic.BrakeCylinderPressure < 1.7+Train.Pneumatic.WeightLoadRatio or brake==0 and (self:Get("Slope") or Train.Pneumatic.BrakeCylinderPressure < 0.7)) and self:Get("DriveStrength") or 0
+	if not self:Get("PVU9") and brake==0 and Train.Pneumatic.BrakeCylinderPressure < 0.4 then
+		self.DriveTimer = CurTime()
+	end
+	if brake==0 and not self:Get("PVU9") then
+		if Train:ReadTrainWire(45) == 1 then
+			strength = 4
+			self.SchemeSlope = true
+		elseif Train:ReadTrainWire(19) == 1 then
+			strength = 2
+			self.SchemeSlope = true			
+		end
+	end
+	local drive = math.min(1,(1-brake)*strength)
+	if strength == 0 then
+		brake=0
+		drive=0
+	end
+	self.Brake = brake
+	self.Drive = drive
+	self.Strength = (self.Brake == 1 and -1 or 1)*strength--*SchemeWork
+	Train.Electric:TriggerInput("Slope",self.SchemeSlope)
+	self.TargetStrength = (self:Get("Brake") == 1 and -1 or 1)*(self:Get("DriveStrength") or 0)+((Train:ReadTrainWire(45) == 1 and 4 or Train:ReadTrainWire(19) == 1 and 2) or 0)
+	--if self:Get("BARSBrake") then self.Strength = -3 end
+	self.DriveStrength = strength
 	--[[
 	if self:Get("PVU11") then
 		if self:Get("PVU1") and Train.BV.Value == 1 and Train.SFV8.Value > 0 then
@@ -257,22 +323,48 @@ function TRAIN_SYSTEM:Think()
 		end
 	end
 	]]
-	local PTReplace = self.States.EnginesBrakeBroke
-    if PTReplace and not self.PTReplace then
-        self.PTReplace =  CurTime()
-        if Train.K3.Value*Train.BV.Value ~= 0 then
-            self.PTReplace = self.PTReplace + 1.3
-        end
-        if Train.BV.Value == 0 or self:Get("PVU9")  then
-            self.PTReplace = self.PTReplace - 1.2
-        end
-    end
-    if not PTReplace and self.PTReplace then self.PTReplace = nil end
+	if not self.Slope then
+		if (self:Get("Brake") or 0) == 0 then
+			self.EnginesDone = false
+		elseif Train.AsyncInverter.Brake == 1 and Train.Speed < 7 or self:Get("PVU9") then
+			self.EnginesDone = true
+		end
+		--[[
+		local PTReplace = self.States.EnginesBrakeBroke
+		if PTReplace and not self.PTReplace then
+			self.PTReplace =  CurTime()
+			if Train.AsyncInverter.Torque ~= 0 then
+				self.PTReplace = self.PTReplace + 1.3
+			end
+			if self:Get("PVU9")  then
+				self.PTReplace = self.PTReplace - 1.2
+			end
+		end
+		if not PTReplace and self.PTReplace then self.PTReplace = nil end]]
 
-		local PN =  self.PTReplace and CurTime()-self.PTReplace > 1.2 or self.States.EnginesDone
-    self.PN1 = (self:Get("PN1") and self:Get("PN1") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 0)
-    --print(self:Get("DriveStrength"),Train.K1.Value,Train.Electric.Itotal,Train.Electric.Drive,Train.BUV.Brake)
-    self.PN2 = (self:Get("PN2") and self:Get("PN2") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 2)
+		if (self.EnginesDone or self.States.EnginesDone) and self.Strength < 0 and Train.Speed > 7 then
+			self.EnginesDone = false
+			self.States.EnginesDone = false
+		end
+		if self.TargetStrength < 0 and not self.PTReplaceTimer and math.abs(Train.AsyncInverter.Torque) < 0.01 then
+			self.PTReplaceTimer = CurTime()
+		elseif (self.TargetStrength >= 0 or math.abs(Train.AsyncInverter.Torque) >= 0.1) and self.PTReplaceTimer then
+			self.PTReplaceTimer = nil
+		end
+		if self.PTReplaceTimer and CurTime()-self.PTReplaceTimer > 2.2 or (Train.Speed < 7 and self.TargetStrength<0) then
+			self.PTReplace = true
+		elseif not self.PTReplaceTimer and self.PTReplace then
+			self.PTReplace = false
+		end
+	end
+	if (not self.EnginesDone or not self.States.EnginesDone) then--and (self:Get("BARSBrake") or self:Get("AO")) then
+		self.EnginesDone = true
+		self.States.EnginesDone = true
+	end
+	local PN = self.PTReplace --self.PTReplace and CurTime()-self.PTReplace > 1.2 or self.States.EnginesDone
+	self.PN1 = (self:Get("PN1") and self:Get("PN1") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 0) or self:Get("PR") and self.TargetStrength <=0 --or (self.Pant and Train.TR.Main750V == 0 or Train.BV.Value*Train.GV.Value == 0) --or (Train.AsyncInverter.PrevVoltage > 975 or Train.AsyncInverter.PrevVoltage < 550) and Train.AsyncInverter.Brake > 0.5) and self.Strength < 0
+	self.PN2 = self.Slope and self:Get("SlopeSpeed") or (self:Get("PN2") and self:Get("PN2") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 2) --[[and not (self:Get("BARSBrake") or self:Get("AO"))]] -- or (self.Pant and Train.TR.Main750V == 0 or Train.BV.Value*Train.GV.Value == 0) --or (Train.AsyncInverter.PrevVoltage > 975 or Train.AsyncInverter.PrevVoltage < 550) and Train.AsyncInverter.Brake > 0.5) and self.Strength < -1
+	self.Recurperation = not self:Get("ReccOff") and 1 or 0
 
     self.MK = not self:Get("PVU3") and self:Get("Compressor") and 1 or 0
 

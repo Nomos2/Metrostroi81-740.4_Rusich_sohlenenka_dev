@@ -40,7 +40,7 @@ end
 
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)	
-	
+	local rol = math.random (1,2)	
 	for i = 1,10 do
 		local id3 = Format("b3tunnel_%d",i)		
 		self.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
@@ -63,7 +63,6 @@ function ENT:InitializeSounds()
 	
 	self.SoundNames["rolling_5_tst"] = {loop=true,"subway_trains/rusich/rolling/skrip1.mp3"}	
 	self.SoundNames["rolling_10_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_10.wav"}
-	local rol = math.random (1,2)
 	self.SoundNames["rolling_30_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_30_"..rol..".wav"}
 	self.SoundNames["rolling_55_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
 	self.SoundNames["rolling_75_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}		

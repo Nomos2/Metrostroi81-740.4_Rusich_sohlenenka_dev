@@ -390,110 +390,6 @@ ENT.ClientProps["FrontTrain"] = {
 ENT.ClientSounds["FrontBrakeLineIsolation"] = {{"FrontBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 ENT.ClientSounds["FrontTrainLineIsolation"] = {{"FrontTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 
---[[for i=1,29 do
-ENT.ClientProps["led_l_f4_new"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.435+375,85.9,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-		hide = 0.49,    
-}
-ENT.ClientProps["led_l_f4_new_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.435+375,85.9,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-		hide = 0.49,       
-}
-end
-
-for i=1,31 do
-ENT.ClientProps["led_l_f1_new"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.438+387.9,11.7,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-		hide = 0.49,
-}
-ENT.ClientProps["led_l_f1_new_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.438+387.9,11.7,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-		hide = 0.49,    
-}
-end 
-
-for i=1,32 do
-ENT.ClientProps["led_l_f_new"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+156.25,11.7,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-		hide = 0.49,    
-}
-ENT.ClientProps["led_l_f_new_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+156.25,11.7,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,     
-}
-ENT.ClientProps["led_l_f2_new"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+620.3,11.7,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,   
-}
-ENT.ClientProps["led_l_f2_new_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1.99)*1.425+620.3,11.7,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,    
-}
-ENT.ClientProps["led_l_f3_new"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.430+612.81,85.9,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,   
-}
-ENT.ClientProps["led_l_f3_new_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.430+612.81,85.9,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49, 
-}
-ENT.ClientProps["led_l_f5_new"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.425+148.5,85.9,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,         
-}
-ENT.ClientProps["led_l_f5_new_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1.99)*1.425+148.5,85.9,13.2), 
-        ang = Angle(0,180,0),
-        skin=6,
-		scale = 1.01,		
-        hide = 0.49,       
-}
-end]]
 --Новые модели 2023.
 ENT.ClientProps["Zavod_table_front"] = { --Заводская табличка
     model = "models/metrostroi_train/81-741/salon/zavod.mdl",
@@ -516,170 +412,6 @@ ENT.ClientProps["Naddver_off_left"] = {
 	scale = 1,
 	hide = 2, 	
 }
---Задняя часть наддверок
---[[for i=1,29 do
-ENT.ClientProps["led_l_f2_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1)*1.435+29.81,11.54,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f2_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f2_rear"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_f2_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1)*1.435+29.81,11.54,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f2_rear_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f2_rear_ob"..i].ang)
-    end,      
-}
-end
-for i=1,32 do
-ENT.ClientProps["led_l_f1_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1)*1.430-203.81,11.54,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f1_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f1_rear"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_f1_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1)*1.430-203.81,11.54,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f1_rear_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f1_rear_ob"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_f3_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1)*1.430+260.31,11.5,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f3_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f3_rear"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_f3_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_l.mdl",
-        pos = Vector(-(i-1)*1.430+260.31,11.5,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_f3_rear_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_f3_rear_ob"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_r2_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1)*1.430-211.45,85.7,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_r2_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_r2_rear"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_r2_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1)*1.430-211.45,85.7,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_r2_rear_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_r2_rear_ob"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_r4_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1)*1.430+252.65,85.7,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_r4_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_r4_rear"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_r4_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1)*1.430+252.65,85.7,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_r4_rear_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_r4_rear_ob"..i].ang)
-    end,      
-}
-end
-
-for i=1,31 do
-ENT.ClientProps["led_l_r1_rear"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1)*1.440+19.93,85.7,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_r1_rear"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_r1_rear"..i].ang)
-    end,      
-}
-ENT.ClientProps["led_l_r1_rear_ob"..i] = {
-        model = "models/metrostroi_train/81-740/salon/740_led_r.mdl",
-        pos = Vector(-(i-1)*1.440+19.93,85.7,13.3),        
-        ang = Angle(0,180,0),
-        skin=6,
-        hide = 0.49,
-		callback = function(ent,cl_ent)
-			if cl_ent:GetParent() == ent:GetNW2Entity("ent") then return end
-			cl_ent:SetParent(ent:GetNW2Entity("ent"))
-			cl_ent:SetLocalPos(ent.ClientProps["led_l_r1_rear_ob"..i].pos)
-			cl_ent:SetLocalAngles(ent.ClientProps["led_l_r1_rear_ob"..i].ang)
-    end,      
-}
-end]]
 --------------------------------------------------------------------------------
 -- Add doors
 --------------------------------------------------------------------------------
@@ -1852,16 +1584,7 @@ for i = 1,11 do
     Pricep740:ShowHideSmooth("lamps_salon_on_test"..i-1,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
     Pricep740:ShowHideSmooth("lamps_salon_on_test1"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
     -----------------------Задняя часть		
-end	
-
-	local net = LocalPlayer():GetName()
-
-	Pricep740:ShowHide("Naddver_off_740",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")
-	and not net:find("Dl3ves15"))
-	self:ShowHide("Naddver_off_left",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")and 
-	not net:find("Dl3ves15"))
-	self:ShowHide("Naddver_off_right",not net:find("VVKonnov") and not net:find("Takkar") and not net:find("George_pot") and not net:find("charliefry") and not net:find("poezdov") and not net:find("JackSever") and not net:find("jack.sever1")and 
-	not net:find("Dl3ves15"))
+end
 	
 	if self:GetNW2Bool("DoorTorec") then
 	 Pricep740:HidePanel("RearDoor",1) 
@@ -2071,6 +1794,15 @@ end
     Pricep740:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
     Pricep740:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70		
 
+--[[	
+    --local state = (RealTime()%4/3)^1.5
+    --local strength = 1--self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-15)/15,0,1))
+    local state = self:GetPackedRatio("asynccurrent")--^1.5--RealTime()%2.5/2	
+    local strength = self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-23)/23,0,1))
+	--print(state/0.3+0.2)
+	--self:SetSoundState("async1", tunstreet*math.Clamp((state)/0.26+0.2,0,1)*strength, 1)
+    --self:SetSoundState("chopper", tunstreet*self:GetPackedRatio("chopper"), 1)  	
+	
     local state = self:GetPackedRatio("RNState")
     self.TISUVol = math.Clamp(self.TISUVol+(state-self.TISUVol)*dT*8,0,1)
 	
@@ -2092,7 +1824,14 @@ end
 	end	
 	if AsyncSound==6 then		
     self:SetSoundState("async6", self.TISUVol/1.5, 1)
-	end	
+	end		
+	]]
+	
+    local state = self:GetPackedRatio("asynccurrent")--^1.5--RealTime()%2.5/2	
+    local strength = self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-23)/23,0,1))*0.5
+		
+    self:SetSoundState("ONIX", tunstreet*math.Clamp((state)/0.26+0.2,0,1)*strength, 1)--+math.Clamp(state,0,1)*0.1)
+    self:SetSoundState("chopper_onix", tunstreet*self:GetPackedRatio("chopper"), 1)
 	
 	local BBEs = self:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		

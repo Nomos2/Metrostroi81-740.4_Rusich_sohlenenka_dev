@@ -48,14 +48,6 @@ Spawner.740.BBESound2    = Type 1
 Spawner.740.BBESound3    = Type 2 
 Spawner.740.BBESound4    = Type 3
 
-Spawner.740.AsyncSound    = Sound type inverter
-Spawner.740.AsyncSound.Random   = Random
-Spawner.740.AsyncSound2    = Type 1
-Spawner.740.AsyncSound3    = Type 2
-Spawner.740.AsyncSound4    = Type 3
-Spawner.740.AsyncSound5    = Type 4
-Spawner.740.AsyncSound6    = Type 5
-
 Spawner.740.RingSound    = Type of ring sound
 Spawner.740.RingSound.Random   = Random
 Spawner.740.RingSound2    = Type 1
@@ -547,14 +539,6 @@ Entities.gmod_subway_81-740_4.Spawner.VentSound.Name 		  = @[Spawner.740.VentSou
 Entities.gmod_subway_81-740_4.Spawner.VentSound.1 		  	  = @[Spawner.740.VentSound.Random] 
 Entities.gmod_subway_81-740_4.Spawner.VentSound.2         	  = @[Spawner.740.VentSound2]
 Entities.gmod_subway_81-740_4.Spawner.VentSound.3             = @[Spawner.740.VentSound3]
-
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.Name 		  = @[Spawner.740.AsyncSound] 
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.1 		  	  = @[Spawner.740.AsyncSound.Random] 
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.2         	  = @[Spawner.740.AsyncSound2]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.3            = @[Spawner.740.AsyncSound3]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.4         	  = @[Spawner.740.AsyncSound4]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.5            = @[Spawner.740.AsyncSound5]
-Entities.gmod_subway_81-740_4.Spawner.AsyncSound.6            = @[Spawner.740.AsyncSound6]
 
 Entities.gmod_subway_81-740_4.Spawner.RingSound.Name 		  = @[Spawner.740.RingSound] 
 Entities.gmod_subway_81-740_4.Spawner.RingSound.1 		  	  = @[Spawner.740.RingSound.Random] 

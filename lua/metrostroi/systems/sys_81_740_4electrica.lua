@@ -7,20 +7,19 @@
 Metrostroi.DefineSystem("81_740_4ELECTRICA")
 TRAIN_SYSTEM.DontAccelerateSimulation = false	
 
+local function Clamp(val,min,max)
+    return math.max(min,math.min(max,val))
+end
+
+local function Rand(a,b) 
+	return a+(b-a)*math.random()
+end
+
+local function sign(x)
+	return (x>0 and 1 or x < 0 and -1 or 0)
+end
+
 function TRAIN_SYSTEM:Initialize()
-
-	-- Линейный контактор К1 (КР)
-    self.Train:LoadSystem("K1","Relay","PK-162",{bass = true,close_time=0.1})
-    -- Линейный контактор К2 (Ход)
-    self.Train:LoadSystem("K2","Relay","PK-162",{bass = true,close_time=0.1})
-    -- Линейный контактор К3 (Тормоз)
-    self.Train:LoadSystem("K3","Relay","PK-162",{bass = true,close_time=0.1})
-
-    -- Контактор(ы) реверса "Вперёд"
-    self.Train:LoadSystem("KMR1","Relay","PK-162",{bass = true,close_time=0.1})
-    -- Контактор(ы) реверса "Назад"
-    self.Train:LoadSystem("KMR2","Relay","PK-162",{bass = true,close_time=0.1})
-
 
     -- General power output
     self.Main750V = 0.0
@@ -29,6 +28,17 @@ function TRAIN_SYSTEM:Initialize()
     self.Aux80V = 0.0
     self.Lights80V = 0.0
     self.Battery80V = 0.0
+	
+	
+    self.Power = 0
+    self.States = {}
+    self.Commands = {}
+
+
+    self.DriveTimer = CurTime()
+
+    self.CurTime = CurTime()
+    self.TimerMode = CurTime()
 
     self.R1 = 1e1
     self.R2 = 1e1
@@ -75,9 +85,15 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("BV","Relay")
     self.Train:LoadSystem("GV","Relay","GV_10ZH",{bass=true})
     -- Thyristor contrller
-    self.IX = 0
-    self.IT = 0
-
+    self.Brake = 0
+    self.Drive = 0
+    self.DriveStrength = 0
+	self.Recurperation = 1
+    self.Iexit = 0
+    self.IChopped = 0
+    self.Chopper = 0
+	
+	
     self.BTB = 0
     self.KTR = 0
     self.V2 = 0
@@ -95,6 +111,10 @@ function TRAIN_SYSTEM:Initialize()
 
     self.BUTP = 0
     self.ISet = 0
+	
+	self.Slope = 0
+	self.command = 0
+    self.commandTimer = 0
 
     --self.Train:LoadSystem("Telemetry",nil,"",{"Electric","Panel","Engines"})
 end
@@ -105,7 +125,7 @@ function TRAIN_SYSTEM:Inputs()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return { "I13","I24","Itotal", "IT", "IX",
+    return { "I13","I24","Itotal","Brake", "Drive",
         --[[
                     "Rs1","Rs2","Itotal","I13","I24","IRT2",
                  "Ustator13","Ustator24","Ishunt13","Istator13","Ishunt24","Istator24",
@@ -117,9 +137,37 @@ function TRAIN_SYSTEM:Outputs()
              "BTB","V2","V1",
              "BVKA_KM1","BVKA_KM2","BVKA_KM3","BVKA_KM4","BVKA_KM5",
              "Vent2",
-			 "BSKA","BPTI_V","BPTI_ZKK","BUTP","ISet"
+			 "BSKA","BPTI_V","BPTI_ZKK","BUTP","ISet",
+             "Recurperation","Itotal","Iexit","IChopped","Chopper","ElectricEnergyUsed","ElectricEnergyDissipated","EnergyChange"
         }
 end
+
+TRAIN_SYSTEM.CurrentConfig = {
+	{
+		[1] = 150,
+		[2] = 200,
+		[3] = 260,
+		[4] = 320,
+		[0] = 0,
+		[-1]= 150,
+		[-2]= 200,
+		[-3]= 320,
+	},
+	{
+		[1] = 0.67,
+		[2] = 0.69,
+		[3] = 0.77,
+		[4] = 0.79,
+		[0] = 0,
+		[-1]= 0.55,
+		[-2]= 0.60,
+		[-3]= 0.85,
+	},
+}
+
+local S = {}
+local function C(x) return x and 1 or 0 end
+local min,max,abs = math.min,math.max,math.abs
 
 function TRAIN_SYSTEM:TriggerInput(name,value)
 
@@ -128,6 +176,8 @@ end
 --------------------------------------------------------------------------------
 function TRAIN_SYSTEM:Think(dT,iter)
     local Train = self.Train
+    local Async = Train.AsyncInverter
+	local BUV = Train.BUV
     --  local dT = dT/8
     ----------------------------------------------------------------------------
     -- Voltages from the third rail
@@ -136,6 +186,7 @@ function TRAIN_SYSTEM:Think(dT,iter)
     self.Aux750V  = Train.TR.Main750V
     self.Power750V = self.Main750V*Train.GV.Value
 
+	if not Async then return end
 
     ----------------------------------------------------------------------------
     -- Information only
@@ -266,6 +317,65 @@ function TRAIN_SYSTEM:Think(dT,iter)
         self.BVKA_KM2 = KM2
     end
 	
+		local command = BUV.Strength or 0--+0.5*(BUV.Strength > 0 and BUV.Slope1 and 1 or 0)
+	local speed = Async.Speed -- Turbostroi acceleration enabled
+	--local speed = Train.Speed -- Turbostroi acceleration disabled
+	if self.command ~= command and CurTime()-self.commandTimer > (0.3+(command ~= 0 and speed > 2 and sign(command) ~= sign(self.command) and 0.6 or 0)) then
+		self.commandTimer = CurTime()
+		self.command = command
+	end
+
+	Async:TriggerInput("Power",P*(Train.SFV27 and Train.Battery.Value*Train.SFV27.Value or 1)*Train.GV.Value*Train.BV.Value*(Train.TR.Main750V > 975 and 0 or 1))--*(1-BUKV.DisableTP))
+	--print(string.format("%.2f %.2f %d %.2f",command,Async.Speed,Async.Mode,Async.Torque))
+	if self.command > 0 then--and Train.GV.Value*Train.BV.Value == 1 then--and Train.BV.Value > 0 and Train.AsyncInverter.Drive == 0 and Train.TR.Main750V > 20 then
+		Async:TriggerInput("Drive",self.command)
+		Async:TriggerInput("Brake",0)
+	elseif self.command < 0 then--and Train.GV.Value*Train.BV.Value == 1 then--and Train.AsyncInverter.Brake == 0 then
+		Async:TriggerInput("Drive",0)
+		Async:TriggerInput("Brake",abs(self.command))
+	else
+		Async:TriggerInput("Drive",0)
+		Async:TriggerInput("Brake",0)		
+	end		
+    --local speed = (command <= 0 and math.abs(Async.Speed) or math.max(9.6,math.abs(Async.Speed)))
+	local targetI,k = self.CurrentConfig[1][self.command],self.CurrentConfig[2][self.command]
+    if self.command > 0 then
+		Async:TriggerInput("TargetCurrent",targetI*(1+(self.Slope == 1 and 0.1 or Train.Pneumatic.WeightLoadRatio*0.1))*((1-k)+k*Clamp((speed-3)/16,0,1)))--*(0.22+0.78*Clamp((speed-3)/14,0,1)))--*(speed > 50 and 1-(speed-50)/150 or 1) )--*(speed < 20 and 0.23+Clamp(speed/22,0,1)*0.77 or 1))--330
+    elseif self.command < 0 then
+		Async:TriggerInput("TargetCurrent",targetI*(1+(self.Slope == 1 and 0.1 or Train.Pneumatic.WeightLoadRatio*0.1))*((1-k)+k*Clamp((speed-3)/22,0,1)))--*Clamp((speed-2)/18,0,1))--*(Clamp(speed/30,0,1)+(speed < 10 and 0.035 or 0) ))--330
+    else
+        Async:TriggerInput("TargetCurrent",0)
+    end
+	self.EnergyChange = Async.Mode>0 and (Async.Current^2)*2.2 or 0
+    self.Itotal = Async.Current
+    --[[ if self.Main750V > 900 or Async.Mode>0 then
+        self.Recurperation = false
+    elseif self.Main750V < 875 and Async.Mode<0 then
+    end--]]
+    if Async.Mode<0 and Async.State>0 then
+	local RecDelay = 0
+	if self.Main750V <= 970 then
+            if CurTime() < RecDelay then return end
+            RecDelay = CurTime()-- + 5
+        end
+	--print(RecDelay,1-(CurTime()-RecDelay > 5 and 1 or 0))
+        self.Recurperation = C(self.Main750V > 550 and self.Main750V <= 970)*BUV.Recurperation--*(1-(CurTime()-RecDelay > 5 and 1 or 0))-- and 1 or 0   todo reccuperation timer
+        self.Iexit = self.Iexit+(-Async.Current*2*self.Recurperation-self.Iexit)*dT*2
+        --[[ if self.Main750V>550 then
+            self.Iexit = self.Iexit+(-Async.Current*2*self.Recurperation-self.Iexit)*dT*2
+        else
+            self.Iexit = 0
+        end--]]
+        self.IChopped = self.IChopped+(-Async.Current*2*(1-self.Recurperation)-self.IChopped)*dT*2
+        --self.PreChopper = self.Recurperation
+        self.Chopper = 1-self.Recurperation-- and 1 or 0
+        --print(self.IChopped, self.Chopper)
+    else
+        self.Recurperation = 0
+        self.Iexit = 0
+        self.Chopper = 0
+    end
+	
     self.BVKA_KM4 = P*HV*Train.SFV24.Value*(Train.BUV.Vent2)
     self.BVKA_KM5 = P
     self.BSKA = P*Train.SFV6.Value*self.BVKA_KM2
@@ -286,239 +396,12 @@ function TRAIN_SYSTEM:Think(dT,iter)
     local bv = Train.BV.Value
     local strength,brake,drive = 0,0,0
     if emer > 0 then
-        strength = Train:ReadTrainWire(45) > 0 and 4 or Train:ReadTrainWire(19) > 0 and 1 or 0
-        drive = strength*self.BUTP*bv
+        strength = Train:ReadTrainWire(45) > 0 and 4 or Train:ReadTrainWire(19) > 0 and 2 or 0
+        drive = strength*bv
     else
-        brake = Train.BUV.Brake*self.BUTP
-        drive = Train.BUV.Drive*self.BUTP*HV*bv
+        brake = Train.BUV.Brake
+        drive = Train.BUV.Drive*bv
         strength = Train.BUV.DriveStrength
     end
-	
-	self.VP = self.BSKA*(drive+brake)*Train:ReadTrainWire(12)*(1-Train:ReadTrainWire(13))
-    self.NZ = self.BSKA*(drive+brake)*Train:ReadTrainWire(13)*(1-Train:ReadTrainWire(12))
-    self.IX = drive*(1-brake)*(self.VP+self.NZ)
-    self.IT = brake*(1-drive)*(self.VP+self.NZ)
-    if bv==0 or Train.BPTI.Zero or self.IX==0 and self.IT==0 and self.BPTIState==0 then
-        Train.KMR1:TriggerInput("Set",0)
-        Train.KMR2:TriggerInput("Set",0)
-
-        Train.K1:TriggerInput("Set",0)
-        Train.K2:TriggerInput("Set",0)
-        Train.K3:TriggerInput("Set",0)
-        self.Shunt = false
-    elseif self.IX>0 and Train.BPTI.State >= 0 then
-        Train.KMR1:TriggerInput("Set",self.VP)
-        Train.KMR2:TriggerInput("Set",self.NZ)
-
-        Train.K1:TriggerInput("Set",self.IX)
-        Train.K2:TriggerInput("Set",self.IX)
-        Train.K3:TriggerInput("Set",0)
-    elseif self.IT>0 and Train.BPTI.State <= 0  then
-        Train.KMR1:TriggerInput("Set",self.VP)
-        Train.KMR2:TriggerInput("Set",self.NZ)
-
-        Train.K1:TriggerInput("Set",0)
-        Train.K2:TriggerInput("Set",0)
-        Train.K3:TriggerInput("Set",self.IT)
-    end
-    if bv==0 then
-        self.ISet = 0
-        self.BPTIState = 0
-    elseif Train.K2.Value > 0 and self.IX > 0 then
-        self.BPTIState = 1
-        if strength == 1 then
-            self.ISet = 100
-        elseif strength == 2 then
-            self.ISet = 200 + 60*Train.Pneumatic.WeightLoadRatio
-        elseif strength == 3 then
-            self.ISet = 260 + 60*Train.Pneumatic.WeightLoadRatio
-        elseif strength == 4 then
-            self.ISet = 330 + 60*Train.Pneumatic.WeightLoadRatio
-        end
-    elseif Train.K3.Value > 0 and self.IT > 0 then
-        self.BPTIState = -1
-        if strength == 1 then
-            self.ISet = 150 + 50*Train.Pneumatic.WeightLoadRatio
-        elseif strength == 2 then
-            self.ISet = 230 + 70*Train.Pneumatic.WeightLoadRatio
-        elseif strength == 3 then
-            self.ISet = 310 + 120*Train.Pneumatic.WeightLoadRatio
-        end
-    elseif Train.BPTI.Zero then
-        self.ISet = 0
-        self.BPTIState = 0
-    elseif Train.BPTI.State == 1 and drive == 0 or Train.BPTI.State == -1 and brake == 0 then
-        self.ISet = 0
-    end
-    local Current = math.abs(self.I13 + self.I24)/2
-    Train.BV:TriggerInput("Open",(Current > 1000) and 1 or 1-Train.SFV9.Value)
-    self:SolvePowerCircuits(Train,dT,iter)
-
-
-    ----------------------------------------------------------------------------
-    -- Calculate current flow out of the battery
-    ----------------------------------------------------------------------------
-    --local totalCurrent = 5*A30 + 63*A24 + 16*A44 + 5*A39 + 10*A80
-    --local totalCurrent = 20 + 60*DIP
-end
-
-
---------------------------------------------------------------------------------
-function TRAIN_SYSTEM:SolvePowerCircuits(Train,dT,iter)
-    self.Rs1 = Train.BPTI.KVResistance
-    self.Rs2 = Train.BPTI.KVResistance
-
-    -- Calculate total resistance of engines winding
-    local RwAnchor = Train.Engines.Rwa*2 -- Double because each set includes two engines
-    local RwStator = Train.Engines.Rws*2
-    -- Total resistance of the stator + shunt
-    self.Rstator13  = (RwStator^(-1) + self.Rs1^(-1))^(-1)
-    self.Rstator24  = (RwStator^(-1) + self.Rs2^(-1))^(-1)
-    -- Total resistance of entire motor
-    self.Ranchor13  = RwAnchor
-    self.Ranchor24  = RwAnchor
-
-    if Train.BPTI.State < 0 then
-        self:SolvePT(Train)
-    else
-        self:SolvePP(Train)
-    end
-    -- Calculate current through rheostats 1, 2
-    self.IR1 = self.I13
-    self.IR2 = self.I24
-
-    -- Calculate induction properties of the motor
-    self.I13SH = self.I13SH or self.I13
-    self.I24SH = self.I24SH or self.I24
-
-    -- Time constant
-    local T13const1 = math.max(16.00,math.min(28.0,(self.R13^2) * 2.0)) -- R * L
-    local T24const1 = math.max(16.00,math.min(28.0,(self.R24^2) * 2.0)) -- R * L
-    -- Total change
-    local dI13dT = T13const1 * (self.I13 - self.I13SH) * dT
-    local dI24dT = T24const1 * (self.I24 - self.I24SH) * dT
-
-    -- Limit change and apply it
-    if dI13dT > 0 then dI13dT = math.min(self.I13 - self.I13SH,dI13dT) end
-    if dI13dT < 0 then dI13dT = math.max(self.I13 - self.I13SH,dI13dT) end
-    if dI24dT > 0 then dI24dT = math.min(self.I24 - self.I24SH,dI24dT) end
-    if dI24dT < 0 then dI24dT = math.max(self.I24 - self.I24SH,dI24dT) end
-    self.I13SH = self.I13SH + dI13dT
-    self.I24SH = self.I24SH + dI24dT
-    self.I13 = self.I13SH
-    self.I24 = self.I24SH
-
-     if Train.BPTI.State > 0 then -- PS
-        self.I13 = self.I13 * Train.K2.Value * Train.K1.Value
-        self.I24 = self.I24 * Train.K2.Value * Train.K1.Value
-
-        self.Itotal = Train.Electric.I13 + Train.Electric.I24
-    else
-        self.I13 = self.I13 * Train.K3.Value
-        self.I24 = self.I24 * Train.K3.Value
-
-        self.Itotal = Train.Electric.I13 + Train.Electric.I24
-    end
-    -- Calculate extra information
-    self.Uanchor13 = self.I13 * self.Ranchor13
-    self.Uanchor24 = self.I24 * self.Ranchor24
-
-
-
-    ----------------------------------------------------------------------------
-    -- Calculate current through stator and shunt
-    self.Ustator13 = self.I13 * self.Rstator13
-    self.Ustator24 = self.I24 * self.Rstator24
-
-    self.Ishunt13  = self.Ustator13 / self.Rs1
-    self.Istator13 = self.Ustator13 / RwStator
-    self.Ishunt24  = self.Ustator24 / self.Rs2
-    self.Istator24 = self.Ustator24 / RwStator
-
-    if Train.BPTI.State < 0 then
-        local I1,I2 = self.Ishunt13,self.Ishunt24
-        self.Ishunt13 = -I2
-        self.Ishunt24 = -I1
-
-        I1,I2 = self.Istator13,self.Istator24
-        self.Istator13 = -I2
-        self.Istator24 = -I1
-    end
-
-    -- Calculate power and heating
-    local K = 12.0*1e-5
-    local H = (10.00+(15.00*Train.Engines.Speed/80.0))*1e-3
-    self.P1 = (self.IR1^2)*self.R1
-    self.P2 = (self.IR2^2)*self.R2
-    self.T1 = (self.T1 + self.P1*K*dT - (self.T1-25)*H*dT)
-    self.T2 = (self.T2 + self.P2*K*dT - (self.T2-25)*H*dT)
-    self.Overheat1 = math.min(1-1e-12,
-        self.Overheat1 + math.max(0,(math.max(0,self.T1-750.0)/400.0)^2)*dT )
-    self.Overheat2 = math.min(1-1e-12,
-        self.Overheat2 + math.max(0,(math.max(0,self.T2-750.0)/400.0)^2)*dT )
-
-    -- Energy consumption
-    self.ElectricEnergyUsed = self.ElectricEnergyUsed + math.max(0,self.EnergyChange)*dT
-    self.ElectricEnergyDissipated = self.ElectricEnergyDissipated + math.max(0,-self.EnergyChange)*dT
-    --print(self.EnergyChange)
-end
-
-function TRAIN_SYSTEM:SolvePP(Train,inTransition)
-
-    -- Calculate total resistance of each branch
-    local R1 = self.Ranchor13 + self.Rstator13-- + self.ExtraResistanceK5
-    local R2 = self.Ranchor13 + self.Rstator13-- + self.ExtraResistanceK5
-    local CircuitClosed = (self.Power750V*Train.K1.Value > 0) and 1 or 0
-    -- Main circuit parameters
-    local V = self.Power750V*Train.K1.Value*Train.BPTI.RNState
-    local E1 = Train.Engines.E13
-    local E2 = Train.Engines.E24
-
-    -- Calculate current through engines 13, 24
-    self.I13 = math.max(0,((V - E1)/R1)*CircuitClosed)
-    self.I24 = math.max(0,((V - E2)/R2)*CircuitClosed)
-
-    -- Total resistance (for induction RL circuit)
-    self.R13 = R1
-    self.R24 = R2
-    --if inTransition then print("InPP1",self.I13,Format("(%.2f-%.2f)/%.2f=%.2f",V , E1,R1,(V - E1)/R1),Train.K1.Value,Train.K3_4.Value,self.KVState,self.RNState) end
-
-    -- Calculate everything else
-    self.U13 = self.I13*R1
-    self.U24 = self.I24*R2
-    self.Utotal = (self.U13 + self.U24)/2
-    self.Itotal = Train.Electric.I13 + Train.Electric.I24
-    -- Energy consumption
-    self.EnergyChange = math.abs((self.I13^2)*R1) + math.abs((self.I24^2)*R2)
-end
-
-function TRAIN_SYSTEM:SolvePT(Train,inTransition)
-    -- Winding resistances
-    local R1 = self.Ranchor13 + self.Rstator13-- + self.ExtraResistanceK5
-    local R2 = self.Ranchor24 + self.Rstator24-- + self.ExtraResistanceK5
-    -- Total resistance of the entire braking rheostat
-    --local R3 = 1.730*(1-0.860*Train.BPTI.RNState)
-    local R3 = --[[ (1.730+0.4)*--]] 2.8*(1-0.95*Train.BPTI.RNState)--0.84
-
-    -- Main circuit parameters
-    local V = self.Power750V*Train.K1.Value
-    local E1 = Train.Engines.E13
-    local E2 = Train.Engines.E24
-
-    -- Calculate current through engines 13, 24
-    self.I13 = -((E1*R2 + E1*R3 - E2*R3 - R2*V)/(R1*R2 + R1*R3 + R2*R3))
-    self.I24 = -((E2*R1 - E1*R3 + E2*R3 - R1*V)/(R1*R2 + R1*R3 + R2*R3))
-
-    -- Total resistance (for induction RL circuit)
-    self.R13 = R3+((R1^(-1) + R2^(-1))^(-1))
-    self.R24 = R3+((R1^(-1) + R2^(-1))^(-1))
-
-    -- Calculate everything else
-    self.U13 = self.I13*R1
-    self.U24 = self.I24*R2
-    self.Utotal = (self.U13 + self.U24)/2
-    self.Itotal = Train.Electric.I13 + Train.Electric.I24
-
-    -- Energy consumption
-    self.EnergyChange = -math.abs(((0.5*self.Itotal)^2)*self.R13)
+	local Current = math.abs(self.I13 + self.I24)/2
 end
