@@ -42,7 +42,7 @@ function ENT:Initialize()
     self.DriverSeat:SetColor(Color(0,0,0,0))
 
  -- Create bogeys
-        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75.4),Angle(0,180,0),true,"740PER")
+        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740PER")
 		self.FrontBogey.PneumaticPow = 0.7			
         self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  
 		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)	
@@ -352,7 +352,7 @@ function ENT:CreatePricep(pos,ang)
     table.insert(Pricep740.TrainEntities,self)	
 
 	local rand = math.random()*0.05
-	self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74.5),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
+	self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
 	self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand) 		
 	self.MiddleBogey:SetNWInt("MotorSoundType",2)
