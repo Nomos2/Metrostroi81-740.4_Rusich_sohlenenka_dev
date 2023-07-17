@@ -2955,7 +2955,6 @@ end
     local accel = self:GetPackedRatio("BIAccel",0)
     local speed = self:GetNW2Int("BISpeed",0)
     local limit = self:GetNW2Int("BISpeedLimit",0)
-    self:ShowHide("speedl",speed ~= -1)
     self:ShowHide("speed1",speed ~= -1)
     self:ShowHide("speed2",speed ~= -1)
     if speed ~= -1 then
@@ -3329,7 +3328,7 @@ end
     local strength = self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-23)/23,0,1))*0.5
 		
     self:SetSoundState("ONIX", tunstreet*math.Clamp((state)/0.26+0.2,0,1)*strength, 1)--+math.Clamp(state,0,1)*0.1)
-    self:SetSoundState("chopper", tunstreet*self:GetPackedRatio("chopper"), 1)
+    self:SetSoundState("chopper_onix", tunstreet*self:GetPackedRatio("chopper"), 1)
 	
 	local BBEs = self:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		

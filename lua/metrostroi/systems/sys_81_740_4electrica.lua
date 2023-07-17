@@ -88,11 +88,10 @@ function TRAIN_SYSTEM:Initialize()
     self.Brake = 0
     self.Drive = 0
     self.DriveStrength = 0
-	self.Recurperation = 1
+	self.Recurperation = 0
     self.Iexit = 0
-    self.IChopped = 0
     self.Chopper = 0
-	
+    self.IChopper = 0
 	
     self.BTB = 0
     self.KTR = 0
@@ -138,7 +137,7 @@ function TRAIN_SYSTEM:Outputs()
              "BVKA_KM1","BVKA_KM2","BVKA_KM3","BVKA_KM4","BVKA_KM5",
              "Vent2",
 			 "BSKA","BPTI_V","BPTI_ZKK","BUTP","ISet",
-             "Recurperation","Itotal","Iexit","IChopped","Chopper","ElectricEnergyUsed","ElectricEnergyDissipated","EnergyChange"
+             "Recurperation","Itotal","Iexit","IChopped","Chopper","IChopper","ElectricEnergyUsed","ElectricEnergyDissipated","EnergyChange" 
         }
 end
 
@@ -353,28 +352,17 @@ function TRAIN_SYSTEM:Think(dT,iter)
     elseif self.Main750V < 875 and Async.Mode<0 then
     end--]]
     if Async.Mode<0 and Async.State>0 then
-	local RecDelay = 0
-	if self.Main750V <= 970 then
-            if CurTime() < RecDelay then return end
-            RecDelay = CurTime()-- + 5
-        end
-	--print(RecDelay,1-(CurTime()-RecDelay > 5 and 1 or 0))
-        self.Recurperation = C(self.Main750V > 550 and self.Main750V <= 970)*BUV.Recurperation--*(1-(CurTime()-RecDelay > 5 and 1 or 0))-- and 1 or 0   todo reccuperation timer
-        self.Iexit = self.Iexit+(-Async.Current*2*self.Recurperation-self.Iexit)*dT*2
-        --[[ if self.Main750V>550 then
-            self.Iexit = self.Iexit+(-Async.Current*2*self.Recurperation-self.Iexit)*dT*2
-        else
-            self.Iexit = 0
-        end--]]
-        self.IChopped = self.IChopped+(-Async.Current*2*(1-self.Recurperation)-self.IChopped)*dT*2
-        --self.PreChopper = self.Recurperation
-        self.Chopper = 1-self.Recurperation-- and 1 or 0
-        --print(self.IChopped, self.Chopper)
+		self.Recurperation = C(self.Power750V > 749 and self.Power750V < 925)*BUV.Recurperation
+        self.Iexit = self.Iexit+(-(Async.Current)*0.85*self.Recurperation-self.Iexit)*dT*2
+        --if (self.Power750V < 550 or self.Power750V > 915) then self.Chopper = 1 end
+        self.Chopper = 1-self.Recurperation
+        self.IChopper = self.IChopper+(-(Async.Current)*0.85*self.Chopper-self.IChopper)*dT*2
     else
         self.Recurperation = 0
         self.Iexit = 0
         self.Chopper = 0
-    end
+        self.IChopper = 0
+    end		
 	
     self.BVKA_KM4 = P*HV*Train.SFV24.Value*(Train.BUV.Vent2)
     self.BVKA_KM5 = P

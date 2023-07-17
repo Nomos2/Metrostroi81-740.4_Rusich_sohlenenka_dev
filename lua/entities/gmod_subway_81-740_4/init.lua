@@ -48,12 +48,10 @@ function ENT:Initialize()
     -- Set model and initialize
 	--print(self:GetNW2String("Texture"))		
 	self:SetModel("models/metrostroi_train/81-740/body/81-740_4_front.mdl")	
-	
-	--self:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
-    --self.NormalMass = 20000	
+    self.NormalMass = 20000	
 
     -- Create seat entities
     self.DriverSeat = self:CreateSeat("driver",Vector(775-144,19,-27))
@@ -501,7 +499,7 @@ end
 		
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)			
+    constraint.NoCollide(Pricep740,self.MiddleBogey,0,0)			
 			
 	local Map = game.GetMap():lower() or ""        
 	if 
@@ -750,17 +748,7 @@ end
 	Pricep740.ButtonBuffer = {}
 	Pricep740.KeyBuffer = {}
 	Pricep740.KeyMap = {}	
-	self.RearDoor = false		
-	
-	
-function Pricep740:Think()	
-    self:SetPackedBool("RearDoor",self.RearDoor)	
-	
 end	
-function Pricep740:OnButtonPress(button,ply)
-    if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
-end	
-end
 	
 	--[[
     local seat = ents.Create("prop_vehicle_prisoner_pod")
@@ -798,6 +786,36 @@ function ENT:Think()
     local power = self.Electric.Battery80V > 62
     local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")	
     if not IsValid(Pricep740) then return end	
+	Pricep740.SyncTable = {	"RearBrakeLineIsolation","RearTrainLineIsolation"}		
+    --print(self,self.BPTI.T,self.BPTI.State)
+	
+	self.RearDoor = false		
+function Pricep740:Think()	
+    self:SetPackedBool("RearDoor",self.RearDoor)	
+end	
+function Pricep740:OnButtonPress(button,ply)
+    if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
+end		
+
+    --[[ if self.BUV.Brake > 0 then
+        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and (1-self.Electric.RNState)+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
+    else
+        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and self.Electric.RNState+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
+    end--]]
+    --if self.BPTI.State < 0 then
+        --self:SetPackedRatio("RNState", ((self.BPTI.RNState)-0.5)*math.Clamp((math.abs(self.Electric.Itotal/2)-30-self.Speed*1)/35,0,1)) --снижение скорости
+        --self:SetNW2Int("RNFreq", 13)
+   --else--if self.BPTI.State > 0 then
+        --self:SetPackedRatio("RNState", (0.95-self.BPTI.RNState)*math.Clamp((math.abs(self.Electric.Itotal/2)-36-self.Speed*1)/35,0,5))
+        --self:SetNW2Int("RNFreq", ((self.BPTI.FreqState or 0)-1/3)/(2/3)*12)
+    --[[ else
+        self:SetPackedRatio("RNState", 0)--]]
+    --end
+	
+    local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
+    self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
+    self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
+    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	
     --print(self,self.BPTI.T,self.BPTI.State)		
 
     --[[ if self.BUV.Brake > 0 then
@@ -814,11 +832,6 @@ function ENT:Think()
     --[[ else
         self:SetPackedRatio("RNState", 0)--]]
     --end
-	
-    local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
-    self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
-    self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
-    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	
 	
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do

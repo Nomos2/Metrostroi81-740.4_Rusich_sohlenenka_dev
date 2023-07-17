@@ -843,6 +843,7 @@ if SERVER then
 			self:CState("DoorTorec",Train.TorecDoors.Value > 0)
 			self:CState("BBE",Train.BBE.Value > 0)
 			self:CState("BVOn",Train.Panel.Controller == 0 and Train.EnableBV.Value > 0)
+			self:CState("RecurperationDisable", self.Recuperation) 
 			self:CState("TPTOn",Train.Panel.Controller == -3 and Train.TPT.Value > 0 and Train.BARS.Speed > 1)
 			self:CState("HeatinPads",Train.Stand.Value > 0 and Train.BARS.Speed > 1 and Train.Panel.Controller <= 0)
 			--self:CState("Vent2On",Train.Vent2.Value > 0)

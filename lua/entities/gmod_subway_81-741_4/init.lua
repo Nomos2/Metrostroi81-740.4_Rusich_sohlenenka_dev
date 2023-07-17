@@ -27,11 +27,10 @@ ENT.SyncTable = {
 function ENT:Initialize()
     -- Set model and initialize
     self:SetModel("models/metrostroi_train/81-741/body/81-741_4_front.mdl")
-	--self:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))	
 
-    --self.NormalMass = 20000
+    self.NormalMass = 20000
     self:DrawShadow(true)	
 
     -- Create seat entities
@@ -296,17 +295,6 @@ function ENT:SpawnFunction(ply, tr,className,rotate)
 	return ent
 end	
 
-function CanConstrain( gmod_subway_kuzov, self )
-
-	if ( !gmod_subway_kuzov ) then return false end
-	if ( !isnumber( self ) ) then return false end
-	if ( !gmod_subway_kuzov:IsWorld() && !gmod_subway_kuzov:IsValid() ) then return false end
-	if ( !IsValid( gmod_subway_kuzov:GetPhysicsObjectNum( self ) ) ) then return false end
-
-	return true
-
-end
-
     --[[local seat = ents.Create("prop_vehicle_prisoner_pod")
     seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
     seat:SetPos(self:LocalToWorld(Vector(-642,-30.2,-25)))
@@ -361,10 +349,21 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey.DisableSound = 1				
 	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)	
+	
+function CanConstrain( Pricep740, self )
+
+	if ( !Pricep740 ) then return false end
+	if ( !isnumber( self ) ) then return false end
+	if ( !Pricep740:IsWorld() && !Pricep740:IsValid() ) then return false end
+	if ( !IsValid( Pricep740:GetPhysicsObjectNum( self ) ) ) then return false end
+
+	return true
+
+end	
 
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-    constraint.NoCollide(self:GetNW2Entity("gmod_subway_kuzov"),self.MiddleBogey,0,0)		
+    constraint.NoCollide(Pricep740,self.MiddleBogey,0,0)		
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
@@ -752,7 +751,7 @@ end
 		end
 		
 		for k,v in pairs(self.Pneumatic.RightDoorSpeed) do
-			self.Pneumatic.RightDoorSpeed[k] = -2, 12
+			self.Pneumatic.RightDoorSpeed[k] = -1, 12
 		end
 		
 	local lightsActive1 = power and self.SFV20.Value > 0 

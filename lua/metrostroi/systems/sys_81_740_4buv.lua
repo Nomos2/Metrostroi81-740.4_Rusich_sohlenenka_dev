@@ -59,7 +59,7 @@ function TRAIN_SYSTEM:Initialize()
 	self.TargetStrength = 0
 	
 	self.SchemeSlope = false
-	self.Recurperation = 1
+	self.Recurperation = 0
 	
 	self.TPT = 0
 	self.HPds = 0
@@ -364,8 +364,8 @@ function TRAIN_SYSTEM:Think()
 	local PN = self.PTReplace --self.PTReplace and CurTime()-self.PTReplace > 1.2 or self.States.EnginesDone
 	self.PN1 = (self:Get("PN1") and self:Get("PN1") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 0) or self:Get("PR") and self.TargetStrength <=0 --or (self.Pant and Train.TR.Main750V == 0 or Train.BV.Value*Train.GV.Value == 0) --or (Train.AsyncInverter.PrevVoltage > 975 or Train.AsyncInverter.PrevVoltage < 550) and Train.AsyncInverter.Brake > 0.5) and self.Strength < 0
 	self.PN2 = self.Slope and self:Get("SlopeSpeed") or (self:Get("PN2") and self:Get("PN2") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 2) --[[and not (self:Get("BARSBrake") or self:Get("AO"))]] -- or (self.Pant and Train.TR.Main750V == 0 or Train.BV.Value*Train.GV.Value == 0) --or (Train.AsyncInverter.PrevVoltage > 975 or Train.AsyncInverter.PrevVoltage < 550) and Train.AsyncInverter.Brake > 0.5) and self.Strength < -1
-	self.Recurperation = not self:Get("ReccOff") and 1 or 0
-
+	self.Recurperation = self:Get("Recurperation") and 1 or 0 
+    
     self.MK = not self:Get("PVU3") and self:Get("Compressor") and 1 or 0
 
     self.OpenLeft = not self:Get("PVU2") and self:Get("OpenLeft") and self.Orientation or self:Get("OpenRight") and not self.Orientation
