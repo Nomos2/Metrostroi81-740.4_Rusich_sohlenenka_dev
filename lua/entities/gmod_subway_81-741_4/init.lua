@@ -761,7 +761,7 @@ end
 		end
 		
 		for k,v in pairs(self.Pneumatic.RightDoorSpeed) do
-			self.Pneumatic.RightDoorSpeed[k] = -1, 12
+			self.Pneumatic.RightDoorSpeed[k] = -2, 12
 		end
 		
 	local lightsActive1 = power and self.SFV20.Value > 0 
