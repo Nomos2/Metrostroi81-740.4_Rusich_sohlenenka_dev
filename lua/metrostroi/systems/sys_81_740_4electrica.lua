@@ -275,10 +275,10 @@ function TRAIN_SYSTEM:Think(dT)
 
         local ASNP_VV = Train.ASNP_VV
         Panel.R_Announcer = P*Train.SF8.Value*Train.R_Announcer.Value
-        Panel.Line = P*Train.SF8.Value*Train.Line.Value
-        Panel.ChangeRoute = P*Train.SF8.Value*Train.ChangeRoute.Value
+        Panel.R_Line = P*Train.SF8.Value*Train.R_Line.Value
+        --Panel.ChangeRoute = P*Train.SF8.Value*Train.ChangeRoute.Value
         ASNP_VV.Power = P*Train.SF8.Value*Train.R_ASNPOn.Value
-        ASNP_VV.AmplifierPower = ASNP_VV.Power*Train.ASNP.LineOut*(1-Train.Line.Value)
+        ASNP_VV.AmplifierPower = ASNP_VV.Power*Train.ASNP.LineOut*(1-Train.R_Line.Value)
         Train:WriteTrainWire(20,ASNP_VV.AmplifierPower)
         --ASNP_VV.CabinSpeakerPower = ASNP_VV.Power*Train.ASNP.LineOut*Train.R_G.Value
         Panel.DoorLeft = P*Train.SF21.Value*Train.DoorSelectL.Value*(1-Train.DoorSelectR.Value)
