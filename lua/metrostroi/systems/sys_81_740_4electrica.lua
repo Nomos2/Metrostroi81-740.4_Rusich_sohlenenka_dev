@@ -137,7 +137,7 @@ function TRAIN_SYSTEM:Outputs()
              "BVKA_KM1","BVKA_KM2","BVKA_KM3","BVKA_KM4","BVKA_KM5",
              "Vent2",
 			 "BSKA","BPTI_V","BPTI_ZKK","BUTP","ISet",
-             "Recurperation","Itotal","Iexit","IChopped","Chopper","IChopper","ElectricEnergyUsed","ElectricEnergyDissipated","EnergyChange" 
+             "Recurperation","Itotal","Iexit","Chopper","IChopper","ElectricEnergyUsed","ElectricEnergyDissipated","EnergyChange" 
         }
 end
 

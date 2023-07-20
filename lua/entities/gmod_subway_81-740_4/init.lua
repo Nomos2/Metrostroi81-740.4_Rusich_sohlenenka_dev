@@ -52,6 +52,7 @@ function ENT:Initialize()
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
     self.NormalMass = 20000	
+	--self.m_tblToolsAllowed = { "none" }		
 
     -- Create seat entities
     self.DriverSeat = self:CreateSeat("driver",Vector(775-144,19,-27))
@@ -63,14 +64,21 @@ function ENT:Initialize()
     --Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
 	self.DriverSeat:SetColor(Color(0,0,0,0))
+	--self.DriverSeat.m_tblToolsAllowed = { "none" }		
+	
     self.InstructorsSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
-    self.InstructorsSeat:SetColor(Color(0,0,0,0))	
+    self.InstructorsSeat:SetColor(Color(0,0,0,0))
+	--self.InstructorsSeat.m_tblToolsAllowed = { "none" }	
+	
     self.InstructorsSeat2:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat2:SetColor(Color(0,0,0,0))
+	--self.InstructorsSeat2.m_tblToolsAllowed = { "none" }	
+	
     --self.InstructorsSeat3:SetRenderMode(RENDERMODE_TRANSALPHA)
     --self.InstructorsSeat3:SetColor(Color(0,0,0,0))
     self.InstructorsSeat4:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat4:SetColor(Color(0,0,0,0))
+	--self.InstructorsSeat4.m_tblToolsAllowed = { "none" }		
 	
 	self.LightSensor = self:AddLightSensor(Vector(698-144,0,-130),Angle(0,90,0))
 	
@@ -85,7 +93,13 @@ function ENT:Initialize()
 		self.RearBogey.PneumaticPow = 0.7		
         self.FrontCouple = self:CreateCouple(Vector(636,0,-60),Angle(0,0,0),true,"717")
         self.RearCouple = self:CreateCouple(Vector(-625,0,-60),Angle(0,-180,0),false,"740") 
-		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") 	
+		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") 
+			
+		--self.FrontCouple.m_tblToolsAllowed = { "none" }	 Перед релизом убрать коммит.
+		--self.RearCouple.m_tblToolsAllowed = { "none" }	
+		--self.FrontBogey.m_tblToolsAllowed = { "none" }	
+		--self.RearBogey.m_tblToolsAllowed = { "none" }			
+		
 
 	self.Timer = CurTime()	
 	self.Timer2 = CurTime()	
@@ -469,6 +483,7 @@ function ENT:CreatePricep(pos,ang)
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
 	Pricep740:DrawShadow(false)			
+	--Pricep740.m_tblToolsAllowed = { "none" }		
 
 	if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
     --PrintTable(Pricep740:GetTable())
@@ -487,7 +502,8 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey:SetNWBool("DisableEngines",true)			
 	self.MiddleBogey.DisableSound = 1	
 	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
-	self.RearCouple:GetPhysicsObject():SetMass(5000)	
+	self.RearCouple:GetPhysicsObject():SetMass(5000)
+	--self.MiddleBogey.m_tblToolsAllowed = { "none" }		
 	
 function CanConstrain( Pricep740, self )
 	if ( !Pricep740 ) then return false end
@@ -585,6 +601,7 @@ end
 		1--nocollide
 	)
 	else
+	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
 	constraint.AdvBallsocket(
@@ -592,7 +609,7 @@ end
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(315,-1,25),
+		Vector(305,-0.5,-30),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -615,7 +632,7 @@ end
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(315,1,-15),
+		Vector(305,-0.5,30),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
@@ -796,26 +813,11 @@ end
 function Pricep740:OnButtonPress(button,ply)
     if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
 end		
-
-    --[[ if self.BUV.Brake > 0 then
-        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and (1-self.Electric.RNState)+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
-    else
-        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and self.Electric.RNState+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
-    end--]]
-    --if self.BPTI.State < 0 then
-        --self:SetPackedRatio("RNState", ((self.BPTI.RNState)-0.5)*math.Clamp((math.abs(self.Electric.Itotal/2)-30-self.Speed*1)/35,0,1)) --снижение скорости
-        --self:SetNW2Int("RNFreq", 13)
-   --else--if self.BPTI.State > 0 then
-        --self:SetPackedRatio("RNState", (0.95-self.BPTI.RNState)*math.Clamp((math.abs(self.Electric.Itotal/2)-36-self.Speed*1)/35,0,5))
-        --self:SetNW2Int("RNFreq", ((self.BPTI.FreqState or 0)-1/3)/(2/3)*12)
-    --[[ else
-        self:SetPackedRatio("RNState", 0)--]]
-    --end
 	
     local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
     self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
     self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
-    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	
+    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopper/100 or 0,0,1))	
     --print(self,self.BPTI.T,self.BPTI.State)		
 
     --[[ if self.BUV.Brake > 0 then

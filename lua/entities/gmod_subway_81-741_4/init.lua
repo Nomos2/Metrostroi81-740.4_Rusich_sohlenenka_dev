@@ -39,6 +39,8 @@ function ENT:Initialize()
     -- Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.DriverSeat:SetColor(Color(0,0,0,0))
+	
+	--self.DriverSeat.m_tblToolsAllowed = { "none" }		
 
  -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740PER")
@@ -52,6 +54,11 @@ function ENT:Initialize()
         self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")		
         self.RearCouple = self:CreateCouple(Vector(-611,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
+		
+		--self.FrontCouple.m_tblToolsAllowed = { "none" }	
+		--self.RearCouple.m_tblToolsAllowed = { "none" }	
+		--self.FrontBogey.m_tblToolsAllowed = { "none" }	
+		--self.RearBogey.m_tblToolsAllowed = { "none" }		
 		
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
 	self:SetNW2Entity("RearBogey",self.RearBogey)		
@@ -332,6 +339,7 @@ function ENT:CreatePricep(pos,ang)
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
 	Pricep740:DrawShadow(false)		
+	--Pricep740.m_tblToolsAllowed = { "none" }	
 	
     if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end				
 	
@@ -349,6 +357,7 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey.DisableSound = 1				
 	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)	
+	--self.MiddleBogey.m_tblToolsAllowed = { "none" }		
 	
 function CanConstrain( Pricep740, self )
 
@@ -395,7 +404,7 @@ end
 	)
 	else	
 	
-	local Map = game.GetMap():lower() or ""        
+		local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_mustox_neocrimson_line") or
 	Map:find("gm_mus_neoorange") or
@@ -448,6 +457,7 @@ end
 		1--nocollide
 	)
 	else
+	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
 	constraint.AdvBallsocket(
@@ -455,7 +465,7 @@ end
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(315,-1,25),
+		Vector(305,-0.5,-30),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -478,7 +488,7 @@ end
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(315,1,-15),
+		Vector(305,-0.5,30),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
@@ -743,7 +753,7 @@ end
     local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
     self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
     self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
-    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	
+    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopper/100 or 0,0,1))	
 
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do

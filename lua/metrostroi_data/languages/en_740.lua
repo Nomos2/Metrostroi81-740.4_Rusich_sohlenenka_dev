@@ -254,17 +254,17 @@ Common.740.SFV19            = SF19: Interior lighting power supply
 Common.740.SFV20            = SF20: Emergency interior lighting
 Common.740.SFV21            = SF21: Speed sensor
 Common.740.SFV22            = SF22: Parking brake
-Common.740.SFV24            = SF23: Interior ventilation control
-Common.740.SFV26            = SF24: Power supply for interior ventilation
-Common.740.SFV27            = SF25: Pathogen nutrition ( ͡° ͜ʖ ͡°)
-Common.740.SFV28            = SF26: Charging capacitor power supply
-Common.740.SFV29            = SF27: Current collectors
-Common.740.SFV30            = SF28: Scoreboard
-Common.740.SFV31            = SF29: Reserve
-Common.740.SFV32            = SF30: Video
-Common.740.SFV33            = SF31: Cameras
-Common.740.SFV34            = SF32: PrOst (Autodrive)
-Common.740.SFV35            = SF33: Reserve
+Common.740.SFV23            = SF23: Interior ventilation control
+Common.740.SFV24            = SF24: Power supply for interior ventilation
+Common.740.SFV25            = SF25: Pathogen nutrition ( ͡° ͜ʖ ͡°)
+Common.740.SFV26            = SF26: Charging capacitor power supply
+Common.740.SFV27            = SF27: Current collectors
+Common.740.SFV28            = SF28: Scoreboard
+Common.740.SFV29            = SF29: Reserve
+Common.740.SFV30            = SF30: Video
+Common.740.SFV31            = SF31: Cameras
+Common.740.SFV32            = SF32: PrOst (Autodrive)
+Common.740.SFV33            = SF33: Reserve
 
 #gmod_subway_81-740_4
 #Buttons:
