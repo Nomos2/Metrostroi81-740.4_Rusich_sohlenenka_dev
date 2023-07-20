@@ -66,7 +66,7 @@ function TRAIN_SYSTEM:Initialize()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return {"Brake", "Drive", "DriveStrength", "Disassembly","Strength" ,"BBE","MK","Slope","Slope1","SchemeSlope","Vent2","TPT"}
+    return {"Brake", "Drive", "DriveStrength","Recurperation", "Disassembly","Strength" ,"BBE","MK","Slope","Slope1","SchemeSlope","Vent2","TPT"}
 end
 
 function TRAIN_SYSTEM:Inputs()
@@ -205,8 +205,13 @@ function TRAIN_SYSTEM:Think()
         self:CState("EmergencyBrakeGood", Train.Pneumatic.BrakeCylinderPressure >= (2.6+Train.Pneumatic.WeightLoadRatio*0.6)-0.1)
         self:CState("EmergencyBrake", self.States.EmergencyBrakeGood--[[  and Train:ReadTrainWire(27) == 0--]] )
         self:CState("ReserveChannelBraking", Train:ReadTrainWire(28)>0)
-        self:CState("PTEnabled", Train.Pneumatic.BrakeCylinderPressure > 0.2)
-		self:CState("MPTEnabled", Train.Pneumatic.MiddleBogeyBrakeCylinderPressure > 0.2)
+        if Train.SFV8.Value > 0 then 
+            self:CState("PTEnabled", Train.Pneumatic.BrakeCylinderPressure > 0.2)
+            self:CState("MPTEnabled", Train.Pneumatic.MiddleBogeyBrakeCylinderPressure > 0.2)
+        else
+            self:CState("PTEnabled", true)
+            self:CState("MPTEnabled", true)
+        end
         self:CState("PTBad", false)
         self:CState("PTReady", Train.Pneumatic.AirDistributorPressure >= (2.6+Train.Pneumatic.WeightLoadRatio*0.6)-0.1)
         self:CState("PTReplace", self.PTReplace)-- and CurTime()-self.PTReplace > 1.5)
@@ -220,7 +225,9 @@ function TRAIN_SYSTEM:Think()
         self:CState("PantDisabled", self.Pant)
         self:CState("EnginesBroken", false)
         self:CState("BBEEnabled", self.BBE)
+        self:CState("EmerBrakeEnabled",Train:ReadTrainWire(28) > 0)
         self:CState("BBEBroken", false)
+        self:CState("InvertorProtection", Train.SFV28.Value > 0)
         self:CState("HVBad", Train.Electric.Power750V < 550)
         self:CState("LVBad", Train.Electric.Battery80V < 62)
 		self:CState("LVValue", Train.Electric.Battery80V)
@@ -241,6 +248,7 @@ function TRAIN_SYSTEM:Think()
         self:CState("HeatEnabled", false)
 		self:CState("AsyncInverter",true)
         self:CState("MKWork", Train.Pneumatic.Compressor)
+        --self:CState("MKWire", self.MK > 0)
         self:CState("BUVWork", true)
         self:CState("WagNOrientated", self.Orientation  == self.RevOrientation)
         self:CState("Orientation", self.Orientation)
@@ -364,7 +372,7 @@ function TRAIN_SYSTEM:Think()
 	local PN = self.PTReplace --self.PTReplace and CurTime()-self.PTReplace > 1.2 or self.States.EnginesDone
 	self.PN1 = (self:Get("PN1") and self:Get("PN1") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 0) or self:Get("PR") and self.TargetStrength <=0 --or (self.Pant and Train.TR.Main750V == 0 or Train.BV.Value*Train.GV.Value == 0) --or (Train.AsyncInverter.PrevVoltage > 975 or Train.AsyncInverter.PrevVoltage < 550) and Train.AsyncInverter.Brake > 0.5) and self.Strength < 0
 	self.PN2 = self.Slope and self:Get("SlopeSpeed") or (self:Get("PN2") and self:Get("PN2") > 0) or PN and (self:Get("DriveStrength") and self:Get("DriveStrength") > 2) --[[and not (self:Get("BARSBrake") or self:Get("AO"))]] -- or (self.Pant and Train.TR.Main750V == 0 or Train.BV.Value*Train.GV.Value == 0) --or (Train.AsyncInverter.PrevVoltage > 975 or Train.AsyncInverter.PrevVoltage < 550) and Train.AsyncInverter.Brake > 0.5) and self.Strength < -1
-	self.Recurperation = self:Get("Recurperation") and 1 or 0 
+	self.Recurperation = self:Get("RecurperationDisable") and 1 or 0
     
     self.MK = not self:Get("PVU3") and self:Get("Compressor") and 1 or 0
 
