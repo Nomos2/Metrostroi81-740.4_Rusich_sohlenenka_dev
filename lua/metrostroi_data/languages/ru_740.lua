@@ -267,11 +267,11 @@ Common.740.SFV24            = SF24: Питание вентиляции сало
 Common.740.SFV25            = SF25: Питание возбудителя (͡° ͜ʖ ͡°)
 Common.740.SFV26            = SF26: Питание зарядного конденсатора
 Common.740.SFV27            = SF27: Токоприёмники
-Common.740.SFV28            = SF28: Табло
+Common.740.SFV28            = SF28: Инвертор
 Common.740.SFV29            = SF29: Резерв
 Common.740.SFV30            = SF30: Видео
 Common.740.SFV31            = SF31: Камеры
-Common.740.SFV32            = SF32: ПрОст
+Common.740.SFV32            = SF32: Уравнительные цепи питания
 Common.740.SFV33            = SF33: Резерв
 
 #gmod_subway_81-740_4

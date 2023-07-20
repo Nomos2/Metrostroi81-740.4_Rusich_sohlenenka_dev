@@ -259,11 +259,11 @@ Common.740.SFV24            = SF24: Вътрешно вентилационно 
 Common.740.SFV25            = SF25: Хранене на патогена
 Common.740.SFV26            = SF26: Захранване на зареждащия кондензатор
 Common.740.SFV27            = SF27: Токоприемници
-Common.740.SFV28            = SF28: Табло
+Common.740.SFV28            = SF28: Инвертор
 Common.740.SFV29            = SF29: Резерва
 Common.740.SFV30            = SF30: Видео
 Common.740.SFV31            = SF31: Камара
-Common.740.SFV32            = SF32: ПрОст
+Common.740.SFV32            = SF32: Балансиращи силови вериги
 Common.740.SFV33            = SF33: Резерва
 
 #gmod_subway_81-740_4
