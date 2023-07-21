@@ -753,7 +753,7 @@ end
     local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
     self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
     self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
-    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.Chopper/100 or 0,0,1))	
+    self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	 
 
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do
