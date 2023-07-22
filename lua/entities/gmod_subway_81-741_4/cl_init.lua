@@ -1653,45 +1653,6 @@ end
         end
 	end
 	
-	for i = 1,10 do
-		local id1 = Format("b1tunnel_%d",i)
-		local id2 = Format("b2tunnel_%d",i)
-		local id3 = Format("b3tunnel_%d",i)		
-		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
-		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
-		
-		self.SoundNames[id2.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		self.SoundNames[id2.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1}
-		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
-		
-		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1}
-		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
-	end
-	for i = 1,14 do
-		local id1 = Format("b1street_%d",i)
-		local id2 = Format("b2street_%d",i)
-		local id3 = Format("b3street_%d",i)		
-		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
-		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
-		
-		self.SoundNames[id2.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		self.SoundNames[id2.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1.5}
-		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
-		
-		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1.5}
-		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
-	end	
-	
     local door_f = self:GetPackedBool("FrontDoor")
     local door_cab_f = self:Animate("door_cab_f",door_f and 0.99 or -0.05, 0, 0.5, 4.5, 0.55)
 	local door1s = (door_cab_f > 0 or door_f)

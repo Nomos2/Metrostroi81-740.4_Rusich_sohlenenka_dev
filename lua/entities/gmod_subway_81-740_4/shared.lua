@@ -50,7 +50,7 @@ local yventpos = {
 	---414.5+1*117+6.2-144,
 	414.5+2*117+5-144,
 	--414.5+3*117+2-144,
-	414.5+4*117+0.5-144,
+	214.5+4*117+0.5,
 	---414.5+5*117-2.3-144,
 	---414.5+6*117-144,
 }
@@ -62,7 +62,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 	for i = 1,10 do
 		local id1 = Format("b1tunnel_%d",i)
 		local id2 = Format("b2tunnel_%d",i)
-		--local id3 = Format("b3tunnel_%d",i)		
+		local id3 = Format("b3tunnel_%d",i)		
 		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
 		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
 		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
@@ -73,15 +73,15 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1}
 		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
 		
-		--self.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		--self.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		--self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1}
-		--self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
+		self.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1}
+		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
 	end
 	for i = 1,14 do
 		local id1 = Format("b1street_%d",i)
 		local id2 = Format("b2street_%d",i)
-		--local id3 = Format("b3street_%d",i)		
+		local id3 = Format("b3street_%d",i)		
 		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
 		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
 		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
@@ -92,11 +92,13 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1.5}
 		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
 		
-		--self.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		--self.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		--self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1.5}
-		--self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
+		self.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1.5}
+		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
 	end
+	
+	--Костыль в лице id2 и 3, они работают только на передней секции, цель - переписать их под заднюю секцию без внедрения кода непосредственно в заднюю секцию.	
 
 --[[
     self.SoundNames["async1"]   = {"subway_trains/rusich/inverter/inverter1.wav",loop = true}
@@ -116,9 +118,9 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 --Для fixinit75: понятия не имею, но chopper_onix не работает почему-то, в скриптах все нормально, также я не нашел в интернете информацию по инвертору, где он расположен, а по текущим координатам (0,0,0) он еле слышен. И по громкости также есть  проблемы. Прошу, укажи, где я ошибся.
 
     self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true}
-    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),2.5}	
+    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),2}	
     self.SoundNames["ONIX"]   = {"subway_trains/rusich/inverter/inverter.wav", loop = true}
-    self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),2.5}	
+    self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),1.5}	
 	
     for i=1,4 do
         self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop.wav"}

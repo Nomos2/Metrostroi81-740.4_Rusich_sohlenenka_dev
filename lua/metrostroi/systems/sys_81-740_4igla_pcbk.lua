@@ -1,9 +1,3 @@
---------------------------------------------------------------------------------
--- ASOTP "IGLA" wagon controller unit
---------------------------------------------------------------------------------
--- Copyright (C) 2013-2018 Metrostroi Team & FoxWorks Aerospace s.r.o.
--- Contains proprietary code. See license.txt for additional information.
---------------------------------------------------------------------------------
 Metrostroi.DefineSystem("IGLA_740_4PCBK")
 TRAIN_SYSTEM.DontAccelerateSimulation = true
 
@@ -36,14 +30,14 @@ function TRAIN_SYSTEM:CState(name,value)
 end
 function TRAIN_SYSTEM:Think(dT)
     local Train = self.Train
-    if Train.Battery.Value < 0.5 or self.Reset then
+    if Train.Panel.PCBKPower == 0 or self.Reset then
         self.Reset = false
         if self.State ~= -1 then
             self.State = -1
             self.Timer = nil
         end
     end
-    if self.State == -1 and (Train.Battery.Value > 0.5 and (not Train.A63 or Train.A63.Value > 0.5)) then
+    if self.State == -1 and (Train.Panel.PCBKPower > 0) then
         self.State = 0
         self.Timer = CurTime()+math.random()*0.3
     end
@@ -56,50 +50,10 @@ function TRAIN_SYSTEM:Think(dT)
         if self.Update then
             self:CANWrite("Timer",CurTime())
         end
+        local electric = self.Train.Electric
         self.Time= CurTime()+math.random()*0.4
-        local schengaged = Train:ReadTrainWire(20)>0
-        local schengagedD = schengaged and Train:ReadTrainWire(1)>0
-        local schengagedB = schengaged and Train:ReadTrainWire(6)>0
-        --local RP = Train.RPvozvrat.Value > 0.5
-        local DOORS = false
-        local BPSN = false--Train.PowerSupply.XT3_1 <= 50
-        local PARKING = false
-        local MANUAL = false
-        local BRAKES = false
-        local SCHEME = false
-        if schengaged then
-            DOORS = not schengagedB
-            PARKING = Train.ParkingBrake and Train.ParkingBrake.Value > 0.5 and not schengagedB
-            MANUAL = Train.ManualBrake and Train.ManualBrake > 0 and not schengagedB
-            BRAKES = Train.Pneumatic.BrakeCylinderPressure > 0.5 and not schengagedB
-            SCHEME = Train.K2.Value == 0
-            if BPSN and schengagedD and not self.BPSNTimer then self.BPSNTimer = CurTime() end
-        else
-            if (not BPSN or not self.States.BPSN) and self.BPSNTimer then self.BPSNTimer = nil end
-        end
-        if schengaged and SCHEME then
-            if not self.EngageTimer then self.EngageTimer = CurTime() end
-            if BRAKES and not self.BrakesTimer then self.BrakesTimer = CurTime() end
-            if not BRAKES and self.BrakesTimer then self.BrakesTimer = nil end
-        else
-            if self.EngageTimer then self.EngageTimer = nil end
-            if self.BrakesTimer then self.BrakesTimer = nil end
-        end
-        --[[ self:CState("SCHEME",self.EngageTimer and CurTime()-self.EngageTimer > 3)
-        self:CState("RP",RP)
-        self:CState("DOORS",DOORS)
-        self:CState("BPSN",self.BPSNTimer and CurTime()-self.BPSNTimer > 7)
-        self:CState("PARKING",PARKING)
-        self:CState("MANUAL",MANUAL)
-        self:CState("BRAKES",self.BrakesTimer and CurTime()-self.BrakesTimer > 3)
-        self:CState("UAVA",Train.Pneumatic.EmergencyValve)
-        if Train.IGLA_CBKI then
-            --self:CState("EPK",Train.Pneumatic.EPKEnabled and Train.EPKContacts.Value == 0)
-            --self:CState("UAVAK",Train.KV["10AS-33"] > 0 and Train.ALS_ARS.UAVAContacts)
-
-            if Train.ALS_ARS then self:CState("ARS",Train.ALS_ARS.EnableARS and Train.KV["D4-15"] > 0 and math.max(20,Train.ALS_ARS.SpeedLimit)+9 < Train.ALSCoil.Speed) end
-            self:CState("RU",Train.KRU and Train.KRU["14/1-B3"] > 0)
-        end--]]
+        self:CState("PTROverheat",(electric.Overheat1 > 0 or electric.Overheat2 > 0) and math.max(electric.T1,electric.T2))
+        self:CState("PTROverheating",(electric.T1 > 500 or electric.T2 > 500) and math.min(999,math.max(electric.T1,electric.T2)))
         self.Update = false
     end
 end

@@ -72,10 +72,51 @@ function ENT:InitializeSounds()
     --self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
 	]]
 	
+	for i = 1,10 do
+		local id1 = Format("b1tunnel_%d",i)
+		local id2 = Format("b2tunnel_%d",i)
+		local id3 = Format("b3tunnel_%d",i)		
+		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
+		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
+		
+		self.SoundNames[id2.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id2.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-1,0,-74),1}
+		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
+		
+		self.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
+		self.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-520,0,-74.5),1}
+		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
+	end
+	for i = 1,14 do
+		local id1 = Format("b1street_%d",i)
+		local id2 = Format("b2street_%d",i)
+		local id3 = Format("b3street_%d",i)		
+		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
+		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
+		
+		self.SoundNames[id2.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id2.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-1,0,-74),1.5}
+		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"] 
+		
+		self.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-520,0,-74.5),1.5}
+		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
+	end	
+	
+	--Костыль в лице id2 и 3, они работают только на передней секции, цель - переписать их под заднюю секцию без внедрения кода непосредственно в заднюю секцию. 	
+	
     self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true} --По поводу этого дела дал пояснение в голове состава.
-    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),2.5}	
+    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),2}	
     self.SoundNames["ONIX"]   = {"subway_trains/rusich/inverter/inverter.wav", loop = true}
-    self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),2.5}	
+    self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),1.5}	
 	
     for i=1,4 do
         self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop.wav"}

@@ -795,6 +795,26 @@ ENT.ButtonMap["ASNP"] = {
         }},
     }
 }
+
+--[[ENT.ClientProps["Test_prop"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(295, 0, 80),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test_prop_1"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(346, 9.5, 80),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}
+ENT.ClientProps["Test_prop_2"] = {
+    model = "models/hunter/plates/plate.mdl",
+    pos = Vector(614, -1.6, 80),
+    ang = Angle(0,0,0),
+    hideseat = 0.2,
+}]]
+
 ENT.ButtonMap["ASNPScreen"] = {
     pos = Vector(820.05-144,-49.8,-6.6), --446 -- 14 -- -0,5
     ang = Angle(0,-170,90),
@@ -1720,7 +1740,7 @@ local yventpos = {
 	---414.5+1*117+6.2-144,
 	414.5+2*117+5-144,
 	--414.5+3*117+2-144,
-	414.5+4*117+0.5-144,
+	214.5+4*117+0.5,
 	---414.5+5*117-2.3-144,
 	---414.5+6*117-144,
 }
@@ -1801,7 +1821,7 @@ function ENT:Initialize()
     self.VentRand = {}
     self.VentState = {}
     self.VentVol = {}
-    for i=1,7 do
+    for i=1,4 do
         self.VentRand[i] = math.Rand(0.5,2)
         self.VentState[i] = 0
         self.VentVol[i] = 0
@@ -2977,45 +2997,6 @@ end
             if IsValid(self.ClientEnts["speedrek"..i]) then self.ClientEnts["speedrek"..i]:SetSkin(0) end
         end
     end
-		
-	for i = 1,10 do
-		local id1 = Format("b1tunnel_%d",i)
-		local id2 = Format("b2tunnel_%d",i)
-		local id3 = Format("b3tunnel_%d",i)		
-		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
-		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
-		
-		self.SoundNames[id2.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		self.SoundNames[id2.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1}
-		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
-		
-		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1}
-		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
-	end
-	for i = 1,14 do
-		local id1 = Format("b1street_%d",i)
-		local id2 = Format("b2street_%d",i)
-		local id3 = Format("b3street_%d",i)		
-		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
-		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
-		
-		self.SoundNames[id2.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		self.SoundNames[id2.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1.5}
-		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
-		
-		Pricep740.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		Pricep740.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		Pricep740.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1.5}
-		Pricep740.SoundPositions[id3.."b"] = Pricep740.SoundPositions[id3.."a"]		
-	end
 			
 	local bool2num ={ [true]=1, [false]=0 }
 	local negbool2num ={ [true]=0, [false]=1 }
