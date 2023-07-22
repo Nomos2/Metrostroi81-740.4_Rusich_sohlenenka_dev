@@ -261,10 +261,10 @@ Common.740.SFV26            = SF26: Захранване на зареждащи
 Common.740.SFV27            = SF27: Токоприемници
 Common.740.SFV28            = SF28: Инвертор
 Common.740.SFV29            = SF29: Резерва
-Common.740.SFV30            = SF30: Видео
-Common.740.SFV31            = SF31: Камара
+Common.740.SFV30            = SF30: Резерва
+Common.740.SFV31            = SF31: Резерва
 Common.740.SFV32            = SF32: Балансиращи силови вериги
-Common.740.SFV33            = SF33: Резерва
+Common.740.SFV33            = SF33: Видео
 
 #gmod_subway_81-740_4
 #Buttons:

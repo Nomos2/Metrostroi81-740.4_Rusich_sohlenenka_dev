@@ -955,17 +955,17 @@ ENT.ButtonMap["PVZ"] = {
         {ID = "SFV21Toggle",x=9*30, y=55, w=30,h=50, tooltip = "",},
         {ID = "SFV22Toggle",x=10*30, y=55, w=30,h=50, tooltip = ""},
 
-        {ID = "SFV24Toggle",x=0*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV26Toggle",x=1*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV27Toggle",x=2*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV28Toggle",x=3*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV29Toggle",x=4*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV30Toggle",x=5*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV31Toggle",x=6*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV32Toggle",x=7*30, y=110, w=30,h=50, tooltip = "",},
-        {ID = "SFV33Toggle",x=8*30, y=110, w=30,h=50, tooltip = "",},
-		{ID = "SFV34Toggle",x=9*30, y=110, w=30,h=50, tooltip = "",},
-		{ID = "SFV35Toggle",x=10*30, y=110, w=30,h=50, tooltip = ""},
+		{ID = "SFV23Toggle",x=0*30, y=110, w=30,h=50, tooltip = "",},	
+        {ID = "SFV24Toggle",x=1*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV25Toggle",x=2*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV26Toggle",x=3*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV27Toggle",x=4*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV28Toggle",x=5*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV29Toggle",x=6*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV30Toggle",x=7*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV31Toggle",x=8*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV32Toggle",x=9*30, y=110, w=30,h=50, tooltip = "",},
+        {ID = "SFV33Toggle",x=10*30, y=110, w=30,h=50, tooltip = "",},		
     }
 }
 for k,buttbl in ipairs(ENT.ButtonMap["PVZ"].buttons) do

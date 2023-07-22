@@ -261,10 +261,10 @@ Common.740.SFV26            = SF26: Charging capacitor power supply
 Common.740.SFV27            = SF27: Current collectors
 Common.740.SFV28            = SF28: inverter
 Common.740.SFV29            = SF29: Reserve
-Common.740.SFV30            = SF30: Video
-Common.740.SFV31            = SF31: Cameras
+Common.740.SFV30            = SF30: Reserve
+Common.740.SFV31            = SF31: Reserve
 Common.740.SFV32            = SF32: Balancing power circuits
-Common.740.SFV33            = SF33: Reserve
+Common.740.SFV33            = SF33: Video
 
 #gmod_subway_81-740_4
 #Buttons:

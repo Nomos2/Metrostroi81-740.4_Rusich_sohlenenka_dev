@@ -269,10 +269,10 @@ Common.740.SFV26            = SF26: Питание зарядного конде
 Common.740.SFV27            = SF27: Токоприёмники
 Common.740.SFV28            = SF28: Инвертор
 Common.740.SFV29            = SF29: Резерв
-Common.740.SFV30            = SF30: Видео
-Common.740.SFV31            = SF31: Камеры
+Common.740.SFV30            = SF30: Резерв
+Common.740.SFV31            = SF31: Резерв
 Common.740.SFV32            = SF32: Уравнительные цепи питания
-Common.740.SFV33            = SF33: Резерв
+Common.740.SFV33            = SF33: Видео
 
 #gmod_subway_81-740_4
 #Buttons:
