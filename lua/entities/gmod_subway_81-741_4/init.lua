@@ -465,7 +465,7 @@ end
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,-0.5,-30),
+		Vector(305,-0.5,-20),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -488,7 +488,7 @@ end
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,-0.5,30),
+		Vector(305,-0.5,20),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
