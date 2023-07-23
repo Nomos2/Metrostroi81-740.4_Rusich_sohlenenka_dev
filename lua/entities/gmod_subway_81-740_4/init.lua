@@ -961,6 +961,7 @@ end
     self:SetPackedBool("AppLights", self.Panel.EqLights>0)
 	self:SetNW2Bool("TPTLamp",self.Panel.TPT>0)
 	self:SetNW2Bool("WiperLamp",self.Panel.Wiper>0)	
+	self:SetNW2Bool("StandLamp",self.Panel.Stand>0)		
 	
 	self:SetNW2Bool("DAU",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.DAU)
 	self:SetNW2Bool("XOD",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.Speed > 0.2)

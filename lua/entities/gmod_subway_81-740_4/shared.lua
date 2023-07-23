@@ -115,8 +115,6 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     --self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
 ]]
 
---Для fixinit75: понятия не имею, но chopper_onix не работает почему-то, в скриптах все нормально, также я не нашел в интернете информацию по инвертору, где он расположен, а по текущим координатам (0,0,0) он еле слышен. И по громкости также есть  проблемы. Прошу, укажи, где я ошибся.
-
     self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true}
     self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),2}	
     self.SoundNames["ONIX"]   = {"subway_trains/rusich/inverter/inverter.wav", loop = true}
