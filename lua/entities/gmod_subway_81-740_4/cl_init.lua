@@ -1401,6 +1401,13 @@ ENT.ClientProps["AntennaProp"] = {
     ang = Angle(-6,0,0),
     hide = 2,
 }
+ENT.ClientProps["PasswordProp"] = {
+    model = "models/metrostroi_train/81-740/cabine/password.mdl",
+    pos = Vector(672.3,-6,3.4),
+    ang = Angle(90,180,33),
+	scale = 1,	
+    hide = 2,
+}
 
 ---Segments
 ENT.ClientProps["speed1"] = {
@@ -1731,7 +1738,19 @@ ENT.ButtonMap["Antenna"] = {
     hideseat=0.2,
 	
 	buttons = {
-        {ID = "Antenna",x=0,y=0,w=240,h=150,tooltip="Установить/снять антенну",},
+        {ID = "Antenna",x=0,y=0,w=240,h=150,tooltip="",},
+    }
+}
+ENT.ButtonMap["Password"] = {
+    pos = Vector(672.4,-5.5,4.3),
+    ang = Angle(0,-123,90),
+    width = 130,
+    height = 26,
+    scale = 0.0625,
+    hideseat=0.2,
+	
+	buttons = {
+        {ID = "Password",x=0,y=0,w=130,h=26,tooltip="",},
     }
 }
 
@@ -2816,7 +2835,7 @@ if self.RenderClientEnts ~= self:ShouldRenderClientEnts() then
                 ent:SetAngles(Angle(0,math.random(0,360),0))
                 ent:SetSkin(math.floor(ent:SkinCount()*math.random()))
                 ent:SetModelScale(0.98 + (-0.02+0.04*math.random()),0)
-                ent:SetParent()				
+                ent:SetParent(Pricep740)				
                 table.insert(self.PassengerPositions,pos)
                 table.insert(self.PassengerEntsRear,ent)
             end
@@ -2931,6 +2950,7 @@ end
     end
 	
 	self:ShowHide("AntennaProp",not self:GetNW2Bool("Antenna"))
+	self:ShowHide("PasswordProp",not self:GetNW2Bool("Password"))	
 	
 	local ZavodTable = self:GetNW2Int("ZavodTable",1)	
     self:ShowHide("Zavod_table_front",ZavodTable==1)	

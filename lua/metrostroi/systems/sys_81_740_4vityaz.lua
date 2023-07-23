@@ -112,7 +112,7 @@ function TRAIN_SYSTEM:Initialize()
 	self.BRBK1 = true
 	self.Loop = true
 
-	self.TestPUType = math.random() > 0.3 and 1 or 2
+	--self.TestPUType = math.random() > 0.3 and 1 or 2
 
 	self.Compressor = false
 
@@ -187,7 +187,7 @@ if SERVER then
 					Train:SetNW2Bool("VityazMNMM"..k,value)
 				end
 			end
-			Train:SetNW2Int("PUType",self.TestPUType)
+			--Train:SetNW2Int("PUType",self.TestPUType)
 		elseif self.State == 1 then
 			if name == "VityazF5" and value then self.Password = self.Password:sub(1,-2) end
 			if name == "VityazF8" and value then
@@ -299,18 +299,23 @@ if SERVER then
 				self.Prost = true
 				self.Kos = 	true
 			end]]
+			
+			if self.ProstCanEnDis and char then
+				if char == 3 then
+					self.Prost = not self.Prost
+					self.Kos = 	self.Prost
+					self.ProstCanEnDis = nil
+				elseif char == 9 then
+					self.Prost = self.Kos and not self.Prost
+					self.ProstCanEnDis = nil
+				end
+			end
 			if (name == "VityazF8" and value) then
-				self.ProstTimer = CurTime()
+				self.ProstCanEnDis = true
 			else
-				self.ProstTimer = nil
+				self.ProstCanEnDis = nil
 			end
-			if self.ProstTimer and name == "Vityaz3" then
-				self.Prost = not self.Prost
-				self.Kos = self.Prost
-				self.ProstTimer = nil
-			elseif self.ProstTimer and name == "Vityaz9" then
-				if not self.Prost then self.Kos = not self.Kos self.ProstTimer = nil end
-			end
+
 		elseif self.State == 5 and self.State2 == 2 and value then
 			if name == "VityazF6" and self.Selected > 0 then
 				self.Selected = self.Selected - 1
@@ -373,13 +378,15 @@ if SERVER then
 				if name == "VityazT" then self.State2 = 1 end
 				if name == "VityazCurrent" then self.State2 = 2 self.Selected = 0 end
 				if name == "VityazVO" then self.State2 = 4 self.Selected = 0 end
-				if name == "Vityaz9" and not self.ProstTimer and self.State2 ~= 6 then self.State2 = 4 self.Selected = 1 end
+				if self.ProstCanEnDis then if name == "Vityaz9" and self.State2 ~= 6 then self.State2 = 4 self.Selected = 1 end end
 				if name == "VityazPVU" then self.State2 = 6 self.Selected = 1 end
+				if name == "VityazTV1" or name == "VityazTV2" then self.State = 6 self.PrevState2 = self.State2 end 
 				if name == "VityazNum" then self.State2 = 0 end
 				if name == "VityazSOT" then self.State2 = 3 end
 				if self.State2 ~= 6 and name == "Vityaz1" and Train.BARS.Speed == 0 and self.Recuperation == true then self.Recuperation = false elseif name == "Vityaz1" and Train.BARS.Speed == 0 and self.Recuperation == false then self.Recuperation = true end
 			end
 		end
+
 		if self.State == 5 and name == "AttentionMessage" and value then
 			local currerr = 0
 			for id,err in pairs(self.Errors) do
@@ -390,6 +397,9 @@ if SERVER then
 			if (currerr == 10 or currerr > 11) and self.Errors[currerr] then
 				self.Errors[currerr] = false
 			end
+		end
+		if self.State == 6 and value then
+			if name == "VityazUTV" then self.State = 5 self.State2 = self.PrevState2 self.PrevState2 = nil end
 		end
 	end
 	function TRAIN_SYSTEM:CheckError(id,cond)
@@ -565,6 +575,7 @@ if SERVER then
 					if self.Reset == nil then
 						self.Reset = true
 					end
+					if Train.VityazF8.Value < 0.5 then self.ProstCanEnDis = nil end
 					--if self.ProstTimer and Train.VityazF8.Value < 0.5 then self.ProstTimer = nil end
 					--Train:SetNW2Bool("VityazProstTimer",self.ProstTimer and CurTime()-self.ProstTimer > 0.5)
 					Train:SetNW2Bool("VityazProst",self.Prost)
@@ -914,7 +925,7 @@ if SERVER then
 					ring = true
 				end
 			end
-			self.Ring = Train.BARS.Ring > 0 or ring or self.ErrorRing and CurTime()-self.ErrorRing < 2 or self.Error > 11
+			self.Ring = Train.BARS.Ring > 0 or ring or self.ErrorRing and CurTime()-self.ErrorRing < 2 or self.Error > 11 and self.Error < 18
 			self.ErrorRinging = (ring or (Train.Prost_Kos.Programm and Train.Speed > 2) or self.ErrorRing and CurTime()-self.ErrorRing < 2)
 			self.ProstRinging = (Train.Prost_Kos.Programm and Train.Speed > 2)
 
@@ -968,8 +979,8 @@ else
 			scanlines = scanlines or false,
 		})
 	end
-	createFont("VityazComm","FreeSans",53,400,0.5,2,false)
-    createFont("VityazBold","FreeSans",40,400,0.5,2,false)
+	createFont("VityazComm","FreeSans",53,410,0.7,2,false)
+    createFont("VityazBold","FreeSans",40,400,0.7,2,false)
 	createFont("VityazPU","PerfectDOSVGA437",68,400,0,0,false)
 	createFont("CalibriMain","Calibri",53,600,false)
 	local State5 = surface.GetTextureID("models/81-740/State5_1")
@@ -1027,9 +1038,7 @@ else
 			"ДАУ - ДНЕПР",
 			"Отказ ПрОст",
 	}
-	local ErrorNums = {
-		21,23,25,62,38,79,54,12,61,84,83,37,85,47,69,77,78,43,34
-	}
+	
 	local red = Color(200,46,68) --Color(220,50,32)
 	local lightBlue = Color(66,187,183)
     local darkred = Color(77,14,14)
@@ -1042,7 +1051,7 @@ else
 	local aqua = Color(150,193,225)
 	local yellow = Color(220,220,105) --Color(223,217,94)
     local darkyellow = Color(100,90,27)
-    local purple = Color(251,153,253) --Color(210,152,229)
+    local purple = Color(230,153,250) --Color(210,152,229)
     local darkpurple = Color(78,54,102)
     local white = Color(232,236,239)
 	local darkwhite = Color(108,113,117)
@@ -1054,12 +1063,13 @@ else
 		local sel = Train:GetNW2Int("VityazSelected",0)
 		local err = Train:GetNW2Int("VityazError")
 		if self.State ~= 0 then
-			surface.SetDrawColor(25,13,13,180)
+			--surface.SetDrawColor(25,13,13,180)
+			surface.SetDrawColor(10,20,22,190)
 			surface.DrawRect(0,0,1024,1024)
 		end
 		if self.State == -3 then
-			local testPuTyp = Train:GetNW2Int("PUType")
-			if testPuTyp == 1 then
+			--local testPuTyp = Train:GetNW2Int("PUType")
+			--if testPuTyp == 1 then
 				surface.SetDrawColor(30,30,190)
 				surface.DrawRect(0,0,1024,1024)
 				local pix = 120 					-- Размер пикселя
@@ -1108,8 +1118,8 @@ else
 				drawBoxPU(generalPosX+pixoffsetbig*2+pixoffset*3,generalPosY+pixoffset*2,Train:GetNW2Bool("VityazMNMM23"))
 				drawBoxPU(generalPosX+pixoffsetbig*2+pixoffset*3,generalPosY+pixoffset*3,Train:GetNW2Bool("VityazMNMM24"))
 				drawBoxPU(generalPosX+pixoffsetbig+pixoffset*4,generalPosY+pixoffsetbig+pixoffset*3,Train:GetNW2Bool("VityazMNMM29"))
-			else
-				local function drawDefBox(text,posX,posY,size,col)
+			--else
+				--[[local function drawDefBox(text,posX,posY,size,col)
 					size = size or 150
 					text = text or "sample text"
 					col = col or Color(230,92,152)
@@ -1134,19 +1144,16 @@ else
 
 				
 				local size = 120			
-				local function drawBoxPU(PosX,PosY,bool)
+				local function drawBoxPU(PosX,PosY,bool) -- ДОДЕЛАТЬ ПООТОМ, КОГДА ПОЯВИТСЯ ПОЛНАЯ ИНФА!!!!
 					 
 					
 					local onOffset = 5 				-- отступ для полуобводки
 					surface.SetDrawColor(240,240,240)
 					draw.RoundedBox(4, PosX, PosY, size, size, Color(120,120,120))
-					-- draw.RoundedBox(4, x, y, w, h, color)
-					--[[surface.DrawOutlinedRect(bool and PosX-onOffset+2 or PosX-2, bool and PosY-onOffset+2 or PosY-2, bool and size-onOffset+2 or size-2, bool and size-onOffset+2 or size-2, 3)
-					surface.SetDrawColor(bool and red or Color(22,125,12))
-					surface.DrawRect(PosX,PosY,bool and size - onOffset or size,bool and size-onOffset or size)]]
-				end
+
+				end]]
 				--drawBoxPU(110,120,Train:GetNW2Bool("VityazMNMM13"))
-			end
+			--end
 		elseif self.State == 1 or self.WrongPassword == false then
 			if os.date( "%m-%d" ) == "04-01" then
 				self:PrintText(0,4,"В̵̓в̴͓е̵̲д̸̲͂и̷̬̕т̷̥ё̴̜́͑п̙а̷̬̜̒р̴̲оль̴",yellow)
@@ -1154,12 +1161,12 @@ else
 				if os.date( "%m-%d" ) == "05-15" then
 				self:PrintText(1,4,"С днем рождения Московского метро :)",yellow)
 			else				
-				self:PrintText(10,4,"Введите  пароль",yellow)
+				self:PrintText(12,4,"Введите  пароль",yellow)
 			end
 			end
 			--print("тута")
 			local pass = Train:GetNW2String("VityazPass","")
-			self:PrintText(19-0.5*#pass,6.5,pass..string.rep(" ",4-#pass),purple)
+			self:PrintText(20-0.5*#pass,6.5,pass..string.rep(" ",4-#pass),purple)
             local yPOS = 20
 			--
             for i=0,1 do
@@ -1227,28 +1234,28 @@ else
 			local enter = Train:GetNW2String("VityazEnter","-")
 			if enter == "-" then enter = false end
 			if state2 == 0 then
-				self:PrintText(15,2,"Режим ДЕПО",yellow)
+				self:PrintText(17,2,"Режим ДЕПО",yellow)
 				self:PrintText(2,4,"1 Тип и номера вагонов",yellow)
-					self:PrintText(34,4,">",blue)
+					self:PrintText(36,4,">",blue)
 				self:PrintText(2,6,"2 Дата",yellow)
-					if sel == 1 and enter then self:PrintText(31,6,enter..string.rep("█",4-#enter),yellow) else self:PrintText(31,6,Format("%04d", Train:GetNW2String("VityazDate",os.date("%d".."%m"))),yellow) end
+					if sel == 1 and enter then self:PrintText(33,6,enter..string.rep("█",4-#enter),yellow) else self:PrintText(33,6,Format("%04d", Train:GetNW2String("VityazDate",os.date("%d".."%m"))),yellow) end
 				self:PrintText(2,8,"3 Время выдачи состава",yellow)
-					if sel == 2 and enter then self:PrintText(31,8,enter..string.rep("█",4-#enter),yellow) else self:PrintText(31,8,Format("%04d", Train:GetNW2String("VityazTime",os.date("%H".."%M"))),yellow) end
+					if sel == 2 and enter then self:PrintText(33,8,enter..string.rep("█",4-#enter),yellow) else self:PrintText(33,8,Format("%04d", Train:GetNW2String("VityazTime",os.date("%H".."%M"))),yellow) end
 				self:PrintText(2,10,"4 Номер маршрута",yellow)
-					if sel==3 and enter then self:PrintText(33,10,enter..string.rep("█",2-#enter),yellow) else self:PrintText(33,10,Format("%02d", Train:GetNW2String("VityazRouteNumber","0")),yellow) end
+					if sel==3 and enter then self:PrintText(35,10,enter..string.rep("█",2-#enter),yellow) else self:PrintText(35,10,Format("%02d", Train:GetNW2String("VityazRouteNumber","0")),yellow) end
 				self:PrintText(2,12,"5 Число вагонов",yellow)
-					if sel==4 and enter then self:PrintText(33,12,enter..string.rep("█",2-#enter),yellow) else self:PrintText(33,12,Format("%02d", Train:GetNW2Int("VityazWagNum","0")),yellow) end
+					if sel==4 and enter then self:PrintText(35,12,enter..string.rep("█",2-#enter),yellow) else self:PrintText(35,12,Format("%02d", Train:GetNW2Int("VityazWagNum","0")),yellow) end
 				self:PrintText(2,14,"6 Диаметр бандажа КП",yellow)
-					self:PrintText(32,14,"860",yellow)
+					self:PrintText(34,14,"860",yellow)
 				self:PrintText(2,16,"7 Код депо",yellow)
-					if sel==6 and enter then self:PrintText(32,16,enter..string.rep("█",3-#enter),yellow) else self:PrintText(32,16,Format("%03d", Train:GetNW2String("VityazDepotCode","0")),yellow) end
+					if sel==6 and enter then self:PrintText(34,16,enter..string.rep("█",3-#enter),yellow) else self:PrintText(34,16,Format("%03d", Train:GetNW2String("VityazDepotCode","0")),yellow) end
 				self:PrintText(2,18,"8 Номер станции отправления",yellow)
-					if sel==7 and enter then self:PrintText(33,18,enter..string.rep("█",2-#enter),yellow) else self:PrintText(33,18,Format("%02d", Train:GetNW2String("VityazDepeatStation","0")),yellow) end
+					if sel==7 and enter then self:PrintText(35,18,enter..string.rep("█",2-#enter),yellow) else self:PrintText(35,18,Format("%02d", Train:GetNW2String("VityazDepeatStation","0")),yellow) end
 				self:PrintText(2,20,"9 Номер пути",yellow)
-					if sel==8 and enter then self:PrintText(34,20,enter..string.rep("█",1-#enter),yellow) else self:PrintText(34,20,Format("%d", Train:GetNW2String("VityazPath","0")),yellow) end
+					if sel==8 and enter then self:PrintText(36,20,enter..string.rep("█",1-#enter),yellow) else self:PrintText(36,20,Format("%d", Train:GetNW2String("VityazPath","0")),yellow) end
 				self:PrintText(2,22,"10 Направление движения",yellow)
-					if sel==9 and enter then self:PrintText(34,22,enter..string.rep("█",1-#enter),yellow) else self:PrintText(34,22,Format("%d", Train:GetNW2String("VityazDir","0")),yellow) end
-			self:PrintText(36, 4+sel*2,"<",blue)
+					if sel==9 and enter then self:PrintText(36,22,enter..string.rep("█",1-#enter),yellow) else self:PrintText(36,22,Format("%d", Train:GetNW2String("VityazDir","0")),yellow) end
+			self:PrintText(37, 4+sel*2,"<",blue)
 			elseif state2 == 1 then
 				self:PrintText(10,2,"ТИП И НОМЕРА ВАГОНОВ",yellow)
 				self:PrintText(5,4,"№ ваг.",yellow)
@@ -1269,13 +1276,13 @@ else
 		elseif self.State == 3 then
 		local init = Train:GetNW2Bool("VityazNotInitialize",false)
 		if init then --[[surface.SetTexture(State5) surface.SetDrawColor(255,255,255) surface.DrawTexturedRectRotated(512,512,1024,1024,0) ]] else
-			self:PrintText(12,4,"Неиндентифиц ваг",yellow)
+			self:PrintText(14,4,"Неиндентифиц ваг",yellow)
 			for i=1,wagnum do
-				self:PrintText(13+i+(9-wagnum)/2,6,"█",Train:GetNW2Bool("VityazWagI"..i,false) and green or red)
+				self:PrintText(15+i+(9-wagnum)/2,6,"█",Train:GetNW2Bool("VityazWagI"..i,false) and green or red)
 			end
 		end
 		elseif self.State == 4 then
-		local xbase,ybase =  8,5
+		local xbase,ybase =  10,5
 		self:PrintText(xbase+4,ybase,"Основной   ПУ",yellow)
 		self:PrintText(xbase+10,ybase+1,"█",Train:GetNW2Bool("VityazBTestStand") and green or red)
 		self:PrintText(xbase+13,ybase+1,"█",Train:GetNW2Bool("VityazBTestALS") and green or red)
@@ -1304,11 +1311,11 @@ else
 		self:PrintText(xbase+18,ybase+12,tostring(Train:GetNW2Int("VityazBTest")),yellow)
 		elseif self.State == 5 and mainmsg > 0 then
 			if mainmsg == 3 then
-				self:PrintText(10,2,"Включены 2 РВ",yellow)
+				self:PrintText(14,2,"Включены 2 РВ",yellow)
 			elseif mainmsg == 2 then
-				self:PrintText(10,2,"Хвостовой ПУ",yellow)
+				self:PrintText(14,2,"Хвостовой ПУ",yellow)
 			else
-				self:PrintText(10,2,"РВ отключены",yellow)
+				self:PrintText(14,2,"РВ отключены",yellow)
 			end
 			for i = 1,wagnum do
 				if not Train:GetNW2Bool("VityazMBTBR"..i,false) then
@@ -1662,7 +1669,7 @@ else
 				local prostact = vityazs~=-1000 and (vityazs < 200 and ProstActive or Metka and vityazs > 200)
 				
 				if alsfreq == 0 and Train:GetNW2Bool("LN") then 
-					self:PrintText(35+xRightAddOffet,2,"Н", green)
+					self:PrintText(37+xRightAddOffet,2,"Н", green)
 				end
 				if Train:GetNW2Bool("ProstVersion",false) then
 					if prostact or ProstActive and speed > 0 then
@@ -1692,8 +1699,11 @@ else
 			else
 				self:PrintText(4,1,"Зачем тебе так много вагонов?",yellow) -- Хз зачем, меня попросили это добавить
 			end
+		elseif self.State == 6 then
+			surface.SetDrawColor(30,30,190)
+			surface.DrawRect(0,0,1024,1024)
 		end
-		if self.State > 0 then
+		if self.State > 0 and self.State < 6 then
 			if wagnum < 6 then
 				local function tohex(num)
                     local charset = {"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"}

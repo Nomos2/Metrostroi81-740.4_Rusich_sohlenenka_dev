@@ -298,6 +298,7 @@ end	]]
     self.OtsekDoor = true
     self.WrenchMode = 1
 	self.Antenna = false	
+	self.Password = false
 	--self.RearDoor = false	
 	self.KVWrenchMode = self.WrenchMode
 
@@ -983,6 +984,7 @@ end
     self:SetPackedBool("Vent2Work",self.Electric.Vent2>0)
     self:SetPackedBool("RingEnabled",self.BUKP.Ring) 
     self:SetPackedBool("Antenna",self.Antenna)	
+    self:SetPackedBool("Password",self.Password)		
 	
     --self:SetNW2Int("PassSchemesLED",self.PassSchemes.PassSchemeCurr)
     --self:SetNW2Int("PassSchemesLEDN",self.PassSchemes.PassSchemeNext)
@@ -1075,7 +1077,8 @@ function ENT:OnButtonPress(button,ply)
     if button == "CabinDoorLeft" then self.CabinDoorLeft = not self.CabinDoorLeft end
     if button == "OtsekDoor" then self.OtsekDoor = not self.OtsekDoor end
     if button == "CabinDoorRight" then self.CabinDoorRight = not self.CabinDoorRight end
-    if button == "Antenna" then self.Antenna = not self.Antenna end	 		
+    if button == "Antenna" then self.Antenna = not self.Antenna end	
+	if button == "Password" then self.Password = not self.Password end	
     if button == "DoorLeft" then
         self.DoorSelectL:TriggerInput("Set",1)
         self.DoorSelectR:TriggerInput("Set",0)
