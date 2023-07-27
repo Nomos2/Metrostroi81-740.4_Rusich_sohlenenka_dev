@@ -309,9 +309,6 @@ if SERVER then
 					self.Prost = self.Kos and not self.Prost
 					self.ProstCanEnDis = nil
 				end
-			elseif not self.ProstCanEnDis and char == 9 then
-				self.State2 = 4 
-				self.Selected = 1
 			end
 			if (name == "VityazF8" and value) then
 				self.ProstCanEnDis = true
@@ -381,8 +378,7 @@ if SERVER then
 				if name == "VityazT" then self.State2 = 1 end
 				if name == "VityazCurrent" then self.State2 = 2 self.Selected = 0 end
 				if name == "VityazVO" then self.State2 = 4 self.Selected = 0 end
-				if name == "Vityaz9" and self.ProstCanEnDis then self.State2 = 4 self.Selected = 1 end
-				
+				if self.ProstCanEnDis then if name == "Vityaz9" and self.State2 ~= 6 then self.State2 = 4 self.Selected = 1 end end
 				if name == "VityazPVU" then self.State2 = 6 self.Selected = 1 end
 				if name == "VityazTV1" or name == "VityazTV2" then self.State = 6 self.PrevState2 = self.State2 end 
 				if name == "VityazNum" then self.State2 = 0 end
@@ -422,7 +418,7 @@ if SERVER then
 		end
 	end
 	function TRAIN_SYSTEM:Think(dT)
-		--print(self.ProstCanEnDis)
+		
         if self.State > 0 and self.Reset and self.Reset ~= 1 then self.Reset = false end
         local Train = self.Train
         local Panel = Train.Panel

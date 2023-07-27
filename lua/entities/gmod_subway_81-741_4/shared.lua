@@ -113,7 +113,7 @@ function ENT:InitializeSounds()
 	
 	--Костыль в лице id2 и 3, они работают только на передней секции, цель - переписать их под заднюю секцию без внедрения кода непосредственно в заднюю секцию. 	
 	
-    self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true} --По поводу этого дела дал пояснение в голове состава.
+    self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true}
     self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),2}	
     self.SoundNames["ONIX"]   = {"subway_trains/rusich/inverter/inverter.wav", loop = true}
     self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),1.5}	
@@ -139,7 +139,7 @@ function ENT:InitializeSounds()
     self.SoundPositions["front_isolation"] = {300,1e9,Vector(443, 0,-63),1}
     self.SoundNames["rolling_5"] = {loop=true,"subway_trains/rusich/rolling/skrip1.mp3"}	
     self.SoundNames["rolling_10"] = {loop=true,"subway_trains/rusich/rolling/rolling_10.wav"}
-    self.SoundNames["rolling_30"] = {loop=true,"subway_trains/rusich/rolling/rolling_30_"..rol..".wav"}
+    self.SoundNames["rolling_30"] = {loop=true,"subway_trains/rusich/rolling/rolling_30.wav"}
     self.SoundNames["rolling_55"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
     self.SoundNames["rolling_75"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}
     self.SoundPositions["rolling_5"] = {485,1e9,Vector(816-144,0,0),0.4}	
@@ -149,7 +149,7 @@ function ENT:InitializeSounds()
     self.SoundPositions["rolling_75"] = {485,1e9,Vector(816-144,0,0),0.9}
     self.SoundNames["rolling_low"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_low.wav"}
     self.SoundNames["rolling_medium2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium"..rol..".wav"}
-    self.SoundNames["rolling_high2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high2.wav"}
+    self.SoundNames["rolling_high2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high"..rol..".wav"}
     self.SoundPositions["rolling_low"] = {480,1e12,Vector(816-144,0,0),0.6*0.4}
     self.SoundPositions["rolling_medium1"] = {480,1e12,Vector(816-144,0,0),0.90*0.4}
     self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(816-144,0,0),0.90*0.4}

@@ -77,18 +77,18 @@ function ENT:InitializeSounds()
 	
 	self.SoundNames["rolling_5_tst"] = {loop=true,"subway_trains/rusich/rolling/skrip1.mp3"}	
 	self.SoundNames["rolling_10_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_10.wav"}
-	self.SoundNames["rolling_30_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_30_"..rol..".wav"}
+	self.SoundNames["rolling_30_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_30.wav"}
 	self.SoundNames["rolling_55_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
 	self.SoundNames["rolling_75_tst"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}		
-	self.SoundPositions["rolling_5_tst"] = {485,1e9,Vector(116-144,0,0),0.4}	
-	self.SoundPositions["rolling_10_tst"] = {485,1e9,Vector(116-144,0,0),0.53}
-	self.SoundPositions["rolling_30_tst"] = {485,1e9,Vector(116-144,0,0),0.7}
-	self.SoundPositions["rolling_55_tst"] = {485,1e9,Vector(116-144,0,0),0.85}
-	self.SoundPositions["rolling_75_tst"] = {485,1e9,Vector(116-144,0,0),0.9}	
+	self.SoundPositions["rolling_5_tst"] = {485,1e9,Vector(116-144,0,0),0.6}	
+	self.SoundPositions["rolling_10_tst"] = {485,1e9,Vector(116-144,0,0),0.6}
+	self.SoundPositions["rolling_30_tst"] = {485,1e9,Vector(116-144,0,0),0.8}
+	self.SoundPositions["rolling_55_tst"] = {485,1e9,Vector(116-144,0,0),0.9}
+	self.SoundPositions["rolling_75_tst"] = {485,1e9,Vector(116-144,0,0),0.95}	
 	
-    self.SoundNames["rolling_low_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_740/rolling_outside_low.wav"}
-    self.SoundNames["rolling_medium2_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_740/rolling_outside_medium2.wav"}
-    self.SoundNames["rolling_high2_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_740/rolling_outside_high2.wav"}
+    self.SoundNames["rolling_low_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_low.wav"}
+    self.SoundNames["rolling_medium2_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium"..rol..".wav"}
+    self.SoundNames["rolling_high2_740"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high"..rol..".wav"}
     self.SoundPositions["rolling_low_740"] = {480,1e12,Vector(-19.5,0,0),0.6*0.6}
     self.SoundPositions["rolling_medium2_740"] = {480,1e12,Vector(-19.5,0,0),0.90*0.6}
     self.SoundPositions["rolling_high2_740"] = {480,1e12,Vector(-19.5,0,0),1.00*0.6}	
