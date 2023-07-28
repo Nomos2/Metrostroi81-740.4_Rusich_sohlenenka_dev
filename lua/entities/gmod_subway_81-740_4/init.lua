@@ -606,11 +606,11 @@ end
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
 	constraint.AdvBallsocket(
-		Pricep740,
 		self.MiddleBogey,
+		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(305,-0.5,-20),
+		Vector(0,-0.5,-150),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -620,8 +620,8 @@ end
 		20, --xmax
 		20, --ymax
 		180, --zmax
-		0.1, --xfric
-		0.1, --yfric
+		1, --xfric
+		1, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
@@ -629,11 +629,11 @@ end
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
 	constraint.AdvBallsocket(
-		Pricep740,
 		self.MiddleBogey,
+		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(305,-0.5,20),
+		Vector(50,0.5,150),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
@@ -643,8 +643,8 @@ end
 		20, --xmax
 		20, --ymax
 		180, --zmax
-		0.1, --xfric
-		0.1, --yfric
+		1, --xfric
+		1, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
