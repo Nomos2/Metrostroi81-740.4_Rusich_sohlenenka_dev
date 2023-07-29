@@ -64,21 +64,21 @@ function ENT:Initialize()
     --Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
 	self.DriverSeat:SetColor(Color(0,0,0,0))
-	--self.DriverSeat.m_tblToolsAllowed = { "none" }		
+	self.DriverSeat.m_tblToolsAllowed = { "none" }		
 	
     self.InstructorsSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat:SetColor(Color(0,0,0,0))
-	--self.InstructorsSeat.m_tblToolsAllowed = { "none" }	
+	self.InstructorsSeat.m_tblToolsAllowed = { "none" }	
 	
     self.InstructorsSeat2:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat2:SetColor(Color(0,0,0,0))
-	--self.InstructorsSeat2.m_tblToolsAllowed = { "none" }	
+	self.InstructorsSeat2.m_tblToolsAllowed = { "none" }	
 	
     --self.InstructorsSeat3:SetRenderMode(RENDERMODE_TRANSALPHA)
     --self.InstructorsSeat3:SetColor(Color(0,0,0,0))
     self.InstructorsSeat4:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.InstructorsSeat4:SetColor(Color(0,0,0,0))
-	--self.InstructorsSeat4.m_tblToolsAllowed = { "none" }		
+	self.InstructorsSeat4.m_tblToolsAllowed = { "none" }		
 	
 	self.LightSensor = self:AddLightSensor(Vector(698-144,0,-130),Angle(0,90,0))
 	
@@ -95,10 +95,10 @@ function ENT:Initialize()
         self.RearCouple = self:CreateCouple(Vector(-625,0,-60),Angle(0,-180,0),false,"740") 
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") 
 			
-		--self.FrontCouple.m_tblToolsAllowed = { "none" }	 Перед релизом убрать коммит.
-		--self.RearCouple.m_tblToolsAllowed = { "none" }	
-		--self.FrontBogey.m_tblToolsAllowed = { "none" }	
-		--self.RearBogey.m_tblToolsAllowed = { "none" }			
+		self.FrontCouple.m_tblToolsAllowed = { "none" }
+		self.RearCouple.m_tblToolsAllowed = { "none" }	
+		self.FrontBogey.m_tblToolsAllowed = { "none" }	
+		self.RearBogey.m_tblToolsAllowed = { "none" }			
 		
 
 	self.Timer = CurTime()	
@@ -484,7 +484,7 @@ function ENT:CreatePricep(pos,ang)
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
 	Pricep740:DrawShadow(false)			
-	--Pricep740.m_tblToolsAllowed = { "none" }		
+	Pricep740.m_tblToolsAllowed = { "none" }		
 
 	if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
     --PrintTable(Pricep740:GetTable())
@@ -504,15 +504,7 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey.DisableSound = 1	
 	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)
-	--self.MiddleBogey.m_tblToolsAllowed = { "none" }		
-	
-function CanConstrain( Pricep740, self )
-	if ( !Pricep740 ) then return false end
-	if ( !isnumber( self ) ) then return false end
-	if ( !Pricep740:IsWorld() && !Pricep740:IsValid() ) then return false end
-	if ( !IsValid( Pricep740:GetPhysicsObjectNum( self ) ) ) then return false end
-	return true
-end	
+	self.MiddleBogey.m_tblToolsAllowed = { "none" }		
 		
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
@@ -525,13 +517,13 @@ end
 	Map:find("gm_metro_crossline") or	
 	Map:find("gm_metro_mosldl") or	
 	Map:find("gm_smr_1987") then
-        constraint.AdvBallsocket(
-		Pricep740,	
-		self.MiddleBogey,
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(310,0.0),
-		Vector(-310,0,0),		
+		Vector(0,0,0),
+		Vector(0,0,0),		
 		0, --forcelimit
 		0, --torquelimit
 		0, --xmin
@@ -544,9 +536,8 @@ end
 		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
-		false
-	)
+		1--nocollide
+	)			
 	else	
 	
 	local Map = game.GetMap():lower() or ""        
@@ -566,11 +557,11 @@ end
 		Vector(0,0,0),		
 		0, --forcelimit
 		0, --torquelimit
-		-3, --xmin
+		-2, --xmin
 		-3, --ymin
 		-180, --zmin
 		3, --xmax
-		3, --ymax
+		2, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
@@ -590,9 +581,9 @@ end
 		0, --forcelimit
 		0, --torquelimit
 		-3, --xmin
-		-3, --ymin
+		-1, --ymin
 		-180, --zmin
-		3, --xmax
+		1, --xmax
 		3, --ymax
 		180, --zmax
 		0, --xfric
@@ -606,19 +597,19 @@ end
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
 	constraint.AdvBallsocket(
-		self.MiddleBogey,
 		Pricep740,
+		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(0,-0.5,-150),
+		Vector(305,0,-20),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
 		-20, --xmin
-		-20, --ymin
+		-10, --ymin
 		-180, --zmin
 		20, --xmax
-		20, --ymax
+		10, --ymax
 		180, --zmax
 		1, --xfric
 		1, --yfric
@@ -629,19 +620,19 @@ end
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
 	constraint.AdvBallsocket(
-		self.MiddleBogey,
 		Pricep740,
+		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(50,0.5,150),
+		Vector(305,0,20),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
 		-20, --xmin
-		-20, --ymin
+		-10, --ymin
 		-180, --zmin
 		20, --xmax
-		20, --ymax
+		10, --ymax
 		180, --zmax
 		1, --xfric
 		1, --yfric
@@ -973,8 +964,6 @@ end
     self:SetPackedRatio("LV",self.Electric.Battery80V/150) 
     self:SetPackedRatio("HV",self.Electric.Main750V/1000) 
 	self:SetPackedRatio("I",(self.BUV.I+500)/1000)
-    --self:SetPackedRatio("I13",(self.Electric.I13+500)/1000)
-    --self:SetPackedRatio("I24",(self.Electric.I24+500)/1000)
     self:SetPackedRatio("I13",(self.AsyncInverter.Current+500)/1000)
     self:SetPackedRatio("I24",(self.AsyncInverter.Current+500)/1000)
     self:SetPackedBool("PassengerDoor",self.PassengerDoor) 

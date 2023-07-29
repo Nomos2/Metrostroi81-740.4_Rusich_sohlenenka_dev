@@ -55,10 +55,10 @@ function ENT:Initialize()
         self.RearCouple = self:CreateCouple(Vector(-611,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
 		
-		--self.FrontCouple.m_tblToolsAllowed = { "none" }	
-		--self.RearCouple.m_tblToolsAllowed = { "none" }	
-		--self.FrontBogey.m_tblToolsAllowed = { "none" }	
-		--self.RearBogey.m_tblToolsAllowed = { "none" }		
+		self.FrontCouple.m_tblToolsAllowed = { "none" }	
+		self.RearCouple.m_tblToolsAllowed = { "none" }	
+		self.FrontBogey.m_tblToolsAllowed = { "none" }	
+		self.RearBogey.m_tblToolsAllowed = { "none" }		
 		
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
 	self:SetNW2Entity("RearBogey",self.RearBogey)		
@@ -357,7 +357,7 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey.DisableSound = 1				
 	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)	
-	--self.MiddleBogey.m_tblToolsAllowed = { "none" }		
+	self.MiddleBogey.m_tblToolsAllowed = { "none" }		
 	
 function CanConstrain( Pricep740, self )
 
@@ -380,13 +380,13 @@ end
 	Map:find("gm_metro_crossline") or	
 	Map:find("gm_metro_mosldl") or	
 	Map:find("gm_smr_1987") then
-        constraint.AdvBallsocket(
-		Pricep740,	
-		self.MiddleBogey,
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(310,0.0),
-		Vector(-310,0,0),		
+		Vector(0,0,0),
+		Vector(0,0,0),		
 		0, --forcelimit
 		0, --torquelimit
 		0, --xmin
@@ -399,12 +399,11 @@ end
 		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
-		false
-	)
+		1--nocollide
+	)	
 	else	
 	
-		local Map = game.GetMap():lower() or ""        
+	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_mustox_neocrimson_line") or
 	Map:find("gm_mus_neoorange") or
