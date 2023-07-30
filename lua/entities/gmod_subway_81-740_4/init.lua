@@ -478,22 +478,25 @@ end
 function ENT:CreatePricep(pos,ang)
 	local Pricep740 = ents.Create("gmod_subway_kuzov")		
     if not IsValid(Pricep740) or not IsValid(self) then return end
-	Pricep740.SyncTable = {"RearBrakeLineIsolation","RearTrainLineIsolation"}
 	Pricep740:SetPos(self:LocalToWorld(pos))
 	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
 	Pricep740:DrawShadow(false)			
-	Pricep740.m_tblToolsAllowed = { "none" }		
-
+	--Pricep740.m_tblToolsAllowed = { "none" }		
 	if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
     --PrintTable(Pricep740:GetTable())
 	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
+    Pricep740:SetUseType(SIMPLE_USE)
+
+    -- Set proper parameters for the bogey
+    if IsValid(Pricep740:GetPhysicsObject()) then
+        Pricep740:GetPhysicsObject():SetMass(25000)
+    end		
 
 	table.insert(self.TrainEntities,Pricep740)      
     table.insert(Pricep740.TrainEntities,self)	
 	
-	local rand = math.random()*0.05
 	self.MiddleBogey = self:CreateBogey(Vector(-15,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
     local rand = math.random()*0.05
@@ -504,12 +507,22 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey.DisableSound = 1	
 	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)
-	self.MiddleBogey.m_tblToolsAllowed = { "none" }		
+	self.MiddleBogey.m_tblToolsAllowed = { "none" }
+    if not self.NoPhysics then
+        --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
+        self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)
+        --self.MiddleBogey:SetSolid(SOLID_VPHYSICS)
+    end
+    self.MiddleBogey:SetUseType(SIMPLE_USE)
+
+    -- Set proper parameters for the bogey
+    if IsValid(self.MiddleBogey:GetPhysicsObject()) then
+        self.MiddleBogey:GetPhysicsObject():SetMass(5000)
+    end	
 		
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
     constraint.NoCollide(Pricep740,self.MiddleBogey,0,0)			
-			
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
@@ -544,47 +557,42 @@ function ENT:CreatePricep(pos,ang)
 	if 
 	Map:find("gm_mustox_neocrimson_line") or
 	Map:find("gm_mus_neoorange") or
-	Map:find("gm_metro_nekrasovskaya_line") or
-	Map:find("gm_metro_chapaevskaya_line")	then
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
+	Map:find("gm_metro_nekrasovskaya_line") then
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
 		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(0,-1,25),
-		Vector(0,0,0),		
-		0, --forcelimit
-		0, --torquelimit
-		-2, --xmin
-		-3, --ymin
+		Vector(-40,0,65),
+		Vector(40,0,65),		
+		1, --forcelimit
+		1, --torquelimit
+		-1, --xmin
+		-1, --ymin
 		-180, --zmin
-		3, --xmax
-		2, --ymax
+		1, --xmax
+		1, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
-	)		
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
+	)
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
 		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(0,1,-15),
-		Vector(0,0,0),	
-		0, --forcelimit
-		0, --torquelimit
-		-3, --xmin
+		Vector(-40,0,-65),
+		Vector(-40,0,65),	
+		1, --forcelimit
+		1, --torquelimit
+		-2, --xmin
 		-1, --ymin
 		-180, --zmin
 		1, --xmax
-		3, --ymax
+		2, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
@@ -593,6 +601,54 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)
 	else
+
+	local Map = game.GetMap():lower() or ""        
+	if 
+	Map:find("gm_metro_chapaevskaya_line")	then	
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
+		0, --bone
+		0, --bone		
+		Vector(-40,0,20),
+		Vector(40,0,20),		
+		0, --forcelimit
+		0, --torquelimit
+		-5, --xmin
+		-5, --ymin
+		-180, --zmin
+		5, --xmax
+		5, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)			
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
+		0, --bone
+		0, --bone		
+		Vector(-40,0,-20),
+		Vector(-40,0,20),	
+		0, --forcelimit
+		0, --torquelimit
+		-5, --xmin
+		-5, --ymin
+		-180, --zmin
+		5, --xmax
+		5, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)
+	else	
+	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
@@ -641,6 +697,7 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)
 end	
+end
 end
         constraint.Axis(
 		self.RearBogey,		
@@ -793,6 +850,7 @@ end
 function ENT:Think()
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62
+	local Panel = self.Panel	
     local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")	
     if not IsValid(Pricep740) then return end	
 	Pricep740.SyncTable = {	"RearBrakeLineIsolation","RearTrainLineIsolation"}		
@@ -936,23 +994,23 @@ end
     self:SetNW2Bool("BIForward",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.Speed > -0.2)
     self:SetNW2Bool("BIBack",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.Speed < 0.2)
     self:SetNW2Bool("DoorsClosed",power and self.BUKP.DoorClosed)
-    self:SetNW2Bool("HVoltage",power and self.BUKP.HVBad )
-    self:SetNW2Bool("DoorLeftLamp",self.Panel.DoorLeft>0)
-    self:SetNW2Bool("DoorRightLamp",self.Panel.DoorRight>0)
-    self:SetNW2Bool("EmerBrakeWork",self.Panel.EmerBrakeWork>0)
-    self:SetNW2Bool("TickerLamp",self.Panel.Ticker>0)
-    self:SetNW2Bool("KAHLamp",self.Panel.KAH>0)
-    self:SetNW2Bool("ALSLamp",self.Panel.ALS>0)
-    self:SetNW2Bool("PassSchemeLamp",self.Panel.PassScheme>0)
-    self:SetNW2Bool("R_AnnouncerLamp",self.Panel.R_Announcer>0)
-    self:SetNW2Bool("R_LineLamp",self.Panel.R_Line>0)
+    self:SetNW2Bool("HVoltage",power and self.BUKP.HVBad)
+    self:SetNW2Bool("DoorLeftLamp",Panel.DoorLeft>0)
+    self:SetNW2Bool("DoorRightLamp",Panel.DoorRight>0)
+    self:SetNW2Bool("EmerBrakeWork",Panel.EmerBrakeWork>0)
+    self:SetNW2Bool("TickerLamp",Panel.Ticker>0)
+    self:SetNW2Bool("KAHLamp",Panel.KAH>0)
+    self:SetNW2Bool("ALSLamp",Panel.ALS>0)
+    self:SetNW2Bool("PassSchemeLamp",Panel.PassScheme>0)
+    self:SetNW2Bool("R_AnnouncerLamp",Panel.R_Announcer>0)
+    self:SetNW2Bool("R_LineLamp",Panel.R_Line>0)
     self:SetNW2Bool("AccelRateLamp",power and self.BUKP.Slope)
-    self:SetNW2Bool("DoorCloseLamp",self.Panel.DoorClose>0)
-    self:SetNW2Bool("DoorBlockLamp",self.Panel.DoorBlock>0)
-    self:SetPackedBool("AppLights", self.Panel.EqLights>0)
-	self:SetNW2Bool("TPTLamp",self.Panel.TPT>0)
-	self:SetNW2Bool("WiperLamp",self.Panel.Wiper>0)	
-	self:SetNW2Bool("StandLamp",self.Panel.Stand>0)		
+    self:SetNW2Bool("DoorCloseLamp",Panel.DoorClose>0)
+    self:SetNW2Bool("DoorBlockLamp",Panel.DoorBlock>0)
+    self:SetPackedBool("AppLights", Panel.EqLights>0)
+	self:SetNW2Bool("TPTLamp",Panel.TPT>0)
+	self:SetNW2Bool("WiperLamp",Panel.Wiper>0)	
+	self:SetNW2Bool("StandLamp",Panel.Stand>0)		
 	
 	self:SetNW2Bool("DAU",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.BARS.DAU)
 	self:SetNW2Bool("XOD",power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.Speed > 0.2)

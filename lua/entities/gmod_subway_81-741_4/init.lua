@@ -339,17 +339,23 @@ function ENT:CreatePricep(pos,ang)
 	Pricep740:Spawn()
 	Pricep740:SetOwner(self:GetOwner())	
 	Pricep740:DrawShadow(false)		
-	--Pricep740.m_tblToolsAllowed = { "none" }	
-	
+	--Pricep740.m_tblToolsAllowed = { "none" }			
     if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end				
 	
 	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
+    Pricep740:SetUseType(SIMPLE_USE)
+
+    -- Set proper parameters for the bogey
+    if IsValid(Pricep740:GetPhysicsObject()) then
+        Pricep740:GetPhysicsObject():SetMass(25000)
+    end			
+	
 	table.insert(self.TrainEntities,Pricep740)
     table.insert(Pricep740.TrainEntities,self)	
 
-	local rand = math.random()*0.05
 	self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
+    local rand = math.random()*0.05	
 	self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand) 		
 	self.MiddleBogey:SetNWInt("MotorSoundType",2)
 	self.MiddleBogey:SetNWInt("Async",true)
@@ -357,18 +363,18 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey.DisableSound = 1				
 	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)	
-	self.MiddleBogey.m_tblToolsAllowed = { "none" }		
+	self.MiddleBogey.m_tblToolsAllowed = { "none" }
+    if not self.NoPhysics then
+        --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
+        self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)
+        --self.MiddleBogey:SetSolid(SOLID_VPHYSICS)
+    end
+    self.MiddleBogey:SetUseType(SIMPLE_USE)	
 	
-function CanConstrain( Pricep740, self )
-
-	if ( !Pricep740 ) then return false end
-	if ( !isnumber( self ) ) then return false end
-	if ( !Pricep740:IsWorld() && !Pricep740:IsValid() ) then return false end
-	if ( !IsValid( Pricep740:GetPhysicsObjectNum( self ) ) ) then return false end
-
-	return true
-
-end	
+    -- Set proper parameters for the bogey
+    if IsValid(self.MiddleBogey:GetPhysicsObject()) then
+        self.MiddleBogey:GetPhysicsObject():SetMass(5000)
+    end		
 
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
@@ -407,47 +413,42 @@ end
 	if 
 	Map:find("gm_mustox_neocrimson_line") or
 	Map:find("gm_mus_neoorange") or
-	Map:find("gm_metro_nekrasovskaya_line") or
-	Map:find("gm_metro_chapaevskaya_line")	then
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
+	Map:find("gm_metro_nekrasovskaya_line") then
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
 		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(0,-1,25),
-		Vector(0,0,0),		
-		0, --forcelimit
-		0, --torquelimit
-		-3, --xmin
-		-3, --ymin
+		Vector(-40,0,65),
+		Vector(40,0,65),		
+		1, --forcelimit
+		1, --torquelimit
+		-1, --xmin
+		-1, --ymin
 		-180, --zmin
-		3, --xmax
-		3, --ymax
+		1, --xmax
+		1, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
 		0, --zfric
 		0, --rotonly
 		1--nocollide
-	)		
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
+	)
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
 		Pricep740,
 		0, --bone
 		0, --bone		
-		Vector(0,1,-15),
-		Vector(0,0,0),	
-		0, --forcelimit
-		0, --torquelimit
-		-3, --xmin
-		-3, --ymin
+		Vector(-40,0,-65),
+		Vector(-40,0,65),	
+		1, --forcelimit
+		1, --torquelimit
+		-2, --xmin
+		-1, --ymin
 		-180, --zmin
-		3, --xmax
-		3, --ymax
+		1, --xmax
+		2, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
@@ -456,6 +457,54 @@ end
 		1--nocollide
 	)
 	else
+
+	local Map = game.GetMap():lower() or ""        
+	if 
+	Map:find("gm_metro_chapaevskaya_line")	then	
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
+		0, --bone
+		0, --bone		
+		Vector(-40,0,20),
+		Vector(40,0,20),		
+		0, --forcelimit
+		0, --torquelimit
+		-5, --xmin
+		-5, --ymin
+		-180, --zmin
+		5, --xmax
+		5, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)			
+	constraint.AdvBallsocket(
+		self.MiddleBogey,	
+		Pricep740,
+		0, --bone
+		0, --bone		
+		Vector(-40,0,-20),
+		Vector(-40,0,20),	
+		0, --forcelimit
+		0, --torquelimit
+		-5, --xmin
+		-5, --ymin
+		-180, --zmin
+		5, --xmax
+		5, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1--nocollide
+	)
+	else	
+	
 	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
 	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
@@ -504,6 +553,7 @@ end
 		1--nocollide
 	)
 end	
+end
 end
         constraint.Axis(
 		self.RearBogey,		
@@ -721,6 +771,7 @@ function ENT:Think()
     local train = self.HeadTrain	
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62 --Батарея
+	local Panel = self.Panel		
     local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     if not IsValid(Pricep740) then return end	
 	Pricep740.SyncTable = {	"RearBrakeLineIsolation","RearTrainLineIsolation"}		
@@ -810,7 +861,7 @@ end
     --self:SetNW2Int("PassSchemesLEDN",self.PassSchemes.PassSchemeNext) 
     --self:SetPackedBool("PassSchemesLEDO",self.PassSchemes.PassSchemePath)
 
-    self:SetPackedBool("AnnPlay",self.Panel.AnnouncerPlaying > 0)
+    self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)
 	
     self:SetPackedBool("FrontDoor",self.FrontDoor)
 	

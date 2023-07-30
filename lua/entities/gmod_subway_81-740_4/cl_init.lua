@@ -36,7 +36,7 @@ ENT.ButtonMap["PUU"] = {
 		
         {ID = "StandToggle",x=213, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl",z=1.85,
-			lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="Stand",anim=true,z=0}, 				
+			lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="StandLamp",anim=true,z=0}, 				
             var="Stand",speed=12, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
@@ -581,7 +581,7 @@ ENT.ButtonMap["PUR"] = {
 		{ID = "TPTToggle",x=24, y=55, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_red.mdl",z=-6,
             var="TPT",speed=12, vmin=0, vmax=0.5,
-            lamp = {model = "models/metrostroi_train/81-722/lamp_red.mdl",var="TPT",anim=true},
+            lamp = {model = "models/metrostroi_train/81-722/lamp_red.mdl",var="TPTLamp",anim=true},
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
