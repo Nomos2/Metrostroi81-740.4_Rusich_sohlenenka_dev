@@ -30,8 +30,8 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))	
 
-    self.NormalMass = 20000
-    self:DrawShadow(true)	
+    self.NormalMass = 13500	
+    --self:DrawShadow(true)	
 
     -- Create seat entities
 	self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")

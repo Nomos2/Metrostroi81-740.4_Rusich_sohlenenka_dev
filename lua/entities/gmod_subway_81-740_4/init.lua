@@ -51,7 +51,7 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
-    self.NormalMass = 20000	
+    self.NormalMass = 13500	
 	--self.m_tblToolsAllowed = { "none" }		
 
     -- Create seat entities

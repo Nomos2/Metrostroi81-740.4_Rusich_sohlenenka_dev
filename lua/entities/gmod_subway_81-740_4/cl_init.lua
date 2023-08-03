@@ -517,8 +517,8 @@ ENT.ButtonMap["ALSPANELLAMPS"] = { -- дополнительные лампы А
 		{ID = "!Ispr",x=45, y=13.7, radius=10, tooltip = "",model = {
             name="Ispr",lamp = {model = "models/metrostroi_train/81-502/lamps/svetodiod_small_502.mdl",var="Ispr",z=-3.5, color=Color(120,255,50)},
 		}},	
-		{ID = "!Forw",x=55, y=10, w=18, h=10, tooltip = "Движение вперёд"},
-        {ID = "!Back",x=55, y=25, w=18, h=10, tooltip = "Движение назад"},
+		{ID = "!Forw",x=55, y=10, w=18, h=10, tooltip = ""},
+        {ID = "!Back",x=55, y=25, w=18, h=10, tooltip = ""},
     }
 }
 ENT.ButtonMap["PUL"] = {
@@ -549,9 +549,6 @@ ENT.ButtonMap["PUL"] = {
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		/*
-        {ID = "!DoorLeftLamp",x=70, y=197, tooltip = "",model = {
-           lamp = {model = "models/pult/button_lru.mdl",var="DoorLeftLamp",z=-0.5,skin = 9,anim=true},
-        }},
 */
         {ID = "DoorLeftSet",x=70, y=197, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=-5.3,
@@ -789,7 +786,7 @@ ENT.ButtonMap["ASNP"] = {
         {ID = "R_ASNPOnToggle",x=2, y=10, radius=8, tooltip = "",model = {
             model = "models/metrostroi_train/81-720/tumbler2.mdl", ang=0, scale=0.7,z=5,
             var="R_ASNPOn",speed=12, vmin=1, vmax=0,
-            plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=90,x=-0.5,z=2,y=-12,scale=0.7,var="R_ASNPOnPl",ID="R_ASNPOnPl",},			
+            --plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=90,x=-0.5,z=2,y=-12,scale=0.7,var="R_ASNPOnPl",ID="R_ASNPOnPl",},			
             sndvol = 0.5,snd = function(val) return val and "pnm_on" or "pnm_off" end,
             sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
         }},

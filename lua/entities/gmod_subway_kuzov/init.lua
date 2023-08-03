@@ -20,7 +20,7 @@ function ENT:Initialize()
     self:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear.mdl")
     self:SetPos(self:GetPos() + Vector(0,0,0))
 	
-    self.NormalMass = 10000		
+    self.NormalMass = 13500		
 	
     self.Joints = {}
     self.JointPositions = {}

@@ -269,6 +269,15 @@ Common.740.SFV31            = SF31: Резерва
 Common.740.SFV32            = SF32: Балансиращи силови вериги
 Common.740.SFV33            = SF33: Видео
 
+Common.740.LN               = ЛН: Лампа за съвпадение на посоката
+Common.740.Dnepr			= ДНЕПР: Лампа за включване на режим Днепър
+Common.740.XOD				= ХОД: Лампа за ход
+Common.740.DAU				= ДАУ: Лампа за работа на резервно автономно устройство 
+Common.740.Ispr 			= ИСПР: Сервизна лампа на комплекти БАРС
+Common.740.AO				= АО: Лампа за получаване на абсолютен стоп сигнал
+Common.740.Forw				= Движение напред
+Common.740.Back				= Движение назад
+
 #gmod_subway_81-740_4
 #Buttons:
 
@@ -476,8 +485,17 @@ Entities.gmod_subway_81-740_4.Buttons.PneumoHelper2.!BrakeTrainLine   = @[Common
 Entities.gmod_subway_81-740_4.Buttons.PneumoHelper1.!BrakeCylinder    = @[Common.740.BCPressure]
 Entities.gmod_subway_81-740_4.Buttons.GV.GVToggle                     = @[Common.740.BRU]
 
-Entities.gmod_subway_81-740_4.Buttons.Antenna.Antenna       = @[Common.740.Antenna]
+Entities.gmod_subway_81-740_4.Buttons.Antenna.Antenna         = @[Common.740.Antenna]
 Entities.gmod_subway_81-740_4.Buttons.Password.Password       = @[Common.740.Password]
+
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!LN       = @[Common.740.LN]
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Dnepr    = @[Common.740.Dnepr]
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!XOD      = @[Common.740.XOD]
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!DAU      = @[Common.740.DAU]
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Ispr     = @[Common.740.Ispr]
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!AO       = @[Common.740.AO]
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Forw     = @[Common.740.Forw]
+Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Back     = @[Common.740.Back]
 
 #gmod_subway_81-741_4
 Entities.gmod_subway_81-741_4.Buttons.Battery.BatteryToggle   = @[Common.740.VB]
