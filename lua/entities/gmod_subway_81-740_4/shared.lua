@@ -30,27 +30,27 @@ function ENT:PassengerCapacity()
 end
 
 function ENT:GetStandingArea()
-	return Vector(520,-25,-47),Vector(15,25,-46)
+	return Vector(520-15,-25,-47),Vector(15,25,-46)
 end 
 
 function ENT:GetStandingAreaRear()    --смещение пассажиров
-	return Vector(270,-25,-47),Vector(-285,25,-46) 	
+	return Vector(270-15,-25,-47),Vector(-285,25,-46) 	
 end 
 
 local function GetDoorPosition(n,G)	--Правые двери			--Левые двери
-	return Vector(652.5  - 35.0*G     -  338.8*n, -67.5*(1-2*G), 4.3)
+	return Vector(652.5-15  - 35.0*G     -  338.8*n, -67.5*(1-2*G), 4.3)
 end
 
 local function GetDoorPositionRear(n,G)			--	x						--	y        --	z
-	return Vector(-195.5 - -35.0*G - 232.1*n, -66*(1-2*G), 4.3)
+	return Vector(-195.5-15 - -35.0*G - 232.1*n, -66*(1-2*G), 4.3)
 end
 
 local yventpos = {
-    414.5+0*117-144,
+    414.5+0*117-144-15,
 	---414.5+1*117+6.2-144,
-	414.5+2*117+5-144,
+	414.5+2*117+5-144-15,
 	--414.5+3*117+2-144,
-	214.5+4*117+0.5,
+	214.5+4*117+0.5-15,
 	---414.5+5*117-2.3-144,
 	---414.5+6*117-144,
 }
@@ -65,17 +65,17 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 		local id3 = Format("b3tunnel_%d",i)		
 		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
 		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520-25,0,-75),1}
 		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
 		
 		self.SoundNames[id2.."a"] = "subway_trains/bogey/st"..i.."a.wav"
 		self.SoundNames[id2.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1}
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15-16.5,0,-74),1}
 		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
 		
 		self.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
 		self.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
-		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1}
+		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532-25,0,-74.5),1}
 		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
 	end
 	for i = 1,14 do
@@ -84,17 +84,17 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 		local id3 = Format("b3street_%d",i)		
 		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
 		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
+		self.SoundPositions[id1.."a"] = {700,1e9,Vector(520-25,0,-75),1.5}
 		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
 		
 		self.SoundNames[id2.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
 		self.SoundNames[id2.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15,0,-74),1.5}
+		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-15-16.5,0,-74),1.5}
 		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
 		
 		self.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
 		self.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
-		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532,0,-74.5),1.5}
+		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-532-25,0,-74.5),1.5}
 		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
 	end
 	
@@ -116,9 +116,9 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 ]]
 
     self.SoundNames["chopper_onix"]   = {"subway_trains/rusich/chopper.wav",loop = true}
-    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144,0,0),2}	
+    self.SoundPositions["chopper_onix"] = {200,1e9,Vector(144-15,0,0),2}	
     self.SoundNames["ONIX"]   = {"subway_trains/rusich/inverter/inverter.wav", loop = true}
-    self.SoundPositions["ONIX"] = {400,1e9,Vector(344,0,0),1.5}	
+    self.SoundPositions["ONIX"] = {400,1e9,Vector(344-15,0,0),1.5}	
 	
     for i=1,4 do
         self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop.wav"}
@@ -139,42 +139,42 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     }
 
 	self.SoundNames["ring"] = {loop=0.0,"subway_trains/rusich/rings/ring_start.wav","subway_trains/rusich/rings/ring_loop.wav","subway_trains/rusich/rings/ring_end.wav"}
-    self.SoundPositions["ring"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}
+    self.SoundPositions["ring"] = {100,1e9,Vector(803-159,25.6,-26.3),0.45}
 	
     self.SoundNames["ring_old"] = {loop=0.0,"subway_trains/rusich/rings/ring_start1.wav","subway_trains/rusich/rings/ring_loop1.wav","subway_trains/rusich/rings/ring_end1.wav"}
-    self.SoundPositions["ring_old"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}	
+    self.SoundPositions["ring_old"] = {100,1e9,Vector(803-159,25.6,-26.3),0.45}	
 	
     self.SoundNames["ring_new"] = {loop=0.0,"subway_trains/rusich/rings/ring_start2.wav","subway_trains/rusich/rings/ring_loop2.wav","subway_trains/rusich/rings/ring_end2.wav"}
-    self.SoundPositions["ring_new"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}	
+    self.SoundPositions["ring_new"] = {100,1e9,Vector(803-159,25.6,-26.3),0.45}	
 
     self.SoundNames["ring_1"] = {loop=0.0,"subway_trains/rusich/rings/ring_start3.wav","subway_trains/rusich/rings/ring_loop3.wav","subway_trains/rusich/rings/ring_end3.wav"}
-    self.SoundPositions["ring_1"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}		
+    self.SoundPositions["ring_1"] = {100,1e9,Vector(803-159,25.6,-26.3),0.45}		
 	
 	self.SoundNames["ring_vityaz"] = "subway_trains/rusich/rings/ring_start1.wav"
-	self.SoundPositions["ring_vityaz"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}
+	self.SoundPositions["ring_vityaz"] = {100,1e9,Vector(803-159,25.6,-26.3),0.45}
 	
 	self.SoundNames["ring_cams"] = "subway_trains/rusich/rings/ring_start.wav"
-	self.SoundPositions["ring_cams"] = {100,1e9,Vector(803-144,25.6,-26.3),0.45}
+	self.SoundPositions["ring_cams"] = {100,1e9,Vector(803-159,25.6,-26.3),0.45}
 
     self.SoundNames["compressor_pn"] = "subway_trains/rusich/compressor/compressor_psh.wav"
-    self.SoundPositions["compressor_pn"] = {485,1e9,Vector(-18+-144,-40,-66),0.7} --FIXME: Pos
+    self.SoundPositions["compressor_pn"] = {485,1e9,Vector(-18+-159,-40,-66),0.7} --FIXME: Pos
 
 	 local j = math.random (1,3)
     self.SoundNames["release_front"] = {loop=true,"subway_trains/rusich/pneumo_release_"..j..".wav"}
-    self.SoundPositions["release_front"] = {1200,1e9,Vector(0-144,0,-70),0.4}
+    self.SoundPositions["release_front"] = {1200,1e9,Vector(0-159,0,-70),0.4}
     self.SoundNames["release_middle"] = {loop=true,"subway_trains/rusich/pneumo_release_"..j..".wav"}
-	self.SoundPositions["release_middle"] = {1200,1e9,Vector(800-144,0,-70),0.4}
+	self.SoundPositions["release_middle"] = {1200,1e9,Vector(800-159,0,-70),0.4}
     self.SoundNames["parking_brake"] = {loop=true,"subway_trains/common/pneumatic/autostop_loop.wav"}
-    self.SoundPositions["parking_brake"] = {400,1e9,Vector(-13+144,0,-70),0.95}
+    self.SoundPositions["parking_brake"] = {400,1e9,Vector(-13+159,0,-70),0.95}
     self.SoundNames["crane013_brake"] = {loop=true,"subway_trains/common/pneumatic/release_2.wav"}
-    self.SoundPositions["crane013_brake"] = {80,1e9,Vector(813-144,-14.8,-47.9),0.86}
+    self.SoundPositions["crane013_brake"] = {80,1e9,Vector(813-159,-14.8,-47.9),0.86}
     self.SoundNames["crane013_brake2"] = {loop=true,"subway_trains/common/pneumatic/013_brake2.wav"}
-    self.SoundPositions["crane013_brake2"] = {80,1e9,Vector(813-144,-14.8,-47.9),0.86}
+    self.SoundPositions["crane013_brake2"] = {80,1e9,Vector(813-159,-14.8,-47.9),0.86}
     self.SoundNames["crane013_release"] = {loop=true,"subway_trains/common/pneumatic/013_release.wav"}
-    self.SoundPositions["crane013_release"] = {80,1e9,Vector(813-144,-14.8,-47.9),0.4}
+    self.SoundPositions["crane013_release"] = {80,1e9,Vector(813-159,-14.8,-47.9),0.4}
 
 	self.SoundNames["front_isolation"] = {loop=true,"subway_trains/common/pneumatic/isolation_leak.wav"}
-    self.SoundPositions["front_isolation"] = {300,1e9,Vector(813-144, 0,-63),1}
+    self.SoundPositions["front_isolation"] = {300,1e9,Vector(813-159, 0,-63),1}
 
     self.SoundNames["pneumo_disconnect_close"] = {"subway_trains/720/013_close1.mp3","subway_trains/720/013_close2.mp3","subway_trains/720/013_close3.mp3"}
     self.SoundNames["pneumo_disconnect_open"] = {
@@ -183,8 +183,8 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
         "subway_trains/720/013_open3.mp3",
         "subway_trains/720/013_open4.mp3",
     }
-    self.SoundPositions["pneumo_disconnect_close"] = {800,1e9,Vector(795-144,40,-55),0.4}
-    self.SoundPositions["pneumo_disconnect_open"] = {800,1e9,Vector(795-144,40,-55),0.4}
+    self.SoundPositions["pneumo_disconnect_close"] = {800,1e9,Vector(795-159,40,-55),0.4}
+    self.SoundPositions["pneumo_disconnect_open"] = {800,1e9,Vector(795-159,40,-55),0.4}
     self.SoundNames["disconnect_valve"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3" 
 
     self.SoundNames["pnm_on"]           = {"subway_trains/common/pnm/pnm_switch_on.mp3","subway_trains/common/pnm/pnm_switch_on2.mp3"}
@@ -211,7 +211,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     }
 
     self.SoundNames["horn"] = {loop=0.6,"subway_trains/rusich/horn/horn8_start.wav","subway_trains/rusich/horn/horn8_loop.wav", "subway_trains/rusich/horn/horn8_end.wav"}
-    self.SoundPositions["horn"] = {1100,1e9,Vector(820-144,0,-30),0.8}
+    self.SoundPositions["horn"] = {1100,1e9,Vector(820-159,0,-30),0.8}
 
     self.SoundNames["KV_-3_-2"] = "subway_trains/rusich/controller/t3_t2.mp3"
     self.SoundNames["KV_-2_-1"] = "subway_trains/rusich/controller/t2_t1.mp3"
@@ -227,7 +227,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     self.SoundNames["KV_0_-1"] = "subway_trains/rusich/controller/0_t1.mp3"
     self.SoundNames["KV_-1_-2"] = "subway_trains/rusich/controller/t1_t2.mp3"
     self.SoundNames["KV_-2_-3"] = "subway_trains/rusich/controller/t2_t3.mp3"
-    self.SoundPositions["KV_-3_-2"] = {80,1e9,Vector(830.8-144,25.3,-10)}
+    self.SoundPositions["KV_-3_-2"] = {80,1e9,Vector(830.8-159,25.3,-10)}
     self.SoundPositions["KV_-2_-1"] = self.SoundPositions["KV_-3_-2"]
     self.SoundPositions["KV_-1_0"] = self.SoundPositions["KV_-3_-2"]
     self.SoundPositions["KV_0_1"] = self.SoundPositions["KV_-3_-2"]
@@ -275,7 +275,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
         "subway_trains/717/kru/kru1-0_3.mp3",
         "subway_trains/717/kru/kru1-0_4.mp3",
     }
-    self.SoundPositions["kro_in"] = {80,1e9,Vector(813.4-144,53.3,-21.1)}
+    self.SoundPositions["kro_in"] = {80,1e9,Vector(813.4-159,53.3,-21.1)}
     self.SoundPositions["kro_out"] = self.SoundPositions["kro_in"]
     self.SoundPositions["kro_-1_0"] = self.SoundPositions["kro_in"]
     self.SoundPositions["kro_0_1"] = self.SoundPositions["kro_in"]
@@ -288,7 +288,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     self.SoundNames["krr_0_1"] = self.SoundNames["kro_0_1"]
     self.SoundNames["krr_1_0"] = self.SoundNames["kro_1_0"]
     self.SoundNames["krr_0_-1"] = self.SoundNames["kro_0_-1"]
-    self.SoundPositions["krr_in"] = {80,1e9,Vector(810.4-144,53.9,-17.3)}
+    self.SoundPositions["krr_in"] = {80,1e9,Vector(810.4-159,53.9,-17.3)}
     self.SoundPositions["krr_out"] = self.SoundPositions["krr_in"]
     self.SoundPositions["krr_-1_0"] = self.SoundPositions["krr_in"]
     self.SoundPositions["krr_0_1"] = self.SoundPositions["krr_in"]
@@ -334,24 +334,24 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     self.SoundNames["rolling_30"] = {loop=true,"subway_trains/rusich/rolling/rolling_30.wav"}
     self.SoundNames["rolling_55"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
     self.SoundNames["rolling_75"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}
-    self.SoundPositions["door_cab_roll"] = {485,1e9,Vector(516-144,0,0),0.5}		
-    self.SoundPositions["rolling_5"] = {485,1e9,Vector(516-144,0,0),0.6}	
-    self.SoundPositions["rolling_10"] = {485,1e9,Vector(516-144,0,0),0.7}
-    self.SoundPositions["rolling_30"] = {485,1e9,Vector(516-144,0,0),0.8}
-    self.SoundPositions["rolling_55"] = {485,1e9,Vector(516-144,0,0),0.9}
-    self.SoundPositions["rolling_75"] = {485,1e9,Vector(516-144,0,0),0.95}
+    self.SoundPositions["door_cab_roll"] = {485,1e9,Vector(516-159,0,0),0.5}		
+    self.SoundPositions["rolling_5"] = {485,1e9,Vector(516-159,0,0),0.6}	
+    self.SoundPositions["rolling_10"] = {485,1e9,Vector(516-159,0,0),0.7}
+    self.SoundPositions["rolling_30"] = {485,1e9,Vector(516-159,0,0),0.8}
+    self.SoundPositions["rolling_55"] = {485,1e9,Vector(516-159,0,0),0.9}
+    self.SoundPositions["rolling_75"] = {485,1e9,Vector(516-159,0,0),0.95}
     self.SoundNames["rolling_low"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_low.wav"}
     self.SoundNames["rolling_medium2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium"..rol..".wav"}
     self.SoundNames["rolling_high2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high"..rol..".wav"}
-    self.SoundPositions["rolling_low"] = {480,1e12,Vector(516-144,0,0),0.6*0.4}
-    self.SoundPositions["rolling_medium1"] = {480,1e12,Vector(516-144,0,0),0.90*0.4}
-    self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(516-144,0,0),0.90*0.4}
-    self.SoundPositions["rolling_high2"] = {480,1e12,Vector(516-144,0,0),1.00*0.4}
+    self.SoundPositions["rolling_low"] = {480,1e12,Vector(516-159,0,0),0.6*0.4}
+    self.SoundPositions["rolling_medium1"] = {480,1e12,Vector(516-159,0,0),0.90*0.4}
+    self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(516-159,0,0),0.90*0.4}
+    self.SoundPositions["rolling_high2"] = {480,1e12,Vector(516-159,0,0),1.00*0.4}
 
     self.SoundNames["gv_f"] = {"subway_trains/717/kv70/reverser_0-b_1.mp3","subway_trains/717/kv70/reverser_0-b_2.mp3"}
     self.SoundNames["gv_b"] = {"subway_trains/717/kv70/reverser_b-0_1.mp3","subway_trains/717/kv70/reverser_b-0_2.mp3"}
-    self.SoundPositions["gv_f"] = {80,1e9,Vector(126.4-144,50,-60-23.5),0.8}
-    self.SoundPositions["gv_b"] = {80,1e9,Vector(126.4-144,50,-60-23.5),0.8}
+    self.SoundPositions["gv_f"] = {80,1e9,Vector(126.4-159,50,-60-23.5),0.8}
+    self.SoundPositions["gv_b"] = {80,1e9,Vector(126.4-159,50,-60-23.5),0.8}
 	
 	local loop = math.random (1,2)
 	local start = math.random (1,5)		
@@ -376,7 +376,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     --self.SoundPositions["work_beep"] = {65,1e9,Vector(816-144,23,10),0.03}
 	
     self.SoundNames["batt_on"] = "subway_trains/720/batt_on.mp3"
-    self.SoundPositions["batt_on"] = {400,1e9,Vector(816.4-144,50,-60-23.5),0.23}
+    self.SoundPositions["batt_on"] = {400,1e9,Vector(816.4-159,50,-60-23.5),0.23}
 
     self.SoundNames["igla_on"]  = "subway_trains/common/other/igla/igla_on1.mp3"
     self.SoundNames["igla_off"] = "subway_trains/common/other/igla/igla_off2.mp3"
@@ -388,7 +388,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     self.SoundPositions["igla_start2"] = {50,1e9,Vector(800-155,42.3,45.71),0.05}
 
     self.SoundNames["emer_brake"] = {loop=true,"subway_trains/common/pneumatic/autostop_loop.wav"}
-    self.SoundPositions["emer_brake"] = {90,1e9,Vector(780-144,-45,-75),0.85}
+    self.SoundPositions["emer_brake"] = {90,1e9,Vector(780-159,-45,-75),0.85}
 	
 
 end
@@ -435,18 +435,18 @@ end
 ENT.AnnouncerPositions = {}
 for i=1,3 do
     table.insert(ENT.AnnouncerPositions,{
-	Vector(0-(i-1)*230+38,
-	47*(i%2 > 0 and -1 or 1) ,44),450,0.5})
+	Vector(0-(i-1)*230+38-15,
+	47*(i%2 > 0 and -1 or 1) ,44),450,0})
 end  
 ENT.Cameras = {
-    {Vector(770-144,36,42),Angle(0,180,0),"Train.740.CameraCond"},
-    {Vector(750-144,36,26),Angle(0,180,0),"Train.740.CameraPPZ"},
-    {Vector(800-144,36,2),Angle(0,180,0),"Train.740.CameraPV"},
-    {Vector(815-144,-42,-4),Angle(50,0,0),"Train.Common.ASNP"},
-    {Vector(800-144,-9,8),Angle(90-46,0,0),"Train.740.CameraVityaz"},
-    {Vector(777-144,-35,-30),Angle(40,90,0),"Train.740.CameraKRMH"},
-    {Vector(767-144,36,-18),Angle(0,180,0),"Train.740.CameraPVZ"},
-    {Vector(840-144,0,-20),Angle(60,0,0),"Train.Common.CouplerCamera"},
+    {Vector(770-159,36,42),Angle(0,180,0),"Train.740.CameraCond"},
+    {Vector(750-159,36,26),Angle(0,180,0),"Train.740.CameraPPZ"},
+    {Vector(800-159,36,2),Angle(0,180,0),"Train.740.CameraPV"},
+    {Vector(815-159,-42,-4),Angle(50,0,0),"Train.Common.ASNP"},
+    {Vector(800-159,-9,8),Angle(90-46,0,0),"Train.740.CameraVityaz"},
+    {Vector(777-159,-35,-30),Angle(40,90,0),"Train.740.CameraKRMH"},
+    {Vector(767-159,36,-18),Angle(0,180,0),"Train.740.CameraPVZ"},
+    {Vector(840-159,0,-20),Angle(60,0,0),"Train.Common.CouplerCamera"},
 }
 ---------------------------------------------------
 -- Defined train information
@@ -477,36 +477,36 @@ for k,v in pairs(Metrostroi.AnnouncementsASNP or {}) do Announcer[k] = v.name or
 ENT.Spawner = {
 	model = {
 	"models/metrostroi_train/81-740/body/81-740_4_front.mdl",
-	{"models/metrostroi_train/81-740/salon/salon.mdl",pos = Vector(0,0,0), ang=Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/salon/handrails/handrails.mdl",pos = Vector(370-150,-5,0), ang=Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/cabine/Pult/pult.mdl",pos = Vector(465.4-144, 6, 0), ang=Angle(0,0,0)},	
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(852-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(799-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(746-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(691-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(636-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(581-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(527-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(474-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(419-144,0.1,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(852-144,-58.5,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(799-144,-58.5,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(746-144,-58.5,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(691-144,-58.5,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(636-144,-58.5,0),ang = Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(581-144,-58.5,0),ang = Angle(0,-180,0)},	
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(527-144,-58.5,0),ang = Angle(0,-180,0)},	
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(474-144,-58.5,0),ang = Angle(0,-180,0)},	
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(419-144,-58.5,0),ang = Angle(0,-180,0)},			
-	{"models/metrostroi_train/81-741/body/81-741_4_front.mdl",pos = Vector(-10,0,0), ang=Angle(0,-180,0)},
-	{"models/metrostroi_train/81-740/cabine/Pult/bucik.mdl",pos = Vector(465.4-144, 6, 0), ang=Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/body/Garm.mdl",pos = Vector(330,0,-1.5), ang=Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/salon/salon_rear.mdl",pos = Vector(-544, 0, 5.5), ang=Angle(0,180,0)},
-	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",pos = Vector(-450.1, 0.1, -75.15), ang=Angle(0,-180,0)},		
-	{"models/metrostroi_train/81-741/salon/handrails/handrails.mdl",pos = Vector(-330,0,0), ang=Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(283,2,-74.6),ang = Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(-273,1,-74.6),ang = Angle(0,-180,0)},		
-    {"models/metrostroi_train/81-740/cabine/electric/paneltex.mdl",pos = Vector(735.5-144,50,50),ang = Angle(180,270,0)},	
+	{"models/metrostroi_train/81-740/salon/salon.mdl",pos = Vector(-15,0,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/salon/handrails/handrails.mdl",pos = Vector(370-165,-5,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/cabine/Pult/pult.mdl",pos = Vector(465.4-159, 6, 0), ang=Angle(0,0,0)},	
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(852-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(799-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(746-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(691-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(636-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(581-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(527-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(474-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(419-159,0.1,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(852-159,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(799-159,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(746-159,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(691-159,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(636-159,-58.5,0),ang = Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(581-159,-58.5,0),ang = Angle(0,-180,0)},	
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(527-159,-58.5,0),ang = Angle(0,-180,0)},	
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(474-159,-58.5,0),ang = Angle(0,-180,0)},	
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl", pos = Vector(419-159,-58.5,0),ang = Angle(0,-180,0)},			
+	{"models/metrostroi_train/81-741/body/81-741_4_front.mdl",pos = Vector(-26.5,0,0), ang=Angle(0,-180,0)},
+	{"models/metrostroi_train/81-740/cabine/Pult/bucik.mdl",pos = Vector(465.4-159, 6, 0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/body/Garm.mdl",pos = Vector(330-15,0,-1.5), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/salon/salon_rear.mdl",pos = Vector(-544-15, 0, 5.5), ang=Angle(0,180,0)},
+	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",pos = Vector(-450.1-15, 0.1, -75.15), ang=Angle(0,-180,0)},		
+	{"models/metrostroi_train/81-741/salon/handrails/handrails.mdl",pos = Vector(-330-15,0,0), ang=Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(283-15,2,-74.6),ang = Angle(0,0,0)},
+	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(-2730-15,1,-74.6),ang = Angle(0,-180,0)},		
+    {"models/metrostroi_train/81-740/cabine/electric/paneltex.mdl",pos = Vector(735.5-159,50,50),ang = Angle(180,270,0)},	
 	},
 	interim = "gmod_subway_81-741_4", 
 	postfunc = function(trains,WagNum)

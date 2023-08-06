@@ -51,15 +51,14 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
-    self.NormalMass = 13500	
-	--self.m_tblToolsAllowed = { "none" }		
+    self.NormalMass = 13500		
 
     -- Create seat entities
-    self.DriverSeat = self:CreateSeat("driver",Vector(775-144,19,-27))
-    self.InstructorsSeat = self:CreateSeat("instructor",Vector(586,-40,-30),Angle(0,90,0),"models/nova/jeep_seat.mdl")
-    self.InstructorsSeat2 = self:CreateSeat("instructor",Vector(767-144,45,-35),Angle(0,75,0),"models/vehicles/prisoner_pod_inner.mdl") 
+    self.DriverSeat = self:CreateSeat("driver",Vector(775-159,19,-27))
+    self.InstructorsSeat = self:CreateSeat("instructor",Vector(586-15,-40,-30),Angle(0,90,0),"models/nova/jeep_seat.mdl")
+    self.InstructorsSeat2 = self:CreateSeat("instructor",Vector(767-159,45,-35),Angle(0,75,0),"models/vehicles/prisoner_pod_inner.mdl") 
     --self.InstructorsSeat3 = self:CreateSeat("instructor",Vector(760-144,0,-40),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
-    self.InstructorsSeat4 = self:CreateSeat("instructor",Vector(787-144,-25,-40),Angle(0,115,0),"models/vehicles/prisoner_pod_inner.mdl")	
+    self.InstructorsSeat4 = self:CreateSeat("instructor",Vector(787-159,-25,-40),Angle(0,115,0),"models/vehicles/prisoner_pod_inner.mdl")	
 
     --Hide seats
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
@@ -80,34 +79,32 @@ function ENT:Initialize()
     self.InstructorsSeat4:SetColor(Color(0,0,0,0))
 	self.InstructorsSeat4.m_tblToolsAllowed = { "none" }		
 	
-	self.LightSensor = self:AddLightSensor(Vector(698-144,0,-130),Angle(0,90,0))
+	self.LightSensor = self:AddLightSensor(Vector(698-159,0,-130),Angle(0,90,0))
 	
     -- Create bogeys
-        self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740PER")	
-		self.FrontBogey.PneumaticPow = 0.7		
-        self.RearBogey  = self:CreateBogey(Vector(-532,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80 
-		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)			
+        self.FrontBogey = self:CreateBogey(Vector( 520-25,0,-75),Angle(0,180,0),true,"740PER")	
+		self.FrontBogey.PneumaticPow = 0.7	
+        self.RearBogey  = self:CreateBogey(Vector(-532-25,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80 	
 		self.FrontBogey:SetNWInt("MotorSoundType",2)
 		self.RearBogey:SetNWInt("MotorSoundType",2)
         self.RearBogey.DisableContacts = true	
 		self.RearBogey.PneumaticPow = 0.7		
-        self.FrontCouple = self:CreateCouple(Vector(636,0,-60),Angle(0,0,0),true,"717")
-        self.RearCouple = self:CreateCouple(Vector(-625,0,-60),Angle(0,-180,0),false,"740") 
+        self.FrontCouple = self:CreateCouple(Vector(625.9,0,-60),Angle(0,0,0),true,"717")
+        self.RearCouple = self:CreateCouple(Vector(-641,0,-60),Angle(0,-180,0),false,"740") 
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") 
 			
 		self.FrontCouple.m_tblToolsAllowed = { "none" }
 		self.RearCouple.m_tblToolsAllowed = { "none" }	
 		self.FrontBogey.m_tblToolsAllowed = { "none" }	
-		self.RearBogey.m_tblToolsAllowed = { "none" }			
-		
+		self.RearBogey.m_tblToolsAllowed = { "none" }
 
 	self.Timer = CurTime()	
 	self.Timer2 = CurTime()	
 		
 timer.Simple(0, function()			
-		self.Rear1 = self:CreatePricep(Vector(-340,0,0)) --вагон	
+		self.Rear1 = self:CreatePricep(Vector(-356,0,0)) --вагон	
 end)  	    	
-	
+
 	self.FrontBogey:SetNWBool("Async",true)
     self.RearBogey:SetNWBool("Async",true)
 	self.FrontCouple.EKKDisconnected = true
@@ -237,24 +234,24 @@ end	]]
 
  self.Lights = {
         --белые огни
-        [1]  = { "light",Vector(832-144, 27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
-        [2]  = { "light",Vector(832-144, 40.5,-20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
-        [18]  = { "light",Vector(832-144, -27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
-        [19]  = { "light",Vector(832-144, -40.5, -20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [1]  = { "light",Vector(832-159, 27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [2]  = { "light",Vector(832-159, 40.5,-20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [18]  = { "light",Vector(832-159, -27.5, -23), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
+        [19]  = { "light",Vector(832-159, -40.5, -20.5), Angle(0,0,0), Color(255,220,180), brightness = 0.5, scale = 0.5, texture = "sprites/light_glow02.vmt" },
         --красные огни 
-        [3] = { "light",Vector(690, 41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
-		[4] = { "light",Vector(690, -41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
-		[5] = { "light",Vector(656, 40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
-		[6] = { "light",Vector(656, -40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+        [3] = { "light",Vector(690-15, 41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+		[4] = { "light",Vector(690-15, -41.5, -60), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+		[5] = { "light",Vector(656-15, 40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
+		[6] = { "light",Vector(656-15, -40, 57), Angle(0,0,0), Color(139, 0, 0), brightness = 0.6, scale = 0.4, texture = "sprites/light_glow02.vmt" },
         --освещение в кабине
-        [10] = { "dynamiclight",    Vector( 755-144, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
+        [10] = { "dynamiclight",    Vector( 755-159, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
         -- Interior
-		[11] = { "dynamiclight",    Vector(260-144, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, --левая лампа аварийная
-		[12] = { "dynamiclight",    Vector(420-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [13] = { "dynamiclight",    Vector(675-144, -20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }, --правая лампа аварийная
+		[11] = { "dynamiclight",    Vector(260-159, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, --левая лампа аварийная
+		[12] = { "dynamiclight",    Vector(420-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+        [13] = { "dynamiclight",    Vector(675-159, -20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }, --правая лампа аварийная
 		
-		[11.1] = { "dynamiclight",    Vector(260-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [13.1] = { "dynamiclight",    Vector(675-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },	
+		[11.1] = { "dynamiclight",    Vector(260-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+        [13.1] = { "dynamiclight",    Vector(675-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },	
     }
 	
 	self.InteractionZones = {
@@ -280,15 +277,15 @@ end	]]
 		
 		{
 			ID = "FrontBrakeLineIsolationToggle",
-			Pos = Vector(835-144,-25.0,-44), Radius = 16,
+			Pos = Vector(835-159,-25.0,-44), Radius = 16,
         },
 		{
 			ID = "FrontTrainLineIsolationToggle",
-			Pos = Vector(835-144,25.0,-44), Radius = 16,
+			Pos = Vector(835-159,25.0,-44), Radius = 16,
         },
 		{
 			ID = "GVToggle",
-			Pos = Vector(222,-17,-82), Radius = 20,
+			Pos = Vector(222-15,-17,-82), Radius = 20,
         },
     }
 	
@@ -487,17 +484,12 @@ function ENT:CreatePricep(pos,ang)
 	if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
     --PrintTable(Pricep740:GetTable())
 	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
-    Pricep740:SetUseType(SIMPLE_USE)
-
-    -- Set proper parameters for the bogey
-    if IsValid(Pricep740:GetPhysicsObject()) then
-        Pricep740:GetPhysicsObject():SetMass(25000)
-    end		
+    Pricep740:SetMoveType(MOVETYPE_VPHYSICS)
 
 	table.insert(self.TrainEntities,Pricep740)      
     table.insert(Pricep740.TrainEntities,self)	
 	
-	self.MiddleBogey = self:CreateBogey(Vector(-15,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
+	self.MiddleBogey = self:CreateBogey(Vector(-15-16.5,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
     local rand = math.random()*0.05
     self.MiddleBogey:SetNWFloat("SqualPitch",1.45+rand)
@@ -505,15 +497,9 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey:SetNWInt("Async",true)
 	self.MiddleBogey:SetNWBool("DisableEngines",true)			
 	self.MiddleBogey.DisableSound = 1	
-	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)
-	self.MiddleBogey.m_tblToolsAllowed = { "none" }
-    if not self.NoPhysics then
-        --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
-        self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)
-        --self.MiddleBogey:SetSolid(SOLID_VPHYSICS)
-    end
-    self.MiddleBogey:SetUseType(SIMPLE_USE)
+	--self.MiddleBogey.m_tblToolsAllowed = { "none" }
+    self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)
 
     -- Set proper parameters for the bogey
     if IsValid(self.MiddleBogey:GetPhysicsObject()) then
@@ -558,6 +544,8 @@ function ENT:CreatePricep(pos,ang)
 	Map:find("gm_mustox_neocrimson_line") or
 	Map:find("gm_mus_neoorange") or
 	Map:find("gm_metro_nekrasovskaya_line") then
+	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
+	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
 		Pricep740,
@@ -605,6 +593,8 @@ function ENT:CreatePricep(pos,ang)
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_chapaevskaya_line")	then	
+	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
+	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
 		Pricep740,
@@ -649,15 +639,15 @@ function ENT:CreatePricep(pos,ang)
 	)
 	else	
 	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)		
+	constraint.RemoveConstraints(self.RearBogey, "Axis")		
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,1)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,1)		
 	constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,0,-20),
+		Vector(310,0,-20),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -667,20 +657,21 @@ function ENT:CreatePricep(pos,ang)
 		20, --xmax
 		10, --ymax
 		180, --zmax
-		1, --xfric
-		1, --yfric
+		0, --xfric
+		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1--nocollide
-	)	
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,0)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,0)			
+		1,--nocollide
+		true
+	)			
+	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,1)	
+	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,1)			
 	constraint.AdvBallsocket(
 		Pricep740,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(305,0,20),
+		Vector(310,0,20),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
@@ -690,12 +681,13 @@ function ENT:CreatePricep(pos,ang)
 		20, --xmax
 		10, --ymax
 		180, --zmax
-		1, --xfric
-		1, --yfric
+		0, --xfric
+		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1--nocollide
-	)
+		1,--nocollide
+		true
+	)	
 end	
 end
 end
@@ -794,15 +786,15 @@ end
 	 self.InteractionZones = {	
         {
             ID = "RearBrakeLineIsolationToggle",
-            Pos = Vector(-310, -13, -10), Radius = 31
+            Pos = Vector(-310+15, -13, -10), Radius = 31
         },
         {
             ID = "RearTrainLineIsolationToggle",
-            Pos = Vector(-310,-13,-10), Radius = 31
+            Pos = Vector(-310+15,-13,-10), Radius = 31
         },
         {
             ID = "RearDoor",
-            Pos = Vector(-310, -13, 7), Radius = 31
+            Pos = Vector(-310+15, -13, 7), Radius = 31
         },
 	} 
 end
@@ -978,7 +970,9 @@ end
     Pricep740:SetLightPower(16,passlight > 0, passlight) 
 	
 	Pricep740:SetLightPower(14.1,passlight > 0, passlight) 
-    Pricep740:SetLightPower(16.1,passlight > 0, passlight) 
+    Pricep740:SetLightPower(16.1,passlight > 0, passlight)
+	
+    Pricep740:SetPackedBool("AnnPlay",self.Panel.AnnouncerPlaying > 0)	
 	
     self:SetPackedRatio("SalonLighting",passlight) 
 	--print(passlight)
