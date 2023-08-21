@@ -505,7 +505,7 @@ ENT.Spawner = {
 	{"models/metrostroi_train/81-740/salon/lamps/lamps_off_rear.mdl",pos = Vector(-450.1-15, 0.1, -75.15), ang=Angle(0,-180,0)},		
 	{"models/metrostroi_train/81-741/salon/handrails/handrails.mdl",pos = Vector(-330-15,0,0), ang=Angle(0,0,0)},
 	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(283-15,2,-74.6),ang = Angle(0,0,0)},
-	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(-2730-15,1,-74.6),ang = Angle(0,-180,0)},		
+	{"models/metrostroi_train/81-740/body/krepezh.mdl",pos = Vector(-230-15,1,-74.6),ang = Angle(0,-180,0)},		
     {"models/metrostroi_train/81-740/cabine/electric/paneltex.mdl",pos = Vector(735.5-159,50,50),ang = Angle(180,270,0)},	
 	},
 	interim = "gmod_subway_81-741_4", 

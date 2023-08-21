@@ -757,8 +757,8 @@ ENT.ButtonMap["VoltHelper2"] = {
 }
 
 ENT.ButtonMap["ASNP"] = {
-    pos = Vector(822.1-159,-49.8,-6.6), --446 -- 14 -- -0,5
-    ang = Angle(0,-170,90),
+    pos = Vector(822.4-159,-52.5,-6.1), --446 -- 14 -- -0,5
+    ang = Angle(0,-167,90),
     width = 120,
     height = 50,
     scale = 0.0625,
@@ -766,19 +766,19 @@ ENT.ButtonMap["ASNP"] = {
 
     buttons = {
         {ID = "R_ASNPMenuSet",x=29, y=35, radius=16, z=4, tooltip = "",model = {
-            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
+            model = "models/metrostroi_train/81-720/button_round.mdl", --scale=0,
             var="R_ASNPMenu",speed=12, vmin=0, vmax=0.9,
             sndvol = 0.5,snd = function(val) return val and "pnm_button1_on" or "pnm_button1_off" end,
             sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
         }},
         {ID = "R_ASNPUpSet",x=110, y=4, radius=8, tooltip = "",model = {
-            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
+            model = "models/metrostroi_train/81-720/button_round.mdl", --scale=0,
             var="R_ASNPUp",speed=12, vmin=0, vmax=0.9,z=4, 
             sndvol = 0.5,snd = function(val) return val and "pnm_button1_on" or "pnm_button2_off" end,
             sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
         }},
         {ID = "R_ASNPDownSet",x=110, y=18, radius=8, tooltip = "",model = {
-            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
+            model = "models/metrostroi_train/81-720/button_round.mdl", --scale=0,
             var="R_ASNPDown",speed=12, vmin=0, vmax=0.9,z=4, 
             sndvol = 0.5,snd = function(val) return val and "pnm_button2_on" or "pnm_button1_off" end,
             sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
@@ -796,8 +796,8 @@ ENT.ButtonMap["ASNP"] = {
 }
 
 ENT.ButtonMap["ASNPScreen"] = {
-    pos = Vector(820.05-159,-49.8,-6.6), --446 -- 14 -- -0,5
-    ang = Angle(0,-170,90),
+    pos = Vector(820.05-159,-53,-6.1), --446 -- 14 -- -0,5
+    ang = Angle(0,-167,90),
     width = 520,
     height = 125,
     scale = 0.01,
@@ -1682,9 +1682,9 @@ ENT.ClientProps["Zavod_table_front"] = { --Заводская табличка
 	scale = 3,	
 }
 ENT.ClientProps["ASNP_test"] = {
-	model = "models/metrostroi_train/81-740/cabine/asnp.mdl",
-	pos = Vector(674.5-15,-51,-8),
-	ang = Angle(0,100,0),
+	model = "models/740_vrb/vrb_asnp.mdl",
+	pos = Vector(684.5-15,-56,-11),
+	ang = Angle(0,-105,0),
 	hide = 1,
 }
 ENT.ClientProps["Gerb_msk"] = {
@@ -3370,7 +3370,7 @@ function ENT:DrawPost(special)
     self:DrawOnPanel("ASNPScreen",function(...)
         surface.SetMaterial(self.RTMaterial)
         surface.SetDrawColor(255,255,255)
-        surface.DrawTexturedRectRotated(155,50,480,112.5,0)
+        surface.DrawTexturedRectRotated(145,50,490,112.8,0)
     end)
 	--ИГЛА
     self.RTMaterial:SetTexture("$basetexture",self.IGLA)
