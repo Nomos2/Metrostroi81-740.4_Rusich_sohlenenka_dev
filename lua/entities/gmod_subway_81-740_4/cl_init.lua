@@ -167,7 +167,7 @@ ENT.ButtonMap["PUU"] = {
         }},
         {ID = "EmergencyControlsToggle",x=576.63+36.5*2.3, y=90, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_red.mdl", z=1.85,
-            lamp = {model = "models/metrostroi_train/81-722/lamp_red.mdl",var="EmergencyControls",z=0, anim=true},
+            lamp = {model = "models/metrostroi_train/81-722/lamp_red.mdl",var="EmergencyControlsLamp",z=0, anim=true},
             var="EmergencyControls",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
@@ -534,13 +534,13 @@ ENT.ButtonMap["PUL"] = {
         {ID = "DoorSelectLToggle",x=13, y=65, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=-4.8,  --models/metrostroi_train/81-720/buttons/b4.mdl
             lamp = {model = "models/metrostroi_train/81-722/lamp_black.mdl",var="DoorLeftLamp",anim=true},
-            var="DoorSelectL",speed=8, vmin=0, vmax=0.7,
+            var="DoorSelectL",speed=8, vmin=0, vmax=0.6,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "DoorSelectRToggle",x=70, y=65, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=-4.8,
             lamp = {model = "models/metrostroi_train/81-722/lamp_black.mdl",var="DoorRightLamp",anim=true},
-            var="DoorSelectR",speed=8, vmin=0, vmax=0.7,
+            var="DoorSelectR",speed=8, vmin=0, vmax=0.6,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
         {ID = "DoorBlockToggle",x=70, y=130, radius=15, tooltip = "",model = {
@@ -653,7 +653,7 @@ ENT.ButtonMap["RV"] = {
     buttons = {
 	    {ID = "EmergencyDoorsToggle",x=30, y=15, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl",z=-2.8,  --models/metrostroi_train/81-720/tumbler2.mdl
-			lamp = {model ="models/metrostroi_train/81-722/lamp_green.mdl", var="EmergencyDoors", anim=true},
+			lamp = {model ="models/metrostroi_train/81-722/lamp_green.mdl", var="EmergencyDoorsLamp", anim=true},
             var="EmergencyDoors",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
@@ -1058,7 +1058,7 @@ ENT.ButtonMap["BackDown"] = {
         {ID = "!BARSBlock",x=214, y=190, radius=0, model = {
             model = "models/metrostroi_train/81-720/rc_rotator1.mdl",z=12,
             getfunc = function(ent) return ent:GetPackedRatio("BARSBlock") end,var="BARSBlock",
-            plomb = {model = "models/metrostroi_train/81/plomb_b.mdl",ang=-90,x=0,y=40,z=-5,var="BARSBlockPl", ID="BARSBlockPl",},
+            plomb = {model = "models/metrostroi_train/81/plomb_b.mdl",ang=-90,x=-24,y=20,z=-5,var="BARSBlockPl", ID="BARSBlockPl",},
             speed=6, min=0.5,max=0.15,
             sndvol = 1, snd = function(_,val) return val==3 and "switch_batt_on" or val == 0 and "switch_batt_off" or "switch_batt" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
@@ -1076,20 +1076,10 @@ ENT.ButtonMap["BackDown"] = {
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
             vmin=0.15, vmax=0
         }},
-        {ID = "!ALSFreqBlock",x=334, y=294, radius=0,tooltip = "", model = {
-            model = "models/metrostroi_train/81-720/rc_rotator1.mdl",z=4, ang=180,scale = 0.5,
-            getfunc = function(ent) return ent:GetPackedRatio("ALSFreqBlock") end,var="ALSFreqBlock",
-			--plomb = {model = "models/metrostroi_train/81/plomb_b.mdl",ang=-90,x=0,y=16,z=-4.8,var="ALSFreqBlockPl", ID="ALSFreqBlockPl",},
-            speed=6, min=0.9,max=0.6,
-            sndvol = 1, snd = function(_,val) return val==3 and "switch_batt_on" or val == 0 and "switch_batt_off" or "switch_batt" end,
-            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
-			vmin=0.9, vmax=0
-        }},
-		{ID = "ALSFreqBlock-",x=344-25,y=302-20,w=15,h=22,tooltip="",model={
-			--plomb = {var="ALSFreqBlockPl", ID="ALSFreqBlockPl", }
-        }},
-        {ID = "ALSFreqBlock+",x=344-10,y=302-20,w=15,h=22,tooltip="", model={
-			--plomb = {var="ALSFreqBlockPl", ID="ALSFreqBlockPl", }
+        {ID = "ALSFreqBlockToggle",x=334, y=294, radius=12, tooltip = "", model = {
+            model = "models/metrostroi_train/81-720/rc_rotator1.mdl",z=4, ang=180, scale = 0.5,
+            var="ALSFreqBlock",speed=12,min = 0.6, max = 0.9,
+            sndvol = 0.5, snd = function(val) return val and "switch_batt_on" or "switch_batt_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
     }
 }

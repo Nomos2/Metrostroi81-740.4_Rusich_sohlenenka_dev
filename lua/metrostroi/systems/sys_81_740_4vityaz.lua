@@ -309,6 +309,9 @@ if SERVER then
 					self.Prost = self.Kos and not self.Prost
 					self.ProstCanEnDis = nil
 				end
+			elseif not self.ProstCanEnDis and char == 9 then
+				self.State2 = 4 
+				self.Selected = 1
 			end
 			if (name == "VityazF8" and value) then
 				self.ProstCanEnDis = true
@@ -378,7 +381,8 @@ if SERVER then
 				if name == "VityazT" then self.State2 = 1 end
 				if name == "VityazCurrent" then self.State2 = 2 self.Selected = 0 end
 				if name == "VityazVO" then self.State2 = 4 self.Selected = 0 end
-				if self.ProstCanEnDis then if name == "Vityaz9" and self.State2 ~= 6 then self.State2 = 4 self.Selected = 1 end end
+				if name == "Vityaz9" and self.ProstCanEnDis then self.State2 = 4 self.Selected = 1 end
+				
 				if name == "VityazPVU" then self.State2 = 6 self.Selected = 1 end
 				if name == "VityazTV1" or name == "VityazTV2" then self.State = 6 self.PrevState2 = self.State2 end 
 				if name == "VityazNum" then self.State2 = 0 end
@@ -418,11 +422,11 @@ if SERVER then
 		end
 	end
 	function TRAIN_SYSTEM:Think(dT)
-		
+		--print(self.ProstCanEnDis)
         if self.State > 0 and self.Reset and self.Reset ~= 1 then self.Reset = false end
         local Train = self.Train
         local Panel = Train.Panel
-        local Power = Train.BUV.Power > 0 and Train.Electric.Battery80V > 0
+        local Power = Train.Electric.Battery80V*Train.SF1.Value > 0 or Train.Electric.ReservePower > 0
         local VityazWork = Train.SF5.Value > 0 and Power
 		--rint(Train.Electric.Main750V,Train.Electric.Recurperation)
 		--print(self.State)
@@ -557,9 +561,9 @@ if SERVER then
 				local HVBad = false
 				for i=1,self.WagNum do
 					local train = self.Trains[self.Trains[i]] or {}
+
 					if train.DriveStrength then EnginesStrength = EnginesStrength + train.DriveStrength end
 					if train.BrakeStrength then EnginesStrength = EnginesStrength + train.BrakeStrength end
-
 					if train.KV and self.Trains[i] ~= Train:GetWagonNumber() then
 						Back = true
 					end
@@ -650,10 +654,11 @@ if SERVER then
 						Train:SetNW2Bool("VityazMEB"..i,not train.EmergencyBrake) -- ЭКС ТОР
 						Train:SetNW2Bool("VityazMBUV"..i,not train.BUVWork) -- БУВ
 						Train:SetNW2Bool("VityazMBBEBroken"..i,not train.BBEBroken) -- ЗАЩ ДИП
-						Train:SetNW2Bool("VityazMRessora"..i,true) -- ЗАЩ ДИП, НЕИС ТП
+						Train:SetNW2Bool("VityazMRessora"..i,train.AirSpringOkay) -- Рессора
+						Train:SetNW2Bool("VityazMDUKS"..i,train.DUKS)
 						Train:SetNW2Bool("VityazMBTBR"..i,train.BTBReady) -- БТБ ГОТ
-						Train:SetNW2Bool("VityazKKFull"..i,train.Vent2Enabled and Train:ReadTrainWire(46)>0)
-						Train:SetNW2Bool("VityazKKEmer"..i,not train.Vent2Enabled and Train:ReadTrainWire(46)>0)
+						Train:SetNW2Bool("VityazKKFull"..i, train.ConditionerWork)
+						Train:SetNW2Bool("VityazKKEmer"..i, train.ConditionerEmer)
 						--print(train.Vent2Enabled)
 						Train:SetNW2Bool("VityazMKK1Mode",self.Klimat1Mode)
 						Train:SetNW2Bool("VityazMKK2Mode",self.Klimat2Mode)
@@ -686,13 +691,14 @@ if SERVER then
 					self:CheckError(11,err11 or self.Errors[11] and Train.Panel.Controller > 0)
 					self:CheckError(12,err12)
 					self:CheckError(17,err17)
-					self:CheckError(18,err18)
+					self:CheckError(18,Train.DoorBlock.Value > 0)
+					self:CheckError(19,err18)
 					if err19 and not self.EnableMKIPPTimer then self.EnableMKIPPTimer = CurTime() end
 					if not err19 and self.EnableMKIPPTimer then self.EnableMKIPPTimer = nil end
-					self:CheckError(19,err19 and CurTime() - self.EnableMKIPPTimer > 0.5 )
-					self:CheckError(20, Train.BARS.Speed < 2 and Train.DoorLeft.Value > 0 and Train.DoorSelectL.Value > 0 and Train.DoorSelectR.Value == 0 and Train.Prost_Kos.BlockDoorsL and (Train.Attention.Value == 0 and Train.DoorBlock.Value == 0))
-					self:CheckError(21, Train.BARS.Speed < 2 and Train.DoorRight.Value > 0 and Train.DoorSelectR.Value > 0 and Train.DoorSelectL.Value == 0 and Train.Prost_Kos.BlockDoorsR and (Train.Attention.Value == 0 and Train.DoorBlock.Value == 0))
-					self:CheckError(22,self.State == 5)--self:CheckError(19,err19)
+					self:CheckError(20,err19 and CurTime() - self.EnableMKIPPTimer > 0.5 )
+					self:CheckError(21, Train.BARS.Speed < 2 and Train.DoorLeft.Value > 0 and Train.DoorSelectL.Value > 0 and Train.DoorSelectR.Value == 0 and Train.Prost_Kos.BlockDoorsL and (Train.Attention.Value == 0 and Train.DoorBlock.Value == 0))
+					self:CheckError(22, Train.BARS.Speed < 2 and Train.DoorRight.Value > 0 and Train.DoorSelectR.Value > 0 and Train.DoorSelectL.Value == 0 and Train.Prost_Kos.BlockDoorsR and (Train.Attention.Value == 0 and Train.DoorBlock.Value == 0))
+					self:CheckError(23,self.State == 5)--self:CheckError(19,err19)
 
 					if Train.KV["KRO5-6"] == 0 then
 						if (BARS.Brake == 0 and BARS.Drive > 0 and (self.Error == 0 or self.Error == 5.5 and self.EmergencyBrake == 0 or (self.Error == 6 and Train.BUV.Slope1) or self.Error >= 9 and self.Error ~= 11 or self.Error == 11 and Train.DoorBlock.Value > 0 --[[or (self.Error > 1 or self.Error < 4) and Train.BARSBlock.Value == 3 and not err6]] )) or Train.Panel.Controller <= 0 then
@@ -718,7 +724,7 @@ if SERVER then
 							end
 						end
 
-						if Train.Prost_Kos.ProstActive > 0 and Train.Speed > 5 then
+						if Train.Prost_Kos.ProstActive > 0 and Train.BARS.Speed > 5 then
                             Train:SetNW2Int("ProstStength",Train.Prost_Kos.Command < 0 and -Train.Prost_Kos.Command or 0)
                             --if not self.ProstTimer then self.ProstTimer = 1052 end
 							self.ProstExchTimer = self.ProstExchTimer + math.random(1,3)
@@ -733,7 +739,7 @@ if SERVER then
                                 self.Metka3Cache = Train.Prost_Kos.Metka[3]
                                 self.Metka4Cache = Train.Prost_Kos.Metka[4]
                             end
-                        elseif Train.Prost_Kos.Dist and Train.Prost_Kos.Dist < -5 and Train.Speed > 3 then
+                        elseif Train.Prost_Kos.Dist and Train.Prost_Kos.Dist < -5 and Train.BARS.Speed > 3 then
                             Train:SetNW2Int("ProstStength",0)
                             Train:SetNW2Int("ProstTimer",0)
                             Train:SetNW2Int("ProstMark", 0)
@@ -801,7 +807,7 @@ if SERVER then
 								Train:SetNW2Bool("VityazCompressor"..i,true) --"мк" (исправность)
 								Train:SetNW2Bool("VityazDoorBlock"..i,Train.BUV.BlockTorec) --"торц дв"
 								Train:SetNW2Bool("VityazPTWork"..i,not train.PTBad) --"ТОРМ ОБ" !
-								Train:SetNW2Bool("VityazKZ75"..i, Train.Electric.Battery80V > 62) --"КЗ75"
+								Train:SetNW2Bool("VityazTPFailure"..i, not train.TPFailure) --"Неис тп"
 								Train:SetNW2Bool("VityazEmPT"..i,not train.EmPT) --"ТОРМ РК"
 								Train:SetNW2Bool("VityazLightsWork"..i,train.PassLightEnabled) --"ОСВ ВКЛ"
 							end
@@ -820,8 +826,10 @@ if SERVER then
 						elseif self.Selected >= 2 then
 							for i=1,self.WagNum do
 								local train = self.Trains[self.Trains[i]]
-								Train:SetNW2Bool("VityazSOVSGreen"..i,true) -- Почти всё
-								Train:SetNW2Bool("VityazSOVSRed"..i,false)
+								Train:SetNW2Bool("VityazKKGreen"..i,true) -- Почти всё
+								Train:SetNW2Bool("VityazKKRed"..i,false)
+								--Train:SetNW2Bool("VityazKKEnable"..i, )
+								--Train:SetNW2Bool("VityazKKEmer"..i, )
 								Train:SetNW2Bool("VityazMKK1Mode",self.Klimat1Mode)
 								Train:SetNW2Bool("VityazMKK2Mode",self.Klimat2Mode)
 								--Train:SetNW2Bool("VityazSOVSHeating"..i,train.SOVSHeating and self.SOVSH)
@@ -940,7 +948,7 @@ if SERVER then
 			self:CState("PassLight",Train.PassLight.Value > 0)
 			self:CState("ParkingBrake",Train.ParkingBrake.Value > 0)
 
-			self:CState("DoorTorec",Train.TorecDoors.Value > 0)
+			self:CState("BlockDoorTorec",Train.TorecDoors.Value > 0)
 			self:CState("BBE",Train.BBE.Value > 0)
 			self:CState("BVOn",Train.Panel.Controller == 0 and Train.EnableBV.Value > 0)
 			self:CState("RecurperationDisable", self.Recuperation) 
@@ -979,7 +987,7 @@ else
 			scanlines = scanlines or false,
 		})
 	end
-	createFont("VityazComm","FreeSans",53,410,0.7,2,false)
+	createFont("VityazComm","RESurFoxes",43,410,0.7,2,false)
     createFont("VityazBold","FreeSans",40,400,0.7,2,false)
 	createFont("VityazPU","PerfectDOSVGA437",68,400,0,0,false)
 	createFont("CalibriMain","Calibri",53,600,false)
@@ -1031,6 +1039,7 @@ else
 			"Буксы не в норме",
 			"Неисправность МК",
 			"Освещение не вкл.",
+			"Вкл блок дверей",
 			"Торм рез включен",
 			"Включи МК и ИПП",
 			"Лев дв заблокир",
@@ -1423,7 +1432,7 @@ else
 						self:PrintText(31+w,19,"Р", red)
 					end
 					self:PrintText(23,20,"неис тп",yellow)
-					self:PrintText(31+w,20,"█",Train:GetNW2Bool("VityazKZ75"..w,false) and green or purple)
+					self:PrintText(31+w,20,"█",Train:GetNW2Bool("VityazTPFailure"..w,false) and green or purple)
 					self:PrintText(23,21,"торм об",yellow)
 					self:PrintText(31+w,21,"█",Train:GetNW2Bool("VityazPTWork"..w,false) and green or purple)
 					self:PrintText(23,22,"торм рк",yellow)
@@ -1464,25 +1473,25 @@ else
 				end
 				if sel > 1 then
 					self:PrintText(21,16,"кк вкл",yellow)
-					self:PrintText(29+w,16,"█",Train:GetNW2Bool("VityazSOVSRed"..w,false) and green or purple)
+					self:PrintText(29+w,16,"█",Train:GetNW2Bool("VityazKKFull"..w,false) and green or purple)
 					self:PrintText(21,17,"кк неис",yellow)
-					self:PrintText(29+w,17,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
+					self:PrintText(29+w,17,"█",Train:GetNW2Bool("VityazKKGreen"..w,false) and green or purple)
 					self:PrintText(21,18,"ав вент",yellow)
-					self:PrintText(29+w,18,"█",Train:GetNW2Bool("VityazSOVSRed"..w,false) and green or purple)
+					self:PrintText(29+w,18,"█",Train:GetNW2Bool("VityazKKEmer"..w,false) and green or purple)
 					self:PrintText(21,19,"вент",yellow)
-					if not Train:GetNW2Bool("VityazRPVU".."4"..w,false) then 
-						self:PrintText(29+w,19,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
-						self:PrintText(29+w,20,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
-						self:PrintText(29+w,21,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
+					--[[if not Train:GetNW2Bool("VityazRPVU".."7"..w,false) then 
+						self:PrintText(29+w,16,"█",Train:GetNW2Bool("VityazKKFull"..w,false) and green or purple)
 					else
-						self:PrintText(29+w,19,"Р", red)
-						self:PrintText(29+w,20,"Р", red)
-						self:PrintText(29+w,21,"Р", red)
-					end
+						self:PrintText(29+w,16,"Р", red)
+					end]]
+					self:PrintText(29+w,19,"█",Train:GetNW2Bool("VityazKKGreen"..w,false) and green or purple)
+					self:PrintText(29+w,21,"█",Train:GetNW2Bool("VityazKKGreen"..w,false) and green or purple)
 					self:PrintText(21,20,"охлаж",yellow)
 					self:PrintText(21,21,"отопл",yellow)
 					self:PrintText(21,22,"датчики",yellow)
-					self:PrintText(29+w,22,"█",Train:GetNW2Bool("VityazSOVSGreen"..w,false) and green or purple)
+					self:PrintText(29+w,20,"█",Train:GetNW2Bool("VityazKKGreen"..w,false) and green or purple)
+					self:PrintText(29+w,21,"█",Train:GetNW2Bool("VityazKKGreen"..w,false) and green or purple)
+					self:PrintText(29+w,22,"█",Train:GetNW2Bool("VityazKKGreen"..w,false) and green or purple)
 				end
 			end
 		elseif self.State == 5 and state2 == 5 then
@@ -1581,11 +1590,11 @@ else
 					self:PrintText(cb+i,11,"█",Train:GetNW2Bool("VityazMBUV"..i,false) and purple or green)			-- був
 					self:PrintText(cb+i,12,"█",Train:GetNW2Bool("VityazMBBEBroken"..i,false) and green or purple) 	-- защ ипп
 					self:PrintText(cb+i,13,"█",Train:GetNW2Bool("VityazMRessora"..i,false) and green or purple)		-- рессора
-					self:PrintText(cb+i,14,"█",Train:GetNW2Bool("VityazMRessora"..i,false) and green or purple)		-- дукс
+					self:PrintText(cb+i,14,"█",Train:GetNW2Bool("VityazMDUKS"..i,false) and green or purple)		-- дукс
 					self:PrintText(cb+i,15,"█",Train:GetNW2Bool("VityazMBTBR"..i,false) and green or purple)		-- бтб гот
 					if not Train:GetNW2Bool("VityazRPVU".."7"..i,false) then
-						self:PrintText(cb+i,17,"█", Train:GetNW2Bool("VityazKKEmer"..i,false) and yellow or Train:GetNW2Bool("VityazKKFull"..i,false) and green or purple)			-- климат 2
-						self:PrintText(cb+i,16,"█", Train:GetNW2Bool("VityazKKEmer"..i,false) and yellow or Train:GetNW2Bool("VityazKKFull"..i,false) and green or purple)			-- климат 1
+						self:PrintText(cb+i,17,"█",  Train:GetNW2Bool("VityazKKFull"..i,false) and green or Train:GetNW2Bool("VityazKKEmer"..i,false) and yellow or purple)			-- климат 2
+						self:PrintText(cb+i,16,"█", Train:GetNW2Bool("VityazKKFull"..i,false) and green or Train:GetNW2Bool("VityazKKEmer"..i,false) and yellow or purple)			-- климат 1
 					else
 						self:PrintText(cb+i,16,"Р",red)
 						self:PrintText(cb+i,17,"Р",red)

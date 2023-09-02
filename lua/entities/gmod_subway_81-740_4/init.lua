@@ -290,6 +290,7 @@ end	]]
 			Pos = Vector(222-15,-17,-82), Radius = 20,
         },
     }
+    self.RearDoor = false
 	
     self.PassengerDoor = false
     self.CabinDoorLeft = false
@@ -298,7 +299,6 @@ end	]]
     self.WrenchMode = 1
 	self.Antenna = false	
 	self.Password = false
-	--self.RearDoor = false	
 	self.KVWrenchMode = self.WrenchMode
 
 --спасибо Valjas SaretoScripto за скрипт.
@@ -936,6 +936,8 @@ function ENT:Think()
     self:SetNW2Bool("EmerBrakeWork",Panel.EmerBrakeWork>0)
     self:SetNW2Bool("TickerLamp",Panel.Ticker>0)
     self:SetNW2Bool("KAHLamp",Panel.KAH>0)
+    self:SetNW2Bool("EmergencyDoorsLamp",Panel.EmergencyDoors>0)
+    self:SetNW2Bool("EmergencyControlsLamp",Panel.EmergencyControls>0)
     self:SetNW2Bool("ALSLamp",Panel.ALS>0)
     self:SetNW2Bool("PassSchemeLamp",Panel.PassScheme>0)
     self:SetNW2Bool("R_AnnouncerLamp",Panel.R_Announcer>0)
@@ -972,13 +974,13 @@ function ENT:Think()
     --self:SetNW2Int("PassSchemesLED",self.PassSchemes.PassSchemeCurr)
     --self:SetNW2Int("PassSchemesLEDN",self.PassSchemes.PassSchemeNext)
     --self:SetPackedBool("PassSchemesLEDO",self.PassSchemes.PassSchemePath)
-	
+
     self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)
     self:SetPackedRatio("Cran", self.Pneumatic.DriverValvePosition) 
     self:SetPackedRatio("BL", self.Pneumatic.BrakeLinePressure/16.0) 
     self:SetPackedRatio("TL", self.Pneumatic.TrainLinePressure/16.0) 
     self:SetPackedRatio("BC", math.max(math.min(3.2,self.Pneumatic.BrakeCylinderPressure),math.min(3.2,self.Pneumatic.MiddleBogeyBrakeCylinderPressure))/6.0) 
-	
+
     self.AsyncInverter:TriggerInput("Speed", self.Speed)
 	
    if IsValid(self.FrontBogey) and IsValid(self.RearBogey) and IsValid(self.MiddleBogey) and not self.IgnoreEngine then
@@ -990,11 +992,11 @@ function ENT:Think()
             add = math.min((math.abs(self:GetAngles().pitch)-4)/2,1)
         end
         self.FrontBogey.MotorForce = (40000+5000*(A < 0 and 1 or 0))*add --35300
-        self.FrontBogey.Reversed = (self.BUV.Reverser < 0.5)--<
+        self.FrontBogey.Reversed = (self:ReadTrainWire(13) > 0.5)--<
         --self.FrontBogey.Reversed = self.KMR2.Value > 0
         --self.FrontBogey.DisableSound = 1
         self.RearBogey.MotorForce  = (40000+5000*(A < 0 and 1 or 0))*add --35300
-        self.RearBogey.Reversed = (self.BUV.Reverser > 0.5)-->
+        self.RearBogey.Reversed = (self:ReadTrainWire(12) > 0.5)-->
         --self.RearBogey.Reversed = self.KMR1.Value > 0
         --self.RearBogey.DisableSound = 1
 
@@ -1046,7 +1048,7 @@ function ENT:OnButtonPress(button,ply)
         self.Pneumatic:TriggerInput("BrakeSet",tonumber(button:sub(-1,-1)))
         return
     end
-
+    if button == "FrontDoor" and (self.FrontDoor or not self.BUV.BlockTorec) then self.FrontDoor = not self.FrontDoor end
 	if button == "IGLA23" then
         self.IGLA2:TriggerInput("Set",1)
         self.IGLA3:TriggerInput("Set",1)

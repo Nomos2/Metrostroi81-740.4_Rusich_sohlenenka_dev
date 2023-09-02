@@ -170,8 +170,6 @@ end
 function ENT:InitializeSystems()
     self:LoadSystem("TR","TR_3B_4740")
     self:LoadSystem("Electric","81_740_4ELECTRICA")
-    self:LoadSystem("Engines","DK_120AM")
-    self:LoadSystem("BPTI","81_740_4BPTI")
     self:LoadSystem("BUV","81_740_4BUV")
     self:LoadSystem("Pneumatic","81_740_4Pneumatic")
     self:LoadSystem("Panel","81_741_4Panel")

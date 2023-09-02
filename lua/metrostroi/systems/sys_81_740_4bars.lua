@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- 81-720 "BARS" safety system
+-- 81-740.1/740.4 "BARS" safety system
 --------------------------------------------------------------------------------
 -- Copyright (C) 2013-2018 Metrostroi Team & FoxWorks Aerospace s.r.o.
 -- Contains proprietary code. See license.txt for additional information.
@@ -51,11 +51,12 @@ end
 function TRAIN_SYSTEM:Think(dT)
     local Train = self.Train
     local ALS = Train.ALSCoil
-    local Power = Train.Electric.Battery80V > 62 and (Train.SF7.Value > 0.5 and (Train.BARSBlock.Value == 0 or Train.BARSBlock.Value == 2) or Train.SF4.Value > 0.5 and Train.BARSBlock.Value <= 1) and (Train.KV["KRO5-6"] == 0 or Train.KV["KRR15-16"] > 0) and Train.ALS.Value == 0
+    local Power = Train.Electric.Battery80V > 62 and (Train.SF7.Value > 0.5 and Train.BARSBlock.Value == 2 or Train.SF4.Value > 0.5 and Train.BARSBlock.Value == 1) and (Train.KV["KRO5-6"] == 0 or Train.KV["KRR15-16"] > 0) and Train.ALS.Value == 0
     local UOS = (Train.BARSBlock.Value == 3 or Train.SF7.Value < 0.5 and Train.BARSBlock.Value == 1 or Train.SF4.Value < 0.5 and Train.BARSBlock.Value == 2) and (Train.KV["KRO5-6"] == 0 or Train.KV["KRR15-16"] > 0) and Train.ALS.Value == 0
     local EnableALS = Train.Electric.Battery80V > 62 and (1-Train.KV["KRO5-6"]) + Train.KV["KRR15-16"] > 0
 
-    local TwoToSix = Train.ALSFreqBlock.Value < 1
+    local TwoToSix = Train.ALSFreqBlock.Value == 1
+
     if EnableALS ~= (ALS.Enabled==1) then 
         ALS:TriggerInput("Enable",EnableALS and 1 or 0)
     end
@@ -78,7 +79,7 @@ function TRAIN_SYSTEM:Think(dT)
     self.RealF5 = self.F5 and not self.F4 and not self.F3 and not self.F2 and not self.F1
 	self.AO = ALS.AO and not self.NoFreq
     -- Speed check and update speed data
-    if CurTime() - (self.LastSpeedCheck or 0) > 0.5 then
+    if CurTime() - (self.LastSpeedCheck or 0) > 0.1 then
         self.LastSpeedCheck = CurTime()
         self.Speed = math.Round(Train.Speed or 0,1)
     end
@@ -94,6 +95,7 @@ function TRAIN_SYSTEM:Think(dT)
         KMState = (Train.EmerX1.Value > 0 or Train.EmerX2.Value > 0) and 1 or 0
         BUPKMState = (Train.EmerX1.Value > 0 or Train.EmerX2.Value > 0) and 1 or 0
     end
+    Train.Electric:TriggerInput("V11", EnableALS)
     if EnableALS then
         local V = math.floor(self.Speed +0.05)
         local Vlimit = 20

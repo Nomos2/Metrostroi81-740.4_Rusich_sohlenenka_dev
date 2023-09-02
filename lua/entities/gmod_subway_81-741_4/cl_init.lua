@@ -1291,10 +1291,3 @@ function ENT:OnPlay(soundid,location,range,pitch)
     return soundid,location,range,pitch
 end
 Metrostroi.GenerateClientProps()
-
-
-
-
-
-
-

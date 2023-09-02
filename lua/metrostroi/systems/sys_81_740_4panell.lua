@@ -1,8 +1,7 @@
 --------------------------------------------------------------------------------
--- 81-720 controller panel
+-- 81-740.4 controller panel
 --------------------------------------------------------------------------------
 -- Copyright (C) 2013-2018 Metrostroi Team & FoxWorks Aerospace s.r.o.
--- Contains proprietary code. See license.txt for additional information.
 --------------------------------------------------------------------------------
 Metrostroi.DefineSystem("81_740_4Panel")
 TRAIN_SYSTEM.DontAccelerateSimulation = false
@@ -31,7 +30,6 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("Wiper","Relay","Switch",{bass=true})
 	self.Train:LoadSystem("TPT","Relay","Switch",{bass=true})
 
-
     self.Train:LoadSystem("DoorSelectL","Relay","Switch",{bass=true})
     self.Train:LoadSystem("DoorSelectR","Relay","Switch",{bass=true})
     self.Train:LoadSystem("DoorBlock","Relay","Switch",{bass=true})
@@ -58,6 +56,10 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("EmerCloseDoors","Relay","Switch",{bass=true})
     self.Train:LoadSystem("EmergencyDoors","Relay","Switch",{bass=true})
 
+    self.Train:LoadSystem("K11","Relay","Switch",{normally_closed = true,bass=true})
+    self.Train:LoadSystem("ABSD","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("RTE","Relay","Switch",{bass=true})
+
     self.Train:LoadSystem("SF1","Relay","Switch",{normally_closed = true,bass=true})
     self.Train:LoadSystem("SF2","Relay","Switch",{normally_closed = true,bass=true})
     self.Train:LoadSystem("SF3","Relay","Switch",{normally_closed = true,bass=true})
@@ -81,7 +83,6 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("SF20","Relay","Switch",{normally_closed = true,bass=true})
     self.Train:LoadSystem("SF21","Relay","Switch",{normally_closed = true,bass=true})
     self.Train:LoadSystem("SF22","Relay","Switch",{normally_closed = true,bass=true})
-
 
     self.Train:LoadSystem("SFV1","Relay","Switch",{normally_closed = true,bass=true})
     self.Train:LoadSystem("SFV2","Relay","Switch",{normally_closed = true,bass=true})
@@ -124,6 +125,7 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("Pant1","Relay","Switch",{bass=true})
     self.Train:LoadSystem("Pant2","Relay","Switch",{bass=true})
     self.Train:LoadSystem("Vent2","Relay","Switch",{bass=true})
+    self.Train:LoadSystem("Conditioner","Relay","Switch",{bass=true})   -- Вместо Vent2 потом поставлю
     self.Train:LoadSystem("PassLight","Relay","Switch",{bass=true})
     self.Train:LoadSystem("CabLight","Relay","Switch",{bass=true})
     self.Train:LoadSystem("Headlights1","Relay","Switch",{bass=true})
@@ -137,10 +139,10 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("AppLights1","Relay","Switch",{bass=true})
     self.Train:LoadSystem("AppLights2","Relay","Switch",{bass=true})
 
-    self.Train:LoadSystem("BARSBlock","Relay","Switch",{maxvalue=3,defaultvalue=0,bass=true})
+    self.Train:LoadSystem("BARSBlock","Relay","Switch",{maxvalue=3,defaultvalue=2,bass=true})
     self.Train:LoadSystem("Battery","Relay","Switch",{bass=true})
 
-    self.Train:LoadSystem("ALSFreqBlock","Relay","Switch",{maxvalue=3,defaultvalue=3,bass=true})
+    self.Train:LoadSystem("ALSFreqBlock","Relay","Switch",{bass=true})
 	self.Train:LoadSystem("VP_Block","Relay","Switch",{bass=true})
 
     self.Train:LoadSystem("PB","Relay","Switch",{bass=true})
@@ -153,6 +155,8 @@ function TRAIN_SYSTEM:Initialize()
     self.DoorLeft = 0
     self.DoorRight = 0
     self.EmerBrakeWork = 0
+    self.EmergencyDoors = 0
+    self.EmergencyControls = 0
     self.Ticker = 0
     self.KAH = 0
     self.ALS = 0
@@ -185,7 +189,7 @@ function TRAIN_SYSTEM:Inputs()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return { "Controller","Headlights1","Headlights2","RedLights","DoorLeft","DoorRight","EmerBrakeWork","ChangeRoute","Ticker","Wiper","TPT","Stand","KAH","ALS","PassScheme","R_Announcer","R_Line","AccelRate","DoorClose","DoorBlock","EqLights","CabLights","AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PassSchemeControl","CBKIPower","PCBKPower", }
+    return { "Controller","Headlights1","Headlights2","RedLights","DoorLeft","EmergencyDoors","EmergencyControls","DoorRight","EmerBrakeWork","ChangeRoute","Ticker","Wiper","TPT","Stand","KAH","ALS","PassScheme","R_Announcer","R_Line","AccelRate","DoorClose","DoorBlock","EqLights","CabLights","AnnouncerPlaying","TickerPower","PassSchemePower","TickerWork","PassSchemeWork","PassSchemeControl","CBKIPower","PCBKPower", }
 end
 --if not TURBOSTROI then return end
 function TRAIN_SYSTEM:TriggerInput(name,value)

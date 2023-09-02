@@ -386,9 +386,7 @@ end
  
 function ENT:InitializeSystems()
     self:LoadSystem("TR","TR_3B_4740")
-    self:LoadSystem("Engines","DK_120AM")
     self:LoadSystem("Electric","81_740_4ELECTRICA")
-    self:LoadSystem("BPTI","81_740_4BPTI")
 	self:LoadSystem("KV","81_740_4RV")
 
     self:LoadSystem("BUKP","81_740_4VITYAZ")

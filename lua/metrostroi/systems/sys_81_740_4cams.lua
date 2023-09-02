@@ -70,7 +70,7 @@ function TRAIN_SYSTEM:Outputs()
 end
 
 function TRAIN_SYSTEM:Inputs()
-	return {}
+	return {"ReservePower"}
 end
 if TURBOSTROI then return end
 
@@ -147,7 +147,7 @@ if SERVER then
 	end
 	function TRAIN_SYSTEM:Think(dT)
 		local Train = self.Train
-		self.Power = Train.Electric.Battery80V > 62 and Train.SF6.Value > 0.5 and Train.SFV33.Value > 0.5
+		self.Power = (Train.Electric.Battery80V*Train.SF1.Value > 0 or Train.Electric.ReservePower > 0) and Train.SF6.Value > 0.5 --and Train.SFV33.Value > 0.5
 		if not self.Power and self.State ~= -4 then self.LastEntered = 0 self.Selected = 0 self.State = -4 self.StateTimer = nil end
 		--if self.State == -4 and not self.Power then self.StateTimer = CurTime()+math.Rand(10,12) end
 		if self.State == -4 and self.Power then --turned off

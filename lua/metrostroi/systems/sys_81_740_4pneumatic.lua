@@ -64,6 +64,9 @@ function TRAIN_SYSTEM:Initialize()
     self.DriverValveDisconnectPrevious = 0
     self.EPKPrevious = 0
 
+    self.TPTEnable = 0
+    self.HeatingPads = 0
+
     -- Doors state
     --[[self.Train:LoadSystem("LeftDoor1","Relay",{ open_time = 0.5, close_time = 0.5 })
     self.Train:LoadSystem("LeftDoor2","Relay",{ open_time = 0.5, close_time = 0.5 })
@@ -129,6 +132,13 @@ function TRAIN_SYSTEM:TriggerInput(name,value)
         self.EmergencyValve = self.Train.UAVA.Value == 0
         if self.EmergencyValve and value > 0 then RunConsoleCommand("say","Autostop braking",self.Train:GetDriverName()) end
     end
+    if name == "TPTEnable" then
+		self.TPTEnable = value
+	end
+
+    if name == "HeatingPads" then
+		self.HeatingPads = value
+	end
 end
 
 
@@ -257,7 +267,7 @@ end
 function TRAIN_SYSTEM:Think(dT)
     local Train = self.Train
     self.WeightLoadRatio = math.max(0,math.min(1,(Train:GetNW2Float("PassengerCount")/200)))
-
+    --print("Количество пассадиров = "..Train:GetNW2Float("PassengerCount"))
     -- Apply specific rate to equalize pressure
     local V2 = Train.K29.Value == 1 or Train.Electric.V2 > 0
     ----------------------------------------------------------------------------
@@ -393,17 +403,18 @@ function TRAIN_SYSTEM:Think(dT)
     else
         targetPressure = PMPressure
     end
-	if Train.BUV.HPds > 0 then
+	if self.HeatingPads then
 		targetPressure = 1
 		middletargetPr = 1
 	end
-	if EPMPressure > PMPressure and Train.BUV.TPT == 0 then
+	if EPMPressure > PMPressure and not self.TPTEnable then
         middletargetPr = EPMPressure
-    elseif EPMPressure < PMPressure and Train.BUV.TPT == 0 then
+    elseif EPMPressure < PMPressure and not self.TPTEnable then
         middletargetPr = PMPressure
-	elseif Train.BUV.TPT > 0 then
+	elseif self.TPTEnable then
 		middletargetPr = 1
     end
+
     self.DisableScheme = not Train.BUV:Get("Slope") and self.BrakeCylinderPressure > 0.6 or self.BrakeCylinderPressure > 1.8
 	--local targetPressureM = max(targetPressure, Power and Train:ReadTrainWire(28) == 0 and Train.BUV.PNTPT and 0.8+self.WeightLoadRatio*0.8 or 0)	--ошибка ТПТ заготовка
     --end
@@ -437,10 +448,11 @@ function TRAIN_SYSTEM:Think(dT)
 		self:equalizePressure(dT,"MiddleBogeyBrakeCylinderPressure", 0.0, 2.00)
     end
 	--print(self.MiddleBogeyBrakeCylinderPressure)
-	
-    if --[[(Train.BUV:Get("RVPB") or]] Train:ReadTrainWire(11) == 0 and Train.SFV22.Value > 0 and Train.Electric.Battery80V > 62  then
+	local releaseValve = Train:ReadTrainWire(11) > 1
+    local brakeValve = Train:ReadTrainWire(31) > 0
+    if releaseValve and Train.Electric.Battery80V+(Train.KV and Train.Electric.ReservePower or 0) > 0 then
         self:equalizePressure(dT,"ParkingBrakePressure", self.TrainLinePressure, 0.4,1,nil,0.5)
-    else
+    elseif brakeValve or Train.Electric.Battery80V+(Train.KV and Train.Electric.ReservePower or 0) == 0 then
         self:equalizePressure(dT,"ParkingBrakePressure", 0, 0.4,1,nil,0.5)
     end
     Train:SetPackedRatio("ParkingBrakePressure_dPdT",self.ParkingBrakePressure_dPdT)
@@ -498,7 +510,6 @@ function TRAIN_SYSTEM:Think(dT)
         self.Train:PlayOnce("br_013","cabin")
         self.RealDriverValvePosition = self.RealDriverValvePosition - 1
     end
-
 
     if self.V2Previous ~= V2 then
         self.V2Previous = V2

@@ -52,8 +52,8 @@ function TRAIN_SYSTEM:Think(dT)
         end
         local electric = self.Train.Electric
         self.Time= CurTime()+math.random()*0.4
-        self:CState("PTROverheat",(electric.Overheat1 > 0 or electric.Overheat2 > 0) and math.max(electric.T1,electric.T2))
-        self:CState("PTROverheating",(electric.T1 > 500 or electric.T2 > 500) and math.min(999,math.max(electric.T1,electric.T2)))
+        self:CState("PTROverheat",false)
+        self:CState("PTROverheating",false)
         self.Update = false
     end
 end
