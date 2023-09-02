@@ -111,7 +111,7 @@ ENT.ButtonMap["RearDoor"] = {
     height = 2000,
     scale = 0.1/2, 	
     buttons = {
-        {ID = "RearDoor",x=0,y=0,w=642,h=2000, "", model = {
+        {ID = "RearDoor",x=0,y=0,w=642,h=2000,"", model = {
             var="RearDoor",sndid="door_cab_t",
             sndvol = 1, snd = function(val) return val and "cab_door_open" or "cab_door_close" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
@@ -158,14 +158,14 @@ ENT.ButtonMap["Tickers_rear"] = {
 	hideseat=1,		
 }	
 ENT.ClientProps["Zavod_table_sochl"] = { 
-    model = "models/metrostroi_train/81-740/salon/zavod.mdl",
+    model = "models/metrostroi_train/81-741/salon/zavod.mdl", 
 	pos = Vector(287.2,44,48),
     ang = Angle(90,-180,0),
 	scale = 3,
 	hide = 1,		
 }
 ENT.ClientProps["Zavod_table_sochl_torec"] = { 
-    model = "models/metrostroi_train/81-740/salon/zavod.mdl",
+    model = "models/metrostroi_train/81-741/salon/zavod.mdl",
 	pos = Vector(-332.4,-20,59),
     ang = Angle(90,0,0),
 	scale = 3,
@@ -257,7 +257,7 @@ function ENT:Initialize()
         "models/metrostroi/passengers/m5.mdl",
     }
 	
-    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
+    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-741_4")	
     local train = self.HeadTrain 	
 	
     self.RearLeak = 0	
@@ -275,7 +275,7 @@ end
 
 function ENT:Think()
     self.BaseClass.Think(self)
-    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
+    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-741_4")	
     local train = self.HeadTrain 
     if not IsValid(train) or not IsValid(self) then return end		
     if not self.RenderClientEnts or self.CreatingCSEnts or not IsValid(train) then
@@ -445,13 +445,6 @@ end
         self.Door4 = door4s
         self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
     end	 
-	
-    local work = train:GetPackedBool("AnnPlay")
-    for k,v in ipairs(self.AnnouncerPositions) do
-        if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
-            self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
-		end 
-	end		
 end
 
 function ENT:Draw()
@@ -468,7 +461,7 @@ function ENT:OnPlay(soundid,location,range,pitch)
 end	
 
 function ENT:DrawPost(special)
-    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
+    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-741_4")	
     local train = self.HeadTrain	
     if not IsValid(train) or not IsValid(self) then return end	
 	if train then	 	

@@ -6,7 +6,8 @@ or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
-or Map:find("gm_metronvl")) then
+or Map:find("gm_metronvl")
+or Map:find("gm_metropbl")) then
 	return
 end
 
@@ -33,16 +34,8 @@ function ENT:GetStandingArea()
 	return Vector(520-15,-25,-47),Vector(15,25,-46)
 end 
 
-function ENT:GetStandingAreaRear()    --смещение пассажиров
-	return Vector(270-15,-25,-47),Vector(-285,25,-46) 	
-end 
-
 local function GetDoorPosition(n,G)	--Правые двери			--Левые двери
 	return Vector(652.5-15  - 35.0*G     -  338.8*n, -67.5*(1-2*G), 4.3)
-end
-
-local function GetDoorPositionRear(n,G)			--	x						--	y        --	z
-	return Vector(-195.5-15 - -35.0*G - 232.1*n, -66*(1-2*G), 4.3)
 end
 
 local yventpos = {
@@ -56,8 +49,6 @@ local yventpos = {
 }
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)	
-
-local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
 
 	for i = 1,10 do
 		local id1 = Format("b1tunnel_%d",i)
@@ -185,7 +176,7 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
     }
     self.SoundPositions["pneumo_disconnect_close"] = {800,1e9,Vector(795-159,40,-55),0.4}
     self.SoundPositions["pneumo_disconnect_open"] = {800,1e9,Vector(795-159,40,-55),0.4}
-    self.SoundNames["disconnect_valve"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3" 
+    self.SoundNames["disconnect_valve"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3"
 
     self.SoundNames["pnm_on"]           = {"subway_trains/common/pnm/pnm_switch_on.mp3","subway_trains/common/pnm/pnm_switch_on2.mp3"}
     self.SoundNames["pnm_off"]          = "subway_trains/common/pnm/pnm_switch_off.mp3"
@@ -364,10 +355,10 @@ local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
             self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPosition(i,k),1}
             self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start_"..start..".wav"}
             self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPosition(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open_end"..open..".wav"}
-            self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPosition(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
-            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPosition(i,k),0.5}
+            self.SoundNames["door"..i.."x"..k.."o"] = {"subway_trains/rusich/doors/door_open_end"..open..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."o"] = {200,1e9,GetDoorPosition(i,k),1}
+            self.SoundNames["door"..i.."x"..k.."c"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."c"] = {200,1e9,GetDoorPosition(i,k),0.5}
 	        end
     end		
     end
@@ -427,17 +418,14 @@ function ENT:InitializeSystems()
 	self:LoadSystem("AsyncInverter","81_760_AsyncInverter")	
 end
 
---ENT.AnnouncerPositions = {
-	--{Vector(-520,-49 ,51),80,1},
-    --{Vector(443,-60, 51),250,1},
-    --{Vector(143,60 ,62),250,1},
---}
 ENT.AnnouncerPositions = {}
-for i=1,3 do
-    table.insert(ENT.AnnouncerPositions,{
-	Vector(0-(i-1)*230+38-15,
-	47*(i%2 > 0 and -1 or 1) ,44),450,0})
-end  
+ENT.AnnouncerPositions = {
+    {Vector(450,-34,55),10,0.15},
+	{Vector(118,-34,55),10,0.15},
+    {Vector(158,34,55),10,0.15},
+    {Vector(495,34,55),10,0.15},
+    {Vector(580,34,55),10,0.1},	
+}
 ENT.Cameras = {
     {Vector(770-159,36,42),Angle(0,180,0),"Train.740.CameraCond"},
     {Vector(750-159,36,26),Angle(0,180,0),"Train.740.CameraPPZ"},
@@ -468,8 +456,8 @@ ENT.SubwayTrain = {
     },
     EKKType = 740
 }
-ENT.NumberRanges = {{0154,0155},{0190,0337}}
---ENT.NumberRanges = {{0154,0155,0337,0190,0191,0192,0193,0194,0195,0196,0197,0198,0199,0200,0201,0202,0203,0204,0205,0206,0207,0208,0209,0212,0213,0214,0215,0216,0217,0218,0219,0220,0221,0222,0223,0224,0225,0227,0228,0229,0230,0231,0232,0233,0234,0235,0236,0238,0239,0248,0249,0250,0251,0252,0253,0254,0255,0256,0257,0260,0261,0262,0263,0264,0265,0266,0267,0268,0269,0270,0271,0272,0273,0276,0277,0278,0279,0280,0281,0282,0283,0286,0287,0288,0289,0290,0291,0292,0293,0296,0297,0304,0305,0305,0306,0307,0308,0311,0318,0319,0320,0321,0322,0323,0324,0325,0326,0327,0328,0329,0330,0331,0332,0333,0334,0335,0336,0337}}
+ENT.NumberRanges = {{0154,0209},{0212,0335}}
+--ENT.NumberRanges = {{0154,0155,0337,0190,0191,0192,0193,0194,0195,0196,0197,0198,0199,0200,0201,0202,0203,0204,0205,0206,0207,0208,0209,0212,0213,0214,0215,0216,0217,0218,0219,0220,0221,0222,0223,0224,0225,0227,0228,0229,0230,0231,0232,0233,0234,0235,0236,0238,0239,0248,0249,0250,0251,0252,0253,0254,0255,0256,0257,0260,0261,0262,0263,0264,0265,0266,0267,0268,0269,0270,0271,0272,0273,0276,0277,0278,0279,0280,0281,0282,0283,0286,0287,0288,0289,0290,0291,0292,0293,0296,0297,0304,0305,0305,0306,0307,0308,0311,0318,0319,0320,0321,0322,0323,0324,0325,0326,0327,0328,0329,0330,0331,0332,0333,0334,0335}}
 local Texture = {}
 local Announcer = {}
 for k,v in pairs(Metrostroi.AnnouncementsASNP or {}) do Announcer[k] = v.name or k end
@@ -533,7 +521,7 @@ ENT.Spawner = {
 	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType.Random","Spawner.740.MotorType1","Spawner.740.MotorType2","Spawner.740.MotorType3","Spawner.740.MotorType4","Spawner.740.MotorType5"}},	
 	{"VentSound","Spawner.740.VentSound","List",{"Spawner.740.VentSound.Random","Spawner.740.VentSound1","Spawner.740.VentSound2"}}, 	
 	{},
-	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, nil,function(ent,val,rot,i,wagnum,rclk)	
+	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, nil,function(ent,val,rot,i,wagnum,rclk)		
         if rclk then return end
         if ent._SpawnerStarted~=val then
             ent.Battery:TriggerInput("Set",val<=2 and 1 or 0)

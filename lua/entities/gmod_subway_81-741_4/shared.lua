@@ -6,7 +6,8 @@ or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
-or Map:find("gm_metronvl")) then
+or Map:find("gm_metronvl")
+or Map:find("gm_metropbl")) then
 	return
 end
 
@@ -39,10 +40,6 @@ end
 local function GetDoorPosition(b,k)	--Правые двери			--Левые двери
 	return Vector(652.5  - 35.0*k     -  338.8*b, -67.5*(1-2*k), 4.3)
 end
---	x						--	y        --	z
-local function GetDoorPositionRear(b,k)	
-	return Vector(-195.5 - -35.0*k - 232.1*b, -66*(1-2*k), 4.3)
-end
 
 local yventpos = {
     414.5+0*117-144,
@@ -56,21 +53,6 @@ local yventpos = {
 
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)
-	local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
---[[	
-    self.SoundNames["async1"]   = {"subway_trains/rusich/inverter/inverter1.wav",loop = true}
-    self.SoundPositions["async1"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
-    self.SoundNames["async2"]   = {"subway_trains/rusich/inverter/inverter2.wav",loop = true}
-    self.SoundPositions["async2"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
-    self.SoundNames["async3"]   = {"subway_trains/rusich/inverter/inverter3.wav",loop = true}
-    self.SoundPositions["async3"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
-    self.SoundNames["async4"]   = {"subway_trains/rusich/inverter/inverter4.wav",loop = true}
-    self.SoundPositions["async4"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos
-    self.SoundNames["async5"]   = {"subway_trains/rusich/inverter/inverter5.wav",loop = true}
-    self.SoundPositions["async5"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos	
-    --self.SoundNames["async6"]   = {"subway_trains/rusich/inverter/inverter6.wav",loop = true} --5 инвертер переименован в звук рекуперации.
-    --self.SoundPositions["async6"] = {400,1e9,Vector(700-144,0,0),1} --FIXME: Pos		
-	]]
 	
 	for i = 1,10 do
 		local id1 = Format("b1tunnel_%d",i)
@@ -175,10 +157,10 @@ function ENT:InitializeSounds()
             self.SoundPositions["door"..i.."x"..k.."r"] = {200,1e9,GetDoorPosition(i,k),1}
             self.SoundNames["door"..i.."x"..k.."s"] = {"subway_trains/rusich/doors/door_start_"..start..".wav"}
             self.SoundPositions["door"..i.."x"..k.."s"] = {200,1e9,GetDoorPosition(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."o1"] = {"subway_trains/rusich/doors/door_open_end"..open..".wav"}
-            self.SoundPositions["door"..i.."x"..k.."o1"] = {200,1e9,GetDoorPosition(i,k),1}
-            self.SoundNames["door"..i.."x"..k.."c1"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
-            self.SoundPositions["door"..i.."x"..k.."c1"] = {200,1e9,GetDoorPosition(i,k),0.5}		
+            self.SoundNames["door"..i.."x"..k.."o"] = {"subway_trains/rusich/doors/door_open_end"..open..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."o"] = {200,1e9,GetDoorPosition(i,k),1}
+            self.SoundNames["door"..i.."x"..k.."c"] = {"subway_trains/rusich/doors/door_close"..closed..".wav"}
+            self.SoundPositions["door"..i.."x"..k.."c"] = {200,1e9,GetDoorPosition(i,k),0.5}		
         end
     end
     self.SoundNames["batt_on"] = "subway_trains/720/batt_on.mp3"
@@ -200,11 +182,19 @@ function ENT:InitializeSystems()
 end
 
 ENT.AnnouncerPositions = {}
-for i=1,3 do
+ENT.AnnouncerPositions = {
+	{Vector(85,-34,55),50,0.15},
+	{Vector(324,-34,55),50,0.15},
+	{Vector(550,-34,55),50,0.15},
+	{Vector(600,34,55),50,0.15},
+	{Vector(362,34,55),50,0.15},
+	{Vector(136,34,55),50,0.15},
+}
+--[[for i=1,3 do
     table.insert(ENT.AnnouncerPositions,{
 	Vector(0-(i-1)*230+38,
 	47*(i%2 > 0 and -1 or 1) ,44),450,0.5})
-end 
+end]] 
 ---------------------------------------------------
 -- Defined train information
 -- Types of wagon(for wagon limit system):
@@ -219,4 +209,4 @@ ENT.SubwayTrain = {
     Manufacturer = "MVM",
     EKKType = 740
 }
-ENT.NumberRanges = {{0681,0683},{0735,0918}}
+ENT.NumberRanges = {{0681,0683},{0735,0800},{0802,0804},{0809,0917}}

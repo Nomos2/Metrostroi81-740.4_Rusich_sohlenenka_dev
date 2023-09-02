@@ -147,14 +147,7 @@ timer.Simple(0,function()
 				print("[Metrostroi 81-740] Inject sounds")				
 				end
 			end)	
-		end
-		for k,v in pairs(Metrostroi.TrainClasses) do
-        if v == "gmod_pricep_kuzov" then
-            Metrostroi.TrainClasses[k] = nil
-            Metrostroi.IsTrainClass[v] = nil
-            break
-        end
-    end		
+		end 	
 	end) 
 end
 

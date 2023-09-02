@@ -6,19 +6,63 @@ or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
-or Map:find("gm_metronvl")) then
+or Map:find("gm_metronvl")
+or Map:find("gm_metropbl")) then
 	return
 end
 
 include("shared.lua")
-Metrostroi.Version = 1537278077
 --------------------------------------------------------------------------------
 ENT.ClientProps = {}
 ENT.ButtonMap = {}
 ENT.AutoAnims = {}
 ENT.ClientSounds = {}
-
 ENT.ClientPropsInitialized = false
+
+--[[ENT.ClientProps["test_prop"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(85,-34,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+ENT.ClientProps["test_prop1"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(324,-34,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+ENT.ClientProps["test_prop2"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(550,-34,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+ENT.ClientProps["test_prop3"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(600,34,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+ENT.ClientProps["test_prop4"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(362,34,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+ENT.ClientProps["test_prop5"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(136,34,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}]]
+
+
 ENT.ButtonMap["PVZ"] = {
     pos = Vector(654,52,-12), --446 -- 14 -- -0,5
     ang = Angle(0,-90,90),
@@ -479,76 +523,18 @@ function ENT:Initialize()
 	
 	self.FrontBogey = self:GetNW2Entity("FrontBogey")	
 	self.RearBogey = self:GetNW2Entity("RearBogey")
-	
-	self.PassengerEnts = {}
-    self.PassengerPositions = {}
-	
-	self.PassengerEntsRear = {}
-    self.PassengerPositionsRear = {}	
-	
-	self.PassengerEntsRear = {}
-    self.PassengerPositions = {}
-	
-	if not self:GetNW2Bool("metrostroi_custom_passengers") then 	
-    self.PassengerModelsRear = {
-        "models/metrostroi/passengers/f1.mdl",
-        "models/metrostroi/passengers/f2.mdl",
-        "models/metrostroi/passengers/f3.mdl",
-        "models/metrostroi/passengers/f4.mdl",
-        "models/metrostroi/passengers/f5.mdl",		
-        "models/metrostroi/passengers/m1.mdl",
-        "models/metrostroi/passengers/m2.mdl",
-        "models/metrostroi/passengers/m3.mdl",		
-        "models/metrostroi/passengers/m4.mdl",
-        "models/metrostroi/passengers/m5.mdl",
-		}
-	else
-    self.PassengerModelRearCustom = {
-		"models/humans/group01/female_01.mdl",
-		"models/humans/group01/female_02.mdl",
-		"models/humans/group01/female_03.mdl",
-		"models/humans/group01/female_04.mdl",
-		"models/humans/group01/female_06.mdl",
-		"models/humans/group01/female_07.mdl",
-		"models/humans/group01/male_01.mdl",
-		"models/humans/group01/male_02.mdl",
-		"models/humans/group01/male_03.mdl",
-		"models/humans/group01/male_04.mdl",
-		"models/humans/group01/male_05.mdl",
-		"models/humans/group01/male_06.mdl",
-		"models/humans/group01/male_07.mdl",
-		"models/humans/group01/male_08.mdl",
-		"models/humans/group01/male_09.mdl",
-		}
-
-local female_sequences = {2,5,6,7,11,17}
-local male_sequences = {2,3,4,6,10}			
-		
-	end		
-	
-end	
-
-for m=0,3 do
-    ENT.ClientProps["TrainNumberR"..m] = {
-        model = "models/metrostroi_train/common/bort_numbers.mdl",
-        pos = Vector(635-m*6.6+4*6.6/2,-63.35,18),
-        ang = Angle(0,0,-3.29),
-		hide = 1,
-        callback = function(ent)
-            ent.WagonNumber = false
-        end,
-    }
-end	
+end
 
 function ENT:ReInitBogeySounds(bogey)
 	if not IsValid(bogey) then return end
 	
-	local MotorType = self:GetNW2Int("MotorType")
-	if self:GetNW2Int("MotorType")==1 then	
+	local MotorType = self:GetNW2Int("MotorType")	
+
     -- Bogey-related sounds
     bogey.SoundNames = {}
     bogey.EngineSNDConfig = {}
-	
+    
+	if self:GetNW2Int("MotorType")==1 then		
 	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
     for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
     table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,  1})--40
@@ -562,8 +548,8 @@ function ENT:ReInitBogeySounds(bogey)
     table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1})--07
     table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1})--05
     --table.insert(bogey.EngineSNDConfig,{"ted11_720",88,80-4   ,0.00})--02
-	
-	bogey.SoundNames = {}	
+
+    bogey.SoundNames = {}
 	
     bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
     bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
@@ -622,39 +608,9 @@ function ENT:ReInitBogeySounds(bogey)
     bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
     bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
 	
-    -- Remove old sounds
-    if bogey.Sounds then
-        for k,v in pairs(bogey.Sounds) do
-            v:Stop()
-        end
-    end
-
-    -- Create sounds
-    bogey.Sounds = {}
-    bogey.Playing = {}
-    for k,v in pairs(bogey.SoundNames) do
-        --if not file.Exists(v, "MOD") then
---          bogey.SoundNames[k] = nil
-        --end
-        util.PrecacheSound(v)
-        local e = bogey
-        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
-            e = bogey:GetNW2Entity("TrainWheels")
-        end
-        bogey.Sounds[k] = CreateSound(e, Sound(v))
-    end
-
-    bogey.Async = nil
-    --bogey.MotorSoundType = nil
-end
+	end
 	
-if self:GetNW2Int("MotorType")==2 then	
-
-    -- Bogey-related sounds
-    bogey.SoundNames = {}
-    bogey.EngineSNDConfig = {}
-	
-	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
+if MotorType==2 then		
     for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
     table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,  1})--40
     table.insert(bogey.EngineSNDConfig,{"ted2_740" ,16,08-4,24,1})--35
@@ -666,8 +622,6 @@ if self:GetNW2Int("MotorType")==2 then
     table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1})--10
     table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1})--07
     table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1})--05	
-	
-	 bogey.SoundNames = {}
 	
     bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
     bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
@@ -683,16 +637,16 @@ if self:GetNW2Int("MotorType")==2 then
     --bogey.SoundNames["tedm_703"]  = "subway_trains/bogey/engines/703/engines_medium.wav"
 
     --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
-    bogey.SoundNames["ted1_740"]  = "subway_trains/rusich/engines_new/engine_8.wav"
-    bogey.SoundNames["ted2_740"]  = "subway_trains/rusich/engines_new/engine_16.wav"
-    bogey.SoundNames["ted3_740"]  = "subway_trains/rusich/engines_new/engine_24.wav"
-    bogey.SoundNames["ted4_740"]  = "subway_trains/rusich/engines_new/engine_32.wav"
-    bogey.SoundNames["ted5_740"]  = "subway_trains/rusich/engines_new/engine_40.wav"
-    bogey.SoundNames["ted6_740"]  = "subway_trains/rusich/engines_new/engine_48.wav"
-    bogey.SoundNames["ted7_740"]  = "subway_trains/rusich/engines_new/engine_56.wav"
-    bogey.SoundNames["ted8_740"]  = "subway_trains/rusich/engines_new/engine_64.wav"
-    bogey.SoundNames["ted9_740"]  = "subway_trains/rusich/engines_new/engine_72.wav"
-    bogey.SoundNames["ted10_740"] = "subway_trains/rusich/engines_new/engine_80.wav"
+    bogey.SoundNames["ted1_740"]  = "subway_trains/rusich/engines/engine_8.wav"
+    bogey.SoundNames["ted2_740"]  = "subway_trains/rusich/engines/engine_16.wav"
+    bogey.SoundNames["ted3_740"]  = "subway_trains/rusich/engines/engine_24.wav"
+    bogey.SoundNames["ted4_740"]  = "subway_trains/rusich/engines/engine_32.wav"
+    bogey.SoundNames["ted5_740"]  = "subway_trains/rusich/engines/engine_40.wav"
+    bogey.SoundNames["ted6_740"]  = "subway_trains/rusich/engines/engine_48.wav"
+    bogey.SoundNames["ted7_740"]  = "subway_trains/rusich/engines/engine_56.wav"
+    bogey.SoundNames["ted8_740"]  = "subway_trains/rusich/engines/engine_64.wav"
+    bogey.SoundNames["ted9_740"]  = "subway_trains/rusich/engines/engine_72.wav"
+    bogey.SoundNames["ted10_740"] = "subway_trains/rusich/engines/engine_80.wav"
 
     --bogey.SoundNames["ted11_720"] = "subway_trains/760/engines/engine_80.wav"
     bogey.SoundNames["ted11_720"] = "subway_trains/bogey/engines/720/speed_88.wav"
@@ -726,40 +680,10 @@ if self:GetNW2Int("MotorType")==2 then
     bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
     bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
 
-    -- Remove old sounds
-    if bogey.Sounds then
-        for k,v in pairs(bogey.Sounds) do
-            v:Stop()
-        end
-    end
+end	
 
-    -- Create sounds
-    bogey.Sounds = {}
-    bogey.Playing = {}
-    for k,v in pairs(bogey.SoundNames) do
-        --if not file.Exists(v, "MOD") then
---          bogey.SoundNames[k] = nil
-        --end
-        util.PrecacheSound(v)
-        local e = bogey
-        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
-            e = bogey:GetNW2Entity("TrainWheels")
-        end
-        bogey.Sounds[k] = CreateSound(e, Sound(v))
-    end
-
-    bogey.Async = nil
-    --bogey.MotorSoundType = nil
-end
-
-if self:GetNW2Int("MotorType")==3 then
-
-    -- Bogey-related sounds
-    bogey.SoundNames = {}
-    bogey.EngineSNDConfig = {}
-
-	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
-    for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
+if MotorType==3 then
+ for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end	
 	table.insert(bogey.EngineSNDConfig,{"ted1_720" ,08,00,16,1*0.4})
 	table.insert(bogey.EngineSNDConfig,{"ted2_720" ,16,08-4,24,1*0.43})
 	table.insert(bogey.EngineSNDConfig,{"ted3_720" ,24,16-4,32,1*0.46})
@@ -771,8 +695,6 @@ if self:GetNW2Int("MotorType")==3 then
 	table.insert(bogey.EngineSNDConfig,{"ted9_720" ,72,64-4,80,1*0.64})
 	table.insert(bogey.EngineSNDConfig,{"ted10_720",80,72-4,88,1*0.67})
 	table.insert(bogey.EngineSNDConfig,{"ted11_720",88,80-4   ,1*0.7})
-	
-	bogey.SoundNames = {}	
 
     bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
     bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
@@ -825,40 +747,10 @@ if self:GetNW2Int("MotorType")==3 then
     bogey.SoundNames["brake2_loop2"]       = "subway_trains/bogey/brake_rattle_h.wav"
     bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
     bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
-    -- Remove old sounds
-    if bogey.Sounds then
-        for k,v in pairs(bogey.Sounds) do
-            v:Stop()
-        end
-    end
-
-    -- Create sounds
-    bogey.Sounds = {}
-    bogey.Playing = {}
-    for k,v in pairs(bogey.SoundNames) do
-        --if not file.Exists(v, "MOD") then
---          bogey.SoundNames[k] = nil
-        --end
-        util.PrecacheSound(v)
-        local e = bogey
-        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
-            e = bogey:GetNW2Entity("TrainWheels")
-        end
-        bogey.Sounds[k] = CreateSound(e, Sound(v))
-    end
-
-    bogey.Async = nil
-    --bogey.MotorSoundType = nil
-end	
-
-if self:GetNW2Int("MotorType")==4 then
-
-    -- Bogey-related sounds
-    bogey.SoundNames = {}
-    bogey.EngineSNDConfig = {}
-
-	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
-    for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
+	end
+	
+if MotorType==4 then
+for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
 	table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted2_740" ,16,08-4,24,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted3_740" ,24,16-4,32,1*1})
@@ -869,8 +761,6 @@ if self:GetNW2Int("MotorType")==4 then
 	table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1*1})
-	
-	 bogey.SoundNames = {}
 
     bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
     bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
@@ -926,39 +816,9 @@ if self:GetNW2Int("MotorType")==4 then
     bogey.SoundNames["brake_squeal1"]       = "subway_trains/bogey/brake_squeal1.wav"
     bogey.SoundNames["brake_squeal2"]       = "subway_trains/bogey/brake_squeal2.wav"
 	
-    -- Remove old sounds
-    if bogey.Sounds then
-        for k,v in pairs(bogey.Sounds) do
-            v:Stop()
-        end
-    end
-
-    -- Create sounds
-    bogey.Sounds = {}
-    bogey.Playing = {}
-    for k,v in pairs(bogey.SoundNames) do
-        --if not file.Exists(v, "MOD") then
---          bogey.SoundNames[k] = nil
-        --end
-        util.PrecacheSound(v)
-        local e = bogey
-        if (k == "brake3a") and IsValid(bogey:GetNW2Entity("TrainWheels")) then
-            e = bogey:GetNW2Entity("TrainWheels")
-        end
-        bogey.Sounds[k] = CreateSound(e, Sound(v))
-    end
-
-    bogey.Async = nil
-    --bogey.MotorSoundType = nil
-end	
-if self:GetNW2Int("MotorType")==5 then
-
-    -- Bogey-related sounds
-    bogey.SoundNames = {}
-    bogey.EngineSNDConfig = {}
-	
-	bogey.MotorSoundType = bogey:GetNWInt("MotorSoundType",1)
-    for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end	
+end		
+if MotorType==5 then
+for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end		
 	table.insert(bogey.EngineSNDConfig,{"ted1_740" ,08,00,16,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted2_740" ,16,08-4,24,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted3_740" ,24,16-4,32,1*1})
@@ -969,8 +829,6 @@ if self:GetNW2Int("MotorType")==5 then
 	table.insert(bogey.EngineSNDConfig,{"ted8_740" ,64,56-4,72,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted9_740" ,72,64-4,80,1*1})
 	table.insert(bogey.EngineSNDConfig,{"ted10_740",80,72-4,88,1*1})
-	
-	bogey.SoundNames = {}	
 
     bogey.SoundNames["ted1_703"]  = "subway_trains/bogey/engines/703/speed_8.wav"
     bogey.SoundNames["ted2_703"]  = "subway_trains/bogey/engines/703/speed_16.wav"
@@ -1062,7 +920,7 @@ function ENT:Think()
 	local refresh = false--true		
 	
 	if self:GetNW2Int("MotorType")==1 then		
-		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav"  
+		if IsValid(self.FrontBogey) and self.FrontBogey.SoundNames and (self.FrontBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
 	or self.FrontBogey.EngineSNDConfig and self.FrontBogey.EngineSNDConfig[1] and self.FrontBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.FrontBogey)
 	end
@@ -1073,7 +931,7 @@ function ENT:Think()
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
-	end	
+	end		
 	end
 	
 	if self:GetNW2Int("MotorType")==2 then		
@@ -1088,7 +946,7 @@ function ENT:Think()
 	if IsValid(self.RearBogey) and self.RearBogey.SoundNames and (self.RearBogey.SoundNames["ted1_740"] ~= "subway_trains/rusich/engines_new/engine_8.wav" 
 	or self.RearBogey.EngineSNDConfig and self.RearBogey.EngineSNDConfig[1] and self.RearBogey.EngineSNDConfig[1][5] ~= 1) or refresh then
 		self:ReInitBogeySounds(self.RearBogey)
-	end		
+	end	
 	end
 	
 	if self:GetNW2Int("MotorType")==3 then		
@@ -1136,179 +994,40 @@ function ENT:Think()
 	end	
 end	
 
---Генерация пропов для задней секции.
-local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
-if IsValid(Pricep740) then
-if not Pricep740.ClientSounds then
-Pricep740.ButtonMap = {}
-Pricep740.ClientProps = {}
-Pricep740.ClientSounds = {}
-Pricep740.AutoAnims = {}
-
-Pricep740.ClientProps["Zavod_table_sochl"] = { 
-    model = "models/metrostroi_train/81-741/salon/zavod.mdl",
-	pos = Vector(286.9,44,48),
-    ang = Angle(90,180,0),
-	scale = 3,	
-	hide = 1,	
-}
-Pricep740.ClientProps["Zavod_table_sochl_torec"] = {  --Торец табличка зад
-    model = "models/metrostroi_train/81-741/salon/zavod.mdl",
-	pos = Vector(-331.95,-15,59),
-    ang = Angle(90,0,0),
-	scale = 3,	
-	hide = 1,	
-}
-Pricep740.ClientProps["Naddver_off_740"] = { 
-    model = "models/metrostroi_train/81-741/salon/naddverka_off_741.mdl",
-	pos = Vector(-15.2,37.15,57.6),
-    ang = Angle(0,180,0),
-	scale = 1,
-	hide = 2, 	
-}
---Новые модели 2023.
-
-Pricep740.ClientProps["RearTrain"] = {
-	model = "models/metrostroi_train/bogey/disconnect_valve_blue.mdl",
-	pos = Vector(-336, -25, -54),
-	ang = Angle(0,90,0),
-	hide = 1,			
-}
-Pricep740.ClientProps["RearBrake"] = {
-    model = "models/metrostroi_train/bogey/disconnect_valve_red.mdl",
-	pos = Vector(-336, 25, -54),
-	ang = Angle(0,90,0),
-	hide = 1,		
-}
-Pricep740.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}--660, 23, -56
-Pricep740.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
-
-Pricep740.ClientProps["krepezh1"] = {
-    model = "models/metrostroi_train/81-740/body/krepezh.mdl",
-    pos = Vector(64, 0, -75),
-    ang = Angle(0,180,0), 
-	hide = false,		
-}
-Pricep740.ClientProps["handrails_offside"] = {
-    model = "models/metrostroi_train/81-740/body/740_body_additional.mdl",
-    pos = Vector(21.8, 10, -76.5),
-    ang = Angle(0,180,0),
-	hide = false,	
-}
---правый ряд
-for i = 1,11 do
-Pricep740.ClientProps["lamps_salon_on_test"..i-1] = {
-    model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(345-54.23*i,0.55,-74.75),
-    ang = Angle(0,180,0),
-    color = Color(245,238,223),	
-	hide = 1,	 
-}
-Pricep740.ClientProps["lamps_salon_on_test1"..i] = {
-    model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(345-54.23*i,-57.55,-74.75),
-    ang = Angle(0,180,0),
-    color = Color(245,238,223),	
-	hide = 1,	
-}
-
-Pricep740.ClientProps["lamps_salon_on_avar1"] = {
-    model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(234,-57.5,-74.75),
-    ang = Angle(0,180,0),
-	hide = 2,	
-}
-Pricep740.ClientProps["lamps_salon_on_avar2"] = {
-    model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(-255,0.58,-74.75),
-    ang = Angle(0,180,0),
-	hide = 2,	
-}
-Pricep740.ClientProps["lamps_salon_off1"] = {
-    model = "models/metrostroi_train/81-741/salon/lamps/lamps_off_rear.mdl", 
-    pos = Vector(195,0,-75),
-    ang = Angle(0,180,0),
-	hide = 2,		
-}
-
-Pricep740.ClientProps["handrails1"] = {
-	model = "models/metrostroi_train/81-741/salon/handrails/handrails.mdl",
-	pos = Vector(0, 0.5, -2),
-	ang = Angle(0,0,0),
-	hide = 2,		
-}
-Pricep740.ClientProps["salon1"] = {
-	model = "models/metrostroi_train/81-741/salon/salon_rear.mdl",
-	pos = Vector(-9.85, 0, 6),
-	ang = Angle(0,180,0),
-	hide = 2,    		
-}
-Pricep740.ClientProps["door_cab_b"] = {
-	model = "models/metrostroi_train/81-740/salon/door_br.mdl",
-	pos = Vector(-334.5, 15, 8.8),
-	ang = Angle(0,180,0),
-	scale = 1,
-	hide = 2,
-}
-Pricep740.ButtonMap["RearPneumatic"] = {
-    pos = Vector(-206-131,45,-46),
-    ang = Angle(180,90,270),
-    width = 900,
-    height = 100,
-    scale = 0.1,
-    hideseat=0.2,
-    hide=true,
-	screenHide = true,
-	
-    buttons = {
-		{ID = "RearTrainLineIsolationToggle",x=500, y=0, w=400, h=100, tooltip=Metrostroi.GetPhrase ("Common.740.RearTrainLineIsolationToggle")},
-		{ID = "RearBrakeLineIsolationToggle",x=0, y=0, w=400, h=100, tooltip=Metrostroi.GetPhrase ("Common.740.RearBrakeLineIsolationToggle")},
-    }
-}	
-Pricep740.ButtonMap["RearDoor"] = {
-    pos = Vector(-332,-15,55), ---334.8,14.5,9
-    ang = Angle(0,90,90),
-    width = 642,
-    height = 2000,
-    scale = 0.1/2, 	
-    buttons = {
-        {ID = "RearDoor",x=0,y=0,w=642,h=2000, tooltip=Metrostroi.GetPhrase("Common.741.RearDoor"), model = {
-            var="RearDoor",sndid="door_cab_t",
-            sndvol = 1, snd = function(val) return val and "door_cab_open" or "door_cab_close" end,	 
-            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
-        }},   
-	}	
-}
-for m=0,3 do	
-Pricep740.ClientProps["TrainNumberL"..m] = {
+for k=0,3 do
+    self.ClientProps["TrainNumberR"..k] = {
         model = "models/metrostroi_train/common/bort_numbers.mdl",
-		pos = Vector(-310+m*6.6-4*6.6/2, 63.4, 18),
-        ang = Angle(0,180,-3.29),
+        pos = Vector(635-k*6.6+4*6.6/2,-63.35,18),
+        ang = Angle(0,0,-3.29),
 		hide = 1,
-		callback = function(Pricep740)
-            self.WagonNumber = false	
-		end,	
-	}
+        callback = function(ent)
+            ent.WagonNumber = false
+        end,
+    }
 end	
+
 function self:UpdateWagonNumber()	
-for m=0,3 do
+    self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov_741")	
+    local train1 = self.HeadTrain1 
+    if not IsValid(train1) or not IsValid(self) then return end	
+for k=0,3 do
         --if i< count then
 			if self.WagonNumber then	
-            local leftNum = Pricep740.ClientEnts["TrainNumberL"..m]
-            local rightNum = self.ClientEnts["TrainNumberR"..m]
-	        local num = math.floor(self.WagonNumber%(10^(m+1))/10^m)				
+            local rightNum = self.ClientEnts["TrainNumberR"..k]
+	        local num = math.floor(self.WagonNumber%(10^(k+1))/10^k)				
 	        if IsValid(rightNum) then
-                rightNum:SetPos(self:LocalToWorld(Vector(635-m*6.6+4*6.6/2, -63.5 ,18)))
+                rightNum:SetPos(self:LocalToWorld(Vector(635-k*6.6+4*6.6/2, -63.5 ,18)))
                 rightNum:SetSkin(num)
             end		
-	        local num = math.floor(self.WagonNumber%(10^(m+1))/10^m)				
-            if IsValid(leftNum) then		
-                leftNum:SetLocalPos(Vector(-310+m*6.6-4*6.6/2, 63.4, 18))
-                leftNum:SetSkin(num)
-				end
-            end				
+            local leftNum = train1.ClientEnts["TrainNumberL"..k]	
+	        local num = math.floor(self.WagonNumber%(10^(k+1))/10^k)										
+            if IsValid(leftNum) then	
+                leftNum:SetLocalPos(Vector(-310+k*6.6-4*6.6/2, 63.4, 18))
+                leftNum:SetSkin(num)		
+            end  			
 		end
 	end
+end	
 
 local function GetDoorPositionRear(b,k,j)
 	if j == 0 			--	x						--	y        --	z
@@ -1316,216 +1035,11 @@ local function GetDoorPositionRear(b,k,j)
 	else return Vector(265.6 - 35.0*(1+k) - 232.1*b,-67.5*(1-2*k),4.3)
 	end
 end
-
-for b=0,2 do
-	for k=0,1 do
-		Pricep740.ClientProps["door"..b.."x1"..k.."a1"] = {
-			model = "models/metrostroi_train/81-740/body/81-740_leftdoor1.mdl",
-			pos = GetDoorPositionRear(b,k,0),
-			ang = Angle(0,90 +180*k,0),        
-			scale = 1.001,					
-			hide = 2,	
-}
-		Pricep740.ClientProps["door"..b.."x1"..k.."b1"] = {
-			model = "models/metrostroi_train/81-740/body/81-740_leftdoor2.mdl",
-			pos = GetDoorPositionRear(b,k,1),
-			ang = Angle(0,90 +180*k,0),   
-			scale = 1.001,					 
-			hide = 2,   
-}
-Pricep740.ButtonMap["Tickers_rear"] = {
-		pos = Vector(286.9,27,66.3), --446 -- 14 -- -0,5
-		ang = Angle(0,-90,90),
-		width = 1024,
-		height = 59,
-		scale = 0.054,
-		hide=true,
-		hideseat=1,		
-}
-end 
-end
-end
-end
-end
-
-function self:OnRemove(nfinal)
-    if not nfinal then
-        self.RenderBlock = RealTime()
-    else
-        drawCrosshair = false
-        canDrawCrosshair = false
-        toolTipText = nil
-    end
-    self:RemoveCSEnts()
-    self.RenderClientEnts = false
-
-
-    for _,v in pairs(self.Sounds) do
-        if type(v) ~= "function" and IsValid(v) then
-            v:Stop()
-        end
-    end
-    for k,v in pairs(self.Sounds.loop) do
-        for i,sndt in ipairs(v) do
-            if IsValid(sndt.sound) then
-                sndt.sound:Stop()
-            end
-        end
-    end
-    for _,v in pairs(self.PassengerEntsRear or {}) do
-        SafeRemoveEntity(v)
-    end
-    for _,v in pairs(self.PassengerEnts or {}) do
-        SafeRemoveEntity(v)
-    end	
-    if self.GUILocker then self:BlockInput(false) end
-	if Metrostroi.Version >= 1537278077 then 
-    self.Sounds = {loop = {}, isloop = {}}	
-	else
-    self.Sounds = {loop = {}}
-	end
-    self.PassengerEnts = {}
-	self.PassengerEntsRear = {}
-end
-    --[[if not self.PassSchemesDone then
-        local sarmat = self.ClientEnts.PassSchemes
-        local sarmatr = self.ClientEnts.PassSchemesR
-        local scheme = Metrostroi.Skins["720_schemes"] and Metrostroi.Skins["720_schemes"][self.Scheme]
-        if IsValid(sarmat) and IsValid(sarmatr) and scheme then
-            if self:GetNW2Bool("PassSchemesInvert") then
-                sarmat:SetSubMaterial(0,scheme[2])
-                sarmatr:SetSubMaterial(0,scheme[1])
-            else
-                sarmat:SetSubMaterial(0,scheme[1])
-                sarmatr:SetSubMaterial(0,scheme[2])
-            end
-            self.PassSchemesDone = true
-        end
-    end
-
-    if self.Scheme ~= self:GetNW2Int("Scheme",1) then
-        self.PassSchemesDone = false
-        self.Scheme = self:GetNW2Int("Scheme",1)
-    end
-    if self.InvertSchemes ~= self:GetNW2Bool("PassSchemesInvert",false) then
-        self.PassSchemesDone=false
-        self.InvertSchemes = self:GetNW2Bool("PassSchemesInvert",false)
-    end
-]]
-
-   if not self.RenderClientEnts or self.CreatingCSEnts then return end	
-	
-if not IsValid(Pricep740) then return end	
-
---Передняя часть	
-
-if self.RenderClientEnts ~= self:ShouldRenderClientEnts() then
-        self.RenderClientEnts = self:ShouldRenderClientEnts()
-        if self.RenderClientEnts then
-            self:BlockInput(self.HandleMouseInput)
-        else		
-            self:OnRemove(true)
-            for k,v in pairs(self.PassengerEnts or {}) do
-                SafeRemoveEntity(v)
-            end	
---Передняя часть				
---Задняя часть				
-            self:OnRemove(true)
-            for k,v in pairs(self.PassengerEntsRear or {}) do
-                SafeRemoveEntity(v)
-            end			
---Задняя часть				
-            self.PassengerEntsRear = {}		
---Задняя часть
---Передняя часть
-            self.PassengerEnts = {}			
---Передняя часть			
-            return
-        end
-    end		
-
-	if not self:GetNW2Bool("metrostroi_custom_passengers") then 
-    if self.PassengerEntsRear then
-        if #self.PassengerEntsRear ~= self:GetNW2Float("PassengerCount") then
-
-            -- Passengers go out
-            while #self.PassengerEntsRear > self:GetNW2Float("PassengerCount") do
-                local ent = self.PassengerEntsRear[#self.PassengerEntsRear]
-                table.remove(self.PassengerPositions,#self.PassengerPositions)
-                table.remove(self.PassengerEntsRear,#self.PassengerEntsRear)
-                ent:Remove()
-            end
-            -- Passengers go in
-            while #self.PassengerEntsRear < self:GetNW2Float("PassengerCount") do
-                local min,max = self:GetStandingAreaRear()
-                local pos = min + Vector((max.x-min.x)*math.random(),(max.y-min.y)*math.random(),(max.z-min.z)*math.random())
-                local ent = ClientsideModel(table.Random(self.PassengerModelsRear),RENDERGROUP_OPAQUE)			
-                ent:SetLocalPos(Pricep740:LocalToWorld(pos))--ent:SetLocalPos(self:LocalToWorld(pos)) 
-                ent:SetAngles(Angle(0,math.random(0,360),0))
-                ent:SetSkin(math.floor(ent:SkinCount()*math.random()))
-                ent:SetModelScale(0.98 + (-0.02+0.04*math.random()),0)
-                ent:SetParent(Pricep740)				
-                table.insert(self.PassengerPositions,pos)
-                table.insert(self.PassengerEntsRear,ent)
-            end
-        end
-	    elseif (self.PassengerEntsRear ~= self.PrevPass) then
-		self.PrevPass = self.self.PassengerEntsRear	
-        for k,v in pairs(self.PassengerEntsRear) do
-            if IsValid(v) then v:Remove() end
-            self.PassengerEntsRear[k] = nil
-			end
-	else
-if self:GetNW2Bool("metrostroi_custom_passengers") then 		
-		local function SetNewModel(ent)
-		if IsValid(ent) and not ent.ChangedModel then
-			ent.ChangedModel = true
-			local model = tableRandom(PassengerModelRearCustom)
-			ent:SetAngles(ent:GetAngles()+Angle(0,180,0))
-			ent:SetModel(model)
-			--v:SetSkin(mathrandom(1,v:SkinCount()))
-			ent:ResetSequence(tableRandom(model:find("female",1,true) and female_sequences or male_sequences))					
-				local function SetNewModel(ent)
-				if IsValid(ent) and ent.ChangedModel then
-				ent.ChangedModel = true					
-				end 
-				end
-				for k,v in pairs(self.PassengerEntsRear)do SetNewModel(v)
-				end
-				end	
-		end
-	end	
-end		
---[[else
-	
-
-	if self:GetNW2Bool("metrostroi_custom_passengers") then 		
-    if self.PassengerEntsRearCustom then
-        if #self.PassengerEntsRearCustom ~= self:GetNW2Float("PassengerCount") then
-
-            -- Passengers go out
-            while #self.PassengerEntsRearCustom > self:GetNW2Float("PassengerCount") do
-                local ent = self.PassengerEntsRearCustom[#self.PassengerEntsRearCustom]
-                table.remove(self.PassengerPositionsCustom,#self.PassengerPositionsCustom)
-                table.remove(self.PassengerEntsRearCustom,#self.PassengerEntsRearCustom)
-                ent:Remove()
-            end
-            -- Passengers go in
-            while #self.PassengerEntsRearCustom < self:GetNW2Float("PassengerCount") do
-                local min,max = self:GetStandingAreaRear()
-                local pos = min + Vector((max.x-min.x)*math.random(),(max.y-min.y)*math.random(),(max.z-min.z)*math.random())
-                ent:SetLocalPos(gmod_subway_kuzov:LocalToWorld(pos))--ent:SetLocalPos(self:LocalToWorld(pos)) 
-				ent:ResetSequence(table.Random(model:find("female",1,true) and female_sequences or male_sequences))				
-                ent:SetAngles(gmod_subway_kuzov:GetAngles()+Angle(0,180,0))
-                ent:SetParent(gmod_subway_kuzov)				
-                table.insert(self.PassengerPositionsCustom,pos)
-                table.insert(self.PassengerEntsRearCustom,ent)
-				end
-            end
-        end
-    end]]
-end	
 ----------------------------------------------------------------------------------------------------Задняя часть
+    self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov_741")	
+    local train1 = self.HeadTrain1 
+    if not IsValid(train1) or not IsValid(self) then return end	
+	
     if self.LastGVValue ~= self:GetPackedBool("GV") then
         self.ResetTime = CurTime()+1.5
         self.LastGVValue = self:GetPackedBool("GV")
@@ -1540,23 +1054,18 @@ end
     self:SetSoundState("parking_brake",self.ParkingBrake,1.4)
 	
     self.FrontLeak = math.Clamp(self.FrontLeak + 10*(-self:GetPackedRatio("FrontLeak")-self.FrontLeak)*dT,0,1)
-    self:SetSoundState("front_isolation",self.FrontLeak,0.9+0.2*self.FrontLeak)
-	
-    Pricep740.RearLeak = math.Clamp(self.RearLeak + 10*(-self:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)	
-    Pricep740:SetSoundState("rear_isolation",Pricep740.RearLeak,0.9+0.2*Pricep740.RearLeak)
+    self:SetSoundState("front_isolation",self.FrontLeak,0.9+0.2*self.FrontLeak)	
 
     local dPdT = self:GetPackedRatio("BrakeCylinderPressure_dPdT")
     self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-self:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)
     --print(dPdT)
     self:SetSoundState("release_front",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)	
     self:SetSoundState("release_middle",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)
-    Pricep740:SetSoundState("release_rear",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)
 
 for avar = 1,2 do	
     -----------------------Задняя часть	
     local colV = self:GetNW2Vector("Lamp7404"..avar)
     local col = Color(colV.x,colV.y,colV.z)		
-    Pricep740:ShowHideSmooth("lamps_salon_on_avar"..avar,self:Animate("LampsEmer",self:GetPackedRatio("SalonLighting") == 0.4 and 1 or 0,0,1,5,false),col)
     -----------------------Задняя часть
     -----------------------Передняя часть	
     self:ShowHideSmooth("lamps_salon_on_avar_front"..avar,self:Animate("LampsEmer",self:GetPackedRatio("SalonLighting") == 0.4 and 1 or 0,0,1,5,false),col)	
@@ -1571,25 +1080,12 @@ for i = 0,11 do
 	self:ShowHideSmooth("lamps_salon_on_front_left"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
 	-----------------------Передняя часть
 end
-for i = 1,11 do		
-    local colV = self:GetNW2Vector("Lamp7404"..i)
-    local col = Color(colV.x,colV.y,colV.z)	
-    -----------------------Задняя часть	
-    Pricep740:ShowHideSmooth("lamps_salon_on_test"..i-1,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
-    Pricep740:ShowHideSmooth("lamps_salon_on_test1"..i,self:Animate("LampsFull",self:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,1,5,false),col)
-    -----------------------Задняя часть		
-end
-	
-	if self:GetNW2Bool("DoorTorec") then
-	 Pricep740:HidePanel("RearDoor",1) 
-	else
-	 Pricep740:HidePanel("RearDoor",false)
-	end 	
 
     self:Animate("FrontBrake", self:GetNW2Bool("FbI") and 0 or 1,0,1, 3, false)
     self:Animate("FrontTrain",  self:GetNW2Bool("FtI") and 1 or 0,0,1, 3, false)
-    Pricep740:Animate("RearBrake",   self:GetNW2Bool("RbI") and 0 or 1,0,1, 3, false)
-    Pricep740:Animate("RearTrain",   self:GetNW2Bool("RtI") and 1 or 0,0,1, 3, false)
+	
+	train1:Animate("RearBrake", self:GetNW2Bool("RbI") and 0 or 1,0,1, 3, false)
+    train1:Animate("RearTrain", self:GetNW2Bool("RtI") and 1 or 0,0,1, 3, false)
 	
     local PVZ_otsek = self:GetNW2Bool("PVZ_otsek")
     self:HidePanel("PVZ_otsek_close",not PVZ_otsek)
@@ -1601,8 +1097,6 @@ end
 
 	local ZavodTable = self:GetNW2Int("ZavodTable",1)	
     self:ShowHide("Zavod_table_front",ZavodTable==1)	
-    Pricep740:ShowHide("Zavod_table_sochl",ZavodTable==2)
-    Pricep740:ShowHide("Zavod_table_sochl_torec",ZavodTable==3)		
 
 	--Анимация дверей.
 	if not self.DoorStates then self.DoorStates = {} end
@@ -1616,15 +1110,12 @@ end
             --print(state,self.DoorStates[state])
             if (state ~= 1 and state ~= 0) ~= self.DoorStates[id] then
                 if doorstate and state < 1 or not doorstate and state > 0 then
-					if doorstate then self:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))
-					if doorstate then Pricep740:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))						
+					if doorstate then self:PlayOnce(sid.."s","",1,math.Rand(0.9,1.3)) end--math.Rand(0.9,1.3))					
                 else
 					if state > 0 then
-                        self:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))
-                        Pricep740:PlayOnce(sid.."o1","",1,math.Rand(0.9,1.3))						
+                        self:PlayOnce(sid.."o","",1,math.Rand(0.9,1.3))					
                     else
-                        self:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))
-                        Pricep740:PlayOnce(sid.."c1","",1,math.Rand(0.9,1.3))							
+                        self:PlayOnce(sid.."c","",1,math.Rand(0.9,1.3))						
                     end
                 end
                 self.DoorStates[id] = (state ~= 1 and state ~= 0)
@@ -1634,16 +1125,11 @@ end
             else
                 self.DoorLoopStates[id] = math.Clamp((self.DoorLoopStates[id] or 0) - 6*self.DeltaTime,0,1)
             end
-            self:SetSoundState(sid.."r",self.DoorLoopStates[id],0.9+self.DoorLoopStates[id]*0.1)
-	        Pricep740:SetSoundState(sid.."r",self.DoorLoopStates[id],0.9+self.DoorLoopStates[id]*0.1)					
+            self:SetSoundState(sid.."r",self.DoorLoopStates[id],0.9+self.DoorLoopStates[id]*0.1)			
             local n_l = "door"..b.."x"..k.."a"
-            local n_r = "door"..b.."x"..k.."b"
-			local n_l1 = "door"..b.."x1"..k.."a1"
-            local n_r1 = "door"..b.."x1"..k.."b1"							
+            local n_r = "door"..b.."x"..k.."b"						
             self:Animate(n_l,state,0,1,15,1)--0.8 + (-0.2+0.4*math.random()),0)
             self:Animate(n_r,state,0,1,15,1)--0.8 + (-0.2+0.4*math.random()),0)	
-            Pricep740:Animate(n_r1,state,0,1,15,1)--0.8 + (-0.2+0.4*math.random()),0)			
-			Pricep740:Animate(n_l1,state,0,1,15,1)--0.8 + (-0.2+0.4*math.random()),0)
         end
 	end
 	
@@ -1653,15 +1139,7 @@ end
     if self.Door1 ~= door1s then
         self.Door1 = door1s
         self:PlayOnce("FrontDoor","bass",door1s and 1 or 0)
-    end
-	
-	local door_cab_t = Pricep740:GetPackedBool("RearDoor")	
-	local door_cab_b = Pricep740:Animate("door_cab_b",door_cab_t and 0.99 or -0.05, 0, 0.5, 4.5, 0.35) 	
-	local door4s = (door_cab_b > 0 or door_cab_t)
-    if self.Door2 ~= door4s then
-        self.Door2 = door4s
-        self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
-    end		
+    end	
 
     local speed = self:GetPackedRatio("Speed", 0)
 
@@ -1686,20 +1164,11 @@ end
 		local VentSound = self:GetNW2Int("VentSound",1)	
 		if VentSound==1 then
         self:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
-		end
-		if VentSound==1 then
-        Pricep740:SetSoundState("vent"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
-		end		
+		end	
 		if VentSound==2 then
         self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
-		end		
-		if VentSound==2 then
-        Pricep740:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
-		end			
-    end
-	
-    local state = self:GetPackedBool("CompressorWork")
-    Pricep740:SetSoundState("compressor",state and 1.0 or 0,1)	
+		end				
+    end	
 	
     --local rol10 = math.Clamp(speed/5,0,1)*(1-math.Clamp((speed-50)/8,0,1))
     --local rol70 = math.Clamp((speed-50)/8,0,1)
@@ -1720,13 +1189,7 @@ end
     self:SetSoundState("rolling_10",rollingi*rol10,rol10p)
     self:SetSoundState("rolling_30",rollingi*rol30,rol30p)
     self:SetSoundState("rolling_55",rollingi*rol55,rol55p)
-    self:SetSoundState("rolling_75",rollingi*rol75,rol75p)
-	
-    Pricep740:SetSoundState("rolling_5_tst",rollingi*rol5,rol5p)	
-    Pricep740:SetSoundState("rolling_10_tst",rollingi*rol10,rol10p)
-    Pricep740:SetSoundState("rolling_30_tst",rollingi*rol30,rol30p)
-    Pricep740:SetSoundState("rolling_55_tst",rollingi*rol55,rol55p)
-    Pricep740:SetSoundState("rolling_75_tst",rollingi*rol75,rol75p)		
+    self:SetSoundState("rolling_75",rollingi*rol75,rol75p)	
 
     local rol10 = math.Clamp(speed/15,0,1)*(1-math.Clamp((speed-18)/35,0,1))
     local rol10p = Lerp((speed-15)/14,0.6,0.78)
@@ -1743,11 +1206,7 @@ end
 	
     self:SetSoundState("rolling_low_740"    ,rol10*rollings,rol10p) --15
     self:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
-    self:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70	
-	
-    Pricep740:SetSoundState("rolling_low_740"    ,rol10*rollings,rol10p) --15
-    Pricep740:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
-    Pricep740:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70		
+    self:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70
 
 --[[	
     --local state = (RealTime()%4/3)^1.5
@@ -1786,18 +1245,7 @@ end
     local strength = self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-23)/23,0,1))*0.5
 		
     self:SetSoundState("ONIX", tunstreet*math.Clamp((state)/0.26+0.2,0,1)*strength, 1)--+math.Clamp(state,0,1)*0.1)
-    self:SetSoundState("chopper_onix", tunstreet*self:GetPackedRatio("chopper"), 1)
-	
-	local BBEs = self:GetNW2Int("BBESound",1)	
-	if BBEs==1 then		
-    Pricep740:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
-	end
-	if BBEs==2 then		
-    Pricep740:SetSoundState("bbe_v2", self:GetPackedBool("BBEWork") and 1 or 0, 1)
-	end	
-	if BBEs==3 then		
-    Pricep740:SetSoundState("bbe_v3", self:GetPackedBool("BBEWork") and 1 or 0, 1)
-	end			
+    self:SetSoundState("chopper_onix", tunstreet*self:GetPackedRatio("chopper"), 1)			
 
     local work = self:GetPackedBool("AnnPlay")
     for k,v in ipairs(self.AnnouncerPositions) do
@@ -1811,6 +1259,10 @@ function ENT:Draw()
     self.BaseClass.Draw(self)
 end
 
+function ENT:OnButtonPressed(button)
+
+end
+
 function ENT:DrawPost(special)
 	self.RTMaterial:SetTexture("$basetexture", self.Tickers)
     self:DrawOnPanel("Tickers",function(...)
@@ -1818,33 +1270,8 @@ function ENT:DrawPost(special)
         surface.SetDrawColor(255,255,255)
         surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
     end)
-    local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
-	if Pricep740.ButtonMap then	
-	self.RTMaterial:SetTexture("$basetexture", self.Tickers)		
-    Pricep740:DrawOnPanel("Tickers_rear",function(...)
-        surface.SetMaterial(self.RTMaterial)
-        surface.SetDrawColor(255,255,255)
-        surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
-    end)
-end	
 end
 function ENT:OnButtonPressed(button)
-end
-local dist = {
-    GV = 150,
-}
-for id,panel in pairs(ENT.ButtonMap) do
-    if not panel.buttons then continue end
-    for k,v in pairs(panel.buttons) do
-        if v.model then
-            local dist = dist[id] or 150
-            if v.model.model then
-                v.model.hideseat=dist
-            elseif v.model.lamp then
-                v.model.lamp.hideseat=dist
-            end
-        end
-    end
 end
 
 function ENT:OnPlay(soundid,location,range,pitch)
@@ -1864,3 +1291,10 @@ function ENT:OnPlay(soundid,location,range,pitch)
     return soundid,location,range,pitch
 end
 Metrostroi.GenerateClientProps()
+
+
+
+
+
+
+

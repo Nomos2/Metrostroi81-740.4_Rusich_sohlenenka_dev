@@ -15,7 +15,8 @@ or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
-or Map:find("gm_metronvl")) then
+or Map:find("gm_metronvl")
+or Map:find("gm_metropbl")) then
 	return
 end
 return 
@@ -502,6 +503,18 @@ Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Ispr     = @[Common.740.Isp
 Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!AO       = @[Common.740.AO]
 Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Forw     = @[Common.740.Forw]
 Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Back     = @[Common.740.Back]
+
+#gmod_subway_kuzov
+#Buttons:
+Entities.gmod_subway_kuzov.Buttons.RearPneumatic.RearTrainLineIsolationToggle    = @[Common.741.RearTrainLineIsolationToggle]
+Entities.gmod_subway_kuzov.Buttons.RearPneumatic.RearBrakeLineIsolationToggle    = @[Common.741.RearBrakeLineIsolationToggle]
+Entities.gmod_subway_kuzov.Buttons.RearDoor.RearDoor   							 = @[Common.741.RearDoor]
+
+#gmod_subway_kuzov_741
+#Buttons:
+Entities.gmod_subway_kuzov_741.Buttons.RearPneumatic.RearTrainLineIsolationToggle    = @[Common.741.RearTrainLineIsolationToggle]
+Entities.gmod_subway_kuzov_741.Buttons.RearPneumatic.RearBrakeLineIsolationToggle    = @[Common.741.RearBrakeLineIsolationToggle]
+Entities.gmod_subway_kuzov_741.Buttons.RearDoor.RearDoor   							 = @[Common.741.RearDoor]
 
 #gmod_subway_81-741_4
 Entities.gmod_subway_81-741_4.Buttons.Battery.BatteryToggle   = @[Common.740.VB]

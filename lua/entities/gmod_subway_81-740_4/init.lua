@@ -6,7 +6,8 @@ or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
-or Map:find("gm_metronvl")) then
+or Map:find("gm_metronvl")
+or Map:find("gm_metropbl")) then
 	return
 end
 
@@ -38,7 +39,7 @@ ENT.SyncTable = {
 	
 	--"CAMS1","CAMS2","CAMS3","CAMS4",
 	"CAMS5","CAMS6","CAMS7","CAMS8","CAMS9","CAMS10",
-	--"RearBrakeLineIsolation","RearTrainLineIsolation",
+	"RearBrakeLineIsolation","RearTrainLineIsolation",
     "FrontBrakeLineIsolation","FrontTrainLineIsolation",
     "PB",   "GV",	"EmergencyBrakeValve","stopkran",
 }
@@ -51,7 +52,8 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
-    self.NormalMass = 13500		
+    self.Mass = 13500	
+	--self.m_tblToolsAllowed = { "none" }		
 
     -- Create seat entities
     self.DriverSeat = self:CreateSeat("driver",Vector(775-159,19,-27))
@@ -83,26 +85,26 @@ function ENT:Initialize()
 	
     -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520-25,0,-75),Angle(0,180,0),true,"740PER")	
-		self.FrontBogey.PneumaticPow = 0.7	
-        self.RearBogey  = self:CreateBogey(Vector(-532-25,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80 	
+		self.FrontBogey.PneumaticPow = 0.7		
+        self.RearBogey  = self:CreateBogey(Vector(-532-25,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80 
+		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)			
 		self.FrontBogey:SetNWInt("MotorSoundType",2)
 		self.RearBogey:SetNWInt("MotorSoundType",2)
         self.RearBogey.DisableContacts = true	
 		self.RearBogey.PneumaticPow = 0.7		
-        self.FrontCouple = self:CreateCouple(Vector(625.9,0,-60),Angle(0,0,0),true,"717")
-        self.RearCouple = self:CreateCouple(Vector(-641,0,-60),Angle(0,-180,0),false,"740") 
+        self.FrontCouple = self:CreateCouple(Vector(626.9,0,-60),Angle(0,0,0),true,"717")
+        self.RearCouple = self:CreateCouple(Vector(-640,0,-60),Angle(0,-180,0),false,"740") 
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") 
+		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)				
 			
 		self.FrontCouple.m_tblToolsAllowed = { "none" }
 		self.RearCouple.m_tblToolsAllowed = { "none" }	
 		self.FrontBogey.m_tblToolsAllowed = { "none" }	
 		self.RearBogey.m_tblToolsAllowed = { "none" }
-
-	self.Timer = CurTime()	
-	self.Timer2 = CurTime()	
 		
 timer.Simple(0, function()			
-		self.Rear1 = self:CreatePricep(Vector(-356,0,0)) --вагон	
+        if not IsValid(self) then return end
+		self.Pricep = self:CreatePricep(Vector(-356,0,0))--вагон				
 end)  	    	
 
 	self.FrontBogey:SetNWBool("Async",true)
@@ -327,7 +329,7 @@ end
     }	
 	
     local rand = math.random() > 0.9 and 1 or math.random(0.95,0.99)
-    for i = 1,40 do
+    for i = 1,20 do
         if math.random() > rand then self.Lamps.broken[i] = math.random() > 0.7 end
     end
 	
@@ -473,21 +475,25 @@ function ENT:RerailChange(ent, bool)
 end
 	
 function ENT:CreatePricep(pos,ang)
-	local Pricep740 = ents.Create("gmod_subway_kuzov")		
-    if not IsValid(Pricep740) or not IsValid(self) then return end
-	Pricep740:SetPos(self:LocalToWorld(pos))
-	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
-	Pricep740:Spawn()
-	Pricep740:SetOwner(self:GetOwner())	
-	Pricep740:DrawShadow(false)			
-	--Pricep740.m_tblToolsAllowed = { "none" }		
-	if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end	
-    --PrintTable(Pricep740:GetTable())
-	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
-    Pricep740:SetMoveType(MOVETYPE_VPHYSICS)
+	local ent = ents.Create("gmod_subway_kuzov")		
+    if not IsValid(ent) or not IsValid(self) then return end
+	ent:SetPos(self:LocalToWorld(pos))
+	ent:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
+	ent:Spawn()
+	ent:SetOwner(self:GetOwner())	
+	ent:DrawShadow(false)			
+	--ent.m_tblToolsAllowed = { "none" }		
+	if CPPI and IsValid(self:CPPIGetOwner()) then ent:CPPISetOwner(self:CPPIGetOwner()) end	
+    --PrintTable(ent:GetTable())
+	self:SetNW2Entity("gmod_subway_kuzov",ent)
+    if not self.NoPhysics then
+        --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
+        ent:SetMoveType(MOVETYPE_VPHYSICS)
+        --self.MiddleBogey:SetSolid(SOLID_VPHYSICS)
+    end	
 
-	table.insert(self.TrainEntities,Pricep740)      
-    table.insert(Pricep740.TrainEntities,self)	
+	table.insert(self.TrainEntities,ent)      
+    table.insert(ent.TrainEntities,self)	
 	
 	self.MiddleBogey = self:CreateBogey(Vector(-15-16.5,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
@@ -497,18 +503,29 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey:SetNWInt("Async",true)
 	self.MiddleBogey:SetNWBool("DisableEngines",true)			
 	self.MiddleBogey.DisableSound = 1	
+	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)
-	--self.MiddleBogey.m_tblToolsAllowed = { "none" }
-    self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)
+	self.MiddleBogey.m_tblToolsAllowed = { "none" }
+    if not self.NoPhysics then
+        --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
+        self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)
+        --self.MiddleBogey:SetSolid(SOLID_VPHYSICS)
+    end
+    self.MiddleBogey:SetUseType(SIMPLE_USE)
 
     -- Set proper parameters for the bogey
     if IsValid(self.MiddleBogey:GetPhysicsObject()) then
         self.MiddleBogey:GetPhysicsObject():SetMass(5000)
-    end	
+    end
+
+	constraint.NoCollide(self.MiddleBogey,ent,0,0)
+	constraint.NoCollide(self,ent,0,0)	
+	constraint.NoCollide(ent,self.MiddleBogey,0,0)
+	constraint.NoCollide(self.MiddleBogey,self,0,0)	
 		
+	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-    constraint.NoCollide(Pricep740,self.MiddleBogey,0,0)			
+	constraint.RemoveConstraints(ent, "AdvBallsocket")		
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
@@ -518,7 +535,7 @@ function ENT:CreatePricep(pos,ang)
 	Map:find("gm_smr_1987") then
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(0,0,0),
@@ -538,17 +555,14 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)			
 	else	
-	
-	local Map = game.GetMap():lower() or ""        
+    
 	if 
 	Map:find("gm_mustox_neocrimson_line") or
 	Map:find("gm_mus_neoorange") or
-	Map:find("gm_metro_nekrasovskaya_line") then
-	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
+	Map:find("gm_metro_nekrasovskaya_line") then	
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,65),
@@ -569,7 +583,7 @@ function ENT:CreatePricep(pos,ang)
 	)
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,-65),
@@ -589,15 +603,12 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)
 	else
-
-	local Map = game.GetMap():lower() or ""        
+   
 	if 
 	Map:find("gm_metro_chapaevskaya_line")	then	
-	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,20),
@@ -618,7 +629,7 @@ function ENT:CreatePricep(pos,ang)
 	)			
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,-20),
@@ -639,11 +650,8 @@ function ENT:CreatePricep(pos,ang)
 	)
 	else	
 	
-	constraint.RemoveConstraints(self.RearBogey, "Axis")		
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,1)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,1)		
 	constraint.AdvBallsocket(
-		Pricep740,
+		ent,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
@@ -663,11 +671,9 @@ function ENT:CreatePricep(pos,ang)
 		0, --rotonly
 		1,--nocollide
 		true
-	)			
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,1)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,1)			
+	)		
 	constraint.AdvBallsocket(
-		Pricep740,
+		ent,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
@@ -687,13 +693,13 @@ function ENT:CreatePricep(pos,ang)
 		0, --rotonly
 		1,--nocollide
 		true
-	)	
+	)
 end	
 end
 end
         constraint.Axis(
 		self.RearBogey,		
-		Pricep740,
+		ent,
 		0,
 		0,
 		Vector(0,0,0),
@@ -707,7 +713,7 @@ end
 	--Сцепка, крепление к вагону.
 	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.AdvBallsocket(
-		Pricep740,
+		ent,
         self.RearCouple,
         0, --bone
         0, --bone
@@ -732,7 +738,7 @@ end
     self:RerailChange(self.MiddleBogey, true)
     self:RerailChange(self.RearBogey, true)		
 	
-function Pricep740:TrainSpawnerUpdate()
+function ent:TrainSpawnerUpdate()
 	local MotorType = self:GetNW2Int("MotorType")	
        if MotorType == 1 then
             MotorType = math.ceil(math.random()*4+0.5)
@@ -763,49 +769,14 @@ function Pricep740:TrainSpawnerUpdate()
 	--self:SetNW2Int("tablo_color", ALS)
 	--print(self:GetNW2String("Texture"))
 end	
-	
-function Pricep740:Use(ply)
-    local tr = ply:GetEyeTrace()
-    if not tr.Hit then return end
-    local hitpos = self:WorldToLocal(tr.HitPos)
-    print(hitpos)
-    if self.InteractionZones and ply:GetPos():Distance(tr.HitPos) < 100 then
-        for k,v in pairs(self.InteractionZones) do
-            if hitpos:Distance(v.Pos) < v.Radius then
-                self:ButtonEvent(v.ID,nil,ply)
-            end
-        end
-    end
-	
-function Pricep740:ShowInteractionZones()
-    for k,v in pairs(self.InteractionZones) do
-        debugoverlay.Sphere(self:LocalToWorld(v.Pos),v.Radius,15,Color(255,185,0),true)
-    end
-end	
-		
-	 self.InteractionZones = {	
-        {
-            ID = "RearBrakeLineIsolationToggle",
-            Pos = Vector(-310+15, -13, -10), Radius = 31
-        },
-        {
-            ID = "RearTrainLineIsolationToggle",
-            Pos = Vector(-310+15,-13,-10), Radius = 31
-        },
-        {
-            ID = "RearDoor",
-            Pos = Vector(-310+15, -13, 7), Radius = 31
-        },
-	} 
-end
 
 	--Метод mirror 				
-	Pricep740.HeadTrain = self 
-    Pricep740:SetNW2Entity("HeadTrain", self)
+	ent.HeadTrain = self 
+    ent:SetNW2Entity("HeadTrain", self)
 
-	Pricep740.ButtonBuffer = {}
-	Pricep740.KeyBuffer = {}
-	Pricep740.KeyMap = {}	
+	ent.ButtonBuffer = {}
+	ent.KeyBuffer = {}
+	ent.KeyMap = {}	
 end	
 	
 	--[[
@@ -823,7 +794,7 @@ end
 	
     --Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then seat:CPPISetOwner(self:CPPIGetOwner()) end
-    seat:SetParent(Pricep740)	
+    seat:SetParent(ent)	
 
     local seat_1 = ents.Create("prop_vehicle_prisoner_pod")	
     seat_1:SetModel("models/nova/jeep_seat.mdl") --jalopy
@@ -837,24 +808,15 @@ end
 	seat_1:SetNoDraw(true)	
 	
     if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
-    seat_1:SetParent(Pricep740)]]				
+    seat_1:SetParent(ent)]]				
 ---------------------------------------------------------------------------
 function ENT:Think()
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62
 	local Panel = self.Panel	
-    local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")	
-    if not IsValid(Pricep740) then return end	
-	Pricep740.SyncTable = {	"RearBrakeLineIsolation","RearTrainLineIsolation"}		
-    --print(self,self.BPTI.T,self.BPTI.State)
-	
-	self.RearDoor = false		
-function Pricep740:Think()	
-    self:SetPackedBool("RearDoor",self.RearDoor)	
-end	
-function Pricep740:OnButtonPress(button,ply)
-    if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
-end		
+    local ent = self:GetNW2Entity("gmod_subway_kuzov")	
+    if not IsValid(ent) then return end	
+    --print(self,self.BPTI.T,self.BPTI.State)	
 	
     local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
     self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
@@ -880,11 +842,11 @@ end
 	
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do
-			self.Pneumatic.LeftDoorSpeed[k] = -2, 10
+			self.Pneumatic.LeftDoorSpeed[k] = -2, 4
 		end
 		
 		for k,v in pairs(self.Pneumatic.RightDoorSpeed) do
-			self.Pneumatic.RightDoorSpeed[k] = -2, 10
+			self.Pneumatic.RightDoorSpeed[k] = -2, 4
 		end
 		
 	local lightsActive1 = power and self.SFV20.Value > 0 
@@ -892,7 +854,7 @@ end
 	local mul = 0
     local Ip = 6.9
     local Im = 1
-	for i = 1,40 do
+	for i = 1,20 do
        if (lightsActive2 or (lightsActive1 and math.ceil((i+Ip-Im)%Ip)==1)) then
             if not self.Lamps[i] and not self.Lamps.broken[i] then self.Lamps[i] = CurTime() + math.Rand(0.1,math.Rand(1.15,2.5)) --[[print(self.Lamps[i]-CurTime())]] end
         else
@@ -908,7 +870,7 @@ end
 
     self:SetPackedRatio("Speed", self.Speed) 
     self:SetNW2Int("Wrench",self.WrenchMode) 
-    self:SetPackedRatio("Controller",self.Panel.Controller) 
+    self:SetPackedRatio("Controller",Panel.Controller) 
     self:SetPackedRatio("KRO",(self.KV.KROPosition+1)/2) 
     self:SetPackedRatio("KRR",(self.KV.KRRPosition+1)/2) 
 	
@@ -917,62 +879,42 @@ end
     --self:SetPackedRatio("VentHeatMode",self.VentHeatMode.Value/2)
     self:SetPackedRatio("BARSBlock",self.BARSBlock.Value/3) 
 	self:SetPackedRatio("ALSFreqBlock",self.ALSFreqBlock.Value/3) 
-    self:SetPackedBool("BBEWork",power and self.BUV.BBE > 0
-)	
     --self:SetPackedBool("WorkBeep",power)
 	self:SetPackedBool("BUKPRing",power and self.BUKP.State == 5 and self.BUKP.ProstRinging) 
 	self:SetPackedBool("CAMSRing",power and self.CAMS.State == 0 and self.CAMS.ButtonRing) 
     --print(0.4+math.max(0,math.min(1,1-(self.Speed-30)/30))*0.5)
     --print((80-self.Engines.Speed))
-    self:SetPackedBool("Headlights1Enabled",self.Panel.Headlights1 > 0)
-    self:SetPackedBool("Headlights2Enabled",self.Panel.Headlights2 > 0)
-    local headlights = self.Panel.Headlights1*0.5+self.Panel.Headlights2*0.5	
-    local redlights = self.Panel.RedLights>0
+    self:SetPackedBool("Headlights1Enabled",Panel.Headlights1 > 0)
+    self:SetPackedBool("Headlights2Enabled",Panel.Headlights2 > 0)
+    local headlights = Panel.Headlights1*0.5+self.Panel.Headlights2*0.5	
+    local redlights = Panel.RedLights>0
     self:SetPackedBool("RedLights",redlights)
 		
-    self:SetLightPower(1,not self.HeadLightBroken[3] and self.Panel.Headlights2> 0,1)
-    self:SetLightPower(2,not self.HeadLightBroken[1] and self.Panel.Headlights1> 0,1)
-    self:SetLightPower(18,not self.HeadLightBroken[4] and self.Panel.Headlights2> 0,1)
-    self:SetLightPower(19,not self.HeadLightBroken[2] and self.Panel.Headlights1> 0,1)
+    self:SetLightPower(1,not self.HeadLightBroken[3] and Panel.Headlights2> 0,1)
+    self:SetLightPower(2,not self.HeadLightBroken[1] and Panel.Headlights1> 0,1)
+    self:SetLightPower(18,not self.HeadLightBroken[4] and Panel.Headlights2> 0,1)
+    self:SetLightPower(19,not self.HeadLightBroken[2] and Panel.Headlights1> 0,1)
 	
 	--self:SetLightPower(17,headlights>0,headlights)
-    self:SetLightPower(3,not self.HeadLightBroken[3] and self.Panel.RedLights>0,1)
-    self:SetLightPower(4,not self.HeadLightBroken[1] and self.Panel.RedLights>0,1)
-    self:SetLightPower(5,not self.HeadLightBroken[4] and self.Panel.RedLights>0,1)
-    self:SetLightPower(6,not self.HeadLightBroken[2] and self.Panel.RedLights>0,1)
+    self:SetLightPower(3,not self.HeadLightBroken[3] and Panel.RedLights>0,1)
+    self:SetLightPower(4,not self.HeadLightBroken[1] and Panel.RedLights>0,1)
+    self:SetLightPower(5,not self.HeadLightBroken[4] and Panel.RedLights>0,1)
+    self:SetLightPower(6,not self.HeadLightBroken[2] and Panel.RedLights>0,1)
 	--self:SetLightPower(20,cablights)
 	--self:SetLightPower(21,cablights)
 	--self:SetLightPower(22,cablights)
-    local cablight = self.Panel.CabLights
+    local cablight = Panel.CabLights
     self:SetLightPower(10,cablight > 0 ,cablight)
     self:SetPackedBool("CabinEnabledEmer", cablight > 0)
     self:SetPackedBool("CabinEnabledFull", cablight > 0.5)
     local passlight = power and (self.BUV.MainLights and 1 or self.SFV20.Value > 0.5 and 0.4) or 0
 	
-	self:SetLightPower(11,passlight > 0, passlight and mul/40)
-	self:SetLightPower(12,passlight > 0.5, passlight and mul/40)
-	self:SetLightPower(13,passlight > 0, passlight and mul/40)
+	self:SetLightPower(11,passlight > 0, passlight and mul/20)
+	self:SetLightPower(12,passlight > 0.5, passlight and mul/20)
+	self:SetLightPower(13,passlight > 0, passlight and mul/20)
 	
-	self:SetLightPower(11.1,passlight > 0, passlight and mul/40)
-	self:SetLightPower(13.1,passlight > 0, passlight and mul/40)
-	
-	Pricep740.Lights = {
-		[14] = { "dynamiclight",    Vector( 220, -20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-		[15] = { "dynamiclight",    Vector( 10, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [16] = { "dynamiclight",    Vector( -310, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 },
-		
-		[14.1] = { "dynamiclight",    Vector( 200, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, --полный свет
-        [16.1] = { "dynamiclight",    Vector( -310, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 } 	
-    }	
-	
-	Pricep740:SetLightPower(14,passlight > 0, passlight) 
-    Pricep740:SetLightPower(15,passlight > 0.5, passlight) 
-    Pricep740:SetLightPower(16,passlight > 0, passlight) 
-	
-	Pricep740:SetLightPower(14.1,passlight > 0, passlight) 
-    Pricep740:SetLightPower(16.1,passlight > 0, passlight)
-	
-    Pricep740:SetPackedBool("AnnPlay",self.Panel.AnnouncerPlaying > 0)	
+	self:SetLightPower(11.1,passlight > 0, passlight and mul/20)
+	self:SetLightPower(13.1,passlight > 0, passlight and mul/20)
 	
     self:SetPackedRatio("SalonLighting",passlight) 
 	--print(passlight)
@@ -1022,7 +964,6 @@ end
     self:SetPackedBool("CabinDoorLeft",self.CabinDoorLeft) 
     self:SetPackedBool("CabinDoorRight",self.CabinDoorRight) 
     self:SetPackedBool("OtsekDoor",self.OtsekDoor)	
-    self:SetPackedBool("CompressorWork",self.Pneumatic.Compressor) 
     self:SetPackedBool("Vent2Work",self.Electric.Vent2>0)
     self:SetPackedBool("RingEnabled",self.BUKP.Ring) 
     self:SetPackedBool("Antenna",self.Antenna)	
@@ -1032,7 +973,7 @@ end
     --self:SetNW2Int("PassSchemesLEDN",self.PassSchemes.PassSchemeNext)
     --self:SetPackedBool("PassSchemesLEDO",self.PassSchemes.PassSchemePath)
 	
-    self:SetPackedBool("AnnPlay",self.Panel.AnnouncerPlaying > 0)
+    self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)
     self:SetPackedRatio("Cran", self.Pneumatic.DriverValvePosition) 
     self:SetPackedRatio("BL", self.Pneumatic.BrakeLinePressure/16.0) 
     self:SetPackedRatio("TL", self.Pneumatic.TrainLinePressure/16.0) 
@@ -1086,6 +1027,8 @@ end
 end	 
 
 function ENT:OnCouple(train,isfront)
+    self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
+    local train1 = self.HeadTrain1 
     if isfront and self.FrontAutoCouple then
         self.FrontBrakeLineIsolation:TriggerInput("Open",1.0)
         self.FrontTrainLineIsolation:TriggerInput("Open",1.0)
@@ -1115,6 +1058,7 @@ function ENT:OnButtonPress(button,ply)
         self.KAHk:TriggerInput("Open",1)
         self.KAH:TriggerInput("Close",1)
     end	
+	
     if button == "PassengerDoor" then self.PassengerDoor = not self.PassengerDoor end
     if button == "CabinDoorLeft" then self.CabinDoorLeft = not self.CabinDoorLeft end
     if button == "OtsekDoor" then self.OtsekDoor = not self.OtsekDoor end

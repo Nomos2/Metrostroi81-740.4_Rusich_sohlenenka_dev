@@ -18,7 +18,7 @@ include("shared.lua")
 ENT.SyncTable = {"RearBrakeLineIsolation","RearTrainLineIsolation"}
  
 function ENT:Initialize()
-    self:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear.mdl")
+    self:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl") 
     self:SetPos(self:GetPos() + Vector(0,0,0))
 	
     self.Mass = 13500		
@@ -87,7 +87,7 @@ function ENT:TrainSpawnerUpdate()
 end
 
 function ENT:UpdateLampsColors()
-    local lCol,lCount = Vector(),40
+    local lCol,lCount = Vector(),0
 	local mr = math.random
     local rand = mr() > 0.8 and 1 or mr(0.95,0.99)
 	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
@@ -95,7 +95,7 @@ function ENT:UpdateLampsColors()
 	local r,g = 15,15
 	for i = 1,40 do
 		local chtp = mr() > rnd1
-		if typ == 0 and chtp then
+		if typ == 0 and not chtp or typ == 1 and chtp then
 			if mr() > rnd2 then
 				r = -20+mr()*25
 				g = 0
@@ -124,15 +124,14 @@ function ENT:UpdateLampsColors()
 			lCol = Vector() lCount = 0
 		end
 		self:SetNW2Vector("Lamp7404"..i,col)
-		self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7	
-		--PrintTable(self.Lamps.broken)	
+        self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7
 	end
 end
 	
 function ENT:Think()	
     self:SetPackedBool("RearDoor",self.RearDoor)		
 	
-    self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)    
+    self:SetNW2Entity("gmod_subway_81-741_4", self.HeadTrain)    
 	local train = self.HeadTrain		
 	local retVal = self.BaseClass.Think(self)
     local power = train.Electric.Battery80V > 62			
@@ -216,7 +215,7 @@ function ENT:TriggerInput(name, value)
 end
 
 function ENT:OnButtonPress(button,ply)
-    self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)	
+    self:SetNW2Entity("gmod_subway_81-741_4", self.HeadTrain)	
 	local train = self.HeadTrain
     if not IsValid(train) or not IsValid(self) then return end		
     if button == "RearDoor" and (self.RearDoor or not train.BUV.BlockTorec) then self.RearDoor = not self.RearDoor end

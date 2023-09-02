@@ -6,7 +6,8 @@ or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
 or Map:find("gm_bolshya_kolsewya_line")
 or Map:find("gm_metrostroi_practice_d")
-or Map:find("gm_metronvl")) then
+or Map:find("gm_metronvl")
+or Map:find("gm_metropbl")) then
 	return
 end
 
@@ -31,6 +32,7 @@ function ENT:Initialize()
     self:SetPos(self:GetPos() + Vector(0,0,140))	
 
     self.NormalMass = 13500	
+    --self:DrawShadow(true)	
 
     -- Create seat entities
 	self.DriverSeat = self:CreateSeat("instructor",Vector(610,11,-35),Angle(0,90,0),"models/vehicles/prisoner_pod_inner.mdl")
@@ -45,6 +47,7 @@ function ENT:Initialize()
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740PER")
 		self.FrontBogey.PneumaticPow = 0.7			
         self.RearBogey  = self:CreateBogey(Vector(-520,0,-75),Angle(0,0,0),false,"740NOTR") --110 0 -80  
+		self.RearBogey:PhysicsInit(SOLID_VPHYSICS)	
 		self.FrontBogey:SetNWInt("MotorSoundType",2)
 		self.RearBogey:SetNWInt("MotorSoundType",2)		
 	    self.RearBogey.DisableContacts = true	
@@ -52,17 +55,22 @@ function ENT:Initialize()
         self.FrontCouple = self:CreateCouple(Vector(607,0,-60),Angle(0,0,0),true,"717")		
         self.RearCouple = self:CreateCouple(Vector(-611,0,-60),Angle(0,-180,0),false,"740")
 		self.RearCouple:SetModel("models/metrostroi_train/81-740/bogey/metro_couple_740.mdl") --
+		self.RearCouple:PhysicsInit(SOLID_VPHYSICS)		
 		
 		self.FrontCouple.m_tblToolsAllowed = { "none" }	
 		self.RearCouple.m_tblToolsAllowed = { "none" }	
 		self.FrontBogey.m_tblToolsAllowed = { "none" }	
-		self.RearBogey.m_tblToolsAllowed = { "none" }			
+		self.RearBogey.m_tblToolsAllowed = { "none" }		
+		
+	self:SetNW2Entity("FrontBogey",self.FrontBogey)
+	self:SetNW2Entity("RearBogey",self.RearBogey)		
 		
 	self.Timer = CurTime()	
 	self.Timer2 = CurTime()		
 	
 timer.Simple(0, function()	
-		self.Rear1 = self:CreatePricep(Vector(-326.1,0,0))		--вагон			
+        if not IsValid(self) then return end
+		self.Pricep = self:CreatePricep(Vector(-326.1,0,0))		--вагон			
 end)
 	
 	self.FrontBogey:SetNWBool("Async",true)
@@ -71,9 +79,6 @@ end)
     local rand = math.random()*0.05
     self.FrontBogey:SetNWFloat("SqualPitch",1.45+rand)
     self.RearBogey:SetNWFloat("SqualPitch",1.45+rand)
-	
-	self:SetNW2Entity("FrontBogey",self.FrontBogey)
-	self:SetNW2Entity("RearBogey",self.RearBogey)		
 --------------------------------------------------------------------------------	
     -- Initialize key mapping
     self.KeyMap = {
@@ -135,56 +140,12 @@ end)
     }		
 	
     local rand = math.random() > 0.9 and 1 or math.random(0.95,0.99)
-    for i = 1,40 do
+    for i = 1,20 do
         if math.random() > rand then self.Lamps.broken[i] = math.random() > 0.7 end
-    end	
+    end		
 	
     self:UpdateLampsColors()		
 	
-end
-
-function ENT:UpdateLampsColors()
-    local lCol,lCount = Vector(),40
-	local mr = math.random
-    local rand = mr() > 0.8 and 1 or mr(0.95,0.99)
-	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
-	local typ = math.Round(mr())
-	local r,g = 15,15
-	for i = 1,40 do
-		local chtp = mr() > rnd1
-		if typ == 0 and chtp then
-			if mr() > rnd2 then
-				r = -20+mr()*25
-				g = 0
-			else
-				g = -5+mr()*15
-				r = g
-			end
-			col = Vector(245+r,228+g,189)
-		else
-			if mr() > rnd2 then
-				g = mr()*15
-				b = g
-			else
-				g = 15
-				b = -10+mr()*25
-			end
-			col = Vector(255,235+g,235+b)
-		end
-		lCol = lCol + col
-		lCount = lCount + 1
-		if i%8.3<1 then
-			local id = 9+math.ceil(i/8.3)
-			--self:SetLightPower(id,false)
-			
-			local tcol = (lCol/lCount)/255
-			--self.Lights[id][4] = Vector(tcol.r,tcol.g^3,tcol.b^3)*255
-			lCol = Vector() lCount = 0
-		end
-		self:SetNW2Vector("Lamp7404"..i,col)
-		self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7
-		--PrintTable(self.Lamps.broken)	
-	end
 end
 
 function ENT:TrainSpawnerUpdate()
@@ -227,6 +188,49 @@ function ENT:TrainSpawnerUpdate()
     self:UpdateLampsColors()		
 	
 end	
+
+function ENT:UpdateLampsColors()
+    local lCol,lCount = Vector(),40
+	local mr = math.random
+    local rand = mr() > 0.8 and 1 or mr(0.95,0.99)
+	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
+	local typ = math.Round(mr())
+	local r,g = 15,15
+	for i = 1,40 do
+		local chtp = mr() > rnd1
+		if typ == 0 and chtp then
+			if mr() > rnd2 then
+				r = -20+mr()*25
+				g = 0
+			else
+				g = -5+mr()*15
+				r = g
+			end
+			col = Vector(245+r,228+g,189)
+		else
+			if mr() > rnd2 then
+				g = mr()*15
+				b = g
+			else
+				g = 15
+				b = -10+mr()*25
+			end
+			col = Vector(255,235+g,235+b)
+		end
+		lCol = lCol + col
+		lCount = lCount + 1
+		if i%8.3<1 then
+			local id = 9+math.ceil(i/8.3)
+			--self:SetLightPower(id,false)
+			local tcol = (lCol/lCount)/255
+			--self.Lights[id][4] = Vector(tcol.r,tcol.g^3,tcol.b^3)*255
+			lCol = Vector() lCount = 0
+		end
+		self:SetNW2Vector("Lamp7404"..i,col)
+		self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7	
+		--PrintTable(self.Lamps.broken)	
+	end
+end
 
 function ENT:RerailChange(ent, bool)
     if not IsValid(ent) then return end
@@ -313,7 +317,7 @@ end
 	
     --Assign ownership
     if CPPI and IsValid(self:CPPIGetOwner()) then seat:CPPISetOwner(self:CPPIGetOwner()) end
-    seat:SetParent(Pricep740)	
+    seat:SetParent(ent)	
 
     local seat_1 = ents.Create("prop_vehicle_prisoner_pod")	
     seat_1:SetModel("models/nova/jeep_seat.mdl") --jalopy
@@ -327,24 +331,29 @@ end
 	seat_1:SetNoDraw(true)	
 
     if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
-    seat_1:SetParent(Pricep740)]]	
+    seat_1:SetParent(ent)]]	
 
 function ENT:CreatePricep(pos,ang)
-	local Pricep740 = ents.Create("gmod_subway_kuzov")
-    if not IsValid(Pricep740) or not IsValid(self) then return end	
-	Pricep740:SetPos(self:LocalToWorld(pos))
-	Pricep740:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
-	Pricep740:Spawn()
-	Pricep740:SetOwner(self:GetOwner())	
-	Pricep740:DrawShadow(false)		
-	--Pricep740.m_tblToolsAllowed = { "none" }			
-    if CPPI and IsValid(self:CPPIGetOwner()) then Pricep740:CPPISetOwner(self:CPPIGetOwner()) end				
+	local ent = ents.Create("gmod_subway_kuzov_741")
+    if not IsValid(ent) or not IsValid(self) then return end	
+	ent:SetPos(self:LocalToWorld(pos))
+	ent:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
+	ent:Spawn()
+	ent:SetOwner(self:GetOwner())	
+	ent:DrawShadow(false)		
+	--ent.m_tblToolsAllowed = { "none" }			
+	if CPPI and IsValid(self:CPPIGetOwner()) then ent:CPPISetOwner(self:CPPIGetOwner()) end	
+    --PrintTable(ent:GetTable())
+	self:SetNW2Entity("gmod_subway_kuzov_741",ent)
+    ent:SetUseType(SIMPLE_USE)
+    if not self.NoPhysics then
+        --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
+        ent:SetMoveType(MOVETYPE_VPHYSICS)
+        --self.MiddleBogey:SetSolid(SOLID_VPHYSICS)
+    end			
 	
-	self:SetNW2Entity("gmod_subway_kuzov",Pricep740)
-    Pricep740:SetMoveType(MOVETYPE_VPHYSICS)			
-	
-	table.insert(self.TrainEntities,Pricep740)
-    table.insert(Pricep740.TrainEntities,self)	
+	table.insert(self.TrainEntities,ent)
+    table.insert(ent.TrainEntities,self)	
 
 	self.MiddleBogey = self:CreateBogey(Vector(-1,0,-74),Angle(0,0,0),true,"740G")--тележка  ---160,0,-75 -410,0,-75	
 	self:SetNW2Entity("MiddleBogey",self.MiddleBogey)	
@@ -354,18 +363,29 @@ function ENT:CreatePricep(pos,ang)
 	self.MiddleBogey:SetNWInt("Async",true)
 	self.MiddleBogey:SetNWBool("DisableEngines",true)			
 	self.MiddleBogey.DisableSound = 1				
+	self.RearCouple:PhysicsInit(SOLID_VPHYSICS)
 	self.RearCouple:GetPhysicsObject():SetMass(5000)	
 	self.MiddleBogey.m_tblToolsAllowed = { "none" }
-    self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)	
+    if not self.NoPhysics then
+        --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
+        self.MiddleBogey:SetMoveType(MOVETYPE_VPHYSICS)
+        --self.MiddleBogey:SetSolid(SOLID_VPHYSICS)
+    end
+    self.MiddleBogey:SetUseType(SIMPLE_USE)	
 	
     -- Set proper parameters for the bogey
     if IsValid(self.MiddleBogey:GetPhysicsObject()) then
         self.MiddleBogey:GetPhysicsObject():SetMass(5000)
     end		
+	
+	constraint.NoCollide(self.MiddleBogey,ent,0,0)
+	constraint.NoCollide(self,ent,0,0)	
+	constraint.NoCollide(ent,self.MiddleBogey,0,0)
+	constraint.NoCollide(self.MiddleBogey,self,0,0)		
 
+	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")
-    constraint.NoCollide(Pricep740,self.MiddleBogey,0,0)			
+	constraint.RemoveConstraints(ent, "AdvBallsocket")	
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
@@ -375,7 +395,7 @@ function ENT:CreatePricep(pos,ang)
 	Map:find("gm_smr_1987") then
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(0,0,0),
@@ -395,17 +415,14 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)			
 	else	
-	
-	local Map = game.GetMap():lower() or ""        
+	     
 	if 
 	Map:find("gm_mustox_neocrimson_line") or
 	Map:find("gm_mus_neoorange") or
-	Map:find("gm_metro_nekrasovskaya_line") then
-	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
+	Map:find("gm_metro_nekrasovskaya_line") then		
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,65),
@@ -426,7 +443,7 @@ function ENT:CreatePricep(pos,ang)
 	)
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,-65),
@@ -446,15 +463,12 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)
 	else
-
-	local Map = game.GetMap():lower() or ""        
+     
 	if 
 	Map:find("gm_metro_chapaevskaya_line")	then	
-	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(Pricep740, "AdvBallsocket")	
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,20),
@@ -475,7 +489,7 @@ function ENT:CreatePricep(pos,ang)
 	)			
 	constraint.AdvBallsocket(
 		self.MiddleBogey,	
-		Pricep740,
+		ent,
 		0, --bone
 		0, --bone		
 		Vector(-40,0,-20),
@@ -495,12 +509,9 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)
 	else	
-	
-	constraint.RemoveConstraints(self.RearBogey, "Axis")	
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,1)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,1)		
+
 	constraint.AdvBallsocket(
-		Pricep740,
+		ent,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
@@ -521,10 +532,8 @@ function ENT:CreatePricep(pos,ang)
 		1,--nocollide
 		true
 	)	
-	constraint.NoCollide(self.MiddleBogey,Pricep740, 0 ,1)	
-	constraint.NoCollide(Pricep740,self.MiddleBogey, 0 ,1)			
 	constraint.AdvBallsocket(
-		Pricep740,
+		ent,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
@@ -550,7 +559,7 @@ end
 end
         constraint.Axis(
 		self.RearBogey,		
-		Pricep740,
+		ent,
 		0,
 		0,
 		Vector(0,0,0),
@@ -564,7 +573,7 @@ end
 	--Сцепка, крепление к вагону.
 	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.AdvBallsocket(
-		Pricep740,
+		ent,
         self.RearCouple,
         0, --bone
         0, --bone
@@ -587,26 +596,7 @@ end
 
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
-    self:RerailChange(self.RearBogey, true)		
-
-function Pricep740:Use(ply)
-    local tr = ply:GetEyeTrace()
-    if not tr.Hit then return end
-    local hitpos = self:WorldToLocal(tr.HitPos)
-    print(hitpos)
-    if self.InteractionZones and ply:GetPos():Distance(tr.HitPos) < 100 then
-        for k,v in pairs(self.InteractionZones) do
-            if hitpos:Distance(v.Pos) < v.Radius then
-                self:ButtonEvent(v.ID,nil,ply)
-            end
-        end
-    end
-end	
-function Pricep740:ShowInteractionZones()
-    for k,v in pairs(self.InteractionZones) do
-        debugoverlay.Sphere(self:LocalToWorld(v.Pos),v.Radius,15,Color(255,185,0),true)
-    end
-end		
+    self:RerailChange(self.RearBogey, true)			
 		
 	 self.InteractionZones = {	
         {
@@ -624,159 +614,19 @@ end
 	}
 
 	--Метод mirror 				
-	Pricep740.HeadTrain = self 
-    Pricep740:SetNW2Entity("HeadTrain", self)	
-	
---------------------------------------------------------------------------------
--- Keyboard input
---------------------------------------------------------------------------------
-function Pricep740:IsModifier(key)
-    return type(self.KeyMap[key]) == "table"
-end
+	ent.HeadTrain = self 
+    ent:SetNW2Entity("HeadTrain", self)	
 
-function Pricep740:HasModifier(key)
-    return self.KeyMods[key] ~= nil
-end
-
-function Pricep740:GetActiveModifiers(key)
-    local tbl = {}
-    local mods = self.KeyMods[key]
-    for k,v in pairs(mods) do
-        if self.KeyBuffer[k] ~= nil then
-            table.insert(tbl,k)
-        end
-    end
-    return tbl
-end
-
-function Pricep740:OnKeyEvent(key,state,ply,helper)
-    if state then
-        self:OnKeyPress(key)
-    else
-        self:OnKeyRelease(key)
-    end
-    local keyT = self.KeyMap[key]
-    if self:HasModifier(key) and not helper then
-        --If we have a modifier
-        local actmods = self:GetActiveModifiers(key)
-        if #actmods > 0 then
-            --Modifier is being preseed
-            for k,v in pairs(actmods) do
-                if self.KeyMap[v][key] ~= nil then
-                    self:ButtonEvent(self.KeyMap[v][key],state,ply)
-                end
-            end
-            return
-        end
-    end
-    if self:IsModifier(key) then
-        if keyT.helper then
-            self:ButtonEvent(helper and keyT.helper or keyT[1],state,ply)
-        elseif not helper then
-            if state and keyT.def and not helper then
-                self:ButtonEvent(keyT.def,state,ply)
-            elseif not state then
-                if keyT.def then
-                    self:ButtonEvent(keyT.def,state,ply)
-                end
-                for k,v in pairs(keyT) do
-                    self:ButtonEvent(v,false,ply)
-                end
-            end
-        end
-    elseif keyT ~= nil and type(keyT) == "string" and not helper then
-        --If we're a regular binded key
-        self:ButtonEvent(keyT,state,ply)
-    end
-end
-function Pricep740:OnKeyPress(key)
-
-end
-
-function Pricep740:OnKeyRelease(key)
-
-end
-
-function Pricep740:ProcessKeyMap()
-    self.KeyMods = {}
-
-    for mod,v in pairs(self.KeyMap) do
-        if type(v) == "table" then
-            for k,_ in pairs(v) do
-                if not self.KeyMods[k] then
-                    self.KeyMods[k]={}
-                end
-                self.KeyMods[k][mod]=true
-            end
-        end
-    end
-end
-
-
-local function HandleKeyHook(ply,k,state)
-    local train = ply:GetTrain()
-    if IsValid(train) then
-        train.KeyMap[k] = state or nil
-    end
-end
-
-function Pricep740:HandleKeyboardInput(ply)
-    if not self.KeyMods and self.KeyMap then
-        self:ProcessKeyMap()
-    end
-
-    -- Check for newly pressed keys
-    for k,v in pairs(ply.keystate) do
-        if self.KeyBuffer[k] == nil then
-            self.KeyBuffer[k] = true
-            self:OnKeyEvent(k,true,ply)
-        end
-    end
-
-    -- Check for newly released keys
-    for k,v in pairs(self.KeyBuffer) do
-        if ply.keystate[k] == nil then
-            self.KeyBuffer[k] = nil
-            self:OnKeyEvent(k,false,ply)
-        end
-    end
-end	
-
-function Pricep740:CreateJointSound(sndnum)
-    local jID = self.SpeedSign>0 and 1 or #self.JointPositions
-    table.insert(self.Joints,
-        {
-            type = sndnum,
-            state = jID,
-            dist = self.JointPositions[jID]
-        }
-    )
-end 
-
-    Pricep740.ButtonBuffer = {}
-    Pricep740.KeyBuffer = {}
-    Pricep740.KeyMap = {}		
-	return Pricep740
+    ent.ButtonBuffer = {}
+    ent.KeyBuffer = {}
+    ent.KeyMap = {}		
 end	
 --------------------------------------------------------------------------------
 --Основное
-function ENT:Think()
-    local train = self.HeadTrain	
+function ENT:Think()	
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62 --Батарея
 	local Panel = self.Panel		
-    local Pricep740 = self:GetNW2Entity("gmod_subway_kuzov")
-    if not IsValid(Pricep740) then return end	
-	Pricep740.SyncTable = {	"RearBrakeLineIsolation","RearTrainLineIsolation"}		
-    --print(self,self.BPTI.T,self.BPTI.State)
-	
-	self.RearDoor = false		
-function Pricep740:Think()	
-    self:SetPackedBool("RearDoor",self.RearDoor)	
-end	
-function Pricep740:OnButtonPress(button,ply)
-    if button == "RearDoor" and (self.RearDoor or not self.BlockTorec)	 then self.RearDoor = not self.RearDoor end	
-end		
 
     --[[ if self.BUV.Brake > 0 then
         self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and (1-self.Electric.RNState)+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
@@ -855,18 +705,7 @@ end
     --self:SetPackedBool("PassSchemesLEDO",self.PassSchemes.PassSchemePath)
 
     self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)
-	
     self:SetPackedBool("FrontDoor",self.FrontDoor)
-	
-	Pricep740.Lights = {
-		[18] = { "dynamiclight",    Vector( 180, -15, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-		[19] = { "dynamiclight",    Vector( 10, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [20] = { "dynamiclight",    Vector( -290, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }
-    }		
-	
-	Pricep740:SetLightPower(18,passlight > 0, passlight and mul/40)
-	Pricep740:SetLightPower(19,passlight > 0.5, passlight and mul/40)
-    Pricep740:SetLightPower(20,passlight > 0, passlight and mul/40)
 	
     self:SetPackedRatio("SalonLighting",passlight)
     --local mul = self.SF45.Value > 0.5 and self.BUV.MainLights and 1 or self.SF46.Value > 0.5 and 0.5 or 0
