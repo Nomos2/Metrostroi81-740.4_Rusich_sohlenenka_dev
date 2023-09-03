@@ -2547,18 +2547,22 @@ end
     self:ShowHide("speed1",speed ~= -1)
     self:ShowHide("speed2",speed ~= -1)
     if speed ~= -1 then
-        local blink = self:GetNW2Bool("BISpeedLimitBlink") 
-        if blink and CurTime()%1 <=0.5 then
-            limit = 98
-        end
-        local nxt = self:GetNW2Int("BISpeedLimitNext",0)
+        if IsValid(self.ClientEnts["speed1"]) then self.ClientEnts["speed1"]:SetSkin(speed/10) end
+        if IsValid(self.ClientEnts["speed2"]) then self.ClientEnts["speed2"]:SetSkin(speed%10) end
+    end
+
+    local bi_power = self:GetNW2Bool("BIPower", false)
+	if bi_power then
         for i=1,5 do
+            local blink = self:GetNW2Bool("BISpeedLimitBlink") 
+            if blink and CurTime()%1 <=0.5 then
+                limit = 98
+            end
+            local nxt = self:GetNW2Int("BISpeedLimitNext",0)
             if IsValid(self.ClientEnts["speeddop"..i]) then self.ClientEnts["speeddop"..i]:SetSkin(math.Clamp(50-limit/2-(i-1)*10,0,10)) end
             if IsValid(self.ClientEnts["speedfact"..i]) then self.ClientEnts["speedfact"..i]:SetSkin(math.Clamp(speed/2-(i-1)*10,0,10)) end
             if IsValid(self.ClientEnts["speedrek"..i]) then self.ClientEnts["speedrek"..i]:SetSkin(math.Clamp(50-nxt/2-(i-1)*10,0,10)) end
         end
-        if IsValid(self.ClientEnts["speed1"]) then self.ClientEnts["speed1"]:SetSkin(speed/10) end
-        if IsValid(self.ClientEnts["speed2"]) then self.ClientEnts["speed2"]:SetSkin(speed%10) end
     else
         for i=1,5 do
             if IsValid(self.ClientEnts["speeddop"..i]) then self.ClientEnts["speeddop"..i]:SetSkin(0) end
