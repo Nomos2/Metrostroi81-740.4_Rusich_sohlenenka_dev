@@ -34,6 +34,9 @@ local yventpos = {
 	---414.5+5*117-2.3-144,
 	---414.5+6*117-144,
 }
+function ENT:PassengerCapacity()
+    return 191
+end	
 
 local function GetDoorPosition(n,G)			--	x						--	y        --	z
 	return Vector(-195.5 - -35.0*G - 232.1*n, -66*(1-2*G), 4.3)

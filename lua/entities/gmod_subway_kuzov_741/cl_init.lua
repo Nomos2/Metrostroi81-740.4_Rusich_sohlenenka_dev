@@ -118,6 +118,20 @@ ENT.ButtonMap["RearDoor"] = {
         }},   
 	}	
 }
+ENT.ButtonMap["RearDoor_front"] = {
+    pos = Vector(-337,15,55), ---334.8,14.5,9
+    ang = Angle(0,-90,90),
+    width = 642,
+    height = 2000,
+    scale = 0.1/2, 	
+    buttons = {
+        {ID = "RearDoor",x=0,y=0,w=642,h=2000,"", model = {
+            var="RearDoor_front",sndid="door_cab_t",
+            sndvol = 1, snd = function(val) return val and "cab_door_open" or "cab_door_close" end,
+            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
+        }},   
+	}	
+}
 ENT.ButtonMap["RearPneumatic"] = {
     pos = Vector(-206-131,45,-46),
     ang = Angle(180,90,270),

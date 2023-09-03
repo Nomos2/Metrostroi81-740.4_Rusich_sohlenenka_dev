@@ -111,13 +111,28 @@ ENT.ButtonMap["RearDoor"] = {
     height = 2000,
     scale = 0.1/2, 	
     buttons = {
-        {ID = "RearDoor",x=0,y=0,w=642,h=2000, "", model = {
+        {ID = "RearDoor",x=0,y=0,w=642,h=2000,"", model = {
             var="RearDoor",sndid="door_cab_t",
             sndvol = 1, snd = function(val) return val and "cab_door_open" or "cab_door_close" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
         }},   
 	}	
 }
+ENT.ButtonMap["RearDoor_front"] = {
+    pos = Vector(-337,15,55), ---334.8,14.5,9
+    ang = Angle(0,-90,90),
+    width = 642,
+    height = 2000,
+    scale = 0.1/2, 	
+    buttons = {
+        {ID = "RearDoor",x=0,y=0,w=642,h=2000,"", model = {
+            var="RearDoor_front",sndid="door_cab_t",
+            sndvol = 1, snd = function(val) return val and "cab_door_open" or "cab_door_close" end,
+            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
+        }},   
+	}	
+}
+
 ENT.ButtonMap["RearPneumatic"] = {
     pos = Vector(-206-131,45,-46),
     ang = Angle(180,90,270),
@@ -294,12 +309,6 @@ self.ClientProps["TrainNumberL"..k] = {
     } 
 end	
 
---[[if not train:GetNW2Bool("DoorTorec") then
-	 self:HidePanel("RearDoor",false) 
-	else
-	 self:HidePanel("RearDoor",1)
-	end]]
-
 for avar = 1,2 do
 	local animation = math.random (5,12)	
 	local animation1 = math.random (0.5,1)	
@@ -426,7 +435,10 @@ end
     local rol70p = Lerp((speed-55)/27,0.78,1.15)
     self:SetSoundState("rolling_low"    ,rol10*rollings,rol10p) --15
     self:SetSoundState("rolling_medium2",rol40*rollings,rol40p) --57
-    self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70		
+    self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70	
+
+    self:Animate("RearBrake", train:GetNW2Bool("RbI") and 0 or 1,0,1, 3, false)
+    self:Animate("RearTrain", train:GetNW2Bool("RtI") and 1 or 0,0,1, 3, false)		
 	
 	local BBEs = train:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		

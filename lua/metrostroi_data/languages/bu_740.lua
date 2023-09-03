@@ -364,8 +364,6 @@ Entities.gmod_subway_81-740_4.Buttons.BackDown.AppLights2Toggle       = @[Common
 Entities.gmod_subway_81-740_4.Buttons.BackDown.BARSBlock-             = @[Common.740.BARSBlock] @[Common.ALL.CCW]
 Entities.gmod_subway_81-740_4.Buttons.BackDown.BARSBlock+             = @[Common.740.BARSBlock] @[Common.ALL.CW]
 Entities.gmod_subway_81-740_4.Buttons.BackDown.BatteryToggle          = @[Common.740.VB]
-Entities.gmod_subway_81-740_4.Buttons.BackDown.ALSFreqBlock+  		  =	@[Common.740.ALSFreqBlock+] @[Common.ALL.CW] 
-Entities.gmod_subway_81-740_4.Buttons.BackDown.ALSFreqBlock-    	  = @[Common.740.ALSFreqBlock-] @[Common.ALL.CCW]
 
 Entities.gmod_subway_81-740_4.Buttons.PUU.!DoorsClosed                = @[Common.740.LSD]
 Entities.gmod_subway_81-740_4.Buttons.PUU.StandToggle                 = @[Common.740.Stand]
@@ -503,12 +501,14 @@ Entities.gmod_subway_81-740_4.Buttons.ALSPANELLAMPS.!Back     = @[Common.740.Bac
 Entities.gmod_subway_kuzov.Buttons.RearPneumatic.RearTrainLineIsolationToggle    = @[Common.741.RearTrainLineIsolationToggle]
 Entities.gmod_subway_kuzov.Buttons.RearPneumatic.RearBrakeLineIsolationToggle    = @[Common.741.RearBrakeLineIsolationToggle]
 Entities.gmod_subway_kuzov.Buttons.RearDoor.RearDoor   							 = @[Common.741.RearDoor]
+Entities.gmod_subway_kuzov.Buttons.RearDoor_front.RearDoor   					 = @[Common.741.RearDoor]
 
 #gmod_subway_kuzov_741
 #Buttons:
 Entities.gmod_subway_kuzov_741.Buttons.RearPneumatic.RearTrainLineIsolationToggle    = @[Common.741.RearTrainLineIsolationToggle]
 Entities.gmod_subway_kuzov_741.Buttons.RearPneumatic.RearBrakeLineIsolationToggle    = @[Common.741.RearBrakeLineIsolationToggle]
 Entities.gmod_subway_kuzov_741.Buttons.RearDoor.RearDoor   							 = @[Common.741.RearDoor]
+Entities.gmod_subway_kuzov_741.Buttons.RearDoor_front.RearDoor   					 = @[Common.741.RearDoor]
 
 #gmod_subway_81-741_4
 Entities.gmod_subway_81-741_4.Buttons.Battery.BatteryToggle   = @[Common.740.VB]
@@ -547,6 +547,7 @@ Entities.gmod_subway_81-741_4.Buttons.PVZ.SFV32Toggle         = @[Common.740.SFV
 Entities.gmod_subway_81-741_4.Buttons.PVZ.SFV33Toggle         = @[Common.740.SFV33]
 
 Entities.gmod_subway_81-741_4.Buttons.FrontDoor.FrontDoor       = @[Common.740.FrontDoor]
+Entities.gmod_subway_81-741_4.Buttons.FrontDoor_rear.FrontDoor  = @[Common.740.FrontDoor]
 Entities.gmod_subway_81-741_4.Buttons.FrontPneumatic.FrontBrakeLineIsolationToggle    = @[Common.741.FrontBrakeLineIsolationToggle]
 Entities.gmod_subway_81-741_4.Buttons.FrontPneumatic.FrontTrainLineIsolationToggle    = @[Common.741.FrontTrainLineIsolationToggle]
 

@@ -52,7 +52,7 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
-    self.Mass = 13500	
+    self.NormalMass = 19500	
 	--self.m_tblToolsAllowed = { "none" }		
 
     -- Create seat entities
@@ -1029,8 +1029,6 @@ function ENT:Think()
 end	 
 
 function ENT:OnCouple(train,isfront)
-    self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
-    local train1 = self.HeadTrain1 
     if isfront and self.FrontAutoCouple then
         self.FrontBrakeLineIsolation:TriggerInput("Open",1.0)
         self.FrontTrainLineIsolation:TriggerInput("Open",1.0)

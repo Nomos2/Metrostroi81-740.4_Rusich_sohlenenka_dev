@@ -27,7 +27,7 @@ ENT.AdminSpawnable  = true
 ENT.DontAccelerateSimulation = false
 
 function ENT:PassengerCapacity()
-    return 344
+    return 176
 end
 
 function ENT:GetStandingArea()
@@ -380,8 +380,6 @@ function ENT:InitializeSounds()
 
     self.SoundNames["emer_brake"] = {loop=true,"subway_trains/common/pneumatic/autostop_loop.wav"}
     self.SoundPositions["emer_brake"] = {90,1e9,Vector(780-159,-45,-75),0.85}
-	
-
 end
  
 function ENT:InitializeSystems()
@@ -458,8 +456,8 @@ ENT.NumberRanges = {{0154,0209},{0212,0335}}
 --ENT.NumberRanges = {{0154,0155,0337,0190,0191,0192,0193,0194,0195,0196,0197,0198,0199,0200,0201,0202,0203,0204,0205,0206,0207,0208,0209,0212,0213,0214,0215,0216,0217,0218,0219,0220,0221,0222,0223,0224,0225,0227,0228,0229,0230,0231,0232,0233,0234,0235,0236,0238,0239,0248,0249,0250,0251,0252,0253,0254,0255,0256,0257,0260,0261,0262,0263,0264,0265,0266,0267,0268,0269,0270,0271,0272,0273,0276,0277,0278,0279,0280,0281,0282,0283,0286,0287,0288,0289,0290,0291,0292,0293,0296,0297,0304,0305,0305,0306,0307,0308,0311,0318,0319,0320,0321,0322,0323,0324,0325,0326,0327,0328,0329,0330,0331,0332,0333,0334,0335}}
 local Texture = {}
 local Announcer = {}
-for k,v in pairs(Metrostroi.AnnouncementsASNP or {}) do Announcer[k] = v.name or k end
-	
+for k,v in pairs(Metrostroi.AnnouncementsASNP or {}) do Announcer[k] = v.name or k end	
+
 ENT.Spawner = {
 	model = {
 	"models/metrostroi_train/81-740/body/81-740_4_front.mdl",
@@ -519,7 +517,10 @@ ENT.Spawner = {
 	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType.Random","Spawner.740.MotorType1","Spawner.740.MotorType2","Spawner.740.MotorType3","Spawner.740.MotorType4","Spawner.740.MotorType5"}},	
 	{"VentSound","Spawner.740.VentSound","List",{"Spawner.740.VentSound.Random","Spawner.740.VentSound1","Spawner.740.VentSound2"}}, 	
 	{},
-	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, nil,function(ent,val,rot,i,wagnum,rclk)		
+	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, 
+	nil,function(ent,val,rot,i,wagnum,rclk)	
+    ent.HeadTrain1 = ent:GetNW2Entity("gmod_subway_kuzov")	
+    local train1 = ent.HeadTrain1 	
         if rclk then return end
         if ent._SpawnerStarted~=val then
             ent.Battery:TriggerInput("Set",val<=2 and 1 or 0)
@@ -536,7 +537,7 @@ ENT.Spawner = {
                 _LastSpawner=CurTime()
                 ent.CabinDoorLeft = val==2 and first
                 ent.CabinDoorRight = val==2 and first
-                ent.RearDoor = val==2
+                ent.BUV.RearDoor = val==2
                 ent.PassScheme:TriggerInput("Set",val==1 and 1 or 0)
 				--ent.BUKP.State = 0	
 				--ent.Ticker:TriggerInput("Set",val==1 and 1 or 0)
@@ -562,10 +563,10 @@ ENT.Spawner = {
                 _LastSpawner=CurTime()				
                 ent.CabinDoorLeft = val==4 and first
                 ent.CabinDoorRight = val==4 and first
-                ent.RearDoor = val==4
+                ent.BUV.RearDoor = val==4
             else
                 ent.FrontDoor = val==4
-                ent.RearDoor = val==4
+                ent.BUV.RearDoor = val==4
             end
             ent.Pneumatic.RightDoorState = val==4 and {1,1,1,1} or {0,0,0,0}
             ent.Pneumatic.DoorRight = val==4

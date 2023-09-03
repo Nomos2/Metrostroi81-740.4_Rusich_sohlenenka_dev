@@ -1688,13 +1688,13 @@ ENT.ButtonMap["Antenna"] = {
 ENT.ButtonMap["Password"] = {
     pos = Vector(672.4-15,-5.5,4.3),
     ang = Angle(0,-123,90),
-    width = 130,
+    width = 65,
     height = 26,
     scale = 0.0625,
     hideseat=0.2,
 	
 	buttons = {
-        {ID = "Password",x=0,y=0,w=130,h=26,tooltip="",},
+        {ID = "Password",x=0,y=0,w=65,h=26,tooltip="",},
     }
 }
 
@@ -2474,10 +2474,7 @@ end
     self:Animate("controller", (self:GetPackedRatio("Controller")+4)/8, 0, 0.425,  2.5,false)
 
     self:Animate("FrontBrake", self:GetNW2Bool("FbI") and 0 or 1,0,1, 3, false)
-    self:Animate("FrontTrain",  self:GetNW2Bool("FtI") and 1 or 0,0,1, 3, false)
-	
-    train1:Animate("RearBrake", self:GetNW2Bool("RbI") and 0 or 1,0,1, 3, false)
-    train1:Animate("RearTrain", self:GetNW2Bool("RtI") and 1 or 0,0,1, 3, false)		
+    self:Animate("FrontTrain",  self:GetNW2Bool("FtI") and 1 or 0,0,1, 3, false)	
 
     if self.LastGVValue ~= self:GetPackedBool("GV") then
         self.ResetTime = CurTime()+1.5

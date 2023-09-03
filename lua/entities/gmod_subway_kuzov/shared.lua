@@ -35,6 +35,9 @@ local yventpos = {
 	---414.5+6*117-144,
 }
 
+function ENT:PassengerCapacity()
+    return 177
+end
 local function GetDoorPosition(n,G)			--	x						--	y        --	z
 	return Vector(-195.5 - -35.0*G - 232.1*n, -66*(1-2*G), 4.3)
 end
@@ -163,6 +166,5 @@ for i=0,2 do
     table.insert(ENT.LeftDoorPositions,GetDoorPosition(i,1))
     table.insert(ENT.RightDoorPositions,GetDoorPosition(i,0))
 end
-
 
 ENT.SubwayTrain = nil

@@ -19,9 +19,7 @@ ENT.SyncTable = {"RearBrakeLineIsolation","RearTrainLineIsolation"}
  
 function ENT:Initialize()
     self:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl") 
-    self:SetPos(self:GetPos() + Vector(0,0,0))
-	
-    self.Mass = 13500		
+    self:SetPos(self:GetPos() + Vector(0,0,0))	
 	
     self.Joints = {}
     self.JointPositions = {}
@@ -51,14 +49,16 @@ function ENT:Initialize()
         },
         {
             ID = "RearDoor",
-            Pos = Vector(-310, -13, 7), Radius = 31
+            Pos = Vector(-310, -6, 55), Radius = 31
         },
 	} 
 
     -- Get default train mass
     if IsValid(self:GetPhysicsObject()) then
         self.NormalMass = self:GetPhysicsObject():GetMass()
-    end	
+    end	   
+
+	self.NormalMass = 19500		
 
     self.WireIOSystems = {}
     self.Systems = {}
@@ -79,10 +79,6 @@ function ENT:Initialize()
 end	
 
 function ENT:TrainSpawnerUpdate()
-
-	self.ButtonBuffer = {}
-	self.KeyBuffer = {}
-	self.KeyMap = {}	
     self:UpdateLampsColors()			
 end
 
@@ -197,21 +193,6 @@ function ENT:OnRemove()
             SafeRemoveEntity(v)
         end
 end	
-end
-
--- Trigger output
-function ENT:TriggerOutput(name,value)
-    if Wire_TriggerOutput then
-        Wire_TriggerOutput(self,name,tonumber(value) or 0)
-    end
-end
-
--- Trigger input
-function ENT:TriggerInput(name, value)
-    -- Drivers wrench present
-    if name == "DriversWrenchPresent" then
-        self.DriversWrenchPresent = (value > 0.5)
-    end
 end
 
 function ENT:OnButtonPress(button,ply)

@@ -26,15 +26,11 @@ ENT.Spawnable       = true
 ENT.AdminSpawnable  = true
  
 function ENT:PassengerCapacity()
-    return 370
+    return 191
 end	
 
 function ENT:GetStandingArea()
     return Vector(530,-25,-47), Vector(50,25,-41)
-end
-
-function ENT:GetStandingAreaRear()    --смещение пассажиров
-	return Vector(290,-25,-47),Vector(-298,25,-41)	
 end
 
 local function GetDoorPosition(b,k)	--Правые двери			--Левые двери
@@ -188,11 +184,6 @@ ENT.AnnouncerPositions = {
 	{Vector(362,34,55),50,0.15},
 	{Vector(136,34,55),50,0.15},
 }
---[[for i=1,3 do
-    table.insert(ENT.AnnouncerPositions,{
-	Vector(0-(i-1)*230+38,
-	47*(i%2 > 0 and -1 or 1) ,44),450,0.5})
-end]] 
 ---------------------------------------------------
 -- Defined train information
 -- Types of wagon(for wagon limit system):
