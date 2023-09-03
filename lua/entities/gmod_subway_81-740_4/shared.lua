@@ -242,30 +242,10 @@ function ENT:InitializeSounds()
         "subway_trains/717/kru/kru_eject2.mp3",
         "subway_trains/717/kru/kru_eject3.mp3",
     }]]
-    self.SoundNames["kro_-1_0"] = {
-        "subway_trains/717/kru/kru0-1_1.mp3",
-        "subway_trains/717/kru/kru0-1_2.mp3",
-        "subway_trains/717/kru/kru0-1_3.mp3",
-        "subway_trains/717/kru/kru0-1_4.mp3",
-    }
-    self.SoundNames["kro_0_1"] = {
-        "subway_trains/717/kru/kru1-2_1.mp3",
-        "subway_trains/717/kru/kru1-2_2.mp3",
-        "subway_trains/717/kru/kru1-2_3.mp3",
-        "subway_trains/717/kru/kru1-2_4.mp3",
-    }
-    self.SoundNames["kro_1_0"] = {
-        "subway_trains/717/kru/kru2-1_1.mp3",
-        "subway_trains/717/kru/kru2-1_2.mp3",
-        "subway_trains/717/kru/kru2-1_3.mp3",
-        "subway_trains/717/kru/kru2-1_4.mp3",
-    }
-    self.SoundNames["kro_0_-1"] = {
-        "subway_trains/717/kru/kru1-0_1.mp3",
-        "subway_trains/717/kru/kru1-0_2.mp3",
-        "subway_trains/717/kru/kru1-0_3.mp3",
-        "subway_trains/717/kru/kru1-0_4.mp3",
-    }
+    self.SoundNames["kro_-1_0"] = {"subway_trains/722/switches/multi_switch_panel_mid.mp3","subway_trains/722/switches/multi_switch_panel_mid2.mp3"}
+    self.SoundNames["kro_0_1"] = {"subway_trains/722/switches/multi_switch_panel_max.mp3"}
+    self.SoundNames["kro_1_0"] = {"subway_trains/722/switches/multi_switch_panel_mid.mp3","subway_trains/722/switches/multi_switch_panel_mid2.mp3"}
+    self.SoundNames["kro_0_-1"] = {"subway_trains/722/switches/multi_switch_panel_min.mp3"}
     self.SoundPositions["kro_in"] = {80,1e9,Vector(813.4-159,53.3,-21.1)}
     self.SoundPositions["kro_out"] = self.SoundPositions["kro_in"]
     self.SoundPositions["kro_-1_0"] = self.SoundPositions["kro_in"]
