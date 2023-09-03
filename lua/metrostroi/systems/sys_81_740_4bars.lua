@@ -38,7 +38,7 @@ function TRAIN_SYSTEM:Initialize()
 end
 
 function TRAIN_SYSTEM:Outputs()
-    return {"Active","Ring","Brake","Brake2","Ispr","Dnepr","AO","DAU","Drive","PN1","PN2", "SpeedLimit","ln","XOD", "BTB","BINoFreq","BIAccel"}
+    return {"Active","Ring","Brake","Brake2","Ispr","Dnepr","AO","DAU","Drive","PN1","PN2", "SpeedLimit","ln", "BTB","BINoFreq","BIAccel"}
 end
 
 function TRAIN_SYSTEM:Inputs()
@@ -60,14 +60,8 @@ function TRAIN_SYSTEM:Think(dT)
     if EnableALS ~= (ALS.Enabled==1) then 
         ALS:TriggerInput("Enable",EnableALS and 1 or 0)
     end
-	self.Dnepr = Train.ALSFreqBlock.Value == 0 or Train.ALSFreqBlock.Value == 3
-	self.DAU = Train.ALSFreqBlock.Value == 2
-	local OneToSix = Train.ALSFreqBlock.Value == 3
-	if Train.ALSFreqBlock.Value == 1 then  --ВП
-		Train.ALS.Value = 1
-	else
-	    Train.ALS.Value = 0
-	end
+	self.Dnepr = TwoToSix
+	self.DAU = not TwoToSix
     self.NoFreq = ALS.NoFreq > 0
     self.BINoFreq = ALS.NoFreq
     self.F1 = ALS.F1 > 0 and not self.NoFreq
@@ -79,7 +73,7 @@ function TRAIN_SYSTEM:Think(dT)
     self.RealF5 = self.F5 and not self.F4 and not self.F3 and not self.F2 and not self.F1
 	self.AO = ALS.AO and not self.NoFreq
     -- Speed check and update speed data
-    if CurTime() - (self.LastSpeedCheck or 0) > 0.1 then
+    if CurTime() - (self.LastSpeedCheck or 0) > 0.1 and Train.SF21.Value > 0 then
         self.LastSpeedCheck = CurTime()
         self.Speed = math.Round(Train.Speed or 0,1)
     end
