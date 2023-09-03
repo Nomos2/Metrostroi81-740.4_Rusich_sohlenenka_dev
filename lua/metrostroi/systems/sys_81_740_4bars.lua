@@ -73,7 +73,7 @@ function TRAIN_SYSTEM:Think(dT)
     self.RealF5 = self.F5 and not self.F4 and not self.F3 and not self.F2 and not self.F1
 	self.AO = ALS.AO and not self.NoFreq
     -- Speed check and update speed data
-    if CurTime() - (self.LastSpeedCheck or 0) > 0.1 and Train.SF21.Value > 0 then
+    if CurTime() - (self.LastSpeedCheck or 0) > 0.1 and Train.SFV21.Value > 0 then
         self.LastSpeedCheck = CurTime()
         self.Speed = math.Round(Train.Speed or 0,1)
     end
