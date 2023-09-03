@@ -533,27 +533,19 @@ function ENT:CreatePricep(pos,ang)
 	Map:find("gm_metro_crossline") or	
 	Map:find("gm_metro_mosldl") or	
 	Map:find("gm_smr_1987") then
-	constraint.AdvBallsocket(
-		self.MiddleBogey,	
+        constraint.Axis(
+		self.MiddleBogey,		
 		ent,
-		0, --bone
-		0, --bone		
+		0,
+		0,
 		Vector(0,0,0),
-		Vector(0,0,0),		
-		0, --forcelimit
-		0, --torquelimit
-		0, --xmin
-		0, --ymin
-		-180, --zmin
-		0, --xmax
-		0, --ymax
-		180, --zmax
-		0, --xfric
-		0, --yfric
-		0, --zfric
-		0, --rotonly
-		1--nocollide
-	)			
+		Vector(0,0,0),
+        0,
+		0,
+		0,
+		0,
+		Vector(0,0,-1)
+		)			
 	else	
     
 	if 

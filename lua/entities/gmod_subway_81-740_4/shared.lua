@@ -416,11 +416,11 @@ end
 
 ENT.AnnouncerPositions = {}
 ENT.AnnouncerPositions = {
-    {Vector(450,-34,55),10,0.15},
-	{Vector(118,-34,55),10,0.15},
-    {Vector(158,34,55),10,0.15},
-    {Vector(495,34,55),10,0.15},
-    {Vector(580,34,55),10,0.1},	
+    {Vector(450,-34,55),50,0.4},
+	{Vector(118,-34,55),50,0.4},
+    {Vector(158,34,55),50,0.4},
+    {Vector(495,34,55),50,0.4},
+    {Vector(580,34,55),50,0.4},	
 }
 ENT.Cameras = {
     {Vector(770-159,36,42),Angle(0,180,0),"Train.740.CameraCond"},
