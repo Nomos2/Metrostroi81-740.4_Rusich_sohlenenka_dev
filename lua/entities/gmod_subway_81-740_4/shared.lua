@@ -497,10 +497,7 @@ ENT.Spawner = {
 	{"MotorType","Spawner.740.MotorType","List",{"Spawner.740.MotorType.Random","Spawner.740.MotorType1","Spawner.740.MotorType2","Spawner.740.MotorType3","Spawner.740.MotorType4","Spawner.740.MotorType5"}},	
 	{"VentSound","Spawner.740.VentSound","List",{"Spawner.740.VentSound.Random","Spawner.740.VentSound1","Spawner.740.VentSound2"}}, 	
 	{},
-	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"}, 
-	nil,function(ent,val,rot,i,wagnum,rclk)	
-    ent.HeadTrain1 = ent:GetNW2Entity("gmod_subway_kuzov")	
-    local train1 = ent.HeadTrain1 	
+	{"SpawnMode","Spawner.Common.SpawnMode","List",{"Spawner.Common.SpawnMode.Full","Spawner.Common.SpawnMode.Deadlock","Spawner.Common.SpawnMode.NightDeadlock","Spawner.Common.SpawnMode.Depot"},nil,function(ent,val,rot,i,wagnum,rclk)	
         if rclk then return end
         if ent._SpawnerStarted~=val then
             ent.Battery:TriggerInput("Set",val<=2 and 1 or 0)
@@ -517,7 +514,12 @@ ENT.Spawner = {
                 _LastSpawner=CurTime()
                 ent.CabinDoorLeft = val==2 and first
                 ent.CabinDoorRight = val==2 and first
-                ent.BUV.RearDoor = val==2
+				
+				timer.Simple(0,function()	
+				if not IsValid(ent) then return end				
+				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 2
+				end)
+				
                 ent.PassScheme:TriggerInput("Set",val==1 and 1 or 0)
 				--ent.BUKP.State = 0	
 				--ent.Ticker:TriggerInput("Set",val==1 and 1 or 0)
@@ -543,10 +545,25 @@ ENT.Spawner = {
                 _LastSpawner=CurTime()				
                 ent.CabinDoorLeft = val==4 and first
                 ent.CabinDoorRight = val==4 and first
-                ent.BUV.RearDoor = val==4
+				timer.Simple(0,function()	
+				if not IsValid(ent) then return end					
+				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 4
+				end)
+				timer.Simple(0,function()	
+				if not IsValid(ent) then return end					
+				ent:GetNW2Entity("gmod_subway_kuzov_741").RearDoor = val == 4
+				end)				
             else
                 ent.FrontDoor = val==4
-                ent.BUV.RearDoor = val==4
+				timer.Simple(0,function()	
+				if not IsValid(ent) then return end					
+				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 4
+				end)
+                ent.FrontDoor = val==4
+				timer.Simple(0,function()	
+				if not IsValid(ent) then return end					
+				ent:GetNW2Entity("gmod_subway_kuzov_741").RearDoor = val == 4
+				end)				
             end
             ent.Pneumatic.RightDoorState = val==4 and {1,1,1,1} or {0,0,0,0}
             ent.Pneumatic.DoorRight = val==4

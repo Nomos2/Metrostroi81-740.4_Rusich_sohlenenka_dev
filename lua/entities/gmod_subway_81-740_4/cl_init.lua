@@ -159,7 +159,6 @@ ENT.ButtonMap["PUU"] = {
             sndvol = 0.5, snd = function(val) return val and "button_press" or "button_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 	*/	
-		
 		{ID = "EmergencyCompressorSet",x=576.63+36.5*1.05, y=90, radius=15, tooltip = "",model = { --566.63+36.5*1
             model = "models/metrostroi_train/81-722/button_white.mdl", z=1.85,
             var="EmergencyCompressor",speed=8, vmin=0, vmax=0.7,
@@ -183,8 +182,6 @@ ENT.ButtonMap["PUU"] = {
             var="notused12345",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.5, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-		--models/metrostroi_train/81-720/rc_rotator1.mdl
-
         {ID = "!VDop",x=269, y=69, w=107, h=6, tooltip = ""},
         {ID = "!VFact",x=269, y=76+9, w=107, h=6, tooltip = ""},
         {ID = "!VPred",x=269, y=76+17, w=107, h=6, tooltip = ""},
@@ -206,7 +203,6 @@ ENT.ClientProps["Head--_-0"] = {
     scale = 1.1, 
     nohide=true,
 }
-
 ENT.ClientProps["Head-0_--"] = {
     model = "models/metrostroi_train/81-740/body/headlight.mdl",
     pos = Vector(324.8-159.4, 17.5, -58.2),
@@ -228,7 +224,6 @@ ENT.ClientProps["krepezh"] = {
     ang = Angle(0,0,0),
     nohide = true,
 }
-
 ENT.ClientProps["lamps_salon_off"] = {
     model = "models/metrostroi_train/81-740/salon/lamps/lamps_off_new.mdl",
     pos = Vector(852-159,0.1,0),
@@ -574,8 +569,7 @@ ENT.ButtonMap["PUR"] = {
             var="AccelRate",speed=12, vmin=0, vmax=1,
             lamp = {model = "models/metrostroi_train/81-720/buttons/l1.mdl",var="AccelRateLamp",anim=true},
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
-        }},*/
-		
+        }},*/		
 		{ID = "TPTToggle",x=24, y=55, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_red.mdl",z=-6,
             var="TPT",speed=12, vmin=0, vmax=0.5,
@@ -603,7 +597,6 @@ ENT.ButtonMap["PUR"] = {
             var="EmergencyBrake",speed=12, vmin=0, vmax=1,
             sndvol = 0.5, snd = function(val) return val and "switch_on" or "switch_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-
         {ID = "DoorCloseToggle",x=21, y=119, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl",z=-5.1, --models/metrostroi_train/81-720/buttons/b5.mdl
             lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",z=0.0,var="DoorCloseLamp",anim=true}, --models/metrostroi_train/81-720/buttons/l1.mdl ,anim=true,color=Color(80,255,100)
@@ -751,53 +744,6 @@ ENT.ButtonMap["VoltHelper2"] = {
     }
 }
 
-ENT.ButtonMap["ASNP"] = {
-    pos = Vector(822.4-159,-52.5,-6.1), --446 -- 14 -- -0,5
-    ang = Angle(0,-167,90),
-    width = 120,
-    height = 50,
-    scale = 0.0625,
-    hide=0.8,
-
-    buttons = {
-        {ID = "R_ASNPMenuSet",x=39, y=35, radius=16, z=4, tooltip = "",model = {
-            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
-            var="R_ASNPMenu",speed=12, vmin=0, vmax=0.9,
-            sndvol = 0.5,snd = function(val) return val and "pnm_button1_on" or "pnm_button1_off" end,
-            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
-        }},
-        {ID = "R_ASNPUpSet",x=105, y=2, radius=8, tooltip = "",model = {
-            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
-            var="R_ASNPUp",speed=12, vmin=0, vmax=0.9,z=4, 
-            sndvol = 0.5,snd = function(val) return val and "pnm_button1_on" or "pnm_button2_off" end,
-            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
-        }},
-        {ID = "R_ASNPDownSet",x=105, y=14, radius=8, tooltip = "",model = {
-            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
-            var="R_ASNPDown",speed=12, vmin=0, vmax=0.9,z=4, 
-            sndvol = 0.5,snd = function(val) return val and "pnm_button2_on" or "pnm_button1_off" end,
-            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
-        }},
-        {ID = "R_ASNPOnToggle",x=10, y=10, radius=8, tooltip = "",model = {
-            model = "models/metrostroi_train/81-720/tumbler2.mdl", ang=0, scale=0.7,z=5,
-            var="R_ASNPOn",speed=12, vmin=1, vmax=0,
-            --plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=90,x=-0.5,z=2,y=-12,scale=0.7,var="R_ASNPOnPl",ID="R_ASNPOnPl",},	
-			--Прикол для всех дюбителей срывать пломбы с АСНП:D	
-			--Учитесь перенастраивать АСНП без перезапуска системы.	
-            sndvol = 0.5,snd = function(val) return val and "pnm_on" or "pnm_off" end,
-            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
-        }},
-    }
-}
-
-ENT.ButtonMap["ASNPScreen"] = {
-    pos = Vector(820.05-159,-53,-6.1), --446 -- 14 -- -0,5
-    ang = Angle(0,-167,90),
-    width = 520,
-    height = 125,
-    scale = 0.01,
-    hide=0.8,
-}
 --ИГЛА
 ENT.ButtonMap["IGLA_C"] = {
     pos = Vector(735.85-159,34.1,44.6),
@@ -1187,7 +1133,6 @@ ENT.ButtonMap["VityazButtons"] = {
             --model = "models/metrostroi_train/81-720/vyitaz/v_f9.mdl",z=0, ang=0, var="VityazF9",speed=16,
             sndvol = 1, snd = function(val) return val and "button_vityaz2_press" or "button_vityaz2_release" end,sndmin = 40, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-		
 		{ID = "VityazF8Set",x=80, y=68, w=35,h=20, tooltip = "",model = {
             --model = "models/metrostroi_train/81-720/vyitaz/v_f8.mdl",z=0, ang=0, var="VityazF8",speed=16,
             sndvol = 1, snd = function(val) return val and "button_vityaz1_press" or "button_vityaz1_release" end,sndmin = 40, sndmax = 1e3/3, sndang = Angle(-90,0,0),
@@ -1648,9 +1593,55 @@ ENT.ClientProps["Zavod_table_front"] = { --Заводская табличка
 }
 ENT.ClientProps["ASNP_test"] = {
 	model = "models/740_vrb/vrb_asnp.mdl",
-	pos = Vector(684.5-15,-56,-11),
-	ang = Angle(0,-105,0),
+	pos = Vector(682.5-15,-52.8,-11), --684.5-15,-56,-11
+	ang = Angle(0,-90,0), --0,-105,0 
 	hide = 1,
+}
+ENT.ButtonMap["ASNPScreen"] = {
+    pos = Vector(658.63,-52.1,-6.1), --446 -- 14 -- -0,5 
+    ang = Angle(0,-152.3,90),
+    width = 520,
+    height = 125,
+    scale = 0.01,
+    hide=0.8,
+}
+ENT.ButtonMap["ASNP"] = {
+    pos = Vector(660.8,-51,-6.1), --446 -- 14 -- -0,5
+    ang = Angle(0,-152.3,90),
+    width = 120,
+    height = 50,
+    scale = 0.0625,
+    hide=0.8,
+
+    buttons = {
+        {ID = "R_ASNPMenuSet",x=39, y=35, radius=16, z=4, tooltip = "",model = {
+            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
+            var="R_ASNPMenu",speed=12, vmin=0, vmax=0.9,
+            sndvol = 0.5,snd = function(val) return val and "pnm_button1_on" or "pnm_button1_off" end,
+            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
+        }},
+        {ID = "R_ASNPUpSet",x=105, y=2, radius=8, tooltip = "",model = {
+            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
+            var="R_ASNPUp",speed=12, vmin=0, vmax=0.9,z=4, 
+            sndvol = 0.5,snd = function(val) return val and "pnm_button1_on" or "pnm_button2_off" end,
+            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
+        }},
+        {ID = "R_ASNPDownSet",x=105, y=14, radius=8, tooltip = "",model = {
+            model = "models/metrostroi_train/81-720/button_round.mdl", scale=0,
+            var="R_ASNPDown",speed=12, vmin=0, vmax=0.9,z=4, 
+            sndvol = 0.5,snd = function(val) return val and "pnm_button2_on" or "pnm_button1_off" end,
+            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
+        }},
+        {ID = "R_ASNPOnToggle",x=10, y=10, radius=8, tooltip = "",model = {
+            model = "models/metrostroi_train/81-720/tumbler2.mdl", ang=0, scale=0.7,z=1.5,
+            var="R_ASNPOn",speed=12, vmin=1, vmax=0,
+            --plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=90,x=-0.5,z=2,y=-12,scale=0.7,var="R_ASNPOnPl",ID="R_ASNPOnPl",},	
+			--Прикол для всех дюбителей срывать пломбы с АСНП:D	
+			--Учитесь перенастраивать АСНП без перезапуска системы.	
+            sndvol = 0.5,snd = function(val) return val and "pnm_on" or "pnm_off" end,
+            sndmin = 50,sndmax = 1e3,sndang = Angle(-90,0,0),
+        }},
+    }
 }
 ENT.ClientProps["Gerb_msk"] = {
 	model = "models/metrostroi_train/81-740/body/gerb.mdl",

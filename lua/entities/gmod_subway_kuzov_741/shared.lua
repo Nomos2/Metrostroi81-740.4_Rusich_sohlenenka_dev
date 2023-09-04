@@ -23,7 +23,7 @@ ENT.Author          = ""
 ENT.Contact         = ""
 ENT.Purpose         = ""
 ENT.Instructions    = ""
-ENT.Model 			= "models/metrostroi_train/81-740/body/81-740_4_rear_reference.mdl"
+ENT.Model 			= "models/metrostroi_train/81-741/body/81-741_4_rear_reference.mdl"
 
 local yventpos = {
     -14.5+0*117-144,
