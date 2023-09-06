@@ -88,7 +88,7 @@ ENT.ClientProps["handrails_offside"] = {
 }
 ENT.ClientProps["handrails"] = {
 	model = "models/metrostroi_train/81-740/salon/handrails/handrails_r.mdl",
-    pos = Vector(-115.5, -1, -73),
+    pos = Vector(-115.5, -1, -75),
     ang = Angle(0,180,0),
 	hide = 2, 	
 }
@@ -144,8 +144,8 @@ ENT.ButtonMap["RearPneumatic"] = {
 	screenHide = true,
 	
     buttons = {
-		{ID = "RearTrainLineIsolationToggle",x=500, y=0, w=400, h=100, ""},
-		{ID = "RearBrakeLineIsolationToggle",x=0, y=0, w=400, h=100, ""},
+		{ID = "RearTrainLineIsolationToggle",x=500, y=0, w=400, h=100, tooltip=""},
+		{ID = "RearBrakeLineIsolationToggle",x=0, y=0, w=400, h=100,   tooltip=""},
     }
 }	
 ENT.ClientProps["RearTrain"] = {
@@ -160,8 +160,6 @@ ENT.ClientProps["RearBrake"] = {
 	ang = Angle(0,90,0),
 	hide = 2,	
 }
-ENT.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
-ENT.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 
 ENT.ButtonMap["Tickers_rear"] = {
 	pos = Vector(286.2,27,65.85), --446 -- 14 -- -0,5
@@ -271,11 +269,7 @@ function ENT:Initialize()
         "models/metrostroi/passengers/m4.mdl",
         "models/metrostroi/passengers/m5.mdl",
     }
-	
-    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
-    local train = self.HeadTrain 	
-	
-    self.RearLeak = 0	
+    self:GetNW2Entity("gmod_subway_81-740_4").PreviousCompressorState = false		
     self.ReleasedPdT = 0	
 	
     self.VentRand = {}
@@ -371,12 +365,9 @@ end
 	
 	local dT = train.DeltaTime	
 	
-    self.RearLeak = math.Clamp(self.RearLeak + 10*(-train:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)	
-    self:SetSoundState("rear_isolation",self.RearLeak,0.9+0.2*self.RearLeak)	
-	
     local dPdT = train:GetPackedRatio("BrakeCylinderPressure_dPdT")
-    self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)
-    self:SetSoundState("release_rear",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)		
+    self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-train.ReleasedPdT)*dT,0,1)
+    self:SetSoundState("release_rear",math.Clamp(train.ReleasedPdT,0,1)^1.65,1.0)		
 	
 	local speed = train:GetPackedRatio("Speed", 0)
 
@@ -456,10 +447,9 @@ end
     if self.Door4 ~= door4s then
         self.Door4 = door4s
         self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
-    end	 
+    end	
 	
-    local work = train:GetPackedBool("AnnPlay")
-    for k,v in ipairs(self.AnnouncerPositions) do
+    for k,v in ipairs(train.AnnouncerPositions) do
         if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
             self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
 		end 

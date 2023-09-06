@@ -126,16 +126,17 @@ function ENT:UpdateLampsColors()
 end
 	
 function ENT:Think()	
-    self:SetPackedBool("RearDoor",self.RearDoor)		
-	
     self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)    
 	local train = self.HeadTrain		
-	local retVal = self.BaseClass.Think(self)
-    local power = train.Electric.Battery80V > 62			
+	local Panel = train.Panel		
+	local retVal = train.BaseClass.Think(self)
+    local power = train.Electric.Battery80V > 62
 	
+	self:SetPackedBool("RearDoor",self.RearDoor)	
     self:SetPackedBool("Vent2Work",train.Electric.Vent2>0)	
     self:SetPackedBool("BBEWork",power and train.BUV.BBE > 0)
     self:SetPackedBool("CompressorWork",train.Pneumatic.Compressor) 
+    self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)	 
 	
     if self.AnnouncementToLeaveWagon ~= train.AnnouncementToLeaveWagon then self.AnnouncementToLeaveWagon = train.AnnouncementToLeaveWagon end
 	
