@@ -404,8 +404,9 @@ function ENT:CreatePricep(pos,ang)
 		0,
 		0,
 		0,
-		Vector(0,0,-1)
-		)			
+		Vector(0,0,-1),	
+		false
+		)
 	else		
 	     
 	if 

@@ -1564,7 +1564,7 @@ ENT.ClientProps["salon"] = {
 }
 ENT.ClientProps["handrails"] = {
 	model = "models/metrostroi_train/81-740/salon/handrails/handrails.mdl",
-	pos = Vector(368-161,-5,0),
+	pos = Vector(368-161,-5,-2),
 	ang = Angle(0,0,0),
 	hide = 2,
 }	
@@ -1752,12 +1752,10 @@ function ENT:Initialize()
 	self.EmergencyValveEPKRamp = 0
 	self.EmergencyBrakeValveRamp = 0
     self.FrontLeak = 0
-    self.RearLeak = 0
 
     self.ParkingBrake = 0
 
     self.PreviousRingState = false
-    self.PreviousCompressorState = false
     self.TISUVol = 0
 
     self.VentRand = {}
@@ -2413,6 +2411,9 @@ for k=0,3 do
     } 	 	  
 end
 
+self.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+self.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+
 function self:UpdateWagonNumber()
     self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
     local train1 = self.HeadTrain1 
@@ -2448,7 +2449,8 @@ end
 --Задняя часть
     self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
     local train1 = self.HeadTrain1 
-    if not IsValid(train1) or not IsValid(self) then return end		
+    if not IsValid(train1) or not IsValid(self) then return end	
+	
 	 self:SetLightPower(3,self.Door5 and self:GetPackedBool("AppLights"),self:GetPackedBool("AppLights") and 1 or 0)
     --ANIMS
     self:Animate("brake_line", self:GetPackedRatio("BL"), 0, 0.753,  256,2)
@@ -2836,7 +2838,15 @@ end
         if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
             self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
 		end 
-	end		
+		
+    self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
+    local train1 = self.HeadTrain1 
+	for k,v in ipairs(train1.AnnouncerPositions) do
+        if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
+            self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
+			end 
+		end
+	end	
 end
 
 function ENT:Draw()

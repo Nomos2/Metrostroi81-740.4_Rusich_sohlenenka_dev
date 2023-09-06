@@ -544,8 +544,9 @@ function ENT:CreatePricep(pos,ang)
 		0,
 		0,
 		0,
-		Vector(0,0,-1)
-		)			
+		Vector(0,0,-1),	
+		false
+		)
 	else	
     
 	if 
@@ -807,8 +808,6 @@ function ENT:Think()
     local power = self.Electric.Battery80V > 62
     local powerPPZ = (power and self.SF1.Value > 0) or self.Electric.ReservePower > 0
 	local Panel = self.Panel	
-    local ent = self:GetNW2Entity("gmod_subway_kuzov")	
-    if not IsValid(ent) then return end	
     --print(self,self.BPTI.T,self.BPTI.State)	
 	
     local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
@@ -1022,7 +1021,7 @@ function ENT:Think()
     return retVal
 end	 
 
-function ENT:OnCouple(train,isfront)
+function ENT:OnCouple(train,isfront)   	
     if isfront and self.FrontAutoCouple then
         self.FrontBrakeLineIsolation:TriggerInput("Open",1.0)
         self.FrontTrainLineIsolation:TriggerInput("Open",1.0)
@@ -1040,7 +1039,6 @@ function ENT:OnButtonPress(button,ply)
         self.Pneumatic:TriggerInput("BrakeSet",tonumber(button:sub(-1,-1)))
         return
     end
-    if button == "FrontDoor" and (self.FrontDoor or not self.BUV.BlockTorec) then self.FrontDoor = not self.FrontDoor end
 	if button == "IGLA23" then
         self.IGLA2:TriggerInput("Set",1)
         self.IGLA3:TriggerInput("Set",1)
