@@ -987,7 +987,7 @@ else
 			scanlines = scanlines or false,
 		})
 	end
-	createFont("VityazComm","RESurFoxes",43,410,0.7,2,false)
+	createFont("VityazComm","FreeSans",49,410,0.7,2,false)
     createFont("VityazBold","FreeSans",40,400,0.7,2,false)
 	createFont("VityazPU","PerfectDOSVGA437",68,400,0,0,false)
 	createFont("CalibriMain","Calibri",53,600,false)

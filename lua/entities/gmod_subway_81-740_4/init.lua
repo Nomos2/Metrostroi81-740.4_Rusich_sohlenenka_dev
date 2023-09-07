@@ -306,9 +306,9 @@ local nearlyS
     for k,v in pairs(ents.FindByClass("gmod_track_signal")) do
         if not nearlyS or self:GetPos():DistToSqr(v:GetPos()) < self:GetPos():DistToSqr(nearlyS:GetPos()) then nearlyS = v end
     end
-    if nearlyS and nearlyS.TwoToSix then self.ALSFreqBlock:TriggerInput("Set",2) 
-    elseif nearlyS and not nearlyS.TwoToSix then self.ALSFreqBlock:TriggerInput("Set",3) 
-    elseif nearlyS == nil then self.ALSFreqBlock:TriggerInput("Set",1) 
+    if nearlyS and nearlyS.TwoToSix then self.ALSFreqBlock:TriggerInput("Set",1) 
+    elseif nearlyS and not nearlyS.TwoToSix then self.ALSFreqBlock:TriggerInput("Set",0) 
+    elseif nearlyS == nil then self.ALSFreqBlock:TriggerInput("Set",0) 
 end
 
 --наложение пломб
@@ -807,7 +807,7 @@ function ENT:Think()
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62
     local powerPPZ = (power and self.SF1.Value > 0) or self.Electric.ReservePower > 0
-	local Panel = self.Panel	
+	local Panel = self.Panel
     --print(self,self.BPTI.T,self.BPTI.State)	
 	
     local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
@@ -870,7 +870,6 @@ function ENT:Think()
     self:SetPackedRatio("VentStrengthMode",self.VentStrengthMode.Value/3)
     --self:SetPackedRatio("VentHeatMode",self.VentHeatMode.Value/2)
     self:SetPackedRatio("BARSBlock",self.BARSBlock.Value/3) 
-	self:SetPackedRatio("ALSFreqBlock",self.ALSFreqBlock.Value/3) 
     --self:SetPackedBool("WorkBeep",power)
 	self:SetPackedBool("BUKPRing",powerPPZ and self.BUKP.State == 5 and self.BUKP.ProstRinging) 
 	self:SetPackedBool("CAMSRing",powerPPZ and self.CAMS.State == 0 and self.CAMS.ButtonRing) 
