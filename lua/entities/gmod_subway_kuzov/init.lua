@@ -75,15 +75,27 @@ function ENT:Initialize()
     }	
 	
 	self.RearDoor = false	
+	self.Lamps = {
+        broken = {},
+    }	
+	
+    local rand = math.random() > 0.9 and 1 or math.random(0.95,0.99)
+    for i = 1,20 do
+        if math.random() > rand then self.Lamps.broken[i] = math.random() > 0.7 end
+    end
+	
+    self:UpdateLampsColors()		
 	
 end	
 
 function ENT:TrainSpawnerUpdate()
-    self:UpdateLampsColors()			
+    self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)    
+	local train = self.HeadTrain	
+    train:UpdateLampsColors()			
 end
 
 function ENT:UpdateLampsColors()
-    local lCol,lCount = Vector(),40
+    local lCol,lCount = Vector(),20
 	local mr = math.random
     local rand = mr() > 0.8 and 1 or mr(0.95,0.99)
 	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
@@ -114,9 +126,9 @@ function ENT:UpdateLampsColors()
 		lCount = lCount + 1
 		if i%8.3<1 then
 			local id = 9+math.ceil(i/8.3)
-			self:SetLightPower(id,false)
+			--self:SetLightPower(id,false)
 			local tcol = (lCol/lCount)/255
-			self.Lights[id][4] = Vector(tcol.r,tcol.g^3,tcol.b^3)*255
+			--self.Lights[id][4] = Vector(tcol.r,tcol.g^3,tcol.b^3)*255
 			lCol = Vector() lCount = 0
 		end
 		self:SetNW2Vector("Lamp7404"..i,col)

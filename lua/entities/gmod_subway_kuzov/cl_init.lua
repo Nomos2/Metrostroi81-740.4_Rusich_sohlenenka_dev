@@ -160,6 +160,8 @@ ENT.ClientProps["RearBrake"] = {
 	ang = Angle(0,90,0),
 	hide = 2,	
 }
+ENT.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+ENT.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 
 ENT.ButtonMap["Tickers_rear"] = {
 	pos = Vector(286.2,27,65.85), --446 -- 14 -- -0,5
@@ -307,7 +309,7 @@ for avar = 1,2 do
 	local animation = math.random (5,12)	
 	local animation1 = math.random (0.5,1)	
 	--Головная часть
-    local colV = train:GetNW2Vector("Lamp7404"..avar)
+    local colV = self:GetNW2Vector("Lamp7404"..avar)
     local col = Color(colV.x,colV.y,colV.z)	
 	self:ShowHideSmooth("lamps_salon_on_rear_avar"..avar,train:Animate("LampsEmer",train:GetPackedRatio("SalonLighting") == 0.4 and 1 or 0,0,animation1,animation,false),col)  
 end	
@@ -317,7 +319,7 @@ end
 
 for i = 1,11 do	
 	--Головная часть
-    local colV = train:GetNW2Vector("Lamp7404"..i)
+    local colV = self:GetNW2Vector("Lamp7404"..i)
     local col = Color(colV.x,colV.y,colV.z)			
 	--Задняя часть		
 	self:ShowHideSmooth("lamps_salon_on_rear"..i-1,train:Animate("LampsFull",train:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
