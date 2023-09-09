@@ -19,7 +19,9 @@ ENT.SyncTable = {"RearBrakeLineIsolation","RearTrainLineIsolation"}
  
 function ENT:Initialize()
     self:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear.mdl")
-    self:SetPos(self:GetPos() + Vector(0,0,0))
+    self:SetPos(self:GetPos() + Vector(0,0,0))	
+    --self.PassengerSeat = self:CreateSeat("passenger",Vector(586-15,-40,-30),Angle(0,0,0),"models/nova/jeep_seat.mdl")
+    --self.PassengerSeat2 = self:CreateSeat("passenger",Vector(	-658,36,-25),Angle(0,180,0),"models/nova/jeep_seat.mdl")	--как пойму, из-за чего ошибки, раскомичу.
 	
     self.Joints = {}
     self.JointPositions = {}
@@ -58,7 +60,7 @@ function ENT:Initialize()
         self.NormalMass = self:GetPhysicsObject():GetMass()
     end	   
 
-	self.NormalMass = 19500		
+	self.NormalMass = 15500			
 
     self.WireIOSystems = {}
     self.Systems = {}
@@ -66,12 +68,9 @@ function ENT:Initialize()
     self.TrainWires = {}	
 	
 	self.Lights = {
-		[14] = { "dynamiclight",    Vector( 220, -20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+		[14] = { "dynamiclight",    Vector( 220, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
 		[15] = { "dynamiclight",    Vector( 10, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [16] = { "dynamiclight",    Vector( -310, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 },
-		
-		[14.1] = { "dynamiclight",    Vector( 200, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, --полный свет
-        [16.1] = { "dynamiclight",    Vector( -310, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 } 	
+        [16] = { "dynamiclight",    Vector( -260, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 },
     }	
 	
 	self.RearDoor = false	
@@ -89,9 +88,7 @@ function ENT:Initialize()
 end	
 
 function ENT:TrainSpawnerUpdate()
-    self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)    
-	local train = self.HeadTrain	
-    train:UpdateLampsColors()			
+    self:UpdateLampsColors()			
 end
 
 function ENT:UpdateLampsColors()
@@ -101,7 +98,7 @@ function ENT:UpdateLampsColors()
 	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
 	local typ = math.Round(mr())
 	local r,g = 15,15
-	for i = 1,40 do
+	for i = 1,20 do
 		local chtp = mr() > rnd1
 		if typ == 0 and chtp then
 			if mr() > rnd2 then
@@ -135,7 +132,7 @@ function ENT:UpdateLampsColors()
 		self.Lamps.broken[i] = math.random() > rand and math.random() > 0.7	
 		--PrintTable(self.Lamps.broken)	
 	end
-end
+end	
 	
 function ENT:Think()	
     self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)    
@@ -190,11 +187,8 @@ function ENT:Think()
 	local passlight = power and (train.BUV.MainLights and 1 or train.SFV20.Value > 0.5 and 0.4) or 0 
     train:SetPackedRatio("SalonLighting",passlight) 	
 	self:SetLightPower(14,passlight > 0, passlight and mul/20) 
-    self:SetLightPower(15,passlight > 0.5, passlight and mul/20)
+	self:SetLightPower(15,passlight > 0.5, passlight and mul/20)
 	self:SetLightPower(16,passlight > 0, passlight and mul/20) 
-	
-	self:SetLightPower(14.1,passlight > 0, passlight and mul/20) 
-	self:SetLightPower(16.1,passlight > 0, passlight and mul/20) 	
 	
     return retVal		 
 end	

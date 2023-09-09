@@ -52,7 +52,7 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))
 	
-    self.NormalMass = 19500	
+	self.NormalMass = 15500	
 	--self.m_tblToolsAllowed = { "none" }		
 
     -- Create seat entities
@@ -248,12 +248,9 @@ end	]]
         --освещение в кабине
         [10] = { "dynamiclight",    Vector( 755-159, 0, 40), Angle(0,0,0), Color(206,135,80), brightness = 1.5, distance = 550 },
         -- Interior
-		[11] = { "dynamiclight",    Vector(260-159, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, --левая лампа аварийная
+		[11] = { "dynamiclight",    Vector(260-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
 		[12] = { "dynamiclight",    Vector(420-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [13] = { "dynamiclight",    Vector(675-159, -20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 }, --правая лампа аварийная
-		
-		[11.1] = { "dynamiclight",    Vector(260-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [13.1] = { "dynamiclight",    Vector(675-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },	
+        [13] = { "dynamiclight",    Vector(675-159, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
     }
 	
 	self.InteractionZones = {
@@ -430,7 +427,7 @@ function ENT:UpdateLampsColors()
 	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
 	local typ = math.Round(mr())
 	local r,g = 15,15
-	for i = 1,40 do
+	for i = 1,20 do
 		local chtp = mr() > rnd1
 		if typ == 0 and not chtp or typ == 1 and chtp then
 			if mr() > rnd2 then
@@ -647,7 +644,7 @@ function ENT:CreatePricep(pos,ang)
 		ent,
 		self.MiddleBogey,
 		0, --bone
-		0, --bone		
+		0, --bone
 		Vector(310,0,-20),
 		Vector(-305,0,0),		
 		0, --forcelimit
@@ -663,13 +660,13 @@ function ENT:CreatePricep(pos,ang)
 		0, --zfric
 		0, --rotonly
 		1,--nocollide
-		true
+		false
 	)		
 	constraint.AdvBallsocket(
 		ent,
 		self.MiddleBogey,
 		0, --bone
-		0, --bone		
+		0, --bone,		
 		Vector(310,0,20),
 		Vector(-305,0,0),	
 		0, --forcelimit
@@ -677,15 +674,15 @@ function ENT:CreatePricep(pos,ang)
 		-20, --xmin
 		-10, --ymin
 		-180, --zmin
-		20, --xmax
-		10, --ymax
+		10, --xmax
+		20, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
 		0, --zfric
 		0, --rotonly
 		1,--nocollide
-		true
+		false
 	)
 	constraint.AdvBallsocket(
 		ent,
@@ -753,38 +750,6 @@ end
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
     self:RerailChange(self.RearBogey, true)		
-	
-function ent:TrainSpawnerUpdate()
-	local MotorType = self:GetNW2Int("MotorType")	
-       if MotorType == 1 then
-            MotorType = math.ceil(math.random()*4+0.5)
-          else MotorType = MotorType-1 end	
-	self:SetNW2Int("MotorType",MotorType)	
-	--self:SetNW2Int("MotorType",math.random(1, 2))		
-
-	local ZavodTable = self:GetNW2Int("ZavodTable")	
-       if ZavodTable == 1 then
-            ZavodTable = math.ceil(math.random()*2+0.5)
-          else ZavodTable = ZavodTable-1 end	
-	self:SetNW2Int("ZavodTable",ZavodTable)		
-	
-	local RingSound = self:GetNW2Int("RingSound")	
-       if RingSound == 1 then
-            RingSound = math.ceil(math.random()*3+0.5)
-          else RingSound = RingSound-1 end	
-	self:SetNW2Int("RingSound",RingSound)	
-	
-	local BBEs = self:GetNW2Int("BBESound")	
-       if BBEs == 1 then
-            BBEs = math.ceil(math.random()*2+0.5)
-          else BBEs = BBEs-1 end	
-	self:SetNW2Int("BBESound",BBEs)		
-	
-    --рандомизация цвета табло
-	--local ALS = math.random(1, 3)
-	--self:SetNW2Int("tablo_color", ALS)
-	--print(self:GetNW2String("Texture"))
-end	
 
 	--Метод mirror 				
 	ent.HeadTrain = self 
@@ -926,9 +891,6 @@ function ENT:Think()
 	self:SetLightPower(11,passlight > 0, passlight and mul/20)
 	self:SetLightPower(12,passlight > 0.5, passlight and mul/20)
 	self:SetLightPower(13,passlight > 0, passlight and mul/20)
-	
-	self:SetLightPower(11.1,passlight > 0, passlight and mul/20)
-	self:SetLightPower(13.1,passlight > 0, passlight and mul/20)
 	
     self:SetPackedRatio("SalonLighting",passlight) 
 	--print(passlight)

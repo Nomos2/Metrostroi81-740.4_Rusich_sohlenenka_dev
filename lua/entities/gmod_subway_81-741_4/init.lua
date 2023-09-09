@@ -41,7 +41,7 @@ function ENT:Initialize()
     self.DriverSeat:SetRenderMode(RENDERMODE_TRANSALPHA)
     self.DriverSeat:SetColor(Color(0,0,0,0))
 	
-	--self.DriverSeat.m_tblToolsAllowed = { "none" }		
+	self.DriverSeat.m_tblToolsAllowed = { "none" }		
 
  -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520,0,-75),Angle(0,180,0),true,"740PER")
@@ -122,12 +122,9 @@ end)
     }
     self.Lights = {
         -- Interior
-		[15] = { "dynamiclight",    Vector(280-144, 40, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, --левая лампа аварийная
+		[15] = { "dynamiclight",    Vector(280-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, 
 		[16] = { "dynamiclight",    Vector(420-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [17] = { "dynamiclight",    Vector(705-144, -20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },
-		
-		[15.1] = { "dynamiclight",    Vector(260-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [16.1] = { "dynamiclight",    Vector(675-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },	
+        [17] = { "dynamiclight",    Vector(705-144, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500, fov=180,farz = 128 },	
     }
     self.FrontDoor = false
 	
@@ -240,98 +237,6 @@ function ENT:RerailChange(ent, bool)
         timer.Create("metrostroi_rerailer_solid_reset_"..ent:EntIndex(),1e9,1,function() end)    
     end
 end
-
-
-function ENT:SpawnFunction(ply, tr,className,rotate)
-
- local verticaloffset = 5 -- Offset for the train model
-    local distancecap = 2000 -- When to ignore hitpos and spawn at set distanace
-    local pos, ang = nil
-    local inhibitrerail = false
-    if tr.Hit and self.NoTrain then
-        -- Regular spawn
-        if tr.HitPos:Distance(tr.StartPos) > distancecap then
-            -- Spawnpos is far away, put it at distancecap instead
-            pos = tr.StartPos + tr.Normal * distancecap
-        else
-            -- Spawn is near
-            pos = tr.HitPos + tr.HitNormal * verticaloffset
-        end
-        ang = Angle(-180,tr.Normal:Angle().y,0)
-    elseif tr.Hit and not self.NoTrain then
-        -- Setup trace to find out of this is a track
-        local tracesetup = {}
-        tracesetup.start=tr.HitPos
-        tracesetup.endpos=tr.HitPos+tr.HitNormal*80
-        tracesetup.filter=ply
-
-        local tracedata = util.TraceLine(tracesetup)
-
-        if tracedata.Hit then
-            -- Trackspawn
-            pos = (tr.HitPos + tracedata.HitPos)/2 + Vector(0,0,verticaloffset)
-            ang = tracedata.HitNormal
-            ang:Rotate(Angle(0,-180,0))
-            ang = ang:Angle()
-            -- Bit ugly because Rotate() messes with the orthogonal vector | Orthogonal? I wrote "origional?!" :V
-        else
-            -- Regular spawn
-            if tr.HitPos:Distance(tr.StartPos) > distancecap then
-                -- Spawnpos is far away, put it at distancecap instead
-                pos = tr.StartPos + tr.Normal * distancecap
-                inhibitrerail = true
-            else
-                -- Spawn is near
-                pos = tr.HitPos + tr.HitNormal * verticaloffset
-            end
-            ang = Angle(-180,tr.Normal:Angle().y,0)
-        end
-    else
-        -- Trace didn't hit anything, spawn at distancecap
-        pos = tr.StartPos + tr.Normal * distancecap
-        ang = Angle(0,tr.Normal:Angle().y,0)
-    end
-    local ent = ents.Create(className or self.ClassName)
-    ent:SetPos(pos)
-    ent:SetAngles(ang)
-    if rotate then ent:SetAngles(ent:LocalToWorldAngles(Angle(0,-180,0))) end
-    ent.Owner = ply
-    ent:Spawn()
-    ent:Activate()
-    if not inhibitrerail then inhibitrerail = not Metrostroi.RerailTrain(ent) end
-    if rotate and inhibitrerail then ent:Remove() return false end
-	
-	return ent
-end	
-
-    --[[local seat = ents.Create("prop_vehicle_prisoner_pod")
-    seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
-    seat:SetPos(self:LocalToWorld(Vector(-642,-30.2,-25)))
-    seat:SetAngles(self:GetAngles()+Angle(0,0,0))
-    seat:SetKeyValue("limitview",0)
-    seat:Spawn()
-    seat:GetPhysicsObject():SetMass(0)
-    seat:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    self:DrawShadow(false)
-	seat:SetNoDraw(true)
-	
-    --Assign ownership
-    if CPPI and IsValid(self:CPPIGetOwner()) then seat:CPPISetOwner(self:CPPIGetOwner()) end
-    seat:SetParent(ent)	
-
-    local seat_1 = ents.Create("prop_vehicle_prisoner_pod")	
-    seat_1:SetModel("models/nova/jeep_seat.mdl") --jalopy
-    seat_1:SetPos(self:LocalToWorld(Vector(-642,30.2,-25)))
-    seat_1:SetAngles(self:GetAngles()+Angle(0,180,0))
-    seat_1:SetKeyValue("limitview",0)
-    seat_1:Spawn()
-    seat_1:GetPhysicsObject():SetMass(0)
-    seat_1:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    seat_1:DrawShadow(false)
-	seat_1:SetNoDraw(true)	
-
-    if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
-    seat_1:SetParent(ent)]]	
 
 function ENT:CreatePricep(pos,ang)
 	local ent = ents.Create("gmod_subway_kuzov_741")
@@ -507,7 +412,7 @@ function ENT:CreatePricep(pos,ang)
 		ent,
 		self.MiddleBogey,
 		0, --bone
-		0, --bone		
+		0, --bone
 		Vector(310,0,-20),
 		Vector(-305,0,0),		
 		0, --forcelimit
@@ -523,13 +428,13 @@ function ENT:CreatePricep(pos,ang)
 		0, --zfric
 		0, --rotonly
 		1,--nocollide
-		true
-	)	
+		false
+	)		
 	constraint.AdvBallsocket(
 		ent,
 		self.MiddleBogey,
 		0, --bone
-		0, --bone		
+		0, --bone,		
 		Vector(310,0,20),
 		Vector(-305,0,0),	
 		0, --forcelimit
@@ -537,15 +442,15 @@ function ENT:CreatePricep(pos,ang)
 		-20, --xmin
 		-10, --ymin
 		-180, --zmin
-		20, --xmax
-		10, --ymax
+		10, --xmax
+		20, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
 		0, --zfric
 		0, --rotonly
 		1,--nocollide
-		true
+		false
 	)
 	constraint.AdvBallsocket(
 		ent,
@@ -569,6 +474,7 @@ function ENT:CreatePricep(pos,ang)
 		1,--nocollide
 		true
 	)	
+	
 end	
 end
 end
@@ -698,9 +604,6 @@ function ENT:Think()
 	self:SetLightPower(15,passlight > 0, passlight and mul/40)
 	self:SetLightPower(16,passlight > 0.5, passlight and mul/40)
 	self:SetLightPower(17,passlight > 0, passlight and mul/40)
-	
-	self:SetLightPower(15.1,passlight > 0, passlight and mul/40)
-	self:SetLightPower(16.1,passlight > 0.5, passlight and mul/40)	
 		
     -- получение всяких значений
     self:SetPackedRatio("Speed", self.Speed)
@@ -709,7 +612,6 @@ function ENT:Think()
     self:SetPackedBool("BBEWork",power and self.BUV.BBE > 0)
 	self:SetPackedBool("PVZ_otsek",self.PVZ_otsek)
 	self:SetPackedBool("PVZ_otsek_open",self.PVZ_otsek)	
-	
 	
     self:SetPackedRatio("TrainLine", self.Pneumatic.BrakeLinePressure/16.0)
     self:SetPackedRatio("BrakeLine", self.Pneumatic.TrainLinePressure/16.0)

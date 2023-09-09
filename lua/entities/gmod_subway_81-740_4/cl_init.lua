@@ -106,9 +106,9 @@ ENT.ButtonMap["PUU"] = {
         }},
 		*/
 		
-        {ID = "EnableBVSet",x=95+37.83*8, y=30.5, radius=15, tooltip = "",model = {
+        {ID = "notused123456",x=95+37.83*8, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=1.85,
-            var="EnableBV",speed=8, vmin=0, vmax=0.7,
+            var="notused123",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_press" or "button_square_release" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
 		
@@ -1316,14 +1316,14 @@ ENT.ClientProps["PasswordProp"] = {
 ---Segments
 ENT.ClientProps["speed1"] = {
     model = "models/metrostroi_train/81-720/digits/digit.mdl",
-    pos = Vector(810.9-159, 17.1+1.495, -1),
+    pos = Vector(810.9-159, 17.1+1.495, -0.98),
     ang = Angle(140,0,0),
     color = Color(20,255,50),
     hideseat = 0.2,
 }
 ENT.ClientProps["speed2"] = {
     model = "models/metrostroi_train/81-720/digits/digit.mdl",
-    pos = Vector(810.9-159, 18, -1),
+    pos = Vector(810.9-159, 18, -0.98),
     ang = Angle(140,0,0),
     color = Color(20,255,50),
     hideseat = 0.2,
@@ -2410,9 +2410,6 @@ for k=0,3 do
         end,
     } 	 	  
 end
-
-self.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
-self.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
 
 function self:UpdateWagonNumber()
     self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	

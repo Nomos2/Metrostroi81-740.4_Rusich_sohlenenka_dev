@@ -188,7 +188,7 @@ ENT.ClientProps["Zavod_table_sochl_torec"] = {
 	
 ENT.ClientProps["lamps_salon_on_rear_avar1"] = {
     model = "models/metrostroi_train/81-741/salon/lamps/lamps_on_rear_new.mdl",
-    pos = Vector(-252.75, 0.3, -74.885),
+    pos = Vector(-197.3, 0.3, -74.885),
     ang = Angle(0,180,0),
     color = Color(245,238,223),
 	hide = 1,     	 
@@ -311,7 +311,6 @@ end
 for avar = 1,2 do
 	local animation = math.random (5,12)	
 	local animation1 = math.random (0.5,1)	
-	--Головная часть
     local colV = self:GetNW2Vector("Lamp7404"..avar)
     local col = Color(colV.x,colV.y,colV.z)	
 	self:ShowHideSmooth("lamps_salon_on_rear_avar"..avar,train:Animate("LampsEmer",train:GetPackedRatio("SalonLighting") == 0.4 and 1 or 0,0,animation1,animation,false),col)  
@@ -321,10 +320,8 @@ end
     self:SetSoundState("compressor",state and 1.0 or 0,1)
 
 for i = 1,11 do	
-	--Головная часть
     local colV = self:GetNW2Vector("Lamp7404"..i)
     local col = Color(colV.x,colV.y,colV.z)			
-	--Задняя часть		
 	self:ShowHideSmooth("lamps_salon_on_rear"..i-1,train:Animate("LampsFull",train:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
     self:ShowHideSmooth("lamps_salon_on_rear1"..i,train:Animate("LampsFull",train:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
 end

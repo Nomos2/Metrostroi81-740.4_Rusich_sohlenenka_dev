@@ -58,7 +58,7 @@ function ENT:Initialize()
         self.NormalMass = self:GetPhysicsObject():GetMass()
     end	   
 
-	self.NormalMass = 19500		
+	self.NormalMass = 15500		
 
     self.WireIOSystems = {}
     self.Systems = {}
@@ -66,12 +66,9 @@ function ENT:Initialize()
     self.TrainWires = {}	
 	
 	self.Lights = {
-		[14] = { "dynamiclight",    Vector( 220, -20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+		[14] = { "dynamiclight",    Vector( 220, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
 		[15] = { "dynamiclight",    Vector( 10, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [16] = { "dynamiclight",    Vector( -310, 20, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 },
-		
-		[14.1] = { "dynamiclight",    Vector( 200, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 }, --полный свет
-        [16.1] = { "dynamiclight",    Vector( -310, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 } 	
+        [16] = { "dynamiclight",    Vector( -260, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 },
     }	
 	
 	self.RearDoor = false	
@@ -99,7 +96,7 @@ function ENT:UpdateLampsColors()
 	local rnd1,rnd2,col = 0.7+mr()*0.3,mr()
 	local typ = math.Round(mr())
 	local r,g = 15,15
-	for i = 1,40 do
+	for i = 1,20 do
 		local chtp = mr() > rnd1
 		if typ == 0 and chtp then
 			if mr() > rnd2 then
@@ -140,12 +137,14 @@ function ENT:Think()
 	
     self:SetNW2Entity("gmod_subway_81-741_4", self.HeadTrain)    
 	local train = self.HeadTrain		
+	local Panel = train.Panel		
 	local retVal = self.BaseClass.Think(self)
     local power = train.Electric.Battery80V > 62			
 	
     self:SetPackedBool("Vent2Work",train.Electric.Vent2>0)	
     self:SetPackedBool("BBEWork",power and train.BUV.BBE > 0)
-    self:SetPackedBool("CompressorWork",train.Pneumatic.Compressor) 
+    self:SetPackedBool("CompressorWork",train.Pneumatic.Compressor)
+    self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)	
 	
     if self.AnnouncementToLeaveWagon ~= train.AnnouncementToLeaveWagon then self.AnnouncementToLeaveWagon = train.AnnouncementToLeaveWagon end
 	
@@ -189,9 +188,6 @@ function ENT:Think()
 	self:SetLightPower(14,passlight > 0, passlight and mul/20) 
     self:SetLightPower(15,passlight > 0.5, passlight and mul/20)
 	self:SetLightPower(16,passlight > 0, passlight and mul/20) 
-	
-	self:SetLightPower(14.1,passlight > 0, passlight and mul/20) 
-	self:SetLightPower(16.1,passlight > 0, passlight and mul/20) 	
 	
     return retVal		 
 end	
