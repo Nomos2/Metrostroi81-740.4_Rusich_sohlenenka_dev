@@ -16,7 +16,7 @@ ENT.Base            = "gmod_subway_base"
 
 ENT.NoTrain = true
 
-ENT.Category		= "Metrostroi (utility)"
+ENT.Category		= ""
 ENT.Spawnable		= false
 ENT.AdminSpawnable	= false
 ENT.Author          = ""
@@ -148,10 +148,6 @@ function ENT:InitializeSounds()
         end	
 	end
 end
-
---function ENT:InitializeSystems()
-    --self:SetNW2Entity("gmod_subway_81-740_4"):LoadSystem("Pneumatic","81_740_4Pneumatic")	
---end
 
 ENT.AnnouncerPositions = {}
 ENT.AnnouncerPositions = {

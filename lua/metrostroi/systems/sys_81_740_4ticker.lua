@@ -58,10 +58,10 @@ if CLIENT then
             self.Color = col
             render.PushRenderTarget(self.Train.Tickers,0,0,1000,64)
             render.Clear(0, 0, 0, 0)
-            cam.Start2D()
+            cam.Start2D()				
             self:Tickers(self.Train)
             cam.End2D()
-            render.PopRenderTarget()
+            render.PopRenderTarget() 
         end
     end
     function TRAIN_SYSTEM:PrintText(x, text, color)

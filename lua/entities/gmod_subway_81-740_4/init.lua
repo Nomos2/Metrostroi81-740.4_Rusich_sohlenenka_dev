@@ -771,23 +771,6 @@ function ENT:Think()
     self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
     self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
     self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	
-	--print(self.Electric.IChopped,self.Electric.Chopper)
-    --print(self,self.BPTI.T,self.BPTI.State)		
-
-    --[[ if self.BUV.Brake > 0 then
-        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and (1-self.Electric.RNState)+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
-    else
-        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and self.Electric.RNState+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
-    end--]]
-    --if self.BPTI.State < 0 then
-        --self:SetPackedRatio("RNState", ((self.BPTI.RNState)-0.5)*math.Clamp((math.abs(self.Electric.Itotal/2)-30-self.Speed*1)/35,0,1)) --снижение скорости
-        --self:SetNW2Int("RNFreq", 13)
-    --else--if self.BPTI.State > 0 then
-        --self:SetPackedRatio("RNState", (0.95-self.BPTI.RNState)*math.Clamp((math.abs(self.Electric.Itotal/2)-36-self.Speed*1)/35,0,5))
-        --self:SetNW2Int("RNFreq", ((self.BPTI.FreqState or 0)-1/3)/(2/3)*12)
-    --[[ else
-        self:SetPackedRatio("RNState", 0)--]]
-    --end
 	
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do

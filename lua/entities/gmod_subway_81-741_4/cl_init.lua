@@ -928,9 +928,6 @@ for k,v in pairs(bogey.EngineSNDConfig) do bogey:SetSoundState(v[1],0,0) end
 end
 end
 
-ENT.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
-ENT.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
-
 function ENT:Think()
     self.BaseClass.Think(self)
 	local MiddleBogey = self:GetNW2Entity("MiddleBogey")	
@@ -1021,6 +1018,29 @@ for k=0,3 do
             ent.WagonNumber = false
         end,
     }
+end
+
+function self:UpdateWagonNumber()
+    self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov_741")	
+    local train1 = self.HeadTrain1 
+    if not IsValid(train1) or not IsValid(self) then return end	
+for k=0,3 do
+        --if i< count then			
+			if self.WagonNumber then				
+            local rightNum = self.ClientEnts["TrainNumberR"..k]		
+	        local num = math.floor(self.WagonNumber%(10^(k+1))/10^k)
+            if IsValid(rightNum) then
+				rightNum:SetPos(self:LocalToWorld(Vector(635-k*6.6+4*6.6/2,-63.35,18)))
+                rightNum:SetSkin(num)
+            end	
+            local leftNum = train1.ClientEnts["TrainNumberL"..k]	
+	        local num = math.floor(self.WagonNumber%(10^(k+1))/10^k)										
+            if IsValid(leftNum) then	
+                leftNum:SetLocalPos(Vector(-310+k*6.6-4*6.6/2, 63.4, 18))
+                leftNum:SetSkin(num)		
+            end  								
+			end
+		end
 end
 
 local function GetDoorPositionRear(b,k,j)

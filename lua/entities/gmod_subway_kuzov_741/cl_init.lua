@@ -273,7 +273,8 @@ function ENT:Initialize()
 	
     self.HeadTrain = self:GetNW2Entity("gmod_subway_81-741_4")	
     local train = self.HeadTrain 	
-		
+	
+    self.RearLeak = 0	
     self.ReleasedPdT = 0	
 	
     self.VentRand = {}
@@ -366,8 +367,8 @@ end
 	
 	local dT = train.DeltaTime	
 	
-    train.RearLeak = math.Clamp(train.RearLeak + 10*(-train:GetPackedRatio("RearLeak")-train.RearLeak)*dT,0,1)	
-    self:SetSoundState("rear_isolation",train.RearLeak,0.9+0.2*train.RearLeak)	
+    self.RearLeak = math.Clamp(self.RearLeak + 10*(-train:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)	
+    self:SetSoundState("rear_isolation",self.RearLeak,0.9+0.2*self.RearLeak)	
 	
     local dPdT = train:GetPackedRatio("BrakeCylinderPressure_dPdT")
     self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)

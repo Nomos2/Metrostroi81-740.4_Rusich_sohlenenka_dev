@@ -12,11 +12,13 @@ or Map:find("gm_metropbl")) then
 end
 
 include("shared.lua")
---------------------------------------------------------------------------------
+--
 ENT.ClientProps = {}
 ENT.ButtonMap = {}
 ENT.AutoAnims = {}
 ENT.ClientSounds = {}
+--
+ENT.ClientPropsInitialized = false
 
 --[[ENT.ClientProps["test_prop"] = {
 	model = "models/props_junk/metalbucket01a.mdl",
@@ -305,18 +307,6 @@ self.ClientProps["TrainNumberL"..k] = {
     } 
 end	
 
-function self:UpdateWagonNumber()
-			train.HeadLightBroken1 = train:GetNW2Bool("HeadLightBroken1",false)
-			train.HeadLightBroken2 = train:GetNW2Bool("HeadLightBroken2",false)
-			train.HeadLightBroken3 = train:GetNW2Bool("HeadLightBroken3",false)
-			train.HeadLightBroken4 = train:GetNW2Bool("HeadLightBroken4",false)
-			 
-			train.RedLightBroken1 = train:GetNW2Bool("RedLightBroken1",false)
-			train.RedLightBroken2 = train:GetNW2Bool("RedLightBroken2",false)
-			train.RedLightBroken3 = train:GetNW2Bool("RedLightBroken3",false)
-			train.RedLightBroken4 = train:GetNW2Bool("RedLightBroken4",false)	
-end
-
 for avar = 1,2 do
 	local animation = math.random (5,12)	
 	local animation1 = math.random (0.5,1)	
@@ -380,8 +370,8 @@ end
     self:SetSoundState("rear_isolation",train.RearLeak,0.9+0.2*train.RearLeak)		
 	
     local dPdT = train:GetPackedRatio("BrakeCylinderPressure_dPdT")
-    self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-train.ReleasedPdT)*dT,0,1)
-    self:SetSoundState("release_rear",math.Clamp(train.ReleasedPdT,0,1)^1.65,1.0)		
+    self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)
+    self:SetSoundState("release_rear",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)		
 	
 	local speed = train:GetPackedRatio("Speed", 0)
 
@@ -462,8 +452,10 @@ end
         self.Door4 = door4s
         self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
     end	
-	
-    for k,v in ipairs(train.AnnouncerPositions) do
+    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
+    local train = self.HeadTrain 
+    local work = train:GetPackedBool("AnnPlay")	
+    for k,v in ipairs(self.AnnouncerPositions) do
         if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
             self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
 		end 
@@ -472,6 +464,10 @@ end
 
 function ENT:Draw()
     self.BaseClass.Draw(self)
+end  
+
+function ENT:OnButtonPressed(button)
+
 end
 function ENT:OnPlay(soundid,location,range,pitch)
     if location == "stop" then
@@ -481,7 +477,8 @@ function ENT:OnPlay(soundid,location,range,pitch)
         end
         return
     end
-end	
+    return soundid,location,range,pitch
+end 
 
 function ENT:DrawPost(special)
     self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	

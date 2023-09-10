@@ -20,7 +20,7 @@ ENT.Purpose         = ""
 ENT.Instructions    = ""
 ENT.Category        = "Metrostroi (trains)"
 ENT.SkinsType 		= "81-740"
-ENT.Model 			= "models/metrostroi_train/81-740/body/81-740_4_defualt_mos_front.mdl"
+ENT.Model 			= "models/metrostroi_train/81-741/body/81-741_4_front.mdl"
 
 ENT.Spawnable       = true
 ENT.AdminSpawnable  = true

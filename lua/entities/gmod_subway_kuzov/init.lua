@@ -88,7 +88,7 @@ function ENT:Initialize()
 end	
 
 function ENT:TrainSpawnerUpdate()
-    self:UpdateLampsColors()			
+    self:UpdateLampsColors()
 end
 
 function ENT:UpdateLampsColors()
@@ -146,6 +146,11 @@ function ENT:Think()
     self:SetPackedBool("BBEWork",power and train.BUV.BBE > 0)
     self:SetPackedBool("CompressorWork",train.Pneumatic.Compressor) 
     self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)	 
+	
+    --local state = math.abs(train.AsyncInverter.InverterFrequency/(11+train.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
+    --self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+train.AsyncInverter.State/1),0,1)*math.Clamp(train.Speed/6,0,1))
+    --self:SetPackedRatio("asyncstate", math.Clamp(train.AsyncInverter.State/0.2*math.abs(train.AsyncInverter.Current)/100,0,1))
+    --self:SetPackedRatio("chopper", math.Clamp(train.Electric.Chopper>0 and train.Electric.IChopped/100 or 0,0,1))		
 	
     if self.AnnouncementToLeaveWagon ~= train.AnnouncementToLeaveWagon then self.AnnouncementToLeaveWagon = train.AnnouncementToLeaveWagon end
 	

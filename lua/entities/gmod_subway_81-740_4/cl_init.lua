@@ -2836,7 +2836,6 @@ end
             self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
 		end 
 		
-    self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
     local train1 = self.HeadTrain1 
 	for k,v in ipairs(train1.AnnouncerPositions) do
         if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
