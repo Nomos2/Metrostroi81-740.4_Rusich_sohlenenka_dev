@@ -25,7 +25,6 @@ end
 
 function TRAIN_SYSTEM:TriggerInput(name,value)
 end
-
 if CLIENT then
     function TRAIN_SYSTEM:ClientInitialize()
     end
@@ -112,7 +111,7 @@ function TRAIN_SYSTEM:Initialize()
     self.EnStations["Кожуховская"] = "Kozhuhovskaya"
     self.EnStations["Печатники"] = "Pechatniki"
     self.EnStations["Волжская"] = "Volzhskaya"
-    self.EnStations["Зябликово"] = "Zyablikovo"	
+    self.EnStations["Люблино"] = "Lyublino"		
     --Nekrasovka
     self.EnStations["Некрасовка"] = "Nekrasovka"
     self.EnStations["Лухмановская"] = "Luhmanovskaya"
@@ -138,13 +137,14 @@ function TRAIN_SYSTEM:Initialize()
     self.AdvertSymbol = 0
     self.CurrentAdvert = ""
     self.isMoving = true
-    self.CurColor = Color(255, 0, 0)
+    self.CurColor = Color(255, 32, 32)
     self.Status = -1
     self.ShowStation = false
     self.Station = nil
     self.Next = false
     self.EnShow = false
 end
+
 function TRAIN_SYSTEM:CANReceive(source,sourceid,target,targetid,textdata,numdata)
     if textdata == "Curr" then
         self.Station = numdata
@@ -154,14 +154,15 @@ function TRAIN_SYSTEM:CANReceive(source,sourceid,target,targetid,textdata,numdat
 
     self.ShowStation = true
 end
+
 function TRAIN_SYSTEM:Think()
     local Train = self.Train
-    local Power = Train.Panel.TickerPower > 0
-    local Work = Train.Panel.TickerWork > 0 and Metrostroi.TickerAdverts
-    if Power then
-        self.AdvertSymbol = self.AdvertSymbol - 90*Train.DeltaTime
-        if ((self.AdvertSymbol < -utf8.len(self.CurrentAdvert)*10-20) or self.ShowStation == true) then
-            self.AdvertSymbol = 40*(7+math.random(0,3))--40*7
+    local Power = Train.Panel.TickerPower>0
+    local Work = Train.Panel.TickerWork>=0 and Metrostroi.TickerAdverts
+    if Power and (Work or self.Advert ~= -1) then
+        self.AdvertSymbol = self.AdvertSymbol - 96*Train.DeltaTime
+        if ((self.AdvertSymbol < -(utf8.len(self.CurrentAdvert)*10+40)) or self.ShowStation == true) then
+            self.AdvertSymbol = 400
             self.isMoving = true
             
             if Work and self.Status >= 0 then
@@ -172,16 +173,16 @@ function TRAIN_SYSTEM:Think()
                 if self.Status == 1 or self.ShowStation == true then
                     self.ShowStation = false
                     if self.Station then
-                        self.CurColor = Color(0, 255, 0)
+                        self.CurColor = Color(164, 255, 32)
                         if self.Next == true then
                             self.EnShow = false
                             if self.ReplaceStations[self.Station] then
-                                self.CurrentAdvert = Format("следующая станция %s.", self.ReplaceStations[self.Station])
+                                self.CurrentAdvert = Format("Следующая станция %s", self.ReplaceStations[self.Station])
                             else
-                                self.CurrentAdvert = Format("следующая станция %s.", self.Station)
+                                self.CurrentAdvert = Format("Следующая станция %s", self.Station)
                             end
                             if self.EnStations[self.Station] then
-                                self.CurrentAdvert = self.CurrentAdvert..Format("The next station is %s.", self.EnStations[self.Station])
+                                self.CurrentAdvert = self.CurrentAdvert..Format("          The next station is %s", self.EnStations[self.Station])
                             end
                             self.Status = 2
                         else
@@ -224,15 +225,17 @@ function TRAIN_SYSTEM:Think()
                         self.Status = 1
                     end 
                 else
-                    self.CurColor = Color(255, 0, 0)
-                    self.CurrentAdvert = Metrostroi.TickerAdverts[self.Advert].."   В вагонах действует бесплатная Wi-Fi сеть."
+                    self.CurColor = Color(255, 32, 32)
                     self.Advert = math.random(1, table.getn(Metrostroi.TickerAdverts))
+                    self.CurrentAdvert = Metrostroi.TickerAdverts[self.Advert]
+                    self.Advert = math.random(1, table.getn(Metrostroi.TickerAdverts))
+                    self.CurrentAdvert = self.CurrentAdvert .. "          " .. Metrostroi.TickerAdverts[self.Advert].."          В вагонах действует бесплатная Wi-Fi сеть \"MT_FREE\""
                     self.Status = 0
                 end
             else
                 self.Station = nil
-				self.CurColor = Color(232, 199, 88)
-                self.CurrentAdvert = "НИИ Фабрики SENT БЕГУЩАЯ СТРОКА V2.1"
+				self.CurColor = Color(255, 164, 32)
+                self.CurrentAdvert = "НИИ Фабрики SENT БЕГУЩАЯ СТРОКА V2.2"
 				if os.date( "%m-%d" ) == "04-01" then
 				    self.CurrentAdvert = "УважааааААААААААеееееееееееееееееееееееммммММММММММЫЫЫЫЫЫЫЫЫЫееее пааааааааааааааааааААААААСССААААЖИРЫ"
 				end

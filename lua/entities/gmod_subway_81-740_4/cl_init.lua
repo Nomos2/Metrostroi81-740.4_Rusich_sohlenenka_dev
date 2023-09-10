@@ -1735,7 +1735,6 @@ function ENT:Initialize()
     self.ReleasedPdT = 0
     self.CraneRamp = 0
     self.CraneRRamp = 0
-    self.ReleasedPdT = 0
 	
 	self.HeadLightBroken1 = false
 	self.HeadLightBroken2 = false
@@ -1752,6 +1751,7 @@ function ENT:Initialize()
 	self.EmergencyValveEPKRamp = 0
 	self.EmergencyBrakeValveRamp = 0
     self.FrontLeak = 0
+    self.RearLeak = 0	
 
     self.ParkingBrake = 0
 

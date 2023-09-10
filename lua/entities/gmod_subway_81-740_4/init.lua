@@ -758,38 +758,7 @@ end
 	ent.ButtonBuffer = {}
 	ent.KeyBuffer = {}
 	ent.KeyMap = {}	
-end	
-	
-	--[[
-    local seat = ents.Create("prop_vehicle_prisoner_pod")
-    seat:SetModel("models/nova/jeep_seat.mdl") --jalopy
-    seat:SetPos(self:LocalToWorld(Vector(-657,-30.2,-25)))
-    seat:SetAngles(self:GetAngles()+Angle(0,0,0))
-    seat:SetKeyValue("limitview",0)
-    seat:Spawn()
-    seat:GetPhysicsObject():SetMass(0)
-    seat:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    self:DrawShadow(false)
-	seat:SetNoDraw(true)
-	seat.ExitPos = self.ExitPos	
-	
-    --Assign ownership
-    if CPPI and IsValid(self:CPPIGetOwner()) then seat:CPPISetOwner(self:CPPIGetOwner()) end
-    seat:SetParent(ent)	
-
-    local seat_1 = ents.Create("prop_vehicle_prisoner_pod")	
-    seat_1:SetModel("models/nova/jeep_seat.mdl") --jalopy
-    seat_1:SetPos(self:LocalToWorld(Vector(-658,36,-25)))
-    seat_1:SetAngles(self:GetAngles()+Angle(0,180,0))
-    seat_1:SetKeyValue("limitview",0)
-    seat_1:Spawn()
-    seat_1:GetPhysicsObject():SetMass(0)
-    seat_1:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    seat_1:DrawShadow(false)
-	seat_1:SetNoDraw(true)	
-	
-    if CPPI and IsValid(self:CPPIGetOwner()) then seat_1:CPPISetOwner(self:CPPIGetOwner()) end
-    seat_1:SetParent(ent)]]				
+end			
 ---------------------------------------------------------------------------
 function ENT:Think()
     local retVal = self.BaseClass.Think(self)

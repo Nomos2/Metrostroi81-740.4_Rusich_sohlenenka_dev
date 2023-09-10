@@ -376,6 +376,9 @@ end
 	
 	local dT = train.DeltaTime	
 	
+    train.RearLeak = math.Clamp(train.RearLeak + 10*(-train:GetPackedRatio("RearLeak")-train.RearLeak)*dT,0,1)	
+    self:SetSoundState("rear_isolation",train.RearLeak,0.9+0.2*train.RearLeak)		
+	
     local dPdT = train:GetPackedRatio("BrakeCylinderPressure_dPdT")
     self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-train.ReleasedPdT)*dT,0,1)
     self:SetSoundState("release_rear",math.Clamp(train.ReleasedPdT,0,1)^1.65,1.0)		

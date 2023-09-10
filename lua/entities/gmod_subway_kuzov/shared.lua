@@ -149,6 +149,10 @@ function ENT:InitializeSounds()
 	end
 end
 
+--function ENT:InitializeSystems()
+    --self:SetNW2Entity("gmod_subway_81-740_4"):LoadSystem("Pneumatic","81_740_4Pneumatic")	
+--end
+
 ENT.AnnouncerPositions = {}
 ENT.AnnouncerPositions = {
     {Vector(190,-34,55),250,0.1},
