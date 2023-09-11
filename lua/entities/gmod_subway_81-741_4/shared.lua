@@ -54,18 +54,18 @@ function ENT:InitializeSounds()
 		local id1 = Format("b1tunnel_%d",i)
 		local id2 = Format("b2tunnel_%d",i)
 		local id3 = Format("b3tunnel_%d",i)		
-		self.SoundNames[id1.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		self.SoundNames[id1.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundNames[id1.."a"] = "subway_trains/rusich/bogey/st"..i.."a.wav"
+		self.SoundNames[id1.."b"] = "subway_trains/rusich/bogey/st"..i.."b.wav"
 		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1}
 		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
 		
-		self.SoundNames[id2.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		self.SoundNames[id2.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundNames[id2.."a"] = "subway_trains/rusich/bogey/st"..i.."a.wav"
+		self.SoundNames[id2.."b"] = "subway_trains/rusich/bogey/st"..i.."b.wav"
 		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-1,0,-74),1}
 		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"]
 		
-		self.SoundNames[id3.."a"] = "subway_trains/bogey/st"..i.."a.wav"
-		self.SoundNames[id3.."b"] = "subway_trains/bogey/st"..i.."b.wav"
+		self.SoundNames[id3.."a"] = "subway_trains/rusich/bogey/st"..i.."a.wav"
+		self.SoundNames[id3.."b"] = "subway_trains/rusich/bogey/st"..i.."b.wav"
 		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-520,0,-74.5),1}
 		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
 	end
@@ -73,18 +73,18 @@ function ENT:InitializeSounds()
 		local id1 = Format("b1street_%d",i)
 		local id2 = Format("b2street_%d",i)
 		local id3 = Format("b3street_%d",i)		
-		self.SoundNames[id1.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		self.SoundNames[id1.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundNames[id1.."a"] = "subway_trains/rusich/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id1.."b"] = "subway_trains/rusich/bogey/wheels/street_"..i.."b.mp3"
 		self.SoundPositions[id1.."a"] = {700,1e9,Vector( 520,0,-75),1.5}
 		self.SoundPositions[id1.."b"] = self.SoundPositions[id1.."a"]
 		
-		self.SoundNames[id2.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		self.SoundNames[id2.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundNames[id2.."a"] = "subway_trains/rusich/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id2.."b"] = "subway_trains/rusich/bogey/wheels/street_"..i.."b.mp3"
 		self.SoundPositions[id2.."a"] = {700,1e9,Vector(-1,0,-74),1.5}
 		self.SoundPositions[id2.."b"] = self.SoundPositions[id2.."a"] 
 		
-		self.SoundNames[id3.."a"] = "subway_trains/bogey/wheels/street_"..i.."a.mp3"
-		self.SoundNames[id3.."b"] = "subway_trains/bogey/wheels/street_"..i.."b.mp3"
+		self.SoundNames[id3.."a"] = "subway_trains/rusich/bogey/wheels/street_"..i.."a.mp3"
+		self.SoundNames[id3.."b"] = "subway_trains/rusich/bogey/wheels/street_"..i.."b.mp3"
 		self.SoundPositions[id3.."a"] = {700,1e9,Vector(-520,0,-74.5),1.5}
 		self.SoundPositions[id3.."b"] = self.SoundPositions[id3.."a"]		
 	end	
