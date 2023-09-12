@@ -21,7 +21,7 @@ ENT.ClientSounds = {}
 ENT.ClientPropsInitialized = false
 
 --[[ENT.ClientProps["test_prop"] = {
-	model = "models/props_junk/metalbucket01a.mdl",
+	model = "models/props_junk/metalbucket01a.mdl", --Заготовка под информатор нормальный.
 	pos = Vector(190,-34,55),
 	ang = Angle(0,0,0),
 	scale = 0.5,	
@@ -62,6 +62,7 @@ ENT.ClientProps["test_prop5"] = {
 	scale = 0.5,	
 	nohide = true,
 }]]
+
 
 ENT.ClientProps["salonR"] = {
 	model = "models/metrostroi_train/81-740/salon/salon_rear.mdl",
@@ -306,6 +307,28 @@ self.ClientProps["TrainNumberL"..k] = {
 		end,
     } 
 end	
+
+--[[train.ClientProps["test_prop"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(-140,0,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+train.ClientProps["test_prop_1"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(-360,0,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+train.ClientProps["test_prop_2"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(-590,0,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}]]
 
 for avar = 1,2 do
 	local animation = math.random (5,12)	

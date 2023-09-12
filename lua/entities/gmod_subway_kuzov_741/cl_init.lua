@@ -19,7 +19,7 @@ ENT.AutoAnims = {}
 ENT.ClientSounds = {}
 
 --[[ENT.ClientProps["test_prop"] = {
-	model = "models/props_junk/metalbucket01a.mdl",
+	model = "models/props_junk/metalbucket01a.mdl", тот же костыль, что в голове.
 	pos = Vector(190,-34,55),
 	ang = Angle(0,0,0),
 	scale = 0.5,	
@@ -307,6 +307,28 @@ self.ClientProps["TrainNumberL"..k] = {
 		end,
     } 
 end
+--[[train.ClientProps["test_prop"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(-120,0,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+train.ClientProps["test_prop1"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(-360,0,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+train.ClientProps["test_prop2"] = {
+	model = "models/props_junk/metalbucket01a.mdl",
+	pos = Vector(-570,0,55),
+	ang = Angle(0,0,0),
+	scale = 0.5,	
+	nohide = true,
+}
+}]]	
 
 for avar = 1,2 do
 	local animation = math.random (5,12)	
