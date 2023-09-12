@@ -19,26 +19,33 @@ ENT.SyncTable = {"RearBrakeLineIsolation","RearTrainLineIsolation"}
  
 function ENT:Initialize()
     self:SetModel("models/metrostroi_train/81-740/body/81-740_4_rear.mdl")
+    self.BaseClass.Initialize(self)	
     self:SetPos(self:GetPos() + Vector(0,0,0))	
-    --self.PassengerSeat = self:CreateSeat("passenger",Vector(586-15,-40,-30),Angle(0,0,0),"models/nova/jeep_seat.mdl")
-    --self.PassengerSeat2 = self:CreateSeat("passenger",Vector(	-658,36,-25),Angle(0,180,0),"models/nova/jeep_seat.mdl")	--как пойму, из-за чего ошибки, раскомичу.
+    self.PassengerSeat = self:CreateSeat("passenger",Vector(-135,-40,-25),Angle(0,90,0),"models/nova/airboat_seat.mdl")
+    self.PassengerSeat2 = self:CreateSeat("passenger",Vector(-135,40,-25),Angle(0,270,0),"models/nova/airboat_seat.mdl")  
+    self.PassengerSeat3 = self:CreateSeat("passenger",Vector(95,40,-25),Angle(0,270,0),"models/nova/airboat_seat.mdl") 
+    self.PassengerSeat4 = self:CreateSeat("passenger",Vector(95,-40,-25),Angle(0,90,0),"models/nova/airboat_seat.mdl")  	
+    self.PassengerSeat:SetRenderMode(RENDERMODE_NONE)
+	self.PassengerSeat:SetColor(Color(0,0,0,0))
+    self.PassengerSeat2:SetRenderMode(RENDERMODE_NONE)
+	self.PassengerSeat2:SetColor(Color(0,0,0,0))
+    self.PassengerSeat3:SetRenderMode(RENDERMODE_NONE)
+	self.PassengerSeat3:SetColor(Color(0,0,0,0))
+    self.PassengerSeat4:SetRenderMode(RENDERMODE_NONE)
+	self.PassengerSeat4:SetColor(Color(0,0,0,0))	
+
+	self.NormalMass = 15500
 	
-    self.Joints = {}
-    self.JointPositions = {}
-    if self:GetModel() == "models/error.mdl" then
-        self:SetModel("models/props_lab/reciever01a.mdl")
-    end	
-    if not self.NoPhysics then
-        self:PhysicsInit(SOLID_VPHYSICS)
-        self:SetMoveType(MOVETYPE_VPHYSICS)
-        self:SetSolid(SOLID_VPHYSICS)
-    else
-        self:SetSolid(SOLID_VPHYSICS)
-    end
-    self:SetUseType(SIMPLE_USE)
-    if CPPI and IsValid(self.Owner) then
-        self:CPPISetOwner(self.Owner)
-    end    
+    self.WireIOSystems = {}
+    self.Systems = {}
+    self.TrainEntities = {}
+    self.TrainWires = {}	
+	
+	self.Lights = {
+		[14] = { "dynamiclight",    Vector( 220, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+		[15] = { "dynamiclight",    Vector( 10, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
+        [16] = { "dynamiclight",    Vector( -260, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 },
+    }	
 	
 	self.InteractionZones = {	
         {
@@ -53,25 +60,7 @@ function ENT:Initialize()
             ID = "RearDoor",
             Pos = Vector(-310, -6, 7), Radius = 31
         },
-	} 
-
-    -- Get default train mass
-    if IsValid(self:GetPhysicsObject()) then
-        self.NormalMass = self:GetPhysicsObject():GetMass()
-    end	   
-
-	self.NormalMass = 15500			
-
-    self.WireIOSystems = {}
-    self.Systems = {}
-    self.TrainEntities = {}
-    self.TrainWires = {}	
-	
-	self.Lights = {
-		[14] = { "dynamiclight",    Vector( 220, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-		[15] = { "dynamiclight",    Vector( 10, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
-        [16] = { "dynamiclight",    Vector( -260, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 250, fov=180,farz = 128 },
-    }	
+	}   	
 	
 	self.RearDoor = false	
 	self.Lamps = {
