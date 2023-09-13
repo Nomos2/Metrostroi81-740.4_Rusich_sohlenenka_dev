@@ -296,6 +296,7 @@ function ENT:CreatePricep(pos,ang)
 	Map:find("gm_jar_pll_redux") or
 	Map:find("gm_metro_crossline") or	
 	Map:find("gm_metro_mosldl") or	
+	Map:find("gm_metro_nsk_line") or		
 	Map:find("gm_smr_1987") then
         constraint.Axis(
 		self.MiddleBogey,		
