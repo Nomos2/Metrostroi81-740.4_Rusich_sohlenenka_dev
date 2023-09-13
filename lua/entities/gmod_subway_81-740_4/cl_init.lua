@@ -1,6 +1,5 @@
 ﻿local Map = game.GetMap():lower() or ""
 if(Map:find("gm_metro_minsk") 
-or Map:find("gm_metro_nsk_line")
 or Map:find("gm_metro_kalinin")
 or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
@@ -1657,6 +1656,22 @@ ENT.ClientProps["Gerb_msk_right"] = {
 	nohide = true,
 	scale = 3,
 }
+
+ENT.ClientProps["Gerb_msk1"] = {
+	model = "models/metrostroi_train/81-740/body/gerb.mdl",
+	pos = Vector(565-15,62.6,35),
+	ang = Angle(0,0,-86.8),
+	nohide = true,
+	scale = 3,
+}
+ENT.ClientProps["Gerb_msk_right1"] = {
+	model = "models/metrostroi_train/81-740/body/gerb.mdl",
+	pos = Vector(565-15,-62.6,36),
+	ang = Angle(0,180,-86.8),
+	nohide = true,
+	scale = 3,
+}
+
 ENT.ClientProps["Naddver_off"] = {
 	model = "models/metrostroi_train/81-740/salon/naddverka_off.mdl",
 	pos = Vector(314.75-15,37.38,58.1),
@@ -2498,6 +2513,30 @@ end
 	
 	local ZavodTable = self:GetNW2Int("ZavodTable",1)	
     self:ShowHide("Zavod_table_front",ZavodTable==1)
+	
+	local Map = game.GetMap():lower() or ""	
+	local kek1 = Map:find("gm_metro_crossline_n4a") 
+	or Map:find("gm_metro_crossline_c4") 
+	or Map:find("gm_metro_crossline_m12") 
+	or Map:find("gm_metro_crossline_n3") 
+	or Map:find("gm_smr_1987") 
+	or Map:find("gm_jar_pll")
+	or Map:find("gm_metro_pink_line") 
+	or Map:find("gm_metro_chapaevskaya_line")
+	or Map:find("gm_metro_surfacemetro")
+	or Map:find("gm_metro_sunnytown")	
+	or Map:find("gm_metro_ruralline")
+	or Map:find("gm_metro_nsk_line")		
+	or Map:find("gm_metrostroi")
+	or Map:find("gm_line_2")	
+	
+	
+    self:ShowHide("Gerb_msk",kek1)
+    self:ShowHide("Gerb_msk_right",kek1)		
+	
+    self:ShowHide("Gerb_msk1",not kek1)
+    self:ShowHide("Gerb_msk_right1",not kek1)	
+	
 	local animation = math.random (5,12)	
 	local animation1 = math.random (0.5,1)	
 	

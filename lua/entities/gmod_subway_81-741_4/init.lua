@@ -1,6 +1,5 @@
 local Map = game.GetMap():lower() or ""
 if(Map:find("gm_metro_minsk") 
-or Map:find("gm_metro_nsk_line")
 or Map:find("gm_metro_kalinin")
 or Map:find("gm_metro_krl")
 or Map:find("gm_dnipro")
@@ -408,12 +407,12 @@ function ENT:CreatePricep(pos,ang)
 	)
 	else	
 
-	constraint.AdvBallsocket(
+		constraint.AdvBallsocket(
 		ent,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone
-		Vector(310,0,-20),
+		Vector(315,0,-20),
 		Vector(-305,0,0),		
 		0, --forcelimit
 		0, --torquelimit
@@ -428,14 +427,14 @@ function ENT:CreatePricep(pos,ang)
 		0, --zfric
 		0, --rotonly
 		1,--nocollide
-		false
+		true
 	)		
 	constraint.AdvBallsocket(
 		ent,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone,		
-		Vector(310,0,20),
+		Vector(315,0,20),
 		Vector(-305,0,0),	
 		0, --forcelimit
 		0, --torquelimit
@@ -450,14 +449,14 @@ function ENT:CreatePricep(pos,ang)
 		0, --zfric
 		0, --rotonly
 		1,--nocollide
-		false
+		true
 	)
 	constraint.AdvBallsocket(
 		ent,
 		self.MiddleBogey,
 		0, --bone
 		0, --bone		
-		Vector(310,0,-20),
+		Vector(315,0,-20),
 		Vector(5,0,0),	
 		0, --forcelimit
 		0, --torquelimit
