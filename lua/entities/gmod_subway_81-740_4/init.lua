@@ -114,7 +114,8 @@ end)
     self.RearBogey:SetNWFloat("SqualPitch",1.45+rand)
 	
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
-	self:SetNW2Entity("RearBogey",self.RearBogey)	
+	self:SetNW2Entity("RearBogey",self.RearBogey)
+	
 --[[local Bogey = self:GetNW2Entity("gmod_train_bogey")	 Не работает.
 if not IsValid(Bogey) then return end	
 	
@@ -645,15 +646,15 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone
-		Vector(315,0,-20),
-		Vector(-305,0,0),		
+		Vector(305,0,0),
+		Vector(-305,0,60),		
 		0, --forcelimit
 		0, --torquelimit
-		-20, --xmin
-		-10, --ymin
+		-15, --xmin
+		-20, --ymin
 		-180, --zmin
-		20, --xmax
-		10, --ymax
+		15, --xmax
+		20, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
@@ -667,37 +668,15 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone,		
-		Vector(315,0,20),
-		Vector(-305,0,0),	
+		Vector(305,0,60),
+		Vector(-305,0,10),	
 		0, --forcelimit
 		0, --torquelimit
-		-20, --xmin
-		-10, --ymin
+		-15, --xmin
+		-20, --ymin
 		-180, --zmin
-		10, --xmax
+		15, --xmax
 		20, --ymax
-		180, --zmax
-		0, --xfric
-		0, --yfric
-		0, --zfric
-		0, --rotonly
-		1,--nocollide
-		true
-	)
-	constraint.AdvBallsocket(
-		ent,
-		self.MiddleBogey,
-		0, --bone
-		0, --bone		
-		Vector(315,0,-20),
-		Vector(5,0,0),	
-		0, --forcelimit
-		0, --torquelimit
-		-10, --xmin
-		-10, --ymin
-		-180, --zmin
-		10, --xmax
-		10, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric

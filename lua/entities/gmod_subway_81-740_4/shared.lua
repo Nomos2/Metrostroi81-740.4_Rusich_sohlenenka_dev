@@ -553,10 +553,7 @@ ENT.Spawner = {
                 ent.CabinDoorRight = val==4 and first
 				timer.Simple(0,function()	
 				if not IsValid(ent) then return end					
-				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 4
-				end)
-				timer.Simple(0,function()	
-				if not IsValid(ent) then return end					
+				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 4					
 				ent:GetNW2Entity("gmod_subway_kuzov_741").RearDoor = val == 4
 				end)				
             else
@@ -564,10 +561,7 @@ ENT.Spawner = {
 				timer.Simple(0,function()	
 				if not IsValid(ent) then return end					
 				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 4
-				end)
-                ent.FrontDoor = val==4
-				timer.Simple(0,function()	
-				if not IsValid(ent) then return end					
+                ent.FrontDoor = val==4			
 				ent:GetNW2Entity("gmod_subway_kuzov_741").RearDoor = val == 4
 				end)				
             end

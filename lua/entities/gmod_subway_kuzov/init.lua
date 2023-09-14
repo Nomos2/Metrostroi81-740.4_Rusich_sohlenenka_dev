@@ -125,6 +125,7 @@ end
 function ENT:Think()	
     self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)    
 	local train = self.HeadTrain		
+    if not IsValid(train) or not IsValid(self) then return end		
 	local Panel = train.Panel		
 	local retVal = train.BaseClass.Think(self)
     local power = train.Electric.Battery80V > 62
