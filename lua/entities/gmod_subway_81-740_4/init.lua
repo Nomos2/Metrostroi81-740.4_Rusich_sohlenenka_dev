@@ -16,7 +16,7 @@ include("shared.lua")
 
 ENT.SyncTable = {
     "EnableBVEmer","Ticker","KAH","KAHk","ALS","ALSk","FDepot","PassScheme","EnableBV","DisableBV","Ring","R_Program2","R_Announcer","R_Line","R_Emer","R_Program1",
-    "DoorSelectL","DoorSelectR","DoorBlock","TPT",
+    "DoorSelectL","DoorSelectR","DoorBlock","TPT","RTE","ABSD",
     "EmerBrakeAdd","EmerBrakeRelease","EmerBrake","DoorClose","AttentionMessage","Attention","AttentionBrake","EmergencyBrake",
     "SF1","SF2","SF3","SF4","SF5","SF6","SF7","SF8","SF9","SF10","SF11","SF12",
     "SF13","SF14","SF15","SF16","SF17","SF18","SF19","SF20","SF21","SF22",
@@ -315,6 +315,8 @@ end
         ALS = {true,"ALSk"},
         ALSk = true,
         BARSBlock = true,
+        RTE = true,
+        ABSD = true,
         UAVA = true,
         Init = true,
         --ALSFreqBlock = true,		

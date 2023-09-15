@@ -234,6 +234,9 @@ Common.740.CAMS8Set 			= Overview: Tail Lights
 Common.740.CAMS9Set 			= Overview: Left
 Common.740.CAMS10Set		 	= Overview: Right
 
+Common.740.ABSD 				 = Emergency locking of the pressure sensor (ABSD)
+Common.740.RTE 				 	 = Emergency backup brake (RTE)
+
 Common.740.SFV1             = SF1: Power supply for car control circuits
 Common.740.SFV2             = SF2: Car control unit power supply
 Common.740.SFV3             = SF3: Power supply for the traction drive control unit
@@ -412,6 +415,9 @@ Entities.gmod_subway_81-740_4.Buttons.CAMSButtons.CAMS7Set            = @[Common
 Entities.gmod_subway_81-740_4.Buttons.CAMSButtons.CAMS8Set            = @[Common.740.CAMS8Set]
 Entities.gmod_subway_81-740_4.Buttons.CAMSButtons.CAMS9Set            = @[Common.740.CAMS9Set]
 Entities.gmod_subway_81-740_4.Buttons.CAMSButtons.CAMS10Set           = @[Common.740.CAMS10Set]
+
+Entities.gmod_subway_81-740_4.Buttons.CraneCap2.ABSDToggle   	      = @[Common.740.ABSD]
+Entities.gmod_subway_81-740_4.Buttons.CraneCap2.RTEToggle  		      = @[Common.740.RTE]
 
 Entities.gmod_subway_81-740_4.Buttons.PVZ.SFV1Toggle          = @[Common.740.SFV1]
 Entities.gmod_subway_81-740_4.Buttons.PVZ.SFV2Toggle          = @[Common.740.SFV2]

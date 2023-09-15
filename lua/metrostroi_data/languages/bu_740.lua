@@ -234,6 +234,9 @@ Common.740.CAMS8Set 			= Преглед: Опашка
 Common.740.CAMS9Set 			= Преглед: Ляво
 Common.740.CAMS10Set		 	= Преглед: Дясно
 
+Common.740.ABSD 				 = АБСД: Аварийная блокировка сигнализатора давления 
+Common.740.RTE 				 	 = Аварийна резервна спирачка (РТЭ)
+
 Common.740.SFV1             = SF1: Захранване на веригите за управление на вагона
 Common.740.SFV2             = SF2: Захранване на контролния блок на вагона
 Common.740.SFV3             = SF3: Захранване на блока за управление на тяговото задвижване
@@ -307,6 +310,9 @@ Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazF6Set = @[Common.740.V
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazF7Set = @[Common.740.Vityaz.F7]
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazF8Set = @[Common.740.Vityaz.F8]
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazF9Set = @[Common.740.Vityaz.F9]
+
+Entities.gmod_subway_81-740_4.Buttons.CraneCap2.ABSDToggle   	 = @[Common.740.ABSD]
+Entities.gmod_subway_81-740_4.Buttons.CraneCap2.RTEToggle  		 = @[Common.740.RTE]
 
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazPVUSet   = @[Common.740.Vityaz.PVU]
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazVOSet    = @[Common.740.Vityaz.VO]

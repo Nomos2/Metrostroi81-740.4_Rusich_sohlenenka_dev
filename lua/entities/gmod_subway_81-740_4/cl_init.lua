@@ -1003,7 +1003,7 @@ ENT.ButtonMap["BackDown"] = {
         {ID = "!BARSBlock",x=214, y=190, radius=0, model = {
             model = "models/metrostroi_train/81-720/rc_rotator1.mdl",z=12,
             getfunc = function(ent) return ent:GetPackedRatio("BARSBlock") end,var="BARSBlock",
-            plomb = {model = "models/metrostroi_train/81/plomb_b.mdl",ang=-90,x=-24,y=20,z=-5,var="BARSBlockPl", ID="BARSBlockPl",},
+            plomb = {model = "models/metrostroi_train/81/plomb_b.mdl",ang=-90,x=-16,y=36,z=-5,var="BARSBlockPl", ID="BARSBlockPl",},
             speed=6, min=0.5,max=0.15,
             sndvol = 1, snd = function(_,val) return val==3 and "switch_batt_on" or val == 0 and "switch_batt_off" or "switch_batt" end,
             sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
@@ -1025,6 +1025,30 @@ ENT.ButtonMap["BackDown"] = {
             model = "models/metrostroi_train/81-720/rc_rotator1.mdl",z=4, ang=180, scale = 0.5,
             var="ALSFreqBlock",speed=12,min = 0.6, max = 0.9,
             sndvol = 0.5, snd = function(val) return val and "switch_batt_on" or "switch_batt_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
+        }},
+    }
+}
+ENT.ButtonMap["CraneCap2"] = {
+    pos = Vector(788.12-159.3,-4.5,-20.2),
+    ang = Angle(0,-90,31),
+    width = 120,
+    height = 25,
+    scale = 0.0625,
+    hideseat=0.2,
+    buttons = { --
+        {ID = "ABSDToggle",x=10, y=10, radius=12, tooltip = "nolang_АБСД: Аварийная блокирвока сигнализатора давления", model = {
+            model = "models/metrostroi_train/81-710/ezh3_tumbler_t2.mdl",ang = 180,z=-6,
+            var="ABSD",speed=16,
+            plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=-90,x=-1,y=24,z=0,var="ABSDPl",ID="ABSDPl",},
+            sndvol = 1,snd = function(val) return val and "switchbl_on" or "switchbl_off" end,
+            sndmin = 90,sndmax = 1e3,sndang = Angle(-90,0,0),
+        }},	
+        {ID = "RTEToggle",x=100, y=10, radius=12, tooltip = "nolang_РТЭ: Резервный тормоз экстренный", model = {
+            model = "models/metrostroi_train/81-710/ezh3_tumbler_pp250.mdl",ang = 180,z=-6,
+            var="RTE",speed=16,
+            plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=-90,x=-1,y=24,z=0,var="RTEPl",ID="RTEPl",},
+            sndvol = 1,snd = function(val) return val and "switch2_on" or "switch2_off" end,
+            sndmin = 90,sndmax = 1e3,sndang = Angle(-90,0,0),
         }},
     }
 }

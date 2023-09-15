@@ -166,6 +166,29 @@ function ENT:InitializeSounds()
 	self.SoundNames["front_isolation"] = {loop=true,"subway_trains/common/pneumatic/isolation_leak.wav"}
     self.SoundPositions["front_isolation"] = {300,1e9,Vector(813-159, 0,-63),1}
 
+    self.SoundNames["switchbl_off"] = {
+        "subway_trains/717/switches/tumbler_fatb_off1.mp3",
+        "subway_trains/717/switches/tumbler_fatb_off2.mp3",
+        "subway_trains/717/switches/tumbler_fatb_off3.mp3",
+    }
+    self.SoundNames["switchbl_on"] = {
+        "subway_trains/717/switches/tumbler_fatb_on1.mp3",
+        "subway_trains/717/switches/tumbler_fatb_on2.mp3",
+        "subway_trains/717/switches/tumbler_fatb_on3.mp3",
+    }
+    self.SoundNames["switch2_off"] = {
+        "subway_trains/717/switches/tumbler_slim_off1.mp3",
+        "subway_trains/717/switches/tumbler_slim_off2.mp3",
+        "subway_trains/717/switches/tumbler_slim_off3.mp3",
+        "subway_trains/717/switches/tumbler_slim_off4.mp3",
+    }
+    self.SoundNames["switch2_on"] = {
+        "subway_trains/717/switches/tumbler_slim_on1.mp3",
+        "subway_trains/717/switches/tumbler_slim_on2.mp3",
+        "subway_trains/717/switches/tumbler_slim_on3.mp3",
+        "subway_trains/717/switches/tumbler_slim_on4.mp3",
+    }
+
     self.SoundNames["pneumo_disconnect_close"] = {"subway_trains/720/013_close1.mp3","subway_trains/720/013_close2.mp3","subway_trains/720/013_close3.mp3"}
     self.SoundNames["pneumo_disconnect_open"] = {
         "subway_trains/720/013_open1.mp3",

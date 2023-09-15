@@ -1643,7 +1643,7 @@ else
 
 
 				local BarsBlock = Train:GetNW2Int("VityazMBarsBlock",0)
-				if BarsBlock == 1 then self:PrintText(33+xRightAddOffet,1,"барс1",yellow) elseif BarsBlock == 2 then self:PrintText(33+xRightAddOffet,1,"барс2",yellow) elseif BarsBlock == 3 then self:PrintText(33+xRightAddOffet,1,"уос",yellow) else self:PrintText(33+xRightAddOffet,1,"выкл",yellow) end
+				if BarsBlock == 1 then self:PrintText(33+xRightAddOffet,1,"барс2",yellow) elseif BarsBlock == 2 then self:PrintText(33+xRightAddOffet,1,"барс1",yellow) elseif BarsBlock == 3 then self:PrintText(33+xRightAddOffet,1,"уос",yellow) else --[[self:PrintText(33+xRightAddOffet,1,"выкл",yellow)]] end
 				self:PrintText(22+xRightAddOffet,2,"БТБ",yellow)
 						self:PrintText(26+xRightAddOffet,2,"█",Train:GetNW2Bool("VityazMBTB",false) and green or red)
 				self:PrintText(29+xRightAddOffet,2,"АРС",yellow)

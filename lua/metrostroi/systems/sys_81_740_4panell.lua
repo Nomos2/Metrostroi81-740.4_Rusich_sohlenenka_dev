@@ -139,7 +139,7 @@ function TRAIN_SYSTEM:Initialize()
     self.Train:LoadSystem("AppLights1","Relay","Switch",{bass=true})
     self.Train:LoadSystem("AppLights2","Relay","Switch",{bass=true})
 
-    self.Train:LoadSystem("BARSBlock","Relay","Switch",{maxvalue=3,defaultvalue=2,bass=true})
+    self.Train:LoadSystem("BARSBlock","Relay","Switch",{maxvalue=3,defaultvalue=1,bass=true})
     self.Train:LoadSystem("Battery","Relay","Switch",{bass=true})
 
     self.Train:LoadSystem("ALSFreqBlock","Relay","Switch",{bass=true})

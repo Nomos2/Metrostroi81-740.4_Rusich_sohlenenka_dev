@@ -132,6 +132,9 @@ Common.740.Vityaz.TV1 		     = Витязь: ТВ 1
 Common.740.Vityaz.TV2 		     = Витязь: ТВ 2
 Common.740.Vityaz.Noth 		     = Витязь: Не используется
 
+Common.740.ABSD 				 = АБСД: Аварийная блокировка сигнализатора давления
+Common.740.RTE 				 	 = РТЭ: Резервный тормоз экстренный
+
 Common.740.VentCMode        = Режим работы вентилятора
 Common.740.VentCMode+       = Увеличение силы обогрева
 Common.740.VentCMode-       = Уменьшение силы обогрева
@@ -279,7 +282,7 @@ Common.740.SFV33            = SF33: Видео
 
 Common.740.LN               = ЛН: Лампа соответствия направления движения
 Common.740.Dnepr			= ДНЕПР: Лампа включения режима "Днепр"
-Common.740.XOD				= ХОД: Лампа хода
+Common.740.XOD				= ХОД: Лампа отсутствия запрета тягового режима от БАРС
 Common.740.DAU				= ДАУ: Лампа работы дублирующего автономного устройства 
 Common.740.Ispr 			= ИСПР: Лампа исправности комплектов БАРС
 Common.740.AO				= АО: Лампа получения сигнала абсолютной остановки
@@ -329,6 +332,9 @@ Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazUTVSet   = @[Common.74
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazTV1Set   = @[Common.740.Vityaz.TV1]
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazTV2Set   = @[Common.740.Vityaz.TV2]
 Entities.gmod_subway_81-740_4.Buttons.VityazButtons.VityazNothSet  = @[Common.740.Vityaz.Noth]
+
+Entities.gmod_subway_81-740_4.Buttons.CraneCap2.ABSDToggle   	   = @[Common.740.ABSD]
+Entities.gmod_subway_81-740_4.Buttons.CraneCap2.RTEToggle  		   = @[Common.740.RTE]
 
 Entities.gmod_subway_81-740_4.Buttons.BackPPZ.SF1Toggle           = @[Common.740.SF1]
 Entities.gmod_subway_81-740_4.Buttons.BackPPZ.SF2Toggle           = @[Common.740.SF2]

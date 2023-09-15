@@ -235,8 +235,8 @@ function TRAIN_SYSTEM:Think(dT)
             self.BTBTimer = nil
         end
         self.BTB = math.min(1,(self.BTBTimer~=false and 1 or 0)+self.BTB*Train:ReadTrainWire(26))
-        Train:WriteTrainWire(24,BTB*(1-Train.EmergencyBrake.Value))
-        Train:WriteTrainWire(25,BTB*self.BTB*(self.KTR==3 and 0 or 1)*(1-Train.RTE.Value))
+        Train:WriteTrainWire(24,BTB*(1-Train.EmergencyBrake.Value)*(1-Train.RTE.Value))
+        Train:WriteTrainWire(25,BTB*self.BTB*(self.KTR==3 and 0 or 1))
         Train:WriteTrainWire(26,(1-BTB)*Train:ReadTrainWire(24)*(1-Train.EmergencyBrake.Value)*(1-Train.RTE.Value))
         Train:WriteTrainWire(27,BTBp)
         Train:WriteTrainWire(28,Panel.EmerBrakeWork)
