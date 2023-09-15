@@ -435,7 +435,7 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone,		
-		Vector(305,0,60),
+		Vector(305,0,30),
 		Vector(-305,0,10),	
 		0, --forcelimit
 		0, --torquelimit
@@ -451,8 +451,29 @@ function ENT:CreatePricep(pos,ang)
 		0, --rotonly
 		1,--nocollide
 		true
-	)	
-	
+	)		
+	constraint.AdvBallsocket(
+		ent,
+		self.MiddleBogey,
+		0, --bone
+		0, --bone,		
+		Vector(305,0,0),
+		Vector(-305,0,10),	
+		0, --forcelimit
+		0, --torquelimit
+		-10, --xmin
+		-15, --ymin
+		-180, --zmin
+		10, --xmax
+		15, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1,--nocollide
+		true
+	)		
 end	
 end
 end

@@ -256,7 +256,8 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
 	
     self.PassengerEnts = {}
-    self.PassengerPositions = {}	
+    self.PassengerEntsStucked = {}	
+    self.PassengerPositions = {}
 
 	self.PassengerModels = {
         "models/metrostroi/passengers/f1.mdl",
