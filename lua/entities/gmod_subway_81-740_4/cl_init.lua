@@ -1036,7 +1036,7 @@ ENT.ButtonMap["CraneCap2"] = {
     scale = 0.0625,
     hideseat=0.2,
     buttons = { --
-        {ID = "ABSDToggle",x=10, y=10, radius=12, tooltip = "nolang_АБСД: Аварийная блокирвока сигнализатора давления", model = {
+        {ID = "ABSDToggle",x=10, y=10, radius=12, tooltip = "nolang_АБСД: Аварийная блокировка сигнализатора давления", model = {
             model = "models/metrostroi_train/81-710/ezh3_tumbler_t2.mdl",ang = 180,z=-6,
             var="ABSD",speed=16,
             plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=-90,x=-1,y=24,z=0,var="ABSDPl",ID="ABSDPl",},

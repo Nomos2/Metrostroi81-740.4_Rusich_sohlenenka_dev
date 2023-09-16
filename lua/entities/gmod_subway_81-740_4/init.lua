@@ -80,7 +80,9 @@ function ENT:Initialize()
     self.InstructorsSeat4:SetColor(Color(0,0,0,0))
 	self.InstructorsSeat4.m_tblToolsAllowed = { "none" }		
 	
-	self.LightSensor = self:AddLightSensor(Vector(698-159,0,-130),Angle(0,90,0))
+	self.LightSensor = self:AddLightSensor(Vector(627,0,-110),Angle(0,90,0))
+	
+	self.ASSensor = self:AddLightSensor(Vector(515,-15,-90),Angle(90,0,0),"models/hunter/blocks/cube05x2x025.mdl") --для МСМП
 	
     -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520-25,0,-75),Angle(0,180,0),true,"740PER")	
@@ -670,7 +672,7 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone,		
-		Vector(305,0,60),
+		Vector(305,0,30),
 		Vector(-305,0,10),	
 		0, --forcelimit
 		0, --torquelimit
@@ -686,8 +688,29 @@ function ENT:CreatePricep(pos,ang)
 		0, --rotonly
 		1,--nocollide
 		true
-	)	
-	
+	)		
+	constraint.AdvBallsocket(
+		ent,
+		self.MiddleBogey,
+		0, --bone
+		0, --bone,		
+		Vector(305,0,0),
+		Vector(-305,0,10),	
+		0, --forcelimit
+		0, --torquelimit
+		-10, --xmin
+		-15, --ymin
+		-180, --zmin
+		10, --xmax
+		15, --ymax
+		180, --zmax
+		0, --xfric
+		0, --yfric
+		0, --zfric
+		0, --rotonly
+		1,--nocollide
+		true
+	)		
 end	
 end
 end

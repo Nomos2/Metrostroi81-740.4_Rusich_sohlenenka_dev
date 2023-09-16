@@ -260,6 +260,7 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
 	
     self.PassengerEnts = {}
+    self.PassengerEntsStucked = {}	
     self.PassengerPositions = {}	
 
 	self.PassengerModels = {
