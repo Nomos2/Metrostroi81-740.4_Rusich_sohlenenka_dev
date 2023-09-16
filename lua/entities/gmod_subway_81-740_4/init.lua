@@ -38,7 +38,6 @@ ENT.SyncTable = {
 	
 	--"CAMS1","CAMS2","CAMS3","CAMS4",
 	"CAMS5","CAMS6","CAMS7","CAMS8","CAMS9","CAMS10",
-	"RearBrakeLineIsolation","RearTrainLineIsolation",
     "FrontBrakeLineIsolation","FrontTrainLineIsolation",
     "PB",   "GV",	"EmergencyBrakeValve","stopkran",
 }
@@ -526,7 +525,45 @@ function ENT:CreatePricep(pos,ang)
 		
 	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
-	constraint.RemoveConstraints(ent, "AdvBallsocket")		
+	constraint.RemoveConstraints(ent, "AdvBallsocket")	       
+
+	constraint.Axis(
+		self.RearBogey,		
+		ent,
+		0,
+		0,
+		Vector(0,0,0),
+		Vector(0,0,0),
+        0,
+		0,
+		0,
+		0,
+		Vector(0,0,-1)
+		)
+	--Сцепка, крепление к вагону.
+	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
+	constraint.AdvBallsocket(
+		ent,
+        self.RearCouple,
+        0, --bone
+        0, --bone
+        self.RearCouple.SpawnPos-pos,
+        Vector(0,0,0),
+        1, --forcelimit
+        1, --torquelimit
+        -2, --xmin
+        -2, --ymin
+        -15, --zmin
+        2, --xmax
+        2, --ymax
+        15, --zmax
+        0.1, --xfric
+        0.1, --yfric
+        1, --zfric
+        0, --rotonly
+        1 --nocollide
+    ) 	
+	
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
@@ -633,7 +670,7 @@ function ENT:CreatePricep(pos,ang)
 		0, --torquelimit
 		-5, --xmin
 		-5, --ymin
-		-180, --zmin
+		0, --zmin
 		5, --xmax
 		5, --ymax
 		180, --zmax
@@ -645,6 +682,26 @@ function ENT:CreatePricep(pos,ang)
 	)
 	else	
 	
+	--[[local constraint = constraint.AdvBallsocket(
+		ent, 
+		self.MiddleBogey, 
+		0,
+		0, 
+		Vector(0, 0, 0), 
+		Vector(0, 0, 0), 
+		0, 
+		0,
+		
+		0, 
+		0, 
+		0, 
+		0, 
+		0, 
+		0, 
+		0,
+		0
+	 )]]	
+	
 	constraint.AdvBallsocket(
 		ent,
 		self.MiddleBogey,
@@ -652,8 +709,8 @@ function ENT:CreatePricep(pos,ang)
 		0, --bone
 		Vector(305,0,0),
 		Vector(-305,0,60),		
-		0, --forcelimit
-		0, --torquelimit
+		1, --forcelimit
+		1, --torquelimit
 		-15, --xmin
 		-20, --ymin
 		-180, --zmin
@@ -661,10 +718,10 @@ function ENT:CreatePricep(pos,ang)
 		20, --ymax
 		180, --zmax
 		0, --xfric
-		0, --yfric
+		1, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
+		0,--nocollide
 		true
 	)		
 	constraint.AdvBallsocket(
@@ -674,19 +731,19 @@ function ENT:CreatePricep(pos,ang)
 		0, --bone,		
 		Vector(305,0,30),
 		Vector(-305,0,10),	
-		0, --forcelimit
-		0, --torquelimit
+		1, --forcelimit
+		1, --torquelimit
 		-15, --xmin
 		-20, --ymin
 		-180, --zmin
 		15, --xmax
 		20, --ymax
 		180, --zmax
-		0, --xfric
+		1, --xfric
 		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
+		0,--nocollide
 		true
 	)		
 	constraint.AdvBallsocket(
@@ -696,8 +753,8 @@ function ENT:CreatePricep(pos,ang)
 		0, --bone,		
 		Vector(305,0,0),
 		Vector(-305,0,10),	
-		0, --forcelimit
-		0, --torquelimit
+		1, --forcelimit
+		1, --torquelimit
 		-10, --xmin
 		-15, --ymin
 		-180, --zmin
@@ -706,50 +763,15 @@ function ENT:CreatePricep(pos,ang)
 		180, --zmax
 		0, --xfric
 		0, --yfric
-		0, --zfric
+		1, --zfric
 		0, --rotonly
-		1,--nocollide
+		0,--nocollide
 		true
 	)		
 end	
 end
 end
-        constraint.Axis(
-		self.RearBogey,		
-		ent,
-		0,
-		0,
-		Vector(0,0,0),
-		Vector(0,0,0),
-        0,
-		0,
-		0,
-		0,
-		Vector(0,0,-1)
-		)
-	--Сцепка, крепление к вагону.
-	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
-	constraint.AdvBallsocket(
-		ent,
-        self.RearCouple,
-        0, --bone
-        0, --bone
-        self.RearCouple.SpawnPos-pos,
-        Vector(0,0,0),
-        1, --forcelimit
-        1, --torquelimit
-        -2, --xmin
-        -2, --ymin
-        -15, --zmin
-        2, --xmax
-        2, --ymax
-        15, --zmax
-        0.1, --xfric
-        0.1, --yfric
-        1, --zfric
-        0, --rotonly
-        1 --nocollide
-    ) 
+
 	
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)

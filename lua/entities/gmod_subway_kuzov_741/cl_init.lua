@@ -292,7 +292,7 @@ function ENT:Think()
     self.HeadTrain = self:GetNW2Entity("gmod_subway_81-741_4")	
     local train = self.HeadTrain 
     if not IsValid(train) or not IsValid(self) then return end		
-    if not self.RenderClientEnts or self.CreatingCSEnts or not IsValid(train) then
+    if not self.RenderClientEnts or self.CreatingCSEnts then
         return
     end 
 	
@@ -335,6 +335,7 @@ for avar = 1,2 do
 	local animation1 = math.random (0.5,1)	
     local colV = self:GetNW2Vector("Lamp7404"..avar)
     local col = Color(colV.x,colV.y,colV.z)	
+    if not IsValid(train) or not IsValid(self) then return end		
 	self:ShowHideSmooth("lamps_salon_on_rear_avar"..avar,train:Animate("LampsEmer",train:GetPackedRatio("SalonLighting") == 0.4 and 1 or 0,0,animation1,animation,false),col)  
 end	
 
@@ -343,18 +344,21 @@ end
 
 for i = 1,11 do	
     local colV = self:GetNW2Vector("Lamp7404"..i)
-    local col = Color(colV.x,colV.y,colV.z)			
+    local col = Color(colV.x,colV.y,colV.z)		
+    if not IsValid(train) or not IsValid(self) then return end		
 	self:ShowHideSmooth("lamps_salon_on_rear"..i-1,train:Animate("LampsFull",train:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
     self:ShowHideSmooth("lamps_salon_on_rear1"..i,train:Animate("LampsFull",train:GetPackedRatio("SalonLighting") == 1 and 1 or 0,0,animation1,animation,false),col)	
 end
 	
 	local ZavodTable = train:GetNW2Int("ZavodTable",1)	
+    if not IsValid(train) or not IsValid(self) then return end		
     self:ShowHide("Zavod_table_sochl",ZavodTable==2)
     self:ShowHide("Zavod_table_sochl_torec",ZavodTable==3)		
 	
 	--Анимация дверей.
 	if not self.DoorStates then self.DoorStates = {} end
     if not self.DoorLoopStates then self.DoorLoopStates = {} end
+    if not IsValid(train) or not IsValid(self) then return end	
     for b=0,2 do
         for k=0,1 do
             local st = k==1 and "DoorL" or "DoorR"
@@ -388,7 +392,7 @@ end
 	end	
 	
 	local dT = train.DeltaTime	
-	
+    if not IsValid(train) or not IsValid(self) then return end		
     self.RearLeak = math.Clamp(self.RearLeak + 10*(-train:GetPackedRatio("RearLeak")-self.RearLeak)*dT,0,1)	
     self:SetSoundState("rear_isolation",self.RearLeak,0.9+0.2*self.RearLeak)	
 	
@@ -425,7 +429,7 @@ end
         self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
 		end 	
     end		
-	
+    if not IsValid(train) or not IsValid(self) then return end		
     local rollingi = math.min(1,train.TunnelCoeff+math.Clamp((train.StreetCoeff-0.82)/0.5,0,1))
     local rollings = math.max(train.TunnelCoeff*0.6,train.StreetCoeff)
     local tunstreet = (rollingi+rollings*0.2)
@@ -455,6 +459,7 @@ end
     self:SetSoundState("rolling_medium2",rol40*rollings,rol40p) --57
     self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70		
 	
+    if not IsValid(train) or not IsValid(self) then return end		
 	local BBEs = train:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		
     self:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)

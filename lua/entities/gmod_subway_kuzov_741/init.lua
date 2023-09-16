@@ -161,15 +161,15 @@ function ENT:Think()
     local Im = 1
 	for i = 1,20 do
        if (lightsActive2 or (lightsActive1 and math.ceil((i+Ip-Im)%Ip)==1)) then
-            if not train.Lamps[i] and not train.Lamps.broken[i] then train.Lamps[i] = CurTime() + math.Rand(0.1,math.Rand(1.15,2.5)) --[[print(self.Lamps[i]-CurTime())]] end
+            if not self.Lamps[i] and not self.Lamps.broken[i] then self.Lamps[i] = CurTime() + math.Rand(0.1,math.Rand(1.15,2.5)) --[[print(self.Lamps[i]-CurTime())]] end
         else
-            train.Lamps[i] = nil
+            self.Lamps[i] = nil
         end
-        if (train.Lamps[i] and CurTime() - train.Lamps[i] > 0) then
+        if (self.Lamps[i] and CurTime() - self.Lamps[i] > 0) then
             mul = mul + 1
-            train:SetPackedBool("lightsActive"..i,true)
+            self:SetPackedBool("lightsActive"..i,true)
         else
-            train:SetPackedBool("lightsActive"..i,false)
+            self:SetPackedBool("lightsActive"..i,false)
         end
     end	   
 

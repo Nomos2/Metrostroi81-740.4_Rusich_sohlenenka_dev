@@ -123,14 +123,13 @@ function ENT:UpdateLampsColors()
 end	
 	
 function ENT:Think()	
+	self:SetPackedBool("RearDoor",self.RearDoor)		
     self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)    
 	local train = self.HeadTrain		
     if not IsValid(train) or not IsValid(self) then return end		
 	local Panel = train.Panel		
 	local retVal = train.BaseClass.Think(self)
     local power = train.Electric.Battery80V > 62
-	
-	self:SetPackedBool("RearDoor",self.RearDoor)	
     self:SetPackedBool("Vent2Work",train.Electric.Vent2>0)	
     self:SetPackedBool("BBEWork",power and train.BUV.BBE > 0)
     self:SetPackedBool("CompressorWork",train.Pneumatic.Compressor) 
@@ -166,15 +165,15 @@ function ENT:Think()
     local Im = 1
 	for i = 1,20 do
        if (lightsActive2 or (lightsActive1 and math.ceil((i+Ip-Im)%Ip)==1)) then
-            if not train.Lamps[i] and not train.Lamps.broken[i] then train.Lamps[i] = CurTime() + math.Rand(0.1,math.Rand(1.15,2.5)) --[[print(self.Lamps[i]-CurTime())]] end
+            if not self.Lamps[i] and not self.Lamps.broken[i] then self.Lamps[i] = CurTime() + math.Rand(0.1,math.Rand(1.15,2.5)) --[[print(self.Lamps[i]-CurTime())]] end
         else
-            train.Lamps[i] = nil
+            self.Lamps[i] = nil
         end
-        if (train.Lamps[i] and CurTime() - train.Lamps[i] > 0) then
+        if (self.Lamps[i] and CurTime() - self.Lamps[i] > 0) then
             mul = mul + 1
-            train:SetPackedBool("lightsActive"..i,true)
+            self:SetPackedBool("lightsActive"..i,true)
         else
-            train:SetPackedBool("lightsActive"..i,false)
+            self:SetPackedBool("lightsActive"..i,false)
         end
     end	   
 
