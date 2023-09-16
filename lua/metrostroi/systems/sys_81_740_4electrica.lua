@@ -388,19 +388,21 @@ function TRAIN_SYSTEM:Think(dT)
     self.BUTPReady = butpPower*self.BVKA_KM2
 
     local strengthZero = Train.BUV.Strength == 0 and 1 or 0
-	if Train.BV.Value > 0 and Async.Current*2 > 1500 or self.DisableBV > 0 or self.Main750V > 975 or butpPower == 0 then
+    
+    if not self.DisableBV then self.DisableBV = false end
+	if Train.BV.Value > 0 and Async.Current*2 > 1500 or self.DisableBV or self.Main750V > 975 or butpPower == 0 then
         Train.BV:TriggerInput("Open",1)
         self.BVcountOfTriggers = self.BVcountOfTriggers + 1
     end
 
-    if (Train.BV.Value == 0 and butpPower*strengthZero > 0 and self.DisableBV == 0) then
+    if (Train.BV.Value == 0 and butpPower*strengthZero > 0 and not self.DisableBV) then
 		if not self.BVTimer then self.BVTimer = CurTime() end
         if self.BVactivationAttempt <= 3 then
-            if self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and (self.DisableBV == 0 and self.Main750V < 975) then    -- Train.FSE.BVShortCir
+            if self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and (not self.DisableBV and self.Main750V < 975) then    -- Train.FSE.BVShortCir
                 self.BVactivationAttempt = 0
                 if self.BVactivationAttempt <= 3 or self.BVcountOfTriggers <= 2 then Train.BV:TriggerInput("Close",1) self.BVonSelfLocking = 0 end
                 self.BVTimer = nil
-            elseif self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and (self.DisableBV > 0 or self.Main750V > 975) then
+            elseif self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and (not self.DisableBV or self.Main750V > 975) then
                 self.BVactivationAttempt = self.BVactivationAttempt + 1
                 self.BVTimer = nil
             end
