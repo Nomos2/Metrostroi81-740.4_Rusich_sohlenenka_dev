@@ -83,18 +83,11 @@ if CLIENT then
 
     function TRAIN_SYSTEM:Tickers(Train)
         if self.Text  ~= "" then
-		--	print(self.Text)
             self:PrintText(self.Position, self.Text, self.Color)
         end
     end
     return
 end
-/*
-
-"ЭЛЕКТРОДЕПО РОССОШАНСКОЕ ПРИГЛАШАЕТ НА РАБОТУ ПО ПРОФЕССИИ ДИЗАЙНЕР СХЕМ НА ПОДВИЖНОЙ СОСТАВ, А ТАКЖЕ МАШИНИСТОВ ЭЛЕКТРОПОЕЗДА          ЭЛЕКТРОДЕПО РОССОШАНСКОЕ ПРИГЛАШАЕТ НА РАБОТУ ПО ПРОФЕССИИ ДИЗАЙНЕР СХЕМ НА ПОДВИЖНОЙ СОСТАВ, А ТАКЖЕ МАШИНИСТОВ ЭЛЕКТРОПОЕЗДА          В вагонах �"
-
-"ЭЛЕКТРОДЕПО РОССОШАНСКОЕ ПРИГЛАШАЕТ НА РАБОТУ ПО ПРОФЕССИИ ДИЗАЙНЕР СХЕМ НА ПОДВИЖНОЙ СОСТАВ, А ТАКЖЕ МАШИНИСТОВ ЭЛЕКТРОПОЕЗДА          ЭЛЕКТРОДЕПО РОССОШАНСКОЕ ПРИГЛАШАЕТ НА РАБОТУ ПО ПРОФЕССИИ ДИЗАЙНЕР СХЕМ НА ПОДВИЖНОЙ СОСТАВ, А ТАКЖЕ МАШИНИСТОВ ЭЛЕКТРОПОЕЗДА          В вагонах действует бесплатная Wi-Fi сеть \"MT_FREE\""
-*/
 
 function TRAIN_SYSTEM:Initialize()
     self.Weekdays = {} --TODO: через отдельный файл
@@ -266,7 +259,6 @@ function TRAIN_SYSTEM:Think()
     for p, c in utf8.codes(self.CurrentAdvert) do
         str = str..utf8.char(c+10)
     end]]
---	print(self.CurrentAdvert)
     Train:SetNW2String("TickerMessage",self.CurrentAdvert)
     --Train:SetNW2Int("TickerState",math.ceil(math.min(0,self.AdvertSymbol)))
     colR, colG, colB = self.CurColor:Unpack()
