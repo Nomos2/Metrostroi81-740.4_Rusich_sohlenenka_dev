@@ -29,7 +29,7 @@ function TRAIN_SYSTEM:Initialize()
     self.Lights80V = 0.0
     self.Battery80V = 0.0
     self.ReservePower = 0.0         -- V
-    self.EqualizingCircuits = 0.0   -- Вроде подзаряжает батарею, но хз может ли работать свет, нужны схемы 
+    self.EqualizingCircuits = 0.0   -- Типа подзаряд, но хз может ли работать свет, нужны схемы 
 	
     self.Power = 0
     self.States = {}
@@ -358,11 +358,11 @@ function TRAIN_SYSTEM:Think(dT)
     elseif self.Main750V < 875 and Async.Mode<0 then
     end--]]
     if Async.Mode<0 and Async.State>0 then
-	local RecDelay = 0
+	    --[[local RecDelay = 0
 	    if self.Main750V <= 970 then
             if CurTime() < RecDelay then return end
             RecDelay = CurTime()-- + 5
-        end
+        end]]
 	--print(RecDelay,1-(CurTime()-RecDelay > 5 and 1 or 0))
         self.Recurperation = C(self.Main750V > 550 and self.Main750V <= 970)*BUV.Recurperation--*(1-(CurTime()-RecDelay > 5 and 1 or 0))-- and 1 or 0   todo reccuperation timer
         self.Iexit = self.Iexit+(-Async.Current*2*self.Recurperation-self.Iexit)*dT*2
@@ -389,20 +389,19 @@ function TRAIN_SYSTEM:Think(dT)
 
     local strengthZero = Train.BUV.Strength == 0 and 1 or 0
     
-    if not self.DisableBV then self.DisableBV = false end
-	if Train.BV.Value > 0 and Async.Current*2 > 1500 or self.DisableBV or self.Main750V > 975 or butpPower == 0 then
+    if not self.DisableBV then self.DisableBV = 0 end -- Без турбостороя уходит в nil
+	if Train.BV.Value > 0 and Async.Current*2 > 1500 or (self.DisableBV and self.DisableBV == 1) or self.Main750V > 975 or butpPower == 0 then
         Train.BV:TriggerInput("Open",1)
         self.BVcountOfTriggers = self.BVcountOfTriggers + 1
     end
-
-    if (Train.BV.Value == 0 and butpPower*strengthZero > 0 and not self.DisableBV) then
+    if (Train.BV.Value == 0 and butpPower*strengthZero > 0 and (self.DisableBV and self.DisableBV == 0)) then
 		if not self.BVTimer then self.BVTimer = CurTime() end
         if self.BVactivationAttempt <= 3 then
-            if self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and (not self.DisableBV and self.Main750V < 975) then    -- Train.FSE.BVShortCir
+            if self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and ((self.DisableBV and self.DisableBV == 0) and self.Main750V < 975) then
                 self.BVactivationAttempt = 0
                 if self.BVactivationAttempt <= 3 or self.BVcountOfTriggers <= 2 then Train.BV:TriggerInput("Close",1) self.BVonSelfLocking = 0 end
                 self.BVTimer = nil
-            elseif self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and (not self.DisableBV or self.Main750V > 975) then
+            elseif self.BVTimer and CurTime() - self.BVTimer > self.BVTime2On and ((self.DisableBV and self.DisableBV == 0) or self.Main750V > 975) then
                 self.BVactivationAttempt = self.BVactivationAttempt + 1
                 self.BVTimer = nil
             end

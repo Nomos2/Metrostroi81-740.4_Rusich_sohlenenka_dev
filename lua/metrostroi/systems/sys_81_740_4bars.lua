@@ -89,7 +89,7 @@ function TRAIN_SYSTEM:Think(dT)
         KMState = (Train.EmerX1.Value > 0 or Train.EmerX2.Value > 0) and 1 or 0
         BUPKMState = (Train.EmerX1.Value > 0 or Train.EmerX2.Value > 0) and 1 or 0
     end
-    Train.Electric:TriggerInput("V11", EnableALS)
+    Train.Electric:TriggerInput("V11", EnableALS) -- Венитиль РВТБ #todo4Vlj
     if EnableALS then
         local V = math.floor(self.Speed +0.05)
         local Vlimit = 20

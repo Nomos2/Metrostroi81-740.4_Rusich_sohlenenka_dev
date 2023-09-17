@@ -134,7 +134,7 @@ function TRAIN_SYSTEM:Think()
         self:CState("DoorTorec", Train.RearDoor or Train.FrontDoor)
         self:CState("DoorBack", Train.PassengerDoor or Train.CabinDoorLeft or Train.CabinDoorRight)
         self:CState("EmPT",Train:ReadTrainWire(28) > 0)
-        self:CState("NoAssembly",not (self.Scheme_E))--Train.KMR1.Value == 0 and Train.KMR2.Value == 0 or Train.K2.Value == 0 and Train.K3.Value==0)
+        self:CState("NoAssembly",not (self.Scheme_E)) -- #todo4Vlj
         
 		local emer = Train:ReadTrainWire(45)+Train:ReadTrainWire(19)
 		local bv = Train.BV.Value
