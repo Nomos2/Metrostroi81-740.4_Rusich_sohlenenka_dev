@@ -81,7 +81,7 @@ function ENT:Initialize()
 	
 	self.LightSensor = self:AddLightSensor(Vector(627,0,-110),Angle(0,90,0))
 	
-	self.ASSensor = self:AddLightSensor(Vector(515,-15,-90),Angle(90,0,0),"models/hunter/blocks/cube05x2x025.mdl") --для МСМП
+	self.ASSensor = self:AddLightSensor(Vector(515,-45,-95),Angle(90,0,0),"models/hunter/blocks/cube05x2x025.mdl") --для МСМП
 	
     -- Create bogeys
         self.FrontBogey = self:CreateBogey(Vector( 520-25,0,-75),Angle(0,180,0),true,"740PER")	
