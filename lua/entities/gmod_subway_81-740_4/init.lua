@@ -15,7 +15,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 ENT.SyncTable = {
-    "EnableBVEmer","Ticker","KAH","KAHk","ALS","ALSk","FDepot","PassScheme","EnableBV","DisableBV","Ring","R_Program2","R_Announcer","R_Line","R_Emer","R_Program1",
+    "EnableBVEmer","Ticker","KAH","ALS","ALSk","FDepot","PassScheme","EnableBV","DisableBV","Ring","R_Program2","R_Announcer","R_Line","R_Emer","R_Program1",
     "DoorSelectL","DoorSelectR","DoorBlock","TPT","RTE","ABSD",
     "EmerBrakeAdd","EmerBrakeRelease","EmerBrake","DoorClose","AttentionMessage","Attention","AttentionBrake","EmergencyBrake",
     "SF1","SF2","SF3","SF4","SF5","SF6","SF7","SF8","SF9","SF10","SF11","SF12",
@@ -311,8 +311,6 @@ end
 
 --наложение пломб
 	self.Plombs = {
-		KAH = {true,"KAHk"},
-        KAHk = true,
         ALS = {true,"ALSk"},
         ALSk = true,
         BARSBlock = true,
@@ -1008,9 +1006,10 @@ function ENT:OnButtonPress(button,ply)
 	if button == "EmergencyBrakeValveToggle" and (self.K29.Value == 1 or self.Pneumatic.V4 and self:ReadTrainWire(27) == 1) and not self.Pneumatic.KVTBTimer and self.Pneumatic.BrakeLinePressure > 2 then	
 		self:SetPackedRatio("EmerValve",CurTime()+3.8)
 	end
-    if button == "KAH" and not self.Plombs.KAH then
-        self.KAHk:TriggerInput("Open",1)
-        self.KAH:TriggerInput("Close",1)
+
+    if button == "ALS" and not self.Plombs.ALS then
+        self.ALSk:TriggerInput("Open",1)
+        self.ALS:TriggerInput("Close",1)
     end	
 	
     if button == "PassengerDoor" then self.PassengerDoor = not self.PassengerDoor end

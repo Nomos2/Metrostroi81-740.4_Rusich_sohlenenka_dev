@@ -1688,7 +1688,7 @@ else
 					end
 					self:PrintText(36+xRightAddOffet,10,"К",Prost and green or red)
 				else
-					CurrentMode = alsfreq == 0 and "ДНЕПР2/6" or "ДАУ"
+					CurrentMode = alsfreq == 1 and "ДНЕПР2/6" or "ДАУ"
 					if ProstActive and speed > 0 then
 						if Prost then
 							self:PrintText(22+xRightAddOffet,1,"прост",Metka and green or Color(170,170,170))

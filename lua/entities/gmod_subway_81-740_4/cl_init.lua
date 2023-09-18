@@ -60,18 +60,18 @@ ENT.ButtonMap["PUU"] = {
             var="KAH",speed=8, vmin=0, vmax=0.7,
             sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
         }},
-        {ID = "KAHkToggle",x=147.5+37.83*3-20, y=27.5+10, w=40,h=20, tooltip="", model = {
-            model = "models/metrostroi_train/81/krishka.mdl", ang = 0, z = 1,
-            var="KAHk",speed=8,min=0.32,max=0.721, disable="KAHToggle",
-            plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=70,x=15,y=-40,z=-3.6,var="KAHPl", ID="KAHPl",},
-            sndvol = 1, snd = function(val) return val and "kr_close" or "kr_open" end,
-            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
-        }},
         {ID = "ALSToggle",x=147.5+37.83*4, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_green.mdl", z=1.85,
             lamp = {model = "models/metrostroi_train/81-722/lamp_green.mdl",var="ALSLamp",z=0.1, anim=true},
-            var="ALS",speed=8, vmin=0, vmax=0, disable="ALSToggle",
+            var="ALS",speed=8, vmin=0, vmax=0.7, disable="ALSToggle",
             --sndvol = 0.3, snd = function(val) return val and "button_square_on" or "button_square_off" end,sndmin = 80, sndmax = 1e3/3, sndang = Angle(-90,0,0),
+        }},
+        {ID = "ALSkToggle",x=127+37.83*4, y=27.5+10, w=40,h=20, tooltip="", model = {
+            model = "models/metrostroi_train/81/krishka.mdl", ang = 0, z = 1,
+            var="ALSk",speed=8,min=0.32,max=0.721, disable="ALSToggle",
+            plomb = {model = "models/metrostroi_train/81/plomb.mdl",ang=70,x=15,y=-40,z=-3.6,var="ALSPl", ID="ALSPl",},
+            sndvol = 1, snd = function(val) return val and "kr_close" or "kr_open" end,
+            sndmin = 90, sndmax = 1e3, sndang = Angle(-90,0,0),
         }},
 		{ID = "AccelRateSet",x=147.5+37.88*5-7, y=30.5, radius=15, tooltip = "",model = {
             model = "models/metrostroi_train/81-722/button_white.mdl",z=1.85,
