@@ -723,8 +723,8 @@ if SERVER then
 								break
 							end
 						end
-
-						if Train.Prost_Kos.ProstActive > 0 and Train.BARS.Speed > 5 then
+						--print(Train.Speed,Train.BARS.Speed)
+						if Train.Prost_Kos.ProstActive > 0 and Train.Speed > 5 then
                             Train:SetNW2Int("ProstStength",Train.Prost_Kos.Command < 0 and -Train.Prost_Kos.Command or 0)
                             --if not self.ProstTimer then self.ProstTimer = 1052 end
 							self.ProstExchTimer = self.ProstExchTimer + math.random(1,3)
@@ -739,7 +739,7 @@ if SERVER then
                                 self.Metka3Cache = Train.Prost_Kos.Metka[3]
                                 self.Metka4Cache = Train.Prost_Kos.Metka[4]
                             end
-                        elseif Train.Prost_Kos.Dist and Train.Prost_Kos.Dist < -5 and Train.BARS.Speed > 3 then
+                        elseif Train.Prost_Kos.Dist and Train.Prost_Kos.Dist < -5 and Train.Speed > 3 then
                             Train:SetNW2Int("ProstStength",0)
                             Train:SetNW2Int("ProstTimer",0)
                             Train:SetNW2Int("ProstMark", 0)
