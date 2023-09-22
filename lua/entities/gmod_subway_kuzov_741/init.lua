@@ -20,6 +20,9 @@ function ENT:Initialize()
     self:SetModel("models/metrostroi_train/81-741/body/81-741_4_rear.mdl") 
     self.BaseClass.Initialize(self)		
     self:SetPos(self:GetPos() + Vector(0,0,0))	
+	
+    self.NormalMass = 24000	
+	
     self.PassengerSeat = self:CreateSeat("passenger",Vector(-135,-40,-25),Angle(0,90,0),"models/nova/airboat_seat.mdl")
     self.PassengerSeat2 = self:CreateSeat("passenger",Vector(-135,40,-25),Angle(0,270,0),"models/nova/airboat_seat.mdl")  
     self.PassengerSeat3 = self:CreateSeat("passenger",Vector(95,40,-25),Angle(0,270,0),"models/nova/airboat_seat.mdl") 
@@ -31,10 +34,7 @@ function ENT:Initialize()
     self.PassengerSeat3:SetRenderMode(RENDERMODE_NONE)
 	self.PassengerSeat3:SetColor(Color(0,0,0,0))
     self.PassengerSeat4:SetRenderMode(RENDERMODE_NONE)
-	self.PassengerSeat4:SetColor(Color(0,0,0,0))		
-
-	self.NormalMass = 15500			
-
+	self.PassengerSeat4:SetColor(Color(0,0,0,0))				
     self.WireIOSystems = {}
     self.Systems = {}
     self.TrainEntities = {}

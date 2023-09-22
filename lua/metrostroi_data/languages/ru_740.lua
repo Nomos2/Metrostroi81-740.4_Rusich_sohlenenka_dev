@@ -1,5 +1,5 @@
 --NICIX (Pussy Podkradoolya)
--- _Праздник горячей еды_(Питерская Подкрадуля-тян)
+-- malmih(Праздник теплой еды)
 --Nom(Подкрадулеходы Drive)
 --𝓥𝓡𝓑 (Подкрадуля Пердёжная)
 --KASKADA (Шлютти Реквием)
@@ -231,7 +231,7 @@ Common.740.DoorClose            = Закрытие дверей
 Common.740.AttentionMessage     = Кнопка восприятия сообщения
 Common.740.LSD  				= Лампа сигнализации дверей (двери закрыты)
 Common.740.KAH					= Кнопка включения аварийного хода БАРС
-Common.740.KAHK					= Крышка кнопки КАХ
+Common.740.ALSk					= Крышка кнопки АЛС
 Common.740.ARS.KB 				= КБ: Кнопка бдительности
 Common.740.ARS.KVT				= КВТ: Кнопка восприятия торможения
 Common.740.Program1				= Пуск записи (программа 1)
@@ -381,7 +381,7 @@ Entities.gmod_subway_81-740_4.Buttons.BackDown.BatteryToggle          = @[Common
 Entities.gmod_subway_81-740_4.Buttons.PUU.!DoorsClosed                = @[Common.740.LSD]
 Entities.gmod_subway_81-740_4.Buttons.PUU.StandToggle                 = @[Common.740.Stand]
 Entities.gmod_subway_81-740_4.Buttons.PUU.KAHToggle                   = @[Common.740.KAH]
-Entities.gmod_subway_81-740_4.Buttons.PUU.KAHkToggle                  = @[Common.740.KAHK]
+Entities.gmod_subway_81-740_4.Buttons.PUU.ALSkToggle                  = @[Common.740.ALSk]
 Entities.gmod_subway_81-740_4.Buttons.PUU.ALSToggle                   = @[Common.740.ALS]
 Entities.gmod_subway_81-740_4.Buttons.PUU.!HVoltage                   = @[Common.740.HVoltage]
 Entities.gmod_subway_81-740_4.Buttons.PUU.PassSchemeToggle            = @[Common.740.PassScheme]

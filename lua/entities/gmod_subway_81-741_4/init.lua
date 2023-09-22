@@ -30,7 +30,7 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)
     self:SetPos(self:GetPos() + Vector(0,0,140))	
 
-    self.NormalMass = 19500	
+    self.NormalMass = 24000
     --self:DrawShadow(true)	
 
     -- Create seat entities
