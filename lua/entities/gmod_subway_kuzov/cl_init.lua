@@ -289,12 +289,12 @@ end
 
 function ENT:Think()
     self.BaseClass.Think(self)
+    if not self.RenderClientEnts or self.CreatingCSEnts then
+        return
+    end 	
     self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
     local train = self.HeadTrain 
     if not IsValid(train) or not IsValid(self) then return end		
-    if not self.RenderClientEnts or self.CreatingCSEnts then
-        return
-    end 
 	
 for k=0,3 do
 self.ClientProps["TrainNumberL"..k] = {

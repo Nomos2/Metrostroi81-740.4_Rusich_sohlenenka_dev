@@ -413,7 +413,7 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone
-		Vector(305,0,0),
+		Vector(305,0,50),
 		Vector(-305,0,60),		
 		0, --forcelimit
 		0, --torquelimit
@@ -424,10 +424,10 @@ function ENT:CreatePricep(pos,ang)
 		20, --ymax
 		180, --zmax
 		0, --xfric
-		0, --yfric
+		1, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
+		0,--nocollide
 		true
 	)		
 	constraint.AdvBallsocket(
@@ -445,11 +445,11 @@ function ENT:CreatePricep(pos,ang)
 		15, --xmax
 		20, --ymax
 		180, --zmax
-		0, --xfric
+		1, --xfric
 		0, --yfric
 		0, --zfric
 		0, --rotonly
-		1,--nocollide
+		0,--nocollide
 		true
 	)		
 	constraint.AdvBallsocket(
@@ -457,21 +457,21 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone,		
-		Vector(305,0,0),
+		Vector(305,0,60),
 		Vector(-305,0,10),	
 		0, --forcelimit
 		0, --torquelimit
 		-10, --xmin
-		-15, --ymin
+		-20, --ymin
 		-180, --zmin
 		10, --xmax
-		15, --ymax
+		20, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
-		0, --zfric
+		1, --zfric
 		0, --rotonly
-		1,--nocollide
+		0,--nocollide
 		true
 	)		
 end	
@@ -517,21 +517,6 @@ end
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
     self:RerailChange(self.RearBogey, true)			
-		
-	 self.InteractionZones = {	
-        {
-            ID = "RearBrakeLineIsolationToggle",
-            Pos = Vector(-336, -25, -54), Radius = 16
-        },
-        {
-            ID = "RearTrainLineIsolationToggle",
-            Pos = Vector(-536-131,-45,-46), Radius = 16
-        },
-        {
-            ID = "RearDoor",
-            Pos = Vector(-310, -13, 7),Radius = 31
-        },
-	}
 
 	--Метод mirror 				
 	ent.HeadTrain = self 

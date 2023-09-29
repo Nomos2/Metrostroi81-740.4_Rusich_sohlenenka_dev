@@ -38,7 +38,6 @@ ENT.SyncTable = {
 	
 	--"CAMS1","CAMS2","CAMS3","CAMS4",
 	"CAMS5","CAMS6","CAMS7","CAMS8","CAMS9","CAMS10",
-    "FrontBrakeLineIsolation","FrontTrainLineIsolation",
     "PB",   "GV",	"EmergencyBrakeValve","stopkran",
 }
 --------------------------------------------------------------------------------
@@ -705,10 +704,10 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone
-		Vector(305,0,0),
+		Vector(305,0,50),
 		Vector(-305,0,60),		
-		1, --forcelimit
-		1, --torquelimit
+		0, --forcelimit
+		0, --torquelimit
 		-15, --xmin
 		-20, --ymin
 		-180, --zmin
@@ -729,8 +728,8 @@ function ENT:CreatePricep(pos,ang)
 		0, --bone,		
 		Vector(305,0,30),
 		Vector(-305,0,10),	
-		1, --forcelimit
-		1, --torquelimit
+		0, --forcelimit
+		0, --torquelimit
 		-15, --xmin
 		-20, --ymin
 		-180, --zmin
@@ -749,15 +748,15 @@ function ENT:CreatePricep(pos,ang)
 		self.MiddleBogey,
 		0, --bone
 		0, --bone,		
-		Vector(305,0,0),
+		Vector(305,0,60),
 		Vector(-305,0,10),	
-		1, --forcelimit
-		1, --torquelimit
+		0, --forcelimit
+		0, --torquelimit
 		-10, --xmin
-		-15, --ymin
+		-20, --ymin
 		-180, --zmin
 		10, --xmax
-		15, --ymax
+		20, --ymax
 		180, --zmax
 		0, --xfric
 		0, --yfric
@@ -781,7 +780,7 @@ end
 
 	ent.ButtonBuffer = {}
 	ent.KeyBuffer = {}
-	ent.KeyMap = {}	
+	ent.KeyMap = {}		
 end			
 ---------------------------------------------------------------------------
 function ENT:Think()
@@ -796,13 +795,15 @@ function ENT:Think()
     self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
     self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	
 	
+		local sp = math.random (-1,-2)	
+		local spe = math.random (1,4)		
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do
-			self.Pneumatic.LeftDoorSpeed[k] = -2, 4
+			self.Pneumatic.LeftDoorSpeed[k] = -sp, spe
 		end
 		
 		for k,v in pairs(self.Pneumatic.RightDoorSpeed) do
-			self.Pneumatic.RightDoorSpeed[k] = -2, 4
+			self.Pneumatic.RightDoorSpeed[k] = -sp, spe
 		end
 		
 	local lightsActive1 = power and self.SFV20.Value > 0 
