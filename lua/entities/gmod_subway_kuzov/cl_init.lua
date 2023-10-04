@@ -285,6 +285,12 @@ function ENT:Initialize()
         self.VentState[i] = 0
         self.VentVol[i] = 0
     end	
+	
+    self.StopSounds = true
+
+    self.TunnelCoeff = 0
+    self.StreetCoeff = 0
+    self.Street = 0	
 end	
 
 function ENT:Think()
@@ -391,7 +397,7 @@ end
         end
 	end	
 	
-	local dT = train.DeltaTime	
+	local dT = self.DeltaTime	
     if not IsValid(train) or not IsValid(self) then return end		
     train.RearLeak = math.Clamp(train.RearLeak + 10*(-train:GetPackedRatio("RearLeak")-train.RearLeak)*dT,0,1)	
     self:SetSoundState("rear_isolation",train.RearLeak,0.9+0.2*train.RearLeak)		
@@ -429,41 +435,12 @@ end
         self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
 		end 	
     end		
-	
-    local rollingi = math.min(1,train.TunnelCoeff+math.Clamp((train.StreetCoeff-0.82)/0.5,0,1))
-    local rollings = math.max(train.TunnelCoeff*0.6,train.StreetCoeff)
-    local tunstreet = (rollingi+rollings*0.2)
-    local rol5 = math.Clamp(speed/5,0,1)*(1-math.Clamp((speed-10)/5,0,1))
-    local rol5p = Lerp((speed-5)/5,0.9,1.1)		
-    local rol10 = math.Clamp(speed/12,0,1)*(1-math.Clamp((speed-20)/12,0,1))
-    local rol10p = Lerp((speed-12)/12,0.9,1.1)
-    local rol30 = math.Clamp((speed-20)/12,0,1)*(1-math.Clamp((speed-40)/12,0,1))
-    local rol30p = Lerp((speed-15)/30,0.8,1.2)
-    local rol55 = math.Clamp((speed-40)/12,0,1)*(1-math.Clamp((speed-65)/15,0,1))
-    local rol55p = Lerp(0.8+(speed-43)/24,0.8,1.2)
-    local rol75 = math.Clamp((speed-65)/15,0,1)
-    local rol75p = Lerp(0.8+(speed-67)/16,0.8,1.2)
-    self:SetSoundState("rolling_5",rollingi*rol5,rol5p)	
-    self:SetSoundState("rolling_10",rollingi*rol10,rol10p)
-    self:SetSoundState("rolling_30",rollingi*rol30,rol30p)
-    self:SetSoundState("rolling_55",rollingi*rol55,rol55p)
-    self:SetSoundState("rolling_75",rollingi*rol75,rol75p)
 
-    local rol10 = math.Clamp(speed/15,0,1)*(1-math.Clamp((speed-18)/35,0,1))
-    local rol10p = Lerp((speed-15)/14,0.6,0.78)
-    local rol40 = math.Clamp((speed-18)/35,0,1)*(1-math.Clamp((speed-55)/40,0,1))
-    local rol40p = Lerp((speed-15)/66,0.6,1.3)
-    local rol70 = math.Clamp((speed-55)/20,0,1)--*(1-math.Clamp((speed-72)/5,0,1))
-    local rol70p = Lerp((speed-55)/27,0.78,1.15)
-    self:SetSoundState("rolling_low"    ,rol10*rollings,rol10p) --15
-    self:SetSoundState("rolling_medium2",rol40*rollings,rol40p) --57
-    self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70	
-
-    if not IsValid(train) or not IsValid(self) then return end		
+    if not IsValid(train) then return end		
     self:Animate("RearBrake", train:GetNW2Bool("RbI") and 0 or 1,0,1, 3, false)
     self:Animate("RearTrain", train:GetNW2Bool("RtI") and 1 or 0,0,1, 3, false)		
 	
-    if not IsValid(train) or not IsValid(self) then return end		
+    if not IsValid(train) then return end		
 	local BBEs = train:GetNW2Int("BBESound",1)	
 	if BBEs==1 then		
     self:SetSoundState("bbe_v1", self:GetPackedBool("BBEWork") and 1 or 0, 1)
@@ -498,10 +475,14 @@ function ENT:OnButtonPressed(button)
 
 end
 function ENT:OnPlay(soundid,location,range,pitch)
+    self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
+    local train = self.HeadTrain 
+    if not IsValid(train) or not IsValid(self) then return end	
+	
     if location == "stop" then
-        if IsValid(self.Sounds[soundid]) then
-            self.Sounds[soundid]:Pause()
-            self.Sounds[soundid]:SetTime(0)
+        if IsValid(train.Sounds[soundid]) then
+            train.Sounds[soundid]:Pause()
+            train.Sounds[soundid]:SetTime(0)
         end
         return
     end
@@ -520,8 +501,6 @@ function ENT:DrawPost(special)
         surface.DrawTexturedRectRotated(512,32+8,1024+16,64+16,0)
     end)
 	end
-end
-function ENT:OnButtonPressed(button)
 end
 
 Metrostroi.GenerateClientProps()

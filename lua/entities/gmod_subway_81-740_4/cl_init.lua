@@ -517,7 +517,7 @@ ENT.ButtonMap["ALSPANELLAMPS"] = { -- дополнительные лампы А
     }
 }
 ENT.ButtonMap["PUL"] = {
-    pos = Vector(807-159, 34.5, -3.1), --446 -- 14 -- -0,5
+    pos = Vector(807-159, 34.5, -3.1),
     ang = Angle(0,-90,21.5),
     width = 100,
     height = 220,
@@ -747,8 +747,8 @@ ENT.ButtonMap["VoltHelper2"] = {
 ENT.ButtonMap["IGLA_C"] = {
     pos = Vector(735.85-159,34.1,44.6),
     ang = Angle(0,90,90),
-    width = 512,--18333.333333333333333333333333333
-    height = 107,--7916.6666666666666666666666666667
+    width = 512,
+    height = 107,
     scale = 0.0171,
     hideseat=0.8,
     hide=true,
@@ -1730,12 +1730,8 @@ ENT.ButtonMap["Password"] = {
 
 local yventpos = {
     414.5+0*117-159,
-	---414.5+1*117+6.2-144,
 	414.5+2*117+5-159,
-	--414.5+3*117+2-144,
 	214.5+4*117+0.5-15,
-	---414.5+5*117-2.3-144,
-	---414.5+6*117-144,
 }
 
 ENT.ButtonMap["CAMS"] = {
@@ -1757,7 +1753,7 @@ ENT.ButtonMap["Vityaz"] = {
 }
 
  ENT.Lights = {
-    [1] = { "headlight",	Vector(690-15,0,-35), Angle(0,0,0), Color(216,161,92), farz=5144,brightness = 4, hfov=105,vfov=105, texture = "models/metrostroi_train/equipment/headlight",shadows = 1,headlight=true}, --Фары 324.8-144.5, 72.8, -58.2
+    [1] = { "headlight",	Vector(690-15,0,-35), Angle(0,0,0), Color(216,161,92), farz=5144,brightness = 4, hfov=105,vfov=105, texture = "models/metrostroi_train/equipment/headlight",shadows = 1,headlight=true}, --Фары 
     [2] = { "headlight",    Vector(968-159,0,50), Angle(-1,0,0), Color(255,0,0), fov=170 ,brightness = 0.3, farz=450,texture = "models/metrostroi_train/equipment/headlight2",shadows = 0,backlight=true}, --Красные фары 
     [3] = { "headlight",    Vector(358-159,40,43.9), Angle(50,40,-0), Color(206,135,80), fov=100,farz=200,brightness = 0,shadows=1}, --отсеки
 }
@@ -2453,7 +2449,7 @@ end
 function self:UpdateWagonNumber()
     self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
     local train1 = self.HeadTrain1 
-    if not IsValid(train1) or not IsValid(self) then return end	
+    if not IsValid(train1) then return end	
 for k=0,3 do
         --if i< count then			
 			if self.WagonNumber then				
@@ -2485,7 +2481,7 @@ end
 --Задняя часть
     self.HeadTrain1 = self:GetNW2Entity("gmod_subway_kuzov")	
     local train1 = self.HeadTrain1 
-    if not IsValid(train1) or not IsValid(self) then return end	
+    if not IsValid(train1) then return end	
 	
 	 self:SetLightPower(3,self.Door5 and self:GetPackedBool("AppLights"),self:GetPackedBool("AppLights") and 1 or 0)
     --ANIMS
@@ -2832,6 +2828,12 @@ end
     self:SetSoundState("rolling_30",rollingi*rol30,rol30p)
     self:SetSoundState("rolling_55",rollingi*rol55,rol55p)
     self:SetSoundState("rolling_75",rollingi*rol75,rol75p)
+	
+    self:SetSoundState("rolling_5_middle",rollingi*rol5,rol5p)	
+    self:SetSoundState("rolling_10_middle",rollingi*rol10,rol10p)
+    self:SetSoundState("rolling_30_middle",rollingi*rol30,rol30p)
+    self:SetSoundState("rolling_55_middle",rollingi*rol55,rol55p)
+    self:SetSoundState("rolling_75_middle",rollingi*rol75,rol75p)	
 
     local rol10 = math.Clamp(speed/15,0,1)*(1-math.Clamp((speed-18)/35,0,1))
     local rol10p = Lerp((speed-15)/14,0.6,0.78)
@@ -2843,8 +2845,11 @@ end
     --local rol80p = Lerp(0.8+(speed-72)/15*0.2,0.8,1.2)
     self:SetSoundState("rolling_low"    ,rol10*rollings,rol10p) --15
     self:SetSoundState("rolling_medium2",rol40*rollings,rol40p) --57
-    --self:SetSoundState("rolling_medium1",0 or rol40*rollings,rol40p) --57
-    self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70	
+    self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70
+
+    self:SetSoundState("rolling_low_middle"    ,rol10*rollings,rol10p) --15
+    self:SetSoundState("rolling_medium2_middle",rol40*rollings,rol40p) --57
+    self:SetSoundState("rolling_high2_middle"  ,rol70*rollings,rol70p) --70		
 	
     --local state = (RealTime()%4/3)^1.5
     --local strength = 1--self:GetPackedRatio("asyncstate")*(1-math.Clamp((speed-15)/15,0,1))

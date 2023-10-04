@@ -39,12 +39,8 @@ end
 
 local yventpos = {
     414.5+0*117-144-15,
-	---414.5+1*117+6.2-144,
 	414.5+2*117+5-144-15,
-	--414.5+3*117+2-144,
 	214.5+4*117+0.5-15,
-	---414.5+5*117-2.3-144,
-	---414.5+6*117-144,
 }
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)	
@@ -327,19 +323,31 @@ function ENT:InitializeSounds()
     self.SoundNames["rolling_30"] = {loop=true,"subway_trains/rusich/rolling/rolling_30.wav"}
     self.SoundNames["rolling_55"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
     self.SoundNames["rolling_75"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}
-    self.SoundPositions["door_cab_roll"] = {485,1e9,Vector(516-159,0,0),0.5}		
-    self.SoundPositions["rolling_5"] = {485,1e9,Vector(516-159,0,0),0.6}	
-    self.SoundPositions["rolling_10"] = {485,1e9,Vector(516-159,0,0),0.7}
-    self.SoundPositions["rolling_30"] = {485,1e9,Vector(516-159,0,0),0.8}
-    self.SoundPositions["rolling_55"] = {485,1e9,Vector(516-159,0,0),0.9}
-    self.SoundPositions["rolling_75"] = {485,1e9,Vector(516-159,0,0),0.95}
+    self.SoundPositions["door_cab_roll"] = {485,1e9,Vector(516-159,0,0),0.5}
+	
+    self.SoundPositions["rolling_5"] = {485,1e9,Vector(520-25,0,0),0.6}	
+    self.SoundPositions["rolling_10"] = {485,1e9,Vector(520-25,0,0),0.7}
+    self.SoundPositions["rolling_30"] = {485,1e9,Vector(520-25,0,0),0.8}
+    self.SoundPositions["rolling_55"] = {485,1e9,Vector(520-25,0,0),0.9}
+    self.SoundPositions["rolling_75"] = {485,1e9,Vector(520-25,0,0),0.95}
     self.SoundNames["rolling_low"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_low.wav"}
     self.SoundNames["rolling_medium2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium"..rol..".wav"}
     self.SoundNames["rolling_high2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high"..rol..".wav"}
-    self.SoundPositions["rolling_low"] = {480,1e12,Vector(516-159,0,0),0.6*0.4}
-    self.SoundPositions["rolling_medium1"] = {480,1e12,Vector(516-159,0,0),0.90*0.4}
-    self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(516-159,0,0),0.90*0.4}
-    self.SoundPositions["rolling_high2"] = {480,1e12,Vector(516-159,0,0),1.00*0.4}
+    self.SoundPositions["rolling_low"] = {480,1e12,Vector(520-25,0,0),0.6*0.4}
+    self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(520-25,0,0),0.90*0.4}
+    self.SoundPositions["rolling_high2"] = {480,1e12,Vector(520-25,0,0),1.00*0.4}
+	
+	self.SoundPositions["rolling_5_middle"] = {485,1e9,Vector(-15-16.5,0),1}	 --0.6
+    self.SoundPositions["rolling_10_middle"] = {485,1e9,Vector(-15-16.5,0),1}  --0.7
+    self.SoundPositions["rolling_30_middle"] = {485,1e9,Vector(-15-16.5,0),1}  --0.8
+    self.SoundPositions["rolling_55_middle"] = {485,1e9,Vector(-15-16.5,0),1}  --0.9
+    self.SoundPositions["rolling_75_middle"] = {485,1e9,Vector(-15-16.5,0),1} --0.95
+    self.SoundNames["rolling_low_middle"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_low.wav"}
+    self.SoundNames["rolling_medium2_middle"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium"..rol..".wav"}
+    self.SoundNames["rolling_high2_middle"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high"..rol..".wav"}
+    self.SoundPositions["rolling_low_middle"] = {480,1e12,Vector(-15-16.5,0),0.6*0.4}
+    self.SoundPositions["rolling_medium2_middle"] = {480,1e12,Vector(-15-16.5,0),0.90*0.4}
+    self.SoundPositions["rolling_high2_middle"] = {480,1e12,Vector(-15-16.5,0),1.00*0.4}
 
     self.SoundNames["gv_f"] = {"subway_trains/717/kv70/reverser_0-b_1.mp3","subway_trains/717/kv70/reverser_0-b_2.mp3"}
     self.SoundNames["gv_b"] = {"subway_trains/717/kv70/reverser_b-0_1.mp3","subway_trains/717/kv70/reverser_b-0_2.mp3"}
@@ -542,10 +550,7 @@ ENT.Spawner = {
 				
 				timer.Simple(0,function()	
 				if not IsValid(ent) then return end				
-				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 2
-				end)
-				timer.Simple(0,function()	
-				if not IsValid(ent) then return end				
+				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 2			
 				ent:GetNW2Entity("gmod_subway_kuzov_741").RearDoor = val == 2
 				end)				
 				
@@ -583,8 +588,7 @@ ENT.Spawner = {
                 ent.FrontDoor = val==4
 				timer.Simple(0,function()	
 				if not IsValid(ent) then return end					
-				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 4
-                ent.FrontDoor = val==4			
+				ent:GetNW2Entity("gmod_subway_kuzov").RearDoor = val == 4		
 				ent:GetNW2Entity("gmod_subway_kuzov_741").RearDoor = val == 4
 				end)				
             end

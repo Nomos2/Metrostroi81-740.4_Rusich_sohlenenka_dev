@@ -26,12 +26,8 @@ ENT.Model 			= "models/metrostroi_train/81-740/body/81-740_4_rear_reference.mdl"
 
 local yventpos = {
     -14.5+0*117-144,
-	---414.5+1*117+6.2-144,
 	-14.5+2*117+5-144,
-	--414.5+3*117+2-144,
 	-44.5+4*117+0.5-144,
-	---414.5+5*117-2.3-144,
-	---414.5+6*117-144,
 }
 
 function ENT:PassengerCapacity()
@@ -52,8 +48,6 @@ end
 
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)
-
-	local rol = math.random (1,2)	
 	--for i = 1,10 do
 		--local id3 = Format("b3tunnel_%d",i)	
 		--local id3 = Format("b3tunnel_%d",i)	
@@ -87,24 +81,6 @@ function ENT:InitializeSounds()
     self.SoundPositions["rear_isolation"] = {300,1e9,Vector(-456+144, 0,-63),1}
     self.SoundNames["compressor"] = {loop=2,"subway_trains/rusich/compressor/compressor740_start.wav","subway_trains/rusich/compressor/compressor740_loop.wav","subway_trains/rusich/compressor/compressor740_stop.wav"}
     self.SoundPositions["compressor"] = {800,1e9,Vector(-18,-40,-66),0.4}	
-	
-	self.SoundNames["rolling_5"] = {loop=true,"subway_trains/rusich/rolling/skrip1.mp3"}	
-	self.SoundNames["rolling_10"] = {loop=true,"subway_trains/rusich/rolling/rolling_10.wav"}
-	self.SoundNames["rolling_30"] = {loop=true,"subway_trains/rusich/rolling/rolling_30.wav"}
-	self.SoundNames["rolling_55"] = {loop=true,"subway_trains/rusich/rolling/rolling_55.wav"}
-	self.SoundNames["rolling_75"] = {loop=true,"subway_trains/rusich/rolling/rolling_75.wav"}		
-	self.SoundPositions["rolling_5"] = {485,1e9,Vector(116-144,0,0),0.6}	
-	self.SoundPositions["rolling_10"] = {485,1e9,Vector(116-144,0,0),0.6}
-	self.SoundPositions["rolling_30"] = {485,1e9,Vector(116-144,0,0),0.8}
-	self.SoundPositions["rolling_55"] = {485,1e9,Vector(116-144,0,0),0.9}
-	self.SoundPositions["rolling_75"] = {485,1e9,Vector(116-144,0,0),0.95}	
-	
-    self.SoundNames["rolling_low"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_low.wav"}
-    self.SoundNames["rolling_medium2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_medium"..rol..".wav"}
-    self.SoundNames["rolling_high2"] = {loop=true,"subway_trains/rusich/rolling/rolling_outside_high"..rol..".wav"}
-    self.SoundPositions["rolling_low"] = {480,1e12,Vector(-19.5,0,0),0.6*0.6}
-    self.SoundPositions["rolling_medium2"] = {480,1e12,Vector(-19.5,0,0),0.90*0.6}
-    self.SoundPositions["rolling_high2"] = {480,1e12,Vector(-19.5,0,0),1.00*0.6}	
 	
     for i=1,4 do
         self.SoundNames["vent"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop.wav"}
