@@ -249,7 +249,6 @@ function ENT:CreatePricep(pos,ang)
 	if CPPI and IsValid(self:CPPIGetOwner()) then ent:CPPISetOwner(self:CPPIGetOwner()) end	
     --PrintTable(ent:GetTable())
 	self:SetNW2Entity("gmod_subway_kuzov_741",ent)
-    ent:SetUseType(SIMPLE_USE)
     if not self.NoPhysics then
         --self.MiddleBogey:PhysicsInit(SOLID_VPHYSICS)
         ent:SetMoveType(MOVETYPE_VPHYSICS)
@@ -290,6 +289,44 @@ function ENT:CreatePricep(pos,ang)
 	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
 	constraint.RemoveConstraints(self.MiddleBogey, "AdvBallsocket")	
 	constraint.RemoveConstraints(ent, "AdvBallsocket")	
+	
+	constraint.Axis(
+		self.RearBogey,		
+		ent,
+		0,
+		0,
+		Vector(0,0,0),
+		Vector(0,0,0),
+        0,
+		0,
+		0,
+		0,
+		Vector(0,0,-1)
+		)
+	--Сцепка, крепление к вагону.
+	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
+	constraint.AdvBallsocket(
+		ent,
+        self.RearCouple,
+        0, --bone
+        0, --bone
+        self.RearCouple.SpawnPos-pos,
+        Vector(0,0,0),
+        1, --forcelimit
+        1, --torquelimit
+        -2, --xmin
+        -2, --ymin
+        -15, --zmin
+        2, --xmax
+        2, --ymax
+        15, --zmax
+        0.1, --xfric
+        0.1, --yfric
+        1, --zfric
+        0, --rotonly
+        1 --nocollide
+    ) 		
+	
 	local Map = game.GetMap():lower() or ""        
 	if 
 	Map:find("gm_metro_pink_line_redux") or
@@ -396,7 +433,7 @@ function ENT:CreatePricep(pos,ang)
 		0, --torquelimit
 		-5, --xmin
 		-5, --ymin
-		-180, --zmin
+		0, --zmin
 		5, --xmax
 		5, --ymax
 		180, --zmax
@@ -406,7 +443,7 @@ function ENT:CreatePricep(pos,ang)
 		0, --rotonly
 		1--nocollide
 	)
-	else	
+	else
 
 	constraint.AdvBallsocket(
 		ent,
@@ -477,42 +514,6 @@ function ENT:CreatePricep(pos,ang)
 end	
 end
 end
-        constraint.Axis(
-		self.RearBogey,		
-		ent,
-		0,
-		0,
-		Vector(0,0,0),
-		Vector(0,0,0),
-        0,
-		0,
-		0,
-		0,
-		Vector(0,0,-1)
-		)
-	--Сцепка, крепление к вагону.
-	constraint.RemoveConstraints(self.RearCouple, "AdvBallsocket")	
-	constraint.AdvBallsocket(
-		ent,
-        self.RearCouple,
-        0, --bone
-        0, --bone
-        self.RearCouple.SpawnPos-pos,
-        Vector(0,0,0),
-        1, --forcelimit
-        1, --torquelimit
-        -2, --xmin
-        -2, --ymin
-        -15, --zmin
-        2, --xmax
-        2, --ymax
-        15, --zmax
-        0.1, --xfric
-        0.1, --yfric
-        1, --zfric
-        0, --rotonly
-        1 --nocollide
-    ) 
 
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
@@ -532,43 +533,28 @@ function ENT:Think()
     local retVal = self.BaseClass.Think(self)
     local power = self.Electric.Battery80V > 62 --Батарея
 	local Panel = self.Panel		
-
-    --[[ if self.BUV.Brake > 0 then
-        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and (1-self.Electric.RNState)+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
-    else
-        self:SetPackedRatio("RNState", power and (Train.K2.Value>0 or Train.K3.Value>0) and self.Electric.RN > 0 and self.Electric.RNState+math.Clamp(1-(math.abs(self.Electric.Itotal)-50)/50,0,1) or 1)
-    end--]]
-    --if self.BPTI.State < 0 then
-        --self:SetPackedRatio("RNState", ((self.BPTI.RNState)-0.5)*math.Clamp((math.abs(self.Electric.Itotal/2)-30-self.Speed*1)/35,0,1)) --снижение скорости
-        --self:SetNW2Int("RNFreq", 13)
-   --else--if self.BPTI.State > 0 then
-        --self:SetPackedRatio("RNState", (0.95-self.BPTI.RNState)*math.Clamp((math.abs(self.Electric.Itotal/2)-36-self.Speed*1)/35,0,5))
-        --self:SetNW2Int("RNFreq", ((self.BPTI.FreqState or 0)-1/3)/(2/3)*12)
-    --[[ else
-        self:SetPackedRatio("RNState", 0)--]]
-    --end
 	
     local state = math.abs(self.AsyncInverter.InverterFrequency/(11+self.AsyncInverter.State*5))--(10+8*math.Clamp((self.AsyncInverter.State-0.4)/0.4,0,1)))
     self:SetPackedRatio("asynccurrent", math.Clamp(state*(state+self.AsyncInverter.State/1),0,1)*math.Clamp(self.Speed/6,0,1))
     self:SetPackedRatio("asyncstate", math.Clamp(self.AsyncInverter.State/0.2*math.abs(self.AsyncInverter.Current)/100,0,1))
     self:SetPackedRatio("chopper", math.Clamp(self.Electric.Chopper>0 and self.Electric.IChopped/100 or 0,0,1))	 
 
+		local sp = math.random (-1,-2)		
 		--скорость дверей
 		for k,v in pairs(self.Pneumatic.LeftDoorSpeed) do
-			self.Pneumatic.LeftDoorSpeed[k] = -2, 12
+			self.Pneumatic.LeftDoorSpeed[k] = sp, 12
 		end
 		
 		for k,v in pairs(self.Pneumatic.RightDoorSpeed) do
-			self.Pneumatic.RightDoorSpeed[k] = -2, 12
+			self.Pneumatic.RightDoorSpeed[k] = sp, 12
 		end
 		
 	local lightsActive1 = power and self.SFV20.Value > 0 
     local lightsActive2 = power and self.BUV.MainLights 
 	local mul = 0
-    local LampCount = 40	
     local Ip = 7 or 6.9 
     local Im = 1
-	for i = 1,40 do
+	for i = 1,20 do
        if (lightsActive2 or (lightsActive1 and math.ceil((i+Ip-Im)%Ip)==1)) then
             if not self.Lamps[i] and not self.Lamps.broken[i] then self.Lamps[i] = CurTime() + math.Rand(0.1,math.Rand(1.15,2.5)) --[[print(self.Lamps[i]-CurTime())]] end
         else

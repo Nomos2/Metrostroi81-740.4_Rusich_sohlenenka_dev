@@ -768,7 +768,6 @@ function ENT:CreatePricep(pos,ang)
 end	
 end
 end
-
 	
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
