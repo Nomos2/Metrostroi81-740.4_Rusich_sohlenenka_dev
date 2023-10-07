@@ -780,6 +780,7 @@ end
 	ent.ButtonBuffer = {}
 	ent.KeyBuffer = {}
 	ent.KeyMap = {}		
+	ent.InteractionZones = {}
 end			
 ---------------------------------------------------------------------------
 function ENT:Think()

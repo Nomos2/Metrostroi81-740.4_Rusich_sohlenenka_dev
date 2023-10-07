@@ -62,10 +62,7 @@ function ENT:Initialize()
 		self.RearBogey.m_tblToolsAllowed = { "none" }		
 		
 	self:SetNW2Entity("FrontBogey",self.FrontBogey)
-	self:SetNW2Entity("RearBogey",self.RearBogey)		
-		
-	self.Timer = CurTime()	
-	self.Timer2 = CurTime()		
+	self:SetNW2Entity("RearBogey",self.RearBogey)	
 	
 timer.Simple(0, function()	
         if not IsValid(self) then return end
@@ -239,7 +236,7 @@ end
 
 function ENT:CreatePricep(pos,ang)
 	local ent = ents.Create("gmod_subway_kuzov_741")
-    if not IsValid(ent) or not IsValid(self) then return end	
+    if not IsValid(ent) then return end	
 	ent:SetPos(self:LocalToWorld(pos))
 	ent:SetAngles(self:LocalToWorldAngles(Angle(0,0,0)))
 	ent:Spawn()

@@ -1228,8 +1228,8 @@ ENT.ClientProps["FrontTrain"] = {--
 	scale = 0.55,
     hide = 2,
 }
-ENT.ClientSounds["FrontBrakeLineIsolation"] = {{"FrontBrake",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
-ENT.ClientSounds["FrontTrainLineIsolation"] = {{"FrontTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+ENT.ClientSounds["FrontBrakeLineIsolation"] = {{"FrontBrake",function() return "disconnect_valve" end,2,1,50,1e3,Angle(-90,0,0)}}
+ENT.ClientSounds["FrontTrainLineIsolation"] = {{"FrontTrain",function() return "disconnect_valve" end,2,1,50,1e3,Angle(-90,0,0)}}
 
 --Головная часть
 ENT.ButtonMap["CabinDoorL"] = {
@@ -1945,7 +1945,6 @@ function ENT:ReInitBogeySounds(bogey)
     bogey.Async = nil
     --bogey.MotorSoundType = nil
 end
-	
 if self:GetNW2Int("MotorType")==2 then	
 
     -- Bogey-related sounds
@@ -2049,7 +2048,6 @@ if self:GetNW2Int("MotorType")==2 then
     bogey.Async = nil
     --bogey.MotorSoundType = nil
 end
-
 if self:GetNW2Int("MotorType")==3 then
 
     -- Bogey-related sounds
@@ -2147,8 +2145,7 @@ if self:GetNW2Int("MotorType")==3 then
 
     bogey.Async = nil
     --bogey.MotorSoundType = nil
-end	
-
+end
 if self:GetNW2Int("MotorType")==4 then
 
     -- Bogey-related sounds
@@ -2499,7 +2496,7 @@ end
     self:Animate("controller", (self:GetPackedRatio("Controller")+4)/8, 0, 0.425,  2.5,false)
 
     self:Animate("FrontBrake", self:GetNW2Bool("FbI") and 0 or 1,0,1, 3, false)
-    self:Animate("FrontTrain",  self:GetNW2Bool("FtI") and 1 or 0,0,1, 3, false)	
+    self:Animate("FrontTrain",  self:GetNW2Bool("FtI") and 1 or 0,0,1, 3, false)		
 
     if self.LastGVValue ~= self:GetPackedBool("GV") then
         self.ResetTime = CurTime()+1.5
@@ -2903,13 +2900,6 @@ end
         if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
             self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
 		end 
-		
-    local train1 = self.HeadTrain1 
-	for k,v in ipairs(train1.AnnouncerPositions) do
-        if self.Sounds["announcer"..k] and IsValid(self.Sounds["announcer"..k]) then
-            self.Sounds["announcer"..k]:SetVolume(work and (v[4] or 1)  or 0.5)
-			end 
-		end
 	end	
 end
 
@@ -2929,7 +2919,7 @@ function ENT:OnPlay(soundid,location,range,pitch)
         return
     end
 	if soundid:sub(1,4) == "IGLA" then
-    return range > 0 and "igla_on" or "igla_off",location,1,pitch
+    return range > 0 and "	" or "igla_off",location,1,pitch
     end
     if soundid == "QF1" then
         local id = range > 0 and "qf1_on" or "qf1_off"

@@ -52,8 +52,6 @@ end
 
 function ENT:InitializeSounds()
     self.BaseClass.InitializeSounds(self)
-
-	local rol = math.random (1,2)	
 	--for i = 1,10 do
 		--local id3 = Format("b3tunnel_%d",i)	
 		--local id3 = Format("b3tunnel_%d",i)	
@@ -111,10 +109,7 @@ function ENT:InitializeSounds()
         self.SoundPositions["vent"..i] = {130,1e9,Vector(yventpos[i],0,30),0.2}
         self.SoundNames["vent1"..i] = {loop=true,"subway_trains/rusich/vent/vent_loop_1.wav"}
         self.SoundPositions["vent1"..i] = {130,1e9,Vector(yventpos[i],0,30),0.2}
-    end		
-	
-    self.SoundPositions["pneumo_disconnect_close"] = {800,1e9,Vector(-295,40,-55),0.4}
-    self.SoundPositions["pneumo_disconnect_open"] = {800,1e9,Vector(-295,40,-55),0.4}
+    end	
     self.SoundNames["disconnect_valve"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3"	
 	
     self.SoundNames["bbe_v1"]   = {"subway_trains/rusich/bbes/bbe.wav",loop = true}

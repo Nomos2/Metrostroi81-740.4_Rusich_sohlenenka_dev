@@ -21,7 +21,7 @@ function ENT:Initialize()
     self.BaseClass.Initialize(self)		
     self:SetPos(self:GetPos() + Vector(0,0,0))	
 	
-    self.NormalMass = 24000	
+    self.NormalMass = 15500	
 	
     self.PassengerSeat = self:CreateSeat("passenger",Vector(-135,-40,-25),Angle(0,90,0),"models/nova/airboat_seat.mdl")
     self.PassengerSeat2 = self:CreateSeat("passenger",Vector(-135,40,-25),Angle(0,270,0),"models/nova/airboat_seat.mdl")  
@@ -35,10 +35,6 @@ function ENT:Initialize()
 	self.PassengerSeat3:SetColor(Color(0,0,0,0))
     self.PassengerSeat4:SetRenderMode(RENDERMODE_NONE)
 	self.PassengerSeat4:SetColor(Color(0,0,0,0))				
-    self.WireIOSystems = {}
-    self.Systems = {}
-    self.TrainEntities = {}
-    self.TrainWires = {}	
 	
 	self.Lights = {
 		[14] = { "dynamiclight",    Vector( 220, 0, 40), Angle(0,0,0), Color(255,220,180), brightness = 3, distance = 500 , fov=180,farz = 128 },
@@ -126,15 +122,17 @@ function ENT:Think()
     self:SetPackedBool("RearDoor",self.RearDoor)		
 	
     self:SetNW2Entity("gmod_subway_81-741_4", self.HeadTrain)    
-	local train = self.HeadTrain		
-	local Panel = train.Panel		
+	local train = self.HeadTrain
+    self.WireIOSystems = {}
+    self.Systems = {}
+    self.TrainWires = {}			
 	local retVal = self.BaseClass.Think(self)
     local power = train.Electric.Battery80V > 62			
 	
     self:SetPackedBool("Vent2Work",train.Electric.Vent2>0)	
     self:SetPackedBool("BBEWork",power and train.BUV.BBE > 0)
     self:SetPackedBool("CompressorWork",train.Pneumatic.Compressor)
-    self:SetPackedBool("AnnPlay",Panel.AnnouncerPlaying > 0)	
+    self:SetPackedBool("AnnPlay",train.Panel.AnnouncerPlaying > 0)	
 	
     if self.AnnouncementToLeaveWagon ~= train.AnnouncementToLeaveWagon then self.AnnouncementToLeaveWagon = train.AnnouncementToLeaveWagon end
 	
@@ -180,21 +178,11 @@ function ENT:Think()
 	self:SetLightPower(16,passlight > 0, passlight and mul/20) 
 	
     return retVal		 
-end	
-
-function ENT:OnRemove()
-    -- Remove all linked objects
-    constraint.RemoveAll(self)
-    if self.TrainEntities then
-        for k,v in pairs(self.TrainEntities) do
-            SafeRemoveEntity(v)
-        end
-end	
 end
 
 function ENT:OnButtonPress(button,ply)
     self:SetNW2Entity("gmod_subway_81-741_4", self.HeadTrain)	
 	local train = self.HeadTrain
-    if not IsValid(train) or not IsValid(self) then return end		
+    if not IsValid(train) then return end		
     if button == "RearDoor" and (self.RearDoor or not train.BUV.BlockTorec) then self.RearDoor = not self.RearDoor end
 end	

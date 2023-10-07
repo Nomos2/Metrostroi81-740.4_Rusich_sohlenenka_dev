@@ -42,7 +42,7 @@ end
 function ENT:BoardPassengers(delta)
     self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)	
     local train = self.HeadTrain
-	
+	if not IsValid(train) then return end		
 	self:SetNW2Float("PassengerCount", math.max(0,math.min(train:PassengerCapacity(),self:GetNW2Float("PassengerCount") + delta)))
 end
 
@@ -89,8 +89,6 @@ function ENT:InitializeSounds()
         self.SoundPositions["vent1"..i] = {130,1e9,Vector(yventpos[i],0,30),0.2}
     end		
 	
-    self.SoundPositions["pneumo_disconnect_close"] = {800,1e9,Vector(-295,40,-55),0.4}
-    self.SoundPositions["pneumo_disconnect_open"] = {800,1e9,Vector(-295,40,-55),0.4}
     self.SoundNames["disconnect_valve"] = "subway_trains/common/switches/pneumo_disconnect_switch.mp3"	
 	
     self.SoundNames["bbe_v1"]   = {"subway_trains/rusich/bbes/bbe.wav",loop = true}
@@ -133,13 +131,5 @@ ENT.AnnouncerPositions = {
     --{Vector(3,34,55),250,0.1},
     --{Vector(235,34,55),250,0.1},
 }
-
--- Setup door positions
-ENT.LeftDoorPositions = {}
-ENT.RightDoorPositions = {}
-for i=0,2 do
-    table.insert(ENT.LeftDoorPositions,GetDoorPosition(i,1))
-    table.insert(ENT.RightDoorPositions,GetDoorPosition(i,0))
-end
 
 ENT.SubwayTrain = nil

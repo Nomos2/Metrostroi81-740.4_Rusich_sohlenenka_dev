@@ -490,7 +490,8 @@ function ENT:OnPlay(soundid,location,range,pitch)
         end
         return
     end
-end	
+    return soundid,location,range,pitch
+end 
 
 function ENT:DrawPost(special)
     self.HeadTrain = self:GetNW2Entity("gmod_subway_81-741_4")	

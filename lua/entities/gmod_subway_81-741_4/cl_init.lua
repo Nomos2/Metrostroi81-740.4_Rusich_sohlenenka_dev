@@ -1202,7 +1202,13 @@ end
     self:SetSoundState("rolling_10",rollingi*rol10,rol10p)
     self:SetSoundState("rolling_30",rollingi*rol30,rol30p)
     self:SetSoundState("rolling_55",rollingi*rol55,rol55p)
-    self:SetSoundState("rolling_75",rollingi*rol75,rol75p)	
+    self:SetSoundState("rolling_75",rollingi*rol75,rol75p)
+
+    self:SetSoundState("rolling_5_middle",rollingi*rol5,rol5p)	
+    self:SetSoundState("rolling_10_middle",rollingi*rol10,rol10p)
+    self:SetSoundState("rolling_30_middle",rollingi*rol30,rol30p)
+    self:SetSoundState("rolling_55_middle",rollingi*rol55,rol55p)
+    self:SetSoundState("rolling_75_middle",rollingi*rol75,rol75p)	
 
     local rol10 = math.Clamp(speed/15,0,1)*(1-math.Clamp((speed-18)/35,0,1))
     local rol10p = Lerp((speed-15)/14,0.6,0.78)
@@ -1210,16 +1216,13 @@ end
     local rol40p = Lerp((speed-15)/66,0.6,1.3)
     local rol70 = math.Clamp((speed-55)/20,0,1)--*(1-math.Clamp((speed-72)/5,0,1))
     local rol70p = Lerp((speed-55)/27,0.78,1.15)
-    --local rol80 = math.Clamp((speed-70)/5,0,1)
-    --local rol80p = Lerp(0.8+(speed-72)/15*0.2,0.8,1.2)
     self:SetSoundState("rolling_low"    ,rol10*rollings,rol10p) --15
     self:SetSoundState("rolling_medium2",rol40*rollings,rol40p) --57
-    --self:SetSoundState("rolling_medium1",0 or rol40*rollings,rol40p) --57
     self:SetSoundState("rolling_high2"  ,rol70*rollings,rol70p) --70
 	
-    self:SetSoundState("rolling_low_740"    ,rol10*rollings,rol10p) --15
-    self:SetSoundState("rolling_medium2_740",rol40*rollings,rol40p) --57
-    self:SetSoundState("rolling_high2_740"  ,rol70*rollings,rol70p) --70
+    self:SetSoundState("rolling_low_middle"    ,rol10*rollings,rol10p) --15
+    self:SetSoundState("rolling_medium2_middle",rol40*rollings,rol40p) --57
+    self:SetSoundState("rolling_high2_middle"  ,rol70*rollings,rol70p) --70
 
 --[[	
     --local state = (RealTime()%4/3)^1.5
