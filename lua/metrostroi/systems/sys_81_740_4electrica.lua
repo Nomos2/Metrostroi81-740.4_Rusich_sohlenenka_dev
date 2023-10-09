@@ -67,8 +67,6 @@ function TRAIN_SYSTEM:Initialize()
     self.SDWork = 0
 
     self.BUTPReady = 0
-    self.BUTPReverserF = 0
-    self.BUTPReverserB = 0
     self.DisableBV = 0
     self.BVactivationAttempt = 0
     self.BVcountOfTriggers = 0
@@ -95,7 +93,7 @@ function TRAIN_SYSTEM:Outputs()
     return { "Brake", "Drive","BVonSelfLocking","BV_NoAA","DisableBV",
              "Main750V", "Power750V", "Aux750V", "Aux80V", "Lights80V", "Battery80V","ReservePower","EqualizingCircuits",
              "BTB","V2","V1","ConditionerPower","ConditionerWork",
-             "BVKA_KM1","BVKA_KM2","BUTPReady","Vent2","BUTPReverserF","BUTPReverserB",
+             "BVKA_KM1","BVKA_KM2","BUTPReady","Vent2",
              "Recurperation","Iexit","IChopped","Chopper","ElectricEnergyUsed","ElectricEnergyDissipated","EnergyChange"
         }
 end
@@ -383,8 +381,6 @@ function TRAIN_SYSTEM:Think(dT)
     self.ConditionerWork = self.ConditionerPower*HV
 
     local butpPower = P*Train.SFV28.Value
-    self.BUTPReverserF = Train:ReadTrainWire(12) > 0
-    self.BUTPReverserB = Train:ReadTrainWire(13) > 0
     self.BUTPReady = butpPower*self.BVKA_KM2
 
     local strengthZero = Train.BUV.Strength == 0 and 1 or 0
