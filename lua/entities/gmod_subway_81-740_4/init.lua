@@ -161,6 +161,7 @@ end	]]
             def="PBSet",
             [KEY_LSHIFT] = "AttentionBrakeSet",
         },
+	    [KEY_N] = "TPTToggle",		
 
         [KEY_PAD_ENTER] = "KVWrenchKV",
         [KEY_EQUAL] = "R_Program1Set",
@@ -632,52 +633,6 @@ function ENT:CreatePricep(pos,ang)
 		1--nocollide
 	)
 	else
-   
-	if 
-	Map:find("gm_metro_chapaevskaya_line")	then	
-	constraint.AdvBallsocket(
-		self.MiddleBogey,	
-		ent,
-		0, --bone
-		0, --bone		
-		Vector(-40,0,20),
-		Vector(40,0,20),		
-		0, --forcelimit
-		0, --torquelimit
-		-5, --xmin
-		-5, --ymin
-		-180, --zmin
-		5, --xmax
-		5, --ymax
-		180, --zmax
-		0, --xfric
-		0, --yfric
-		0, --zfric
-		0, --rotonly
-		1--nocollide
-	)			
-	constraint.AdvBallsocket(
-		self.MiddleBogey,	
-		ent,
-		0, --bone
-		0, --bone		
-		Vector(-40,0,-20),
-		Vector(-40,0,20),	
-		0, --forcelimit
-		0, --torquelimit
-		-5, --xmin
-		-5, --ymin
-		0, --zmin
-		5, --xmax
-		5, --ymax
-		180, --zmax
-		0, --xfric
-		0, --yfric
-		0, --zfric
-		0, --rotonly
-		1--nocollide
-	)
-	else	
 	
 	--[[local constraint = constraint.AdvBallsocket(
 		ent, 
@@ -766,8 +721,7 @@ function ENT:CreatePricep(pos,ang)
 		true
 	)		
 end	
-end
-end
+end 
 	
     self:RerailChange(self.FrontBogey, true)
     self:RerailChange(self.MiddleBogey, true)
@@ -780,7 +734,7 @@ end
 	ent.ButtonBuffer = {}
 	ent.KeyBuffer = {}
 	ent.KeyMap = {}		
-	ent.InteractionZones = {}
+	ent.SyncTable = {}	
 end			
 ---------------------------------------------------------------------------
 function ENT:Think()

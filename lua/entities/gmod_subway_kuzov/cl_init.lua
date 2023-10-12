@@ -162,8 +162,10 @@ ENT.ClientProps["RearBrake"] = {
 	ang = Angle(0,90,0),
 	hide = 2,	
 }
-ENT.ClientSounds["RearBrakeLineIsolation"] = {{"RearBrake",function() return "disconnect_valve" end,11,1,50,1e3,Angle(-90,0,0)}}
-ENT.ClientSounds["RearTrainLineIsolation"] = {{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+ENT.ClientSounds["RearTrainLineIsolation"] = {
+				{"RearTrain",function() return "disconnect_valve" end,1,1,50,1e3,Angle(-90,0,0)}}
+ENT.ClientSounds["RearBrakeLineIsolation"] = {
+				{"RearBrake",function() return "disconnect_valve" end,11,1,50,1e3,Angle(-90,0,0)}}
 
 ENT.ButtonMap["Tickers_rear"] = {
 	pos = Vector(286.2,27,65.85), --446 -- 14 -- -0,5
@@ -248,12 +250,8 @@ end
 
 local yventpos = {
     414.5+0*117-159,
-	---414.5+1*117+6.2-144,
 	414.5+2*117+5-159,
-	--414.5+3*117+2-144,
 	214.5+4*117+0.5-15,
-	---414.5+5*117-2.3-144,
-	---414.5+6*117-144,
 }
 
 function ENT:Initialize()
@@ -274,8 +272,7 @@ function ENT:Initialize()
         "models/metrostroi/passengers/m4.mdl",
         "models/metrostroi/passengers/m5.mdl",
     }
-    self:GetNW2Entity("gmod_subway_81-740_4").PreviousCompressorState = false		
-    self.ReleasedPdT = 0	
+    self:GetNW2Entity("gmod_subway_81-740_4").PreviousCompressorState = false			
 	
     self.VentRand = {}
     self.VentState = {}
@@ -401,8 +398,9 @@ end
     self:SetSoundState("rear_isolation",train.RearLeak,0.9+0.2*train.RearLeak)		
 	
     local dPdT = train:GetPackedRatio("BrakeCylinderPressure_dPdT")
-    self.ReleasedPdT = math.Clamp(self.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-self.ReleasedPdT)*dT,0,1)
-    self:SetSoundState("release_rear",math.Clamp(self.ReleasedPdT,0,1)^1.65,1.0)		
+    if not IsValid(train) then return end		
+    train.ReleasedPdT = math.Clamp(train.ReleasedPdT + 4*(-train:GetPackedRatio("BrakeCylinderPressure_dPdT",0)-train.ReleasedPdT)*dT,0,1)
+    self:SetSoundState("release_rear",math.Clamp(train.ReleasedPdT,0,1)^1.65,1.0)		
 	
 	local speed = train:GetPackedRatio("Speed", 0)
 
@@ -451,8 +449,7 @@ end
     if self.Door4 ~= door4s then
         self.Door4 = door4s
         self:PlayOnce("RearDoor","bass",door4s and 1 or 0)
-    end	
-    if not IsValid(train) then return end	
+    end
 
     self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
     local train = self.HeadTrain 
@@ -473,6 +470,16 @@ end
 function ENT:OnButtonPressed(button)
 
 end
+function ENT:OnPlay(soundid,location,range,pitch)
+    if location == "stop" then
+        if IsValid(self.Sounds[soundid]) then
+            self.Sounds[soundid]:Pause()
+            self.Sounds[soundid]:SetTime(0)
+        end
+        return
+    end
+    return soundid,location,range,pitch
+end 
 
 function ENT:DrawPost(special)
     self.HeadTrain = self:GetNW2Entity("gmod_subway_81-740_4")	
@@ -488,14 +495,4 @@ function ENT:DrawPost(special)
 	end
 end
 
-function ENT:OnPlay(soundid,location,range,pitch)
-    if location == "stop" then
-        if IsValid(self.Sounds[soundid]) then
-            self.Sounds[soundid]:Pause()
-            self.Sounds[soundid]:SetTime(0)
-        end
-        return
-    end
-    return soundid,location,range,pitch
-end 
 Metrostroi.GenerateClientProps()

@@ -1181,7 +1181,7 @@ end
 		if VentSound==2 then
         self:SetSoundState("vent1"..i,vol1*(0.7+vol2*0.3),0.5+0.5*vol1+math.Rand(-0.01,0.01))
 		end				
-    end	
+    end	 
 	
     --local rol10 = math.Clamp(speed/5,0,1)*(1-math.Clamp((speed-50)/8,0,1))
     --local rol70 = math.Clamp((speed-50)/8,0,1)

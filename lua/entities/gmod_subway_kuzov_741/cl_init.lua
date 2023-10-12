@@ -452,7 +452,7 @@ end
 function ENT:Draw()
     self.BaseClass.Draw(self)
 end
-function ENT:OnPlay(soundid,location,range,pitch)
+function ENT:OnPlay(soundid,location,range,pitch) 
     if location == "stop" then
         if IsValid(self.Sounds[soundid]) then
             self.Sounds[soundid]:Pause()

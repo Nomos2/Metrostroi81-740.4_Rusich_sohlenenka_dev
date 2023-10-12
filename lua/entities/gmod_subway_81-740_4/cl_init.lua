@@ -1218,14 +1218,14 @@ ENT.ClientProps["FrontBrake"] = {--
     model = "models/metrostroi_train/bogey/disconnect_valve_red.mdl",
     pos = Vector(835-159, -17, -53.9),
     ang = Angle(30,-90,0),
-	scale = 0.55,
+	scale = 0.8,
     hide = 2,
 }
 ENT.ClientProps["FrontTrain"] = {--
     model = "models/metrostroi_train/bogey/disconnect_valve_blue.mdl",
     pos = Vector(835-159, 17, -53.9),
     ang = Angle( -30,-90,0),
-	scale = 0.55,
+	scale = 0.8,
     hide = 2,
 }
 ENT.ClientSounds["FrontBrakeLineIsolation"] = {{"FrontBrake",function() return "disconnect_valve" end,2,1,50,1e3,Angle(-90,0,0)}}

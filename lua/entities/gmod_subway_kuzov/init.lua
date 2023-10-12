@@ -184,6 +184,19 @@ function ENT:Think()
     return retVal		 
 end	
 
+function ENT:OnCouple(train,isfront)   	
+    if isfront and self.FrontAutoCouple then
+        self.FrontBrakeLineIsolation:TriggerInput("Open",1.0)
+        self.FrontTrainLineIsolation:TriggerInput("Open",1.0)
+        self.FrontAutoCouple = false
+    elseif not isfront and self.RearAutoCouple then
+        self.RearBrakeLineIsolation:TriggerInput("Open",1.0)
+        self.RearTrainLineIsolation:TriggerInput("Open",1.0)
+        self.RearAutoCouple = false
+    end
+    self.BaseClass.OnCouple(self,train,isfront)
+end
+
 function ENT:OnButtonPress(button,ply)
     self:SetNW2Entity("gmod_subway_81-740_4", self.HeadTrain)	
 	local train = self.HeadTrain
