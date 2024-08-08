@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "models/metrostroi_train/81-740/body/04"
-	"$surfaceprop" "metalvehicle"
-	 $selfillum 1
-}
